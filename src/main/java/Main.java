@@ -5,7 +5,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int result = calculate(18, 3);
+        int result = calculate(12, 3);
         System.out.println("Result: " + result);
     }
 }
