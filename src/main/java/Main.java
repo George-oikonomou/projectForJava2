@@ -3,7 +3,7 @@ public class Main {
     public static int calculate(int x, int y) {
         return x + y;
 
-        //weed weed weed
+        //weed weed weed test
     }
 
     public static void main(String[] args) {
