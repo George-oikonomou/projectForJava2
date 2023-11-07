@@ -78,6 +78,14 @@ if you want to get the latest version of the project from the origin(the one on 
 this pulls the changes from a specific origin repository to your specific local repository accordingly to the branch you are currently on
 [more info](https://github.com/git-guides/git-pull)
 
+# <ins>#Testing</ins>
+unit tests are used to ensure that when one of us changes something in the code, the rest of the code is not affected.
+
+Unit tests must be written in as many methods as possible.
+
+especially the ones that take long to be tested manually.
+
+the more tests we write the less time we will spend on debugging.
 # <ins>#collaborators</ins>
 
 <li><em>George Oikonomou</em></li>
