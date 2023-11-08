@@ -8,7 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         int result = calculate(5, 3);
+
         System.out.println("Result: " + result);
     }
+    
 }
 //makaronia me kima
