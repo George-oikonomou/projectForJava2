@@ -2,8 +2,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 //TESTaaaaa
 
-@Test
+
 public class MainTest {
+    @Test
     public void testCalculate() {
         // Arrange
         int x = 5;
