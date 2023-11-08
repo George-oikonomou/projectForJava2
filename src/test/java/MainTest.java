@@ -3,8 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //TESTaaaaa
 public class MainTest {
 
-
-    @Test
+@Test
 public class MainTest {
     public void testCalculate() {
         // Arrange
