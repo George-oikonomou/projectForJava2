@@ -1,9 +1,7 @@
 import net.fortuna.ical4j.data.ParserException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
+
 
 public class App {
 
@@ -27,7 +25,7 @@ public class App {
             if (fileExists) {
                 try {
                     ICSFile.LoadEvents(args[4]);
-                } catch (IOException | ParserException e) {
+                } catch (ParserException | IOException e) {
                     // TODO: 9/11/23 handle exception 
                 }
             }

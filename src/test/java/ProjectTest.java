@@ -47,4 +47,6 @@ public class ProjectTest
         project.setFinished(true);
         assertTrue(project.isFinished());
     }
+
+
 }
