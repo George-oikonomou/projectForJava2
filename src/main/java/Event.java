@@ -1,8 +1,12 @@
+import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.DateTime;
+
 public class Event {
     private String date;
     private String time;
     private String title;
-    private String  description;
+    private String description;
+
 
     public Event(String title, String description, String date, String time) {
         this.title = title;
@@ -10,10 +14,10 @@ public class Event {
         this.date = date;
         this.time = time;
     }
-
     public String getDate() {
         return date;
     }
+
 
     public void setDate(String date) {
         this.date = date;

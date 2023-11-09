@@ -1,35 +1,53 @@
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import net.fortuna.ical4j.data.CalendarBuilder;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.component.VEvent;
+
 
 
 public class ICSFile {
 
     /**
-     * method that returns the path of the file entered in the command line if the file
-     * exists
-     * @param fileName    the file name
-     * @return   returns its path
+     * returns true if file exists
+     * @param fileName the file name
+     * @return returns its path
      */
-    public static Path ICSFilePath(String fileName){
+    public static boolean ICSFilePath(String fileName) {
         Path path = Paths.get(fileName);
 
-        if(Files.exists(path)){
+        if (Files.exists(path)) {
             System.out.println("file exists");
-            return  path;
+            return true;
         }
-        return null;
+        return false;
     }
-
 
     /**
      * method that will load the contents of the file int the array list of events
      * in the calendar folder
-     * @param path the path of the file we want to load
+     * fileName the path of the file we want to load
      */
-    public static void LoadEvents(Path path){
+    public static void LoadEvents(String fileName) throws IOException, ParserException {
+        ArrayList<Event> events = new ArrayList<>();
+
+        FileInputStream fis = new FileInputStream(fileName);
+        CalendarBuilder builder = new CalendarBuilder();
+        Calendar calendar = builder.build(fis);
+
+
 
 
     }
-
 }
