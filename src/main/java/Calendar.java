@@ -7,9 +7,28 @@ public class Calendar {
 
     private ArrayList <Event> events;           //has all the events
 
-    public void addEvents(){
+    public void addEvents() {
+        Event new_Event;
+        String title, description, date, time;
+
         // TODO: method that adds events to the ArrayList events;
         // TODO: has to have title description and date
+
+        System.out.print("NEW EVENT:\n\nTitle:\t");
+        title = Validation.strInput();
+
+        System.out.print("\nDescription:\t");
+        description = Validation.strInput();
+
+        date = Validation.date();
+
+        System.out.print("\nTime:\tHour:\t");
+
+        System.out.print("\tMinute:\t");
+        time = Validation.time();
+
+        new_Event = new Event(title, description, date, time);
+        events.add(new_Event);
     }
     public void editEvents(){
         // todo: change information of an event according what type it is
