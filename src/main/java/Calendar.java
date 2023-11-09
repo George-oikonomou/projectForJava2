@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 // TODO: 8/11/23 DECIDE IF YOU WANT TO HAVE 5 DIFF LISTS OR 1
-//  THIS IS IMPLMETATION FOR 1 LIST SEE 1.3 ON PROJECT AND DISCORD
+//  THIS IS IMPLEMENTATION FOR 1 LIST SEE 1.3 ON PROJECT AND DISCORD
 
 public class Calendar {
 
@@ -42,4 +42,11 @@ public class Calendar {
         return null;
     }
 
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
+    }
 }
