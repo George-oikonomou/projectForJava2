@@ -34,7 +34,17 @@ public class Calendar {
         // todo: change information of an event according what type it is
     }
     public void changeProjectCondition(){
-        // TODO: change the boolean condition of the project
+        System.out.println("Please provide the name of the Project you wish to update its status");
+        String title = Validation.strInput();
+        Event event = eventSearch(title);
+
+        if(event instanceof Project project){
+            boolean status = project.isFinished();
+            project.setFinished(!status);
+            System.out.printf("The status of the Project is %s", project.isFinished() ? "finished" : "unfinished");
+        }else{
+            throw new IllegalArgumentException("Project does not exist");
+        }
     }
 
     private void shortList(){
@@ -67,5 +77,15 @@ public class Calendar {
 
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
+    }
+
+    private Event eventSearch(String title){
+
+        for(Event event : getEvents()){
+            if (event.getTitle().equals(title)){
+                return event;
+            }
+        }
+        return null;
     }
 }
