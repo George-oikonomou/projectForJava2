@@ -7,8 +7,6 @@ import java.nio.file.Path;
 
 public class App {
 
-    private static final String[] arguments = {"day", "week", "month", "pastday", "pastweek", "pastmonth", "todo", "due"};
-
     public static void main(String[] args) {
         /*
           check to see if the correct number of arguments was entered in the terminal
