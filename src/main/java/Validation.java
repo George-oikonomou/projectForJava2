@@ -14,7 +14,7 @@ public class Validation {
         return string;
     }
 
-    public static int checkInt(int param1, int param2) {
+    public static int checkAndReturnIntBetween(int param1, int param2) {
         Scanner scanner = new Scanner(System.in);
         int temp = 0;
         boolean check = false;
@@ -44,21 +44,21 @@ public class Validation {
         String y, m, d;
 
         System.out.print("\nDate:\nYear:\t");
-        year = checkInt(2023,2024);
+        year = checkAndReturnIntBetween(2023,2024);
 
         System.out.print("\tMonth:\t");
-        month = checkInt(1, 12);
+        month = checkAndReturnIntBetween(1, 12);
 
         System.out.print("\tDay:\t");
         if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
-            day = checkInt(1, 31);
+            day = checkAndReturnIntBetween(1, 31);
         } else if (month != 2) {
-            day = checkInt(1, 30);
+            day = checkAndReturnIntBetween(1, 30);
         } else {
             if (year % 4 == 0) {
-                day = checkInt(1, 29);
+                day = checkAndReturnIntBetween(1, 29);
             } else {
-                day = checkInt(1, 28);
+                day = checkAndReturnIntBetween(1, 28);
             }
         }
         y = Integer.toString(year);
@@ -72,10 +72,10 @@ public class Validation {
         String h, m;
 
         System.out.print("\nTime:\nHour:\t");
-        hour = checkInt(0, 23);
+        hour = checkAndReturnIntBetween(0, 23);
 
         System.out.print("\tMinute:\t");
-        min = checkInt(0, 59);
+        min = checkAndReturnIntBetween(0, 59);
 
         h = Integer.toString(hour);
         m = Integer.toString(min);

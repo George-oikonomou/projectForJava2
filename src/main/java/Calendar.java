@@ -8,7 +8,7 @@ public class Calendar {
     private ArrayList <Event> events;           //has all the events
 
     public void addEvents() {
-        Event new_Event;
+        Event newEvent;
         String title, description, date, time;
 
         // TODO: method that adds events to the ArrayList events;
@@ -27,8 +27,8 @@ public class Calendar {
         System.out.print("\tMinute:\t");
         time = Validation.time();
 
-        new_Event = new Event(title, description, date, time);
-        events.add(new_Event);
+        newEvent = new Event(title, description, date, time);
+        events.add(newEvent);
     }
     public void editEvents(){
         // todo: change information of an event according what type it is
