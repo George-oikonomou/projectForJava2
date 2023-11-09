@@ -10,7 +10,8 @@ public class App{
           check to see if the correct number of arguments was entered in the terminal
          */
         if (args.length != 4 && args.length != 5){
-            throw new IllegalArgumentException("Incorrect argument input");
+            System.out.println("Incorrect argument input");
+            System.exit(1);
         }
 
         if (args.length == 4){
