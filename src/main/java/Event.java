@@ -2,24 +2,24 @@ import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
 
 public class Event {
-    private DateTime date;
+    private String date;
     private String time;
     private String title;
     private String description;
 
 
-    public Event(String title, String description, DateTime date, String time) {
+    public Event(String title, String description, String date, String time) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.time = time;
     }
-    public DateTime getDate() {
+    public String getDate() {
         return date;
     }
 
 
-    public void setDate(DateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
