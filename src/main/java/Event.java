@@ -7,9 +7,17 @@ public class Event {
     private String title;
     private String description;
 
+
+    public Event(String title, String description, DateTime date, String time) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.time = time;
+    }
     public DateTime getDate() {
         return date;
     }
+
 
     public void setDate(DateTime date) {
         this.date = date;
