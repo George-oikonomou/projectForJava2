@@ -6,8 +6,8 @@ Go to a desired folder,open the terminal inside the folder and run the following
 
 # <ins>#collaborators</ins>
 
-<li><em>George Oikonomou</em></li>
+<li><em>George Oikonomou (it2022078) </em></li>
 
-<li><em>Spyros Georgiou</em></li>
+<li><em>Spyros Georgiou (it2022010) </em></li>
 
-<li><em>Georgia Vrettakou</em></li>
+<li><em>Georgia Vrettakou (it2022009) </em></li>
