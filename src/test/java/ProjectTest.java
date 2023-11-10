@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +10,11 @@ public class ProjectTest {
     public void setUp() {
         project = new Project("title", "description", "date", "time", "deadline", true);
     }
+    @AfterEach
+    public void tearDown() {
+        project = null;
+    }
+
 
     @Test
     public void testGetDeadline() {
