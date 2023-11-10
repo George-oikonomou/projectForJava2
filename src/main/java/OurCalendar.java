@@ -1,3 +1,6 @@
+import gr.hua.dit.oop2.calendar.TimeService;
+import gr.hua.dit.oop2.calendar.TimeTeller;
+
 import java.util.ArrayList;
 
 // TODO: 8/11/23 DECIDE IF YOU WANT TO HAVE 5 DIFF LISTS OR 1
@@ -6,9 +9,11 @@ import java.util.ArrayList;
 public class OurCalendar {
 
     private ArrayList <Event> events;           //has all the events
+    private TimeTeller teller;
 
     public OurCalendar() {
         this.events = new ArrayList<>();
+        this.teller = TimeService.getTeller();
     }
 
     public void addEvents() {
@@ -57,6 +62,7 @@ public class OurCalendar {
     }
 
     public void printUpcomingEvents(String time){
+
         // TODO: print events until the specified time given
     }
     public void printOldEvents(String time){
