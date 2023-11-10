@@ -5,33 +5,61 @@ import java.util.ArrayList;
 
 public class Calendar {
 
-    private ArrayList <Event> events;           //has all the events
+    private static ArrayList <Event> events;           //has all the events
 
-    public void addEvents() {
-        Event newEvent;
-        String title, description, date, time;
+    public static void addEvents() {
+        int choice;
+        String title, description;
+        int duration;
+        DateTime dateTime, deadline;
 
-        // TODO: method that adds events to the ArrayList events;
-        // TODO: has to have title description and date
-
-        System.out.print("NEW EVENT:\n\nTitle:\t");
+        //NEW EVENT:
+        System.out.println("Make a new:\n1) Event\n2) Appointment\n3) Project\n");
+        choice = Validation.checkAndReturnIntBetween(1, 3);
+        //Title
+        System.out.print("\nTitle:\t");
         title = Validation.strInput();
-
+        //Description
         System.out.print("\nDescription:\t");
         description = Validation.strInput();
+        //Date & Time
+        dateTime = Validation.dateAndTime();
+        System.out.println();
 
-        date = Validation.date();
+        //Adding one event to the arraylist
+        switch (choice) {
+            case 1: {
+                Event newEvent = new Event(dateTime, description, title);
+                events.add(newEvent);
+            }
 
-        System.out.print("\nTime:\tHour:\t");
+            case 2: {
+                System.out.print("Duration:\t");
+                duration = Validation.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
+                System.out.println();
 
-        System.out.print("\tMinute:\t");
-        time = Validation.time();
+                Appointment newAppointment = new Appointment(title, description, dateTime, duration);
+                events.add(newAppointment);
+            }
 
-        newEvent = new Event(title, description, date, time);
-        events.add(newEvent);
+            default: {
+                System.out.print("Deadline:\t");
+                deadline = Validation.deadline(dateTime);
+                System.out.println();
+
+                Project newProject = new Project(title, description, dateTime, deadline, false);
+                events.add(newProject);
+            }
+        }
+
+
+
+
+
     }
     public void editEvents(){
         // todo: change information of an event according what type it is
+
     }
     public void changeProjectCondition(){
         // TODO: change the boolean condition of the project

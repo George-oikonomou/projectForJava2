@@ -1,30 +1,20 @@
 public class Event {
-    private String date;
-    private String time;
+    private DateTime dateTime;
     private String title;
     private String  description;
 
-    public Event(String title, String description, String date, String time) {
+    public Event(DateTime dateTime, String title, String description) {
+        this.dateTime = dateTime;
         this.title = title;
         this.description = description;
-        this.date = date;
-        this.time = time;
     }
 
-    public String getDate() {
-        return date;
+    public DateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateTime(DateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getTitle() {

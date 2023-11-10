@@ -1,18 +1,18 @@
 public class Project extends Event{
-    private String deadline;    //date and time of project deadline
+    private DateTime deadline;    //date and time of project deadline
     private boolean isFinished;     // boolean value that tells if the project is finished
 
-    public Project(String title, String description, String date, String time, String deadline, boolean isFinished) {
-        super(title, description, date, time);
+    public Project(String title, String description, DateTime dateTime, DateTime deadline, boolean isFinished) {
+        super(dateTime, description, title);
         this.deadline = deadline;
         this.isFinished = isFinished;
     }
 
-    public String getDeadline() {
+    public DateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(DateTime deadline) {
         this.deadline = deadline;
     }
 
