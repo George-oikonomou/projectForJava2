@@ -22,5 +22,11 @@
             <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mnode.ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+            <version>3.0.27</version> <!-- Use the appropriate version -->
+        </dependency>
+
     </dependencies>
 </project>
