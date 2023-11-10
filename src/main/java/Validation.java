@@ -100,8 +100,7 @@ public class Validation {  //Checking the input value
 
     //Making an object DateTime & checking the value of date & time for the deadline
     public static Datetime deadline (Datetime dateTime) {
-        int year, month;
-        int day = 0;
+        int year, month, day;
         int hour = 0;
         int minute = 0;
         String date, time;
