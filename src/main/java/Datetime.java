@@ -1,4 +1,4 @@
-public class DateTime {
+public class Datetime {
     private int year;
     private int month;
     private int day;
@@ -7,7 +7,7 @@ public class DateTime {
     private String date;
     private String time;
 
-    public DateTime (int year, int month, int day, int hour, int minute, String date, String time) {
+    public Datetime (int year, int month, int day, int hour, int minute, String date, String time) {
         this.year = year;
         this.month = month;
         this.day = day;

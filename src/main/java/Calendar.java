@@ -11,7 +11,7 @@ public class Calendar {
         int choice;
         String title, description;
         int duration;
-        DateTime dateTime, deadline;
+        Datetime datetime1, deadline;
 
         //NEW EVENT:
         System.out.println("Make a new:\n1) Event\n2) Appointment\n3) Project\n");
@@ -22,33 +22,45 @@ public class Calendar {
         //Description
         System.out.print("\nDescription:\t");
         description = Validation.strInput();
-        //Date & Time
-        dateTime = Validation.dateAndTime();
-        System.out.println();
+
 
         //Adding one event to the arraylist
         switch (choice) {
             case 1: {
-                Event newEvent = new Event(dateTime, description, title);
+                //Date & Time
+                datetime1 = Validation.dateAndTime();
+                System.out.println();
+                Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
+                break;
             }
 
             case 2: {
+                //Date & Time
+                datetime1 = Validation.dateAndTime();
+                System.out.println();
+
                 System.out.print("Duration:\t");
                 duration = Validation.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
                 System.out.println();
 
-                Appointment newAppointment = new Appointment(title, description, dateTime, duration);
+                Appointment newAppointment = new Appointment(datetime1, description, title, duration);
                 events.add(newAppointment);
+                break;
             }
 
             default: {
-                System.out.print("Deadline:\t");
-                deadline = Validation.deadline(dateTime);
+                //Date & Time
+                datetime1 = Validation.dateAndTime();
                 System.out.println();
 
-                Project newProject = new Project(title, description, dateTime, deadline, false);
+                System.out.print("Deadline:\t");
+                deadline = Validation.deadline(datetime1);
+                System.out.println();
+
+                Project newProject = new Project(datetime1, description, title, deadline, false);
                 events.add(newProject);
+                break;
             }
         }
 

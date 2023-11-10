@@ -43,7 +43,7 @@ public class Validation {  //Checking the input value
     }
 
     //Making an object DateTime & checking the value of date & time
-    public static DateTime dateAndTime() {
+    public static Datetime dateAndTime() {
         int year, month, day, hour, minute;
         String date, time;
 
@@ -95,11 +95,11 @@ public class Validation {  //Checking the input value
                 time = "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
         }
         System.out.println();
-        return new DateTime(year, month, day, hour, minute, date, time);
+        return new Datetime(year, month, day, hour, minute, date, time);
     }
 
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static DateTime deadline (DateTime dateTime) {
+    public static Datetime deadline (Datetime dateTime) {
         int year, month;
         int day = 0;
         int hour = 0;
@@ -166,7 +166,7 @@ public class Validation {  //Checking the input value
                  time = "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
          }
         System.out.println();
-         return new DateTime(year, month, day, hour, minute, date, time);
+         return new Datetime(year, month, day, hour, minute, date, time);
     }
 
 }
