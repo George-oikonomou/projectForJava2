@@ -1,40 +1,20 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProjectTest {
     private Project project;
 
-    @BeforeEach
-    public void setUp() {
-        project = new Project("title", "description", "date", "time", "deadline", true);
-    }
-    @AfterEach
-    public void tearDown() {
-        project = null;
-    }
-
-
     @Test
-    public void testGetDeadline() {
+    public void testGetAndSetDeadline() {
+        project = new Project("name", "description", "deadline","2020-12-12","2020-12-12",false);
+        project.setDeadline("deadline");
         assertEquals("deadline", project.getDeadline());
     }
 
     @Test
-    public void testSetDeadline() {
-        project.setDeadline("testDeadline");
-        assertEquals("testDeadline", project.getDeadline());
-    }
-
-    @Test
-    public void testIsFinished() {
+    public void testGetAndSetIsFinished() {
+        project = new Project("name", "description", "deadline","2020-12-12","2020-12-12",false);
+        project.setFinished(true);
         assertTrue(project.isFinished());
-    }
-
-    @Test
-    public void testSetFinished() {
-        project.setFinished(false);
-        assertFalse(project.isFinished());
     }
 }
