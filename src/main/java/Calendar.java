@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Calendar {
 
-    private static ArrayList <Event> events;           //has all the events
+    private ArrayList <Event> events;           //has all the events
 
-    public static void addEvents() {
+    public void addEvents() {
         int choice;
         String title, description;
         int duration;
