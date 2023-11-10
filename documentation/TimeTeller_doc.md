@@ -13,3 +13,7 @@ there are a lot of these methods like year to work with
 these methods can be useful to determine which events we have to print
 
 from the arrayList of events.
+
+at the end of the program we have to close the TimeTeller object with the line :
+
+TimeService.stop();
