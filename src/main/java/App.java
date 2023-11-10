@@ -1,7 +1,5 @@
 import net.fortuna.ical4j.data.ParserException;
-
 import java.io.IOException;
-
 
 public class App {
 
@@ -11,12 +9,11 @@ public class App {
          */
         if (args.length != 4 && args.length != 5) {
             System.out.println("Incorrect argument input");
-            System.exit(1);
         }
 
         if (args.length == 4) {
             // TODO: 9/11/23 code for editing the calendar
-        } else {
+        } else if (args.length == 5){
             /*
                 start of some code to load the file
              */
