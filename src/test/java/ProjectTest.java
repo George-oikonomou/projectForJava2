@@ -2,40 +2,32 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProjectTest extends EventTest
-{
+public class ProjectTest {
     private Project project;
 
-    @Test
-    public void testGetDeadline()
-    {
+    @BeforeEach
+    public void setUp() {
         project = new Project("title", "description", "date", "time", "deadline", true);
+    }
+
+    @Test
+    public void testGetDeadline() {
         assertEquals("deadline", project.getDeadline());
     }
 
     @Test
-    public void testSetDeadline()
-    {
-        project = new Project("title", "description", "date", "time", "deadline", true);
-
-        assertEquals("deadline", project.getDeadline());
+    public void testSetDeadline() {
         project.setDeadline("testDeadline");
         assertEquals("testDeadline", project.getDeadline());
     }
 
     @Test
-    public void testIsFinished()
-    {
-        project = new Project("title", "description", "date", "time", "deadline", true);
-
+    public void testIsFinished() {
         assertTrue(project.isFinished());
     }
 
     @Test
     public void testSetFinished() {
-        project = new Project("title", "description", "date", "time", "deadline", true);
-
-        assertTrue(project.isFinished());
         project.setFinished(false);
         assertFalse(project.isFinished());
     }
