@@ -9,7 +9,7 @@ public class App {
 
 
         System.out.println("add an event enter (1)");
-        
+
         int choice = input.nextInt();
 
         switch (choice){
