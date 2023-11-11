@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ValidationTest {
+public class ValidateTest {
 
     @Test
     public void test_empty_strInput() {
@@ -20,7 +20,7 @@ public class ValidationTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        String result = Validation.strInput();
+        String result = Validate.strInput();
 
         assertTrue(outContent.toString().contains("You typed something wrong. Try again."));
 
@@ -33,7 +33,7 @@ public class ValidationTest {
         String input = "hello\n";
 
         System.setIn(new ByteArrayInputStream(input.getBytes()));
-        String result = Validation.strInput();
+        String result = Validate.strInput();
 
         assertEquals("hello", result);
     }
@@ -47,7 +47,7 @@ public class ValidationTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        int result = Validation.checkAndReturnIntBetween(1, 10);
+        int result = Validate.checkAndReturnIntBetween(1, 10);
 
         assertEquals(5, result);
         assertTrue(outContent.toString().contains("You didnt type a number.Try again."));
@@ -61,7 +61,7 @@ public class ValidationTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        int result = Validation.checkAndReturnIntBetween(1, 10);
+        int result = Validate.checkAndReturnIntBetween(1, 10);
 
         assertEquals(5, result);
         assertTrue(outContent.toString().contains("The number you typed is invalid, it should be between 1 and 10. Try again."));

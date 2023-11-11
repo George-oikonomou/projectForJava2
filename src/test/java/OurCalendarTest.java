@@ -76,7 +76,7 @@ class OurCalendarTest {
     @Test
     void testEventSearchWhenEventIsFound() {
         OurCalendar ourCalendar = new OurCalendar();
-        ArrayList<Event> Events =new ArrayList<>();
+        ArrayList<Event> Events = new ArrayList<>();
 
         Event expectedEvent =new Event(dateTime, "title", "description");
         Events.add(expectedEvent);

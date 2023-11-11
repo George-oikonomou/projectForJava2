@@ -14,8 +14,7 @@ public class Project extends Event{
         return deadline;
     }
 
-    public void setDeadline(OurDateTime deadline) {
-        this.deadline = deadline;
+    public void setDeadline(OurDateTime deadline) {this.deadline = deadline;
     }
 
     public boolean isFinished() {
