@@ -13,19 +13,34 @@
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <repositories>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://gitlab.com/api/v4/projects/41008035/packages/maven</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- JUnit 5 -->
+
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mnode.ical4j</groupId>
             <artifactId>ical4j</artifactId>
             <version>3.0.27</version> <!-- Use the appropriate version -->
+        </dependency>
+
+        <dependency>
+            <groupId>gr.hua.dit.oop2</groupId>
+            <artifactId>calendar</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

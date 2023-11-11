@@ -1,11 +1,20 @@
+import gr.hua.dit.oop2.calendar.TimeService;
+import gr.hua.dit.oop2.calendar.TimeTeller;
+
 import java.util.ArrayList;
 
 // TODO: 8/11/23 DECIDE IF YOU WANT TO HAVE 5 DIFF LISTS OR 1
 //  THIS IS IMPLEMENTATION FOR 1 LIST SEE 1.3 ON PROJECT AND DISCORD
 
-public class Calendar {
+public class OurCalendar {
 
     private ArrayList <Event> events;           //has all the events
+    private TimeTeller teller;
+
+    public OurCalendar() {
+        this.events = new ArrayList<>();
+        this.teller = TimeService.getTeller();
+    }
 
     public void addEvents() {
         int choice;
@@ -93,6 +102,7 @@ public class Calendar {
     }
 
     public void printUpcomingEvents(String time){
+
         // TODO: print events until the specified time given
     }
     public void printOldEvents(String time){
@@ -119,7 +129,7 @@ public class Calendar {
         this.events = events;
     }
 
-    private Event eventSearch(String title){
+    public Event eventSearch(String title){
 
         for(Event event : getEvents()){
             if (event.getTitle().equals(title)){
