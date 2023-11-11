@@ -1,4 +1,7 @@
-public class Datetime {
+import gr.hua.dit.oop2.calendar.TimeService;
+import gr.hua.dit.oop2.calendar.TimeTeller;
+
+public class OurDateTime {
     private int year;
     private int month;
     private int day;
@@ -7,12 +10,26 @@ public class Datetime {
     private String date;
     private String time;
 
-    public Datetime (int year, int month, int day, int hour, int minute, String date, String time) {
+    public OurDateTime (int year, int month, int day, int hour, int minute, String date, String time) {
         this.year = year;
         this.month = month;
         this.day = day;
         this.hour = hour;
         this.minute = minute;
+        this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+        this.time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
+    }
+
+    /**
+     * constructor that creates a OurDateTime object that contains the current
+     */
+    public OurDateTime() {
+        TimeTeller teller = TimeService.getTeller();
+        this.year = teller.now().getYear();
+        this.month = teller.now().getMonthValue();
+        this.day = teller.now().getDayOfMonth();
+        this.hour = teller.now().getHour();
+        this.minute = teller.now().getMinute();
         this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
         this.time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
     }

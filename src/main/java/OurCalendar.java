@@ -20,7 +20,7 @@ public class OurCalendar {
         int choice;
         String title, description;
         int duration;
-        Datetime datetime1, deadline;
+        OurDateTime datetime1, deadline;
 
         //NEW EVENT:
         System.out.println("Make a new:\n1) Event\n2) Appointment\n3) Project\n");
