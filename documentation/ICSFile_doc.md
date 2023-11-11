@@ -1,6 +1,6 @@
 ICSFilePath(String fileName) :
     takes a file name we want to open and checks if the file exists using its path and 
-    if it does it returns true
+    if it does, it returns true
 
 LoadEvents (string fileName):
     for the time being it uses the ical4j library to try and open a ics file with events
