@@ -57,31 +57,29 @@ public class Validation {  //Checking the input value
         System.out.print("\tDay:\t");
         day = dayCreation(month ,year);
 
+        //Create Date
         date = dateCreation(year, month, day);
 
-        //TIME
+        //hour
         System.out.print("\nTIME\nHour:\t");
         hour = checkAndReturnIntBetween(0, 23);
 
+        //minute
         System.out.print("\tMinute:\t");
         minute = checkAndReturnIntBetween(0, 59);
 
-        if (minute >= 10) {
-            time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
-        } else {
-            if (hour >= 10)
-                time = Integer.toString(hour).concat(":0").concat(Integer.toString(minute));
-            else
-                time = "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
-        }
+        //create time
+        time = timeCreation(minute,hour);
         System.out.println();
+
+        //return object
         return new OurDateTime(year, month, day, hour, minute, date, time);
     }
 
 
 
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline (OurDateTime dateTime) {
+    public static OurDateTime deadline (OurDateTime dateTime) {//todo needs to be checked/explained
         int year, month, day;
         int hour = 0;
         int minute = 0;

@@ -6,9 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OurCalendarTest {
     private OurCalendar calendar;
-
+    private OurDateTime dateTime;
     @BeforeEach
     void setUp() {
+        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0, "13/12/2004","12:00");
         calendar = new OurCalendar();
     }
 
@@ -24,7 +25,7 @@ class OurCalendarTest {
     public void testChangeProjectCondition() {
         // setup
         ArrayList<Event> events = new ArrayList<>();
-        Project project = new Project("ProjectName", "description", "date", "time", "deadline", false);
+        Project project = new Project(dateTime, "ProjectName", "description", dateTime, false);
         events.add(project);
         calendar.setEvents(events);
 
@@ -64,8 +65,8 @@ class OurCalendarTest {
         // Arrange
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> expectedEvents = new ArrayList<>();
-        expectedEvents.add(new Event("title", "description", "date", "time"));
-        expectedEvents.add(new Event("titleSecond", "description", "date", "time"));
+        expectedEvents.add(new Event(dateTime, "title", "description"));
+        expectedEvents.add(new Event(dateTime, "title2", "description"));
 
         ourCalendar.setEvents(expectedEvents);
         ArrayList<Event> actualEvents = ourCalendar.getEvents();
@@ -77,7 +78,7 @@ class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events =new ArrayList<>();
 
-        Event expectedEvent =new Event("title", "description", "date", "time");
+        Event expectedEvent =new Event(dateTime, "title", "description");
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 
@@ -90,7 +91,7 @@ class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events =new ArrayList<>();
 
-        Event expectedEvent =new Event("TitleOfSomethingDifferent", "description", "date", "time");
+        Event expectedEvent =new Event(dateTime, "titleOfSomethingDifferent", "description");
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 
