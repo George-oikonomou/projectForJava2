@@ -66,7 +66,7 @@ public class OurCalendar {
                 deadline = Validate.deadline(datetime1);
                 System.out.println();
 
-                Project newProject = new Project(datetime1, description, title, deadline, false);
+                Project newProject = new Project(datetime1, description, title, deadline);
                 events.add(newProject);
                 break;
             }

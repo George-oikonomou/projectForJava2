@@ -10,7 +10,7 @@ public class OurDateTime {
     private String date;
     private String time;
 
-    public OurDateTime (int year, int month, int day, int hour, int minute, String date, String time) {
+    public OurDateTime (int year, int month, int day, int hour, int minute) {
         this.year = year;
         this.month = month;
         this.day = day;
@@ -18,6 +18,19 @@ public class OurDateTime {
         this.minute = minute;
         this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
         this.time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
+    }
+
+    /**
+     * constructor that creates a OurDateTime but for events that do not have time
+     * @param year year of event
+     * @param month month of event
+     * @param day day of event
+     */
+    public OurDateTime(int year, int month, int day){
+        this.year = year;
+        this.minute = month;
+        this.day = day;
+        this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
     }
 
     /**
@@ -120,7 +133,7 @@ public class OurDateTime {
             System.out.println();
 
             //return object
-            return new OurDateTime(year, month, day, hour, minute, date, time);
+            return new OurDateTime(year, month, day, hour, minute);
         }
     }
 }

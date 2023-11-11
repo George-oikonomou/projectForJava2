@@ -2,12 +2,11 @@ import net.fortuna.ical4j.model.DateTime;
 
 public class Project extends Event{
     private OurDateTime deadline;    //date and time of project deadline
-    private boolean isFinished;     // boolean value that tells if the project is finished
+    private boolean isFinished = false;     // boolean value that tells if the project is finished
 
-    public Project(OurDateTime dateTime, String title, String description, OurDateTime deadline, boolean isFinished) {
+    public Project(OurDateTime dateTime, String title, String description, OurDateTime deadline) {
         super(dateTime, title, description);
         this.deadline = deadline;
-        this.isFinished = isFinished;
     }
 
     public OurDateTime getDeadline() {
