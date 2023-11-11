@@ -1,7 +1,7 @@
 public class Appointment extends Event {
     private int duration;                     //how much the date will last
 
-    public Appointment(Datetime dateTime, String title, String description, int duration) {
+    public Appointment(OurDateTime dateTime, String title, String description, int duration) {
         super(dateTime, title, description);
         this.duration = duration;
     }

@@ -43,7 +43,7 @@ public class Validation {  //Checking the input value
     }
 
     //Making an object DateTime & checking the value of date & time
-    public static Datetime dateAndTime() {
+    public static OurDateTime dateAndTime() {
         int year, month, day, hour, minute;
         String date, time;
 
@@ -55,29 +55,9 @@ public class Validation {  //Checking the input value
         month = checkAndReturnIntBetween(1, 12);
         //Day:
         System.out.print("\tDay:\t");
-        if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
-            day = checkAndReturnIntBetween(1, 31);
-        } else if (month != 2) {
-            day = checkAndReturnIntBetween(1, 30);
-        } else {
-            if (year % 4 == 0) {
-                day = checkAndReturnIntBetween(1, 29);
-            } else {
-                day = checkAndReturnIntBetween(1, 28);
-            }
-        }
+        day = dayCreation(month ,year);
 
-        if (day >= 10) {
-            if (month >= 10)
-                date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-            else
-                date = Integer.toString(day).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-        } else {
-            if (month >= 10)
-                date = "0".concat(Integer.toString(day)).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-            else
-                date = "0".concat(Integer.toString(day)).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-        }
+        date = dateCreation(year, month, day);
 
         //TIME
         System.out.print("\nTIME\nHour:\t");
@@ -95,11 +75,13 @@ public class Validation {  //Checking the input value
                 time = "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
         }
         System.out.println();
-        return new Datetime(year, month, day, hour, minute, date, time);
+        return new OurDateTime(year, month, day, hour, minute, date, time);
     }
 
+
+
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static Datetime deadline (Datetime dateTime) {
+    public static OurDateTime deadline (OurDateTime dateTime) {
         int year, month, day;
         int hour = 0;
         int minute = 0;
@@ -113,23 +95,8 @@ public class Validation {  //Checking the input value
         month = checkAndReturnIntBetween(1, 12);
         //Day:
         System.out.print("\tDay:\t");
+        day = dayCreation(month,year);
 
-        if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
-            day = checkAndReturnIntBetween(1, 31);
-
-        } else if (month != 2) {
-            day = checkAndReturnIntBetween(1, 30);
-
-        } else {
-
-            if (year % 4 == 0) {
-                day = checkAndReturnIntBetween(1, 29);
-
-            } else {
-                day = checkAndReturnIntBetween(1, 28);
-
-            }
-        }
         if (year == dateTime.getYear() && month == dateTime.getMonth() && day == dateTime.getDay()) {
             //TIME
             System.out.print("\nTIME\nHour:\t");
@@ -144,28 +111,50 @@ public class Validation {  //Checking the input value
             }
         }
 
-        if (day >= 10) {
-            if (month >= 10)
-                date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-            else
-                date = Integer.toString(day).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-         } else {
-             if (month >= 10)
-                 date = "0".concat(Integer.toString(day)).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-             else
-                 date = "0".concat(Integer.toString(day)).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-         }
+        date = dateCreation(year, month, day);
+        time = timeCreation(minute,hour);
 
-         if (minute >= 10) {
-             time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
-         } else {
-             if (hour >= 10)
-                 time = Integer.toString(hour).concat(":0").concat(Integer.toString(minute));
-             else
-                 time = "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
-         }
         System.out.println();
-         return new Datetime(year, month, day, hour, minute, date, time);
+        return new OurDateTime(year, month, day, hour, minute, date, time);
     }
 
+    public static String timeCreation(int minute, int hour){
+
+        if (minute >= 10) {
+            return Integer.toString(hour).concat(":").concat(Integer.toString(minute));
+        } else {
+            if (hour >= 10)
+                return Integer.toString(hour).concat(":0").concat(Integer.toString(minute));
+            else
+                return  "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
+        }
+    }
+
+    private static String dateCreation(int year, int month, int day) {
+        if (day >= 10) {
+            if (month >= 10)
+                 return Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+            else
+                return Integer.toString(day).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+        } else {
+            if (month >= 10)
+                return  "0".concat(Integer.toString(day)).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+            else
+                return  "0".concat(Integer.toString(day)).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+        }
+    }
+
+    private static int dayCreation(int month, int year){
+        if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
+            return  checkAndReturnIntBetween(1, 31);
+        } else if (month != 2) {
+            return checkAndReturnIntBetween(1, 30);
+        } else {
+            if (year % 4 == 0) {
+                return checkAndReturnIntBetween(1, 29);
+            } else {
+                return checkAndReturnIntBetween(1, 28);
+            }
+        }
+    }
 }
