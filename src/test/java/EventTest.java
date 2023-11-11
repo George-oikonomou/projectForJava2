@@ -7,7 +7,7 @@ class EventTest {
     OurDateTime dateTime;
     @BeforeEach
     void setUp() {
-        dateTime = new OurDateTime(2023, 12, 13, 12, 0, "13/12/2004","12:00");
+        dateTime = new OurDateTime(2023, 12, 13, 12, 0);
     }
 
     @Test
