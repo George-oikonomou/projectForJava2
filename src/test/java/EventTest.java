@@ -1,8 +1,14 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EventTest {
+    OurDateTime dateTime;
+    @BeforeEach
+    void setUp() {
+        dateTime = new OurDateTime(2023, 12, 13, 12, 0, "13/12/2004","12:00");
+    }
 
     @Test
     void getDate() {
@@ -22,7 +28,7 @@ class EventTest {
 
     @Test
     public void testSetAndGetTitleAndDescription() {
-        Event event = new Event("Meet", "description", "2020-10-10", "10:00 AM");
+        Event event = new Event(dateTime, "title", "description");
         event.setTitle("Conference");
         event.setDescription("International tech conference");
 

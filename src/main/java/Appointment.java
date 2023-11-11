@@ -1,10 +1,8 @@
-import net.fortuna.ical4j.model.DateTime;
-
 public class Appointment extends Event {
     private int duration;                     //how much the date will last
 
-    public Appointment(String title, String description, String date, String time, int duration) {
-        super(title, description, date, time);
+    public Appointment(OurDateTime dateTime, String title, String description, int duration) {
+        super(dateTime, title, description);
         this.duration = duration;
     }
 
