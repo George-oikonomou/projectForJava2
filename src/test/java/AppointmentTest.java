@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppointmentTest {
-    private Appointment appointment;
+    public Appointment appointment;
 
     @BeforeEach
     public void setUp() {
