@@ -59,7 +59,7 @@ public class ICSFile {
 
                 if (event instanceof Project){
                     fileWriter.write("DEADLINE:" + ((Project) event).getDeadline());
-                    fileWriter.write("PROJECT_STATUS" + (((Project) event).isFinished() ? "Ongoing" : "finished"));
+                    fileWriter.write("PROJECT_STATUS" + (((Project) event).isFinished() ? "Finished" : "Ongoing"));
                 }
 
                 if (event instanceof Appointment){
