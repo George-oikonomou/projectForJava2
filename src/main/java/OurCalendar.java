@@ -36,7 +36,7 @@ public class OurCalendar {
         switch (choice) {
             case 1: {
                 //Date & Time
-                datetime1 = Validate.dateAndTime();
+                datetime1 = OurDateTime.Functionality.dateAndTime();
                 System.out.println();
                 Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
@@ -45,7 +45,7 @@ public class OurCalendar {
 
             case 2: {
                 //Date & Time
-                datetime1 = Validate.dateAndTime();
+                datetime1 = OurDateTime.Functionality.dateAndTime();
                 System.out.println();
 
                 System.out.print("Duration:\t");
@@ -59,7 +59,7 @@ public class OurCalendar {
 
             default: {
                 //Date & Time
-                datetime1 = Validate.dateAndTime();
+                datetime1 = OurDateTime.Functionality.dateAndTime();
                 System.out.println();
 
                 System.out.print("Deadline:\t");

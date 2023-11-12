@@ -42,38 +42,7 @@ public class Validate {  //Checking the input value
     }
 
     //Making an object DateTime & checking the value of date & time
-    public static OurDateTime dateAndTime() {
-        int year, month, day, hour, minute;
-        String date, time;
 
-        //Year:
-        System.out.print("\nDATE\nYear:\t");
-        year = checkAndReturnIntBetween(2023,2024);
-        //Month:
-        System.out.print("\tMonth:\t");
-        month = checkAndReturnIntBetween(1, 12);
-        //Day:
-        System.out.print("\tDay:\t");
-        day = day(month ,year);
-
-        //Create Date
-        date = date(year, month, day);
-
-        //hour
-        System.out.print("\nTIME\nHour:\t");
-        hour = checkAndReturnIntBetween(0, 23);
-
-        //minute
-        System.out.print("\tMinute:\t");
-        minute = checkAndReturnIntBetween(0, 59);
-
-        //create time
-        time = time(minute,hour);
-        System.out.println();
-
-        //return object
-        return new OurDateTime(year, month, day, hour, minute);
-    }
 
     //Making an object DateTime & checking the value of date & time for the deadline
     public static OurDateTime deadline (OurDateTime dateTime) {//todo needs to count for hours even if the projects deadline is not on the same day

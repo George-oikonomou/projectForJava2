@@ -103,7 +103,7 @@ public class OurDateTime {
         this.time = time;
     }
 
-    public static class OurDateTimeFunctionality{
+    public static class Functionality{
         public static OurDateTime dateAndTime() {
             int year, month, day, hour, minute;
             String date, time;
