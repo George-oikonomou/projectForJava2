@@ -30,7 +30,7 @@ public class OurCalendar {
         title = Validate.strInput();
         //Description
         System.out.print("\nDescription:\t");
-        description = Validate.strInput();
+            description = Validate.strInput();
 
         //Adding one event to the arraylist
         switch (choice) {

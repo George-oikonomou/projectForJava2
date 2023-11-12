@@ -7,11 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OurCalendarTest {
     public OurCalendar calendar;
     public OurDateTime dateTime;
-    @BeforeEach
-    public void SetUp() {
-        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        calendar = new OurCalendar();
-    }
 
     @Test
     public void addEvents() {
@@ -24,6 +19,8 @@ public class OurCalendarTest {
     @Test
     public void testChangeProjectCondition() {
         // setup
+        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
+        calendar = new OurCalendar();
         ArrayList<Event> events = new ArrayList<>();
         Project project = new Project(dateTime, "ProjectName", "description", dateTime);
         events.add(project);
