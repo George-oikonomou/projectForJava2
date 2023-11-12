@@ -1,8 +1,4 @@
 import gr.hua.dit.oop2.calendar.TimeService;
-import net.fortuna.ical4j.data.ParserException;
-import net.fortuna.ical4j.model.DateTime;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
