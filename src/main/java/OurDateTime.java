@@ -16,8 +16,8 @@ public class OurDateTime {
         this.day = day;
         this.hour = hour;
         this.minute = minute;
-        this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-        this.time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
+        this.date = Validate.date(year,month,day);
+        this.time = Validate.time(minute,hour);
     }
 
     /**
@@ -30,7 +30,7 @@ public class OurDateTime {
         this.year = year;
         this.month = month;
         this.day = day;
-        this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+        this.date = Validate.date(year,month,day);
     }
 
     /**
@@ -43,8 +43,8 @@ public class OurDateTime {
         this.day = teller.now().getDayOfMonth();
         this.hour = teller.now().getHour();
         this.minute = teller.now().getMinute();
-        this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-        this.time = Integer.toString(hour).concat(":").concat(Integer.toString(minute));
+        this.date = Validate.date(year,month,day);
+        this.time = Validate.time(minute,hour);
     }
 
     public int getYear() {
