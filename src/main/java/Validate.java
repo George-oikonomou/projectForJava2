@@ -40,35 +40,73 @@ public class Validate {  //Checking the input value
         }
         return temp;
     }
+
+
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline (OurDateTime dateTime) {//todo needs to count for hours even if the projects deadline is not on the same day
-        int year, month, day;
-        int hour = 0;
-        int minute = 0;
+    public static OurDateTime deadline (OurDateTime dateTime) {
+        int year, month, day, hour, minute;
+
 
         //Year:
         System.out.print("\nDATE\nYear:\t");
         year = checkAndReturnIntBetween(dateTime.getYear(), 2024);
+
         //Month:
         System.out.print("\tMonth:\t");
-        month = checkAndReturnIntBetween(1, 12);
-        //Day:
-        System.out.print("\tDay:\t");
-        day = day(month,year);
+        if (year == dateTime.getYear()) {
+            month = checkAndReturnIntBetween(dateTime.getMonth(), 12);
 
-        if (year == dateTime.getYear() && month == dateTime.getMonth() && day == dateTime.getDay()) {
-            //TIME
-            System.out.print("\nTIME\nHour:\t");
-            hour = checkAndReturnIntBetween(0, 23);
+            //Day:
+            System.out.print("\tDay:\t");
+            if (month == dateTime.getMonth()) {
+                day = day(month, year, dateTime.getDay());
 
-            if (hour == dateTime.getHour()) {
-                System.out.print("\tMinute:\t");
-                minute = checkAndReturnIntBetween(dateTime.getMinute() + 15, 59);  // TODO: 11/11/23 check if it goes above 59 
+                //TIME
+                System.out.print("\nTIME\nHour:\t");
+                if (day == dateTime.getDay()) {
+                    if (dateTime.getMinute() + 15 > 59) {
+                        hour = checkAndReturnIntBetween(dateTime.getHour() + 1, 23);
+
+                        System.out.print("\tMinute:\t");
+                        minute = checkAndReturnIntBetween(0, 59);
+                    } else {
+                        hour = checkAndReturnIntBetween(dateTime.getHour(), 23);
+
+                        System.out.print("\tMinute:\t");
+                        if (hour == dateTime.getHour()) {
+                            minute = checkAndReturnIntBetween(dateTime.getMinute() + 15, 59);
+                        } else {
+                            minute = checkAndReturnIntBetween(0, 59);
+                        }
+                    }
+
+                } else {
+                    //TIME
+                    System.out.print("\nTIME\nHour:\t");
+                    hour = checkAndReturnIntBetween(0, 23);
+                    System.out.print("\tMinute:\t");
+                    minute = checkAndReturnIntBetween(0, 59);
+                }
             } else {
+                day = day(month, year, 1);
+                //TIME
+                System.out.print("\nTIME\nHour:\t");
+                hour = checkAndReturnIntBetween(0, 23);
                 System.out.print("\tMinute:\t");
                 minute = checkAndReturnIntBetween(0, 59);
             }
+        } else {
+            month = checkAndReturnIntBetween(1, 12);
+            //Day:
+            System.out.print("\tDay:\t");
+            day = day(month,year, 1);
+            //TIME
+            System.out.print("\nTIME\nHour:\t");
+            hour = checkAndReturnIntBetween(0, 23);
+            System.out.print("\tMinute:\t");
+            minute = checkAndReturnIntBetween(0, 59);
         }
+
         System.out.println();
         return new OurDateTime(year, month, day, hour, minute);
     }
@@ -97,16 +135,16 @@ public class Validate {  //Checking the input value
                 return  "0".concat(Integer.toString(day)).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
         }
     }
-    public static int day(int month, int year){
+    public static int day(int month, int year, int day){
         if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
-            return  checkAndReturnIntBetween(1, 31);
+            return  checkAndReturnIntBetween(day, 31);
         } else if (month != 2) {
-            return checkAndReturnIntBetween(1, 30);
+            return checkAndReturnIntBetween(day, 30);
         } else {
             if (year % 4 == 0) {
-                return checkAndReturnIntBetween(1, 29);
+                return checkAndReturnIntBetween(day, 29);
             } else {
-                return checkAndReturnIntBetween(1, 28);
+                return checkAndReturnIntBetween(day, 28);
             }
         }
     }

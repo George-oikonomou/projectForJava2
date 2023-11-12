@@ -4,26 +4,23 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OurCalendarTest {
-    private OurCalendar calendar;
-    private OurDateTime dateTime;
-    @BeforeEach
-    void setUp() {
-        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        calendar = new OurCalendar();
+public class OurCalendarTest {
+    public OurCalendar calendar;
+    public OurDateTime dateTime;
+
+    @Test
+    public void addEvents() {
     }
 
     @Test
-    void addEvents() {
-    }
-
-    @Test
-    void editEvents() {
+    public void editEvents() {
     }
 
     @Test
     public void testChangeProjectCondition() {
         // setup
+        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
+        calendar = new OurCalendar();
         ArrayList<Event> events = new ArrayList<>();
         Project project = new Project(dateTime, "ProjectName", "description", dateTime);
         events.add(project);
@@ -32,36 +29,36 @@ class OurCalendarTest {
         // Test case 1: Finished project
         HelperFuncForTests.setInput("ProjectName");
         String output1 = HelperFuncForTests.captureOutput(() -> calendar.changeProjectCondition());
-        assertTrue(output1.contains("The status of the Project is finished"));
+        assertTrue(output1.contains("The status of the Project is Finished"));
 
         // Test case 2: Unfinished project
         HelperFuncForTests.setInput("ProjectName");
         String output2 = HelperFuncForTests.captureOutput(() -> calendar.changeProjectCondition());
-        assertTrue(output2.contains("The status of the Project is unfinished"));
+        assertTrue(output2.contains("The status of the Project is Ongoing"));
     }
 
 
     @Test
-    void printUpcomingEvents() {
+    public void printUpcomingEvents() {
     }
 
     @Test
-    void printOldEvents() {
+    public void printOldEvents() {
     }
 
     @Test
-    void printUnfinishedActive() {
+    public void printUnfinishedActive() {
     }
 
     @Test
-    void printUnfinishedNotActive() {
+    public void printUnfinishedNotActive() {
     }
 
     @Test
-    void reminder() {
+    public void reminder() {
     }
     @Test
-    void testSetAndGetEvents() {
+    public void testSetAndGetEvents() {
         // Arrange
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> expectedEvents = new ArrayList<>();
@@ -74,7 +71,7 @@ class OurCalendarTest {
         assertEquals(expectedEvents, actualEvents);
     }
     @Test
-    void testEventSearchWhenEventIsFound() {
+    public void testEventSearchWhenEventIsFound() {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events = new ArrayList<>();
 
@@ -87,7 +84,7 @@ class OurCalendarTest {
         assertEquals(expectedEvent,actualEvent);
     }
     @Test
-    void testEventSearchWhenEventIsNotFound() {
+    public void testEventSearchWhenEventIsNotFound() {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events =new ArrayList<>();
 

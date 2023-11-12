@@ -98,7 +98,7 @@ public class OurDateTime {
             month = Validate.checkAndReturnIntBetween(1, 12);
             //Day:
             System.out.print("\tDay:\t");
-            day = Validate.day(month ,year);
+            day = Validate.day(month ,year, 1);
 
             if(choice) {
                 int hour,minute;
