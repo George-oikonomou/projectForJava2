@@ -32,12 +32,12 @@ public class OurCalendarTest {
         // Test case 1: Finished project
         HelperFuncForTests.setInput("ProjectName");
         String output1 = HelperFuncForTests.captureOutput(() -> calendar.changeProjectCondition());
-        assertTrue(output1.contains("The status of the Project is finished"));
+        assertTrue(output1.contains("The status of the Project is Finished"));
 
         // Test case 2: Unfinished project
         HelperFuncForTests.setInput("ProjectName");
         String output2 = HelperFuncForTests.captureOutput(() -> calendar.changeProjectCondition());
-        assertTrue(output2.contains("The status of the Project is unfinished"));
+        assertTrue(output2.contains("The status of the Project is Ongoing"));
     }
 
 
