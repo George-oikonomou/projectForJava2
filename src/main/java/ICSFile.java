@@ -40,17 +40,21 @@ public class ICSFile {
 
             for (Event event : events){
                 fileWriter.write("BEGIN:VEVENT\n");
-                fileWriter.write("DTSTART:" + event.getDateTime() + "\n");
+                fileWriter.write(String.format("DTSTART:%s%s\n",
+                        event.getDateTime().getDate(),
+                        (event.getDateTime().getTime() != null ? "\t" + event.getDateTime().getTime() : "")));
+
+
                 fileWriter.write("SUMMARY:" + event.getTitle() + "\n");
                 fileWriter.write("DESCRIPTION:" + event.getDescription() + "\n");
 
                 if (event instanceof Project){
-                    fileWriter.write("DEADLINE:" + ((Project) event).getDeadline() + "\n");
-                    fileWriter.write("PROJECT_STATUS" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
+                    fileWriter.write("DEADLINE:" + ((Project) event).getDeadline().getDate()+"\t"+((Project) event).getDeadline().getTime() + "\n");
+                    fileWriter.write("PROJECT_STATUS:" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
                 }
 
                 if (event instanceof Appointment){
-                    fileWriter.write("DURATION:" + ((Appointment) event).getDuration());
+                    fileWriter.write("DURATION:" + ((Appointment) event).getDuration() + "\n");
                 }
 
                 fileWriter.write("END:VEVENT\n");
