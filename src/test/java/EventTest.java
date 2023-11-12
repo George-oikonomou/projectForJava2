@@ -3,27 +3,27 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EventTest {
+public class EventTest {
     OurDateTime dateTime;
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
     }
 
     @Test
-    void getDate() {
+    public void getDate() {
     }
 
     @Test
-    void setDate() {
+    public void setDate() {
     }
 
     @Test
-    void getTime() {
+    public void getTime() {
     }
 
     @Test
-    void setTime() {
+    public void setTime() {
     }
 
     @Test
