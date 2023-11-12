@@ -6,7 +6,7 @@ public class ProjectTest {
     private Project project;
     private OurDateTime dateTime;
     @BeforeEach
-    void setUp() {
+    public void setUp() {
        dateTime = new OurDateTime(2023, 12, 13, 12, 0);
     }
 

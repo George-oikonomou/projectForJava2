@@ -2,16 +2,16 @@ import org.junit.jupiter.api.Test;
 public class ICSFileTest {
 
     @Test
-    void ICSFilePath() {
+    public void ICSFilePath() {
 
     }
 
     @Test
-    void loadEvents() {
+    public void loadEvents() {
 
     }
 
     @Test
-    void storeEvents() {
+    public void storeEvents() {
     }
 }

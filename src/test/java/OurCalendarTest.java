@@ -7,21 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OurCalendarTest {
     private OurCalendar calendar;
     private OurDateTime dateTime;
-
-    @Test
-    void addEvents() {
+    @BeforeEach
+    public  void setUp() {
+        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
+        calendar = new OurCalendar();
     }
 
     @Test
-    void editEvents() {
+    public void addEvents() {
+    }
+
+    @Test
+    public void editEvents() {
     }
 
     @Test
     public void testChangeProjectCondition() {
         // setup
-        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        calendar = new OurCalendar();
-
         ArrayList<Event> events = new ArrayList<>();
         Project project = new Project(dateTime, "ProjectName", "description", dateTime);
         events.add(project);
@@ -40,26 +42,26 @@ public class OurCalendarTest {
 
 
     @Test
-    void printUpcomingEvents() {
+    public void printUpcomingEvents() {
     }
 
     @Test
-    void printOldEvents() {
+    public void printOldEvents() {
     }
 
     @Test
-    void printUnfinishedActive() {
+    public void printUnfinishedActive() {
     }
 
     @Test
-    void printUnfinishedNotActive() {
+    public void printUnfinishedNotActive() {
     }
 
     @Test
-    void reminder() {
+    public void reminder() {
     }
     @Test
-    void testSetAndGetEvents() {
+    public void testSetAndGetEvents() {
         // Arrange
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> expectedEvents = new ArrayList<>();
@@ -72,7 +74,7 @@ public class OurCalendarTest {
         assertEquals(expectedEvents, actualEvents);
     }
     @Test
-    void testEventSearchWhenEventIsFound() {
+    public void testEventSearchWhenEventIsFound() {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events = new ArrayList<>();
 
@@ -85,7 +87,7 @@ public class OurCalendarTest {
         assertEquals(expectedEvent,actualEvent);
     }
     @Test
-    void testEventSearchWhenEventIsNotFound() {
+    public void testEventSearchWhenEventIsNotFound() {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events =new ArrayList<>();
 
