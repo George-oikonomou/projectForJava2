@@ -27,7 +27,7 @@ public class Validate {  //Checking the input value
                     temp = scanner.nextInt();
                     if (temp < param1 || temp > param2) {
                         System.out.println("The number you typed is invalid, it should be between " + param1 + " and " +
-                                param2 + ". Try again.");
+                                 param2 + ". Try again.");
                     } else {
                         scanner.nextLine();
                         check = true;
@@ -123,7 +123,7 @@ public class Validate {  //Checking the input value
     public static String date(int year, int month, int day) {
         if (day >= 10) {
             if (month >= 10)
-                return Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
+                 return Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
             else
                 return Integer.toString(day).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
         } else {

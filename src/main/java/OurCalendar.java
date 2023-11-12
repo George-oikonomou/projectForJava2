@@ -75,7 +75,7 @@ public class OurCalendar {
         if(event instanceof Project project){
             boolean status = project.isFinished();
             project.setFinished(!status);
-            System.out.printf("The status of the Project is %s", project.isFinished() ? "finished" : "unfinished");
+            System.out.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
         }else{
             throw new IllegalArgumentException("Project does not exist");
         }
