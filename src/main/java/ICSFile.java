@@ -48,6 +48,7 @@ public class ICSFile {
             fileWriter.write("BEGIN:VCALENDAR\n");
             fileWriter.write("VERSION:2.0\n");
             fileWriter.write("PRODID:-//My Calendar//EN\n");
+            fileWriter.write("CALSCALE:GREGORIAN\n");
 
             for (Event event : events){
                 fileWriter.write("BEGIN:VEVENT\n");

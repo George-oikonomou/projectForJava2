@@ -14,7 +14,6 @@ public class App {
 
         calendarListFiller();
 
-
         System.out.println("add an event enter (1)");
 
         int choice = input.nextInt();
@@ -26,16 +25,8 @@ public class App {
             case 2:
                 ICSFile file = new ICSFile("calendar.ics");
                 file.StoreEvents(calendar.getEvents());
-
-
         }
-
-
-
-
         TimeService.stop();
-
-
     }
 
     public static void calendarListFiller() {
