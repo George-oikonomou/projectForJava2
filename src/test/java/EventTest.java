@@ -1,29 +1,16 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EventTest {
     OurDateTime dateTime;
-    @BeforeEach
-    public void setUp() {
-        dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-    }
 
     @Test
-    public void getDate() {
-    }
-
-    @Test
-    public void setDate() {
-    }
-
-    @Test
-    public void getTime() {
-    }
-
-    @Test
-    public void setTime() {
+    public void testSetAndGetDateTime() {
+        Event event = new Event(dateTime, "title", "description");
+        OurDateTime newDateTime = new OurDateTime(2023, 12, 13, 12, 0);
+        event.setDateTime(newDateTime);
+        assertEquals(newDateTime, event.getDateTime());
     }
 
     @Test
