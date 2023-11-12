@@ -31,9 +31,7 @@ public class OurCalendar {
         //Description
         System.out.print("\nDescription:\t");
         description = Validate.strInput();
-        //Date & Time
-        datetime1 = OurDateTime.Functionality.dateAndTime();
-        System.out.println();
+
         //Adding one event to the arraylist
         switch (choice) {
             case 1: {
