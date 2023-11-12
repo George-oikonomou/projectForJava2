@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-class ICSFileTest {
+public class ICSFileTest {
 
     @Test
     void ICSFilePath() {

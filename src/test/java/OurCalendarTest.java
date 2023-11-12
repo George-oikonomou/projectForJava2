@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OurCalendarTest {
+public class OurCalendarTest {
     private OurCalendar calendar;
     private OurDateTime dateTime;
     @BeforeEach
