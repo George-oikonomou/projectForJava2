@@ -11,19 +11,17 @@ class EventTest {
     }
 
     @Test
-    void getDate() {
+    void TestGetDateTime() {
+        Event event = new Event(dateTime, "title", "description");
+        assertEquals(dateTime, event.getDateTime());
     }
 
     @Test
-    void setDate() {
-    }
-
-    @Test
-    void getTime() {
-    }
-
-    @Test
-    void setTime() {
+    void TestSetDateTime() {
+        Event event = new Event(dateTime, "title", "description");
+        OurDateTime newDateTime = new OurDateTime(2023, 12, 16  , 14, 0);
+        event.setDateTime(newDateTime);
+        assertEquals(newDateTime, event.getDateTime());
     }
 
     @Test
