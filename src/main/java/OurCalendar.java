@@ -31,23 +31,18 @@ public class OurCalendar {
         //Description
         System.out.print("\nDescription:\t");
         description = Validate.strInput();
-
+        //Date & Time
+        datetime1 = OurDateTime.Functionality.dateAndTime();
+        System.out.println();
         //Adding one event to the arraylist
         switch (choice) {
             case 1: {
-                //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime();
-                System.out.println();
                 Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
                 break;
             }
 
             case 2: {
-                //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime();
-                System.out.println();
-
                 System.out.print("Duration:\t");
                 duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
                 System.out.println();
@@ -58,10 +53,6 @@ public class OurCalendar {
             }
 
             default: {
-                //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime();
-                System.out.println();
-
                 System.out.print("Deadline:\t");
                 deadline = Validate.deadline(datetime1);
                 System.out.println();
@@ -84,7 +75,7 @@ public class OurCalendar {
         if(event instanceof Project project){
             boolean status = project.isFinished();
             project.setFinished(!status);
-            System.out.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
+            System.out.printf("The status of the Project is %s", project.isFinished() ? "finished" : "unfinished");
         }else{
             throw new IllegalArgumentException("Project does not exist");
         }
