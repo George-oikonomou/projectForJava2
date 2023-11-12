@@ -40,16 +40,11 @@ public class Validate {  //Checking the input value
         }
         return temp;
     }
-
-    //Making an object DateTime & checking the value of date & time
-
-
     //Making an object DateTime & checking the value of date & time for the deadline
     public static OurDateTime deadline (OurDateTime dateTime) {//todo needs to count for hours even if the projects deadline is not on the same day
         int year, month, day;
         int hour = 0;
         int minute = 0;
-        String date, time;
 
         //Year:
         System.out.print("\nDATE\nYear:\t");
@@ -74,10 +69,6 @@ public class Validate {  //Checking the input value
                 minute = checkAndReturnIntBetween(0, 59);
             }
         }
-
-        date = date(year, month, day);
-        time = time(minute,hour);
-
         System.out.println();
         return new OurDateTime(year, month, day, hour, minute);
     }

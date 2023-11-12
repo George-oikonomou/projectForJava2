@@ -35,17 +35,29 @@ public class OurCalendar {
         //Adding one event to the arraylist
         switch (choice) {
             case 1: {
+                String option;
+                System.out.println("\nDo you want to add a time for this event [Y/N]");
+                option = Validate.strInput();
+                while (true) {
+                    if (option.equals("Y")) {
+                        datetime1 = OurDateTime.Functionality.dateAndTime(true);
+                        break;
+                    } else if (option.equals("N")) {
+                        datetime1 = OurDateTime.Functionality.dateAndTime(false);
+                        break;
+                    } else {
+                        System.out.println("Wrong input try again:\n");
+                    }
+                }
                 //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime();
                 System.out.println();
                 Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
                 break;
             }
-
             case 2: {
                 //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime();
+                datetime1 = OurDateTime.Functionality.dateAndTime(true);
                 System.out.println();
 
                 System.out.print("Duration:\t");
@@ -59,7 +71,7 @@ public class OurCalendar {
 
             default: {
                 //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime();
+                datetime1 = OurDateTime.Functionality.dateAndTime(true);
                 System.out.println();
 
                 System.out.print("Deadline:\t");

@@ -1,4 +1,3 @@
-import net.fortuna.ical4j.model.DateTime;
 
 public class Project extends Event{
     private OurDateTime deadline;    //date and time of project deadline

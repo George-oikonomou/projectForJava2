@@ -1,5 +1,3 @@
-import net.fortuna.ical4j.model.DateTime;
-
 public class Event {
     private OurDateTime dateTime;
     private String title;
@@ -17,7 +15,6 @@ public class Event {
 
     public void setDateTime(OurDateTime dateTime) {
         this.dateTime = dateTime;
-
     }
 
     public String getTitle() {

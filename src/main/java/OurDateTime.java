@@ -1,6 +1,5 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
-
 public class OurDateTime {
     private int year;
     private int month;
@@ -19,7 +18,6 @@ public class OurDateTime {
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
     }
-
     /**
      * constructor that creates a OurDateTime but for events that do not have time
      * @param year year of event
@@ -32,7 +30,6 @@ public class OurDateTime {
         this.day = day;
         this.date = Validate.date(year,month,day);
     }
-
     /**
      * constructor that creates a OurDateTime object that contains the current
      */
@@ -50,63 +47,49 @@ public class OurDateTime {
     public int getYear() {
         return year;
     }
-
     public void setYear(int year) {
         this.year = year;
     }
-
     public int getMonth() {
         return month;
     }
-
     public void setMonth(int month) {
         this.month = month;
     }
-
     public int getDay() {
         return day;
     }
-
     public void setDay(int day) {
         this.day = day;
     }
-
     public int getHour() {
         return hour;
     }
-
     public void setHour(int hour) {
         this.hour = hour;
     }
-
     public int getMinute() {
         return minute;
     }
-
     public void setMinute(int minute) {
         this.minute = minute;
     }
-
     public String getDate() {
         return date;
     }
-
     public void setDate(String date) {
         this.date = date;
     }
-
     public String getTime() {
         return time;
     }
-
     public void setTime(String time) {
         this.time = time;
     }
 
     public static class Functionality{
-        public static OurDateTime dateAndTime() {
-            int year, month, day, hour, minute;
-            String date, time;
+        public static OurDateTime dateAndTime(boolean choice) {
+            int year, month, day;
             //Year:
             System.out.print("\nDATE\nYear:\t");
             year =  Validate.checkAndReturnIntBetween(2023,2024);
@@ -117,23 +100,18 @@ public class OurDateTime {
             System.out.print("\tDay:\t");
             day = Validate.day(month ,year);
 
-            //Create Date
-            date = Validate.date(year, month, day);
-
-            //hour
-            System.out.print("\nTIME\nHour:\t");
-            hour = Validate.checkAndReturnIntBetween(0, 23);
-
-            //minute
-            System.out.print("\tMinute:\t");
-            minute = Validate.checkAndReturnIntBetween(0, 59);
-
-            //create time
-            time = Validate.time(minute,hour);
-            System.out.println();
-
+            if(choice) {
+                int hour,minute;
+                //hour
+                System.out.print("\nTIME\nHour:\t");
+                hour = Validate.checkAndReturnIntBetween(0, 23);
+                //minute
+                System.out.print("\tMinute:\t");
+                minute = Validate.checkAndReturnIntBetween(0, 59);
+                return new OurDateTime(year, month, day, hour, minute);
+            }
             //return object
-            return new OurDateTime(year, month, day, hour, minute);
+            return new OurDateTime(year, month, day);
         }
     }
 }
