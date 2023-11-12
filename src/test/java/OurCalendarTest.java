@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OurCalendarTest {
-    private OurCalendar calendar;
-    private OurDateTime dateTime;
+    public OurCalendar calendar;
+    public OurDateTime dateTime;
     @BeforeEach
-    public  void setUp() {
+    public void SetUp() {
         OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
         calendar = new OurCalendar();
     }
