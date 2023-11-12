@@ -1,7 +1,6 @@
-import java.time.Year;
 import java.util.Scanner;
 
-public class Validation {  //Checking the input value
+public class Validate {  //Checking the input value
 
     //Checking if the String is empty
     public static String strInput() {
@@ -55,10 +54,10 @@ public class Validation {  //Checking the input value
         month = checkAndReturnIntBetween(1, 12);
         //Day:
         System.out.print("\tDay:\t");
-        day = dayCreation(month ,year);
+        day = day(month ,year);
 
         //Create Date
-        date = dateCreation(year, month, day);
+        date = date(year, month, day);
 
         //hour
         System.out.print("\nTIME\nHour:\t");
@@ -69,17 +68,15 @@ public class Validation {  //Checking the input value
         minute = checkAndReturnIntBetween(0, 59);
 
         //create time
-        time = timeCreation(minute,hour);
+        time = time(minute,hour);
         System.out.println();
 
         //return object
-        return new OurDateTime(year, month, day, hour, minute, date, time);
+        return new OurDateTime(year, month, day, hour, minute);
     }
 
-
-
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline (OurDateTime dateTime) {//todo needs to be checked/explained
+    public static OurDateTime deadline (OurDateTime dateTime) {//todo needs to count for hours even if the projects deadline is not on the same day
         int year, month, day;
         int hour = 0;
         int minute = 0;
@@ -93,7 +90,7 @@ public class Validation {  //Checking the input value
         month = checkAndReturnIntBetween(1, 12);
         //Day:
         System.out.print("\tDay:\t");
-        day = dayCreation(month,year);
+        day = day(month,year);
 
         if (year == dateTime.getYear() && month == dateTime.getMonth() && day == dateTime.getDay()) {
             //TIME
@@ -102,21 +99,21 @@ public class Validation {  //Checking the input value
 
             if (hour == dateTime.getHour()) {
                 System.out.print("\tMinute:\t");
-                minute = checkAndReturnIntBetween(dateTime.getMinute() + 15, 59);
+                minute = checkAndReturnIntBetween(dateTime.getMinute() + 15, 59);  // TODO: 11/11/23 check if it goes above 59 
             } else {
                 System.out.print("\tMinute:\t");
                 minute = checkAndReturnIntBetween(0, 59);
             }
         }
 
-        date = dateCreation(year, month, day);
-        time = timeCreation(minute,hour);
+        date = date(year, month, day);
+        time = time(minute,hour);
 
         System.out.println();
-        return new OurDateTime(year, month, day, hour, minute, date, time);
+        return new OurDateTime(year, month, day, hour, minute);
     }
 
-    public static String timeCreation(int minute, int hour){
+    public static String time(int minute, int hour){
 
         if (minute >= 10) {
             return Integer.toString(hour).concat(":").concat(Integer.toString(minute));
@@ -127,8 +124,7 @@ public class Validation {  //Checking the input value
                 return  "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
         }
     }
-
-    private static String dateCreation(int year, int month, int day) {
+    public static String date(int year, int month, int day) {
         if (day >= 10) {
             if (month >= 10)
                  return Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
@@ -141,8 +137,7 @@ public class Validation {  //Checking the input value
                 return  "0".concat(Integer.toString(day)).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
         }
     }
-
-    private static int dayCreation(int month, int year){
+    public static int day(int month, int year){
         if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
             return  checkAndReturnIntBetween(1, 31);
         } else if (month != 2) {
@@ -155,4 +150,6 @@ public class Validation {  //Checking the input value
             }
         }
     }
+
+    // TODO: 11/11/23 make a method that checks if a title already exists in the same type of an event
 }

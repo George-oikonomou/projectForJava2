@@ -9,7 +9,7 @@ class OurCalendarTest {
     private OurDateTime dateTime;
     @BeforeEach
     void setUp() {
-        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0, "13/12/2004","12:00");
+        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
         calendar = new OurCalendar();
     }
 
@@ -25,7 +25,7 @@ class OurCalendarTest {
     public void testChangeProjectCondition() {
         // setup
         ArrayList<Event> events = new ArrayList<>();
-        Project project = new Project(dateTime, "ProjectName", "description", dateTime, false);
+        Project project = new Project(dateTime, "ProjectName", "description", dateTime);
         events.add(project);
         calendar.setEvents(events);
 
@@ -76,7 +76,7 @@ class OurCalendarTest {
     @Test
     void testEventSearchWhenEventIsFound() {
         OurCalendar ourCalendar = new OurCalendar();
-        ArrayList<Event> Events =new ArrayList<>();
+        ArrayList<Event> Events = new ArrayList<>();
 
         Event expectedEvent =new Event(dateTime, "title", "description");
         Events.add(expectedEvent);

@@ -8,7 +8,7 @@ class AppointmentTest {
 
     @BeforeEach
     void setUp() {
-        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0, "13/12/2004","12:00");
+        OurDateTime dateTime = new OurDateTime(2023, 12, 13, 12, 0);
         appointment = new Appointment(dateTime, "title", "description", 1);
     }
 

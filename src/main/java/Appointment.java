@@ -1,16 +1,16 @@
 public class Appointment extends Event {
-    private int duration;                     //how much the date will last
+    private int durationInMin;                     //how much the date will last
 
-    public Appointment(OurDateTime dateTime, String title, String description, int duration) {
+    public Appointment(OurDateTime dateTime, String title, String description, int durationInMin) {
         super(dateTime, title, description);
-        this.duration = duration;
+        this.durationInMin = durationInMin;
     }
 
     public int getDuration() {
-        return duration;
+        return durationInMin;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDuration(int durationInMin) {
+        this.durationInMin= durationInMin;
     }
 }
