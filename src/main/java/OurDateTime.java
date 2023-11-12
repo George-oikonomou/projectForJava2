@@ -28,7 +28,7 @@ public class OurDateTime {
      */
     public OurDateTime(int year, int month, int day){
         this.year = year;
-        this.minute = month;
+        this.month = month;
         this.day = day;
         this.date = Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
     }
