@@ -12,11 +12,9 @@ import net.fortuna.ical4j.model.Calendar;
 
 public class ICSFile {
 
-    ArrayList<Event> events;
     String filePath;
 
-    public ICSFile(ArrayList<Event> events, String filePath) {
-        this.events = events;
+    public ICSFile(String filePath) {
         this.filePath = filePath;
     }
 
@@ -58,8 +56,8 @@ public class ICSFile {
                 fileWriter.write("DESCRIPTION:" + event.getDescription() + "\n");
 
                 if (event instanceof Project){
-                    fileWriter.write("DEADLINE:" + ((Project) event).getDeadline());
-                    fileWriter.write("PROJECT_STATUS" + (((Project) event).isFinished() ? "Finished" : "Ongoing"));
+                    fileWriter.write("DEADLINE:" + ((Project) event).getDeadline() + "\n");
+                    fileWriter.write("PROJECT_STATUS" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
                 }
 
                 if (event instanceof Appointment){

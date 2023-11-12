@@ -24,9 +24,14 @@ public class App {
                 calendar.addEvents();
                 break;
             case 2:
+                ICSFile file = new ICSFile("calendar.ics");
+                file.StoreEvents(calendar.getEvents());
 
 
         }
+
+
+
 
         TimeService.stop();
 
