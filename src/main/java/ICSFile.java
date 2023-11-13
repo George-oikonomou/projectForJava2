@@ -89,7 +89,7 @@ public class ICSFile {
                  */
             for (Event event : events){
                 fileWriter.write("BEGIN:VEVENT\n");
-
+                
                 if (event instanceof Project){
                     fileWriter.write("TYPE:PROJECT\n");
                     fileWriter.write("DEADLINE:" + ((Project) event).getDeadline().toString() + "\n");
@@ -99,6 +99,7 @@ public class ICSFile {
                     fileWriter.write("DURATION:" + ((Appointment) event).getDuration());
                 }else {
                     fileWriter.write("TYPE:EVENT\n");
+
                 }
                 fileWriter.write("DTSTART:" + event.getDateTime().toString() + "\n");
                 fileWriter.write("SUMMARY:" + event.getTitle() + "\n");
