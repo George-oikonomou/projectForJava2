@@ -32,4 +32,46 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+
+    public void editEvent() {
+        int option;
+
+        do {
+            //Picking one option to change a field
+            System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time or\n4)Exit");
+            option = Validate.checkAndReturnIntBetween(1, 4);
+            switch (option) {
+                case 1: {
+                    System.out.println("\nType the new title:\t");
+                    setTitle(Validate.strInput());
+                    break;
+                }
+                case 2: {
+                    System.out.println("\nType the new description:\t");
+                    setDescription(Validate.strInput());;
+                    break;
+                }
+                case 3: {
+                    System.out.println("\nType the new date:\t");
+                    if (dateTime.getTime().equals(null)) {
+                        setDateTime(OurDateTime.Functionality.dateAndTime(false));
+                    } else {
+                        setDateTime(OurDateTime.Functionality.dateAndTime(true));
+                    }
+                    break;
+                }
+            }
+        } while (option != 4);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "dateTime:" + dateTime +
+                "title:" + title +
+                "description:" + description +
+                '}';
+    }
 }
