@@ -36,29 +36,39 @@ public class Event {
 
 
     public void editEvent() {
-        int option;
+        int option, choice;
 
         do {
             //Picking one option to change a field
             System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time or\n4)Exit");
             option = Validate.checkAndReturnIntBetween(1, 4);
             switch (option) {
-                case 1: {
-                    System.out.println("\nType the new title:\t");
+                case 1: {   //Changing title:
+                    System.out.print("\nType the new title:\t");
                     setTitle(Validate.strInput());
                     break;
                 }
-                case 2: {
-                    System.out.println("\nType the new description:\t");
+                case 2: {   //Changing description:
+                    System.out.print("\nType the new description:\t");
                     setDescription(Validate.strInput());;
                     break;
                 }
-                case 3: {
-                    System.out.println("\nType the new date:\t");
-                    if (dateTime.getTime().equals(null)) {
-                        setDateTime(OurDateTime.Functionality.dateAndTime(false));
+                case 3: {   //Changing the date and the time if the user wants to:
+                    System.out.print("\nType the new date:\t");
+                    if (dateTime.getTime().equals(null)) {  //if the event has no time and only date:
+                        System.out.println("\nDo you want to add time?\n1) Yes\n2) No");
+                        choice = Validate.checkAndReturnIntBetween(1,2);
+                        if (choice == 1)
+                            setDateTime(OurDateTime.Functionality.dateAndTime(true));
+                        else
+                            setDateTime(OurDateTime.Functionality.dateAndTime(false));
                     } else {
-                        setDateTime(OurDateTime.Functionality.dateAndTime(true));
+                        System.out.println("\nDo you want to remove time?\n1) Yes\n2) No");
+                        choice = Validate.checkAndReturnIntBetween(1,2);
+                        if (choice == 1)
+                            setDateTime(OurDateTime.Functionality.dateAndTime(false));
+                        else
+                            setDateTime(OurDateTime.Functionality.dateAndTime(true));
                     }
                     break;
                 }
