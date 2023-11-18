@@ -104,81 +104,97 @@ public class ICSFile {
         App.calendar.setEvents(events);
     }
 
-        public void StoreEvents(ArrayList<Event> events){
+        public void StoreEvents(ArrayList<Event> events) {
 
-        try{
-            /*
-             * checks if the File Class found an existing file with the same name
-             * of if it did not find and created a new one
-             */
-            File file = new File(filePath);
-            if(file.createNewFile()){
-                System.out.println("File created " + file.getName());
-            }else {
-                System.out.println("File already exists. Overwriting");
-            }
+            try {
+                /*
+                 * checks if the File Class found an existing file with the same name
+                 * of if it did not find and created a new one
+                 */
+                File file = new File(filePath);
+                if (file.createNewFile()) {
+                    System.out.println("File created " + file.getName());
+                } else {
+                    System.out.println("File already exists. Overwriting");
+                }
 
-            FileWriter fileWriter = new FileWriter(file);
+                FileWriter fileWriter = new FileWriter(file);
             /*
                 these contents must be at the start of every calendar
              */
-            fileWriter.write("BEGIN:VCALENDAR\n");
-            fileWriter.write("VERSION:2.0\n");
-            fileWriter.write("PRODID:-//Java Team//My Calendar//EN\n");
-            fileWriter.write("CALSCALE:GREGORIAN\n");
+                fileWriter.write("BEGIN:VCALENDAR\n");
+                fileWriter.write("VERSION:2.0\n");
+                fileWriter.write("PRODID:-//Java Team//My Calendar//EN\n");
+                fileWriter.write("CALSCALE:GREGORIAN\n");
                 /*
                 we loop throw all of the events saving their information depending on the type of event
                  */
-            for (Event event : events){
-                fileWriter.write("BEGIN:VEVENT\n");
+                for (Event event : events) {
+                    fileWriter.write("BEGIN:VEVENT\n");
 
-                String dtStart = ICSFile.Functionality.OurDateTimeToICSFormat(event.getDateTime());
-                fileWriter.write("DTSTART:" + dtStart + "\n");
+                    String dtStart = ICSFile.Functionality.OurDateTimeToICSFormat(event.getDateTime());
+                    fileWriter.write("DTSTART:" + dtStart + "\n");
 
-                fileWriter.write(String.format("DTSTART:%s%s\n",
-                        event.getDateTime().getDate(),
-                        (event.getDateTime().getTime() != null ? "\t" + event.getDateTime().getTime() : "")));
+                    fileWriter.write(String.format("DTSTART:%s%s\n",
+                            event.getDateTime().getDate(),
+                            (event.getDateTime().getTime() != null ? "\t" + event.getDateTime().getTime() : "")));
 
 
-                fileWriter.write("SUMMARY:" + event.getTitle() + "\n");
-                fileWriter.write("DESCRIPTION:" + event.getDescription() + "\n");
+                    fileWriter.write("SUMMARY:" + event.getTitle() + "\n");
+                    fileWriter.write("DESCRIPTION:" + event.getDescription() + "\n");
 
-                if (event instanceof Project){
+                    if (event instanceof Project) {
 
-                    fileWriter.write("CATEGORIES:PROJECT\n");
-                    String due = ICSFile.Functionality.OurDateTimeToICSFormat(((Project) event).getDeadline());
-                    fileWriter.write("DUE:" + due + "\n");
-                    fileWriter.write("STATUS:" + (((Project) event).isFinished() ? "COMPLETED" : "INPROCESS") + "\n");
-                } else if (event instanceof Appointment){
-                    String duration = ICSFile.Functionality.DurationToICSFormat(((Appointment) event).getDuration());
-                    fileWriter.write("CATEGORIES:APPOINTMENT\n");
-                    fileWriter.write("DURATION:" + duration + "\n");
-                }else {
-                    fileWriter.write("CATEGORIES:EVENT\n");
+                        fileWriter.write("CATEGORIES:PROJECT\n");
+                        String due = ICSFile.Functionality.OurDateTimeToICSFormat(((Project) event).getDeadline());
+                        fileWriter.write("DUE:" + due + "\n");
+                        fileWriter.write("STATUS:" + (((Project) event).isFinished() ? "COMPLETED" : "INPROCESS") + "\n");
+                    } else if (event instanceof Appointment) {
+                        String duration = ICSFile.Functionality.DurationToICSFormat(((Appointment) event).getDuration());
+                        fileWriter.write("CATEGORIES:APPOINTMENT\n");
+                        fileWriter.write("DURATION:" + duration + "\n");
+                    } else {
+                        fileWriter.write("CATEGORIES:EVENT\n");
 
-                    fileWriter.write("DEADLINE:" + ((Project) event).getDeadline().getDate()+"\t"+((Project) event).getDeadline().getTime() + "\n");
-                    fileWriter.write("PROJECT_STATUS:" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
+                        fileWriter.write("DEADLINE:" + ((Project) event).getDeadline().getDate() + "\t" + ((Project) event).getDeadline().getTime() + "\n");
+                        fileWriter.write("PROJECT_STATUS:" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
+
+                    }
+                    fileWriter.write("END:VEVENT");
+
+
+                    if (event instanceof Appointment) {
+                        fileWriter.write("DURATION:" + ((Appointment) event).getDuration() + "\n");
+
+
+                        if (event instanceof Project) {
+                            fileWriter.write("TYPE:PROJECT\n");
+                            fileWriter.write("DEADLINE:" + ((Project) event).getDeadline().toString() + "\n");
+                            fileWriter.write("PROJECT_STATUS" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
+                        } else if (event instanceof Appointment) {
+                            fileWriter.write("TYPE:APPOINTMENT\n");
+                            fileWriter.write("DURATION:" + ((Appointment) event).getDuration());
+                        } else {
+                            fileWriter.write("TYPE:EVENT\n");
+
+
+                        }
+
+                        fileWriter.write("END:VEVENT\n");
+                    }
 
                 }
-                fileWriter.write("END:VEVENT");
+                fileWriter.write("END:VCALENDAR\n");
+                fileWriter.close();
+                System.out.println("successfully exported events to " + filePath);
 
-
-                if (event instanceof Appointment){
-                    fileWriter.write("DURATION:" + ((Appointment) event).getDuration() + "\n");
-                }
-
-                fileWriter.write("END:VEVENT\n");
-
+            } catch (IOException e) {
+                System.out.println("error could not save file");
             }
-            fileWriter.write("END:VCALENDAR\n");
-            fileWriter.close();
-            System.out.println("successfully exported events to " + filePath);
-
-        }catch (IOException e){
-            System.out.println("error could not save file");
         }
 
-    }
+
+
     /**
      * returns true if file exists
      * @param fileName the file name
