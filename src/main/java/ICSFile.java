@@ -131,12 +131,20 @@ public class ICSFile {
                  */
             for (Event event : events){
                 fileWriter.write("BEGIN:VEVENT\n");
+
                 String dtStart = ICSFile.Functionality.OurDateTimeToICSFormat(event.getDateTime());
                 fileWriter.write("DTSTART:" + dtStart + "\n");
+
+                fileWriter.write(String.format("DTSTART:%s%s\n",
+                        event.getDateTime().getDate(),
+                        (event.getDateTime().getTime() != null ? "\t" + event.getDateTime().getTime() : "")));
+
+
                 fileWriter.write("SUMMARY:" + event.getTitle() + "\n");
                 fileWriter.write("DESCRIPTION:" + event.getDescription() + "\n");
 
                 if (event instanceof Project){
+
                     fileWriter.write("CATEGORIES:PROJECT\n");
                     String due = ICSFile.Functionality.OurDateTimeToICSFormat(((Project) event).getDeadline());
                     fileWriter.write("DUE:" + due + "\n");
@@ -147,8 +155,19 @@ public class ICSFile {
                     fileWriter.write("DURATION:" + duration + "\n");
                 }else {
                     fileWriter.write("CATEGORIES:EVENT\n");
+
+                    fileWriter.write("DEADLINE:" + ((Project) event).getDeadline().getDate()+"\t"+((Project) event).getDeadline().getTime() + "\n");
+                    fileWriter.write("PROJECT_STATUS:" + (((Project) event).isFinished() ? "Finished" : "Ongoing") + "\n");
+
                 }
                 fileWriter.write("END:VEVENT");
+
+
+                if (event instanceof Appointment){
+                    fileWriter.write("DURATION:" + ((Appointment) event).getDuration() + "\n");
+                }
+
+                fileWriter.write("END:VEVENT\n");
 
             }
             fileWriter.write("END:VCALENDAR\n");

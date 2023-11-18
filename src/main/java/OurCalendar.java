@@ -35,8 +35,9 @@ public class OurCalendar {
         //Adding one event to the arraylist
         switch (choice) {
             case 1: {
-
+                //Date & Time
                 String option;
+
                 System.out.println("\nDo you want to add a time for this event [Y/N]");
                 option = Validate.strInput();
                 while (true) {
@@ -50,9 +51,7 @@ public class OurCalendar {
                         System.out.println("Wrong input try again:\n");
                     }
                 }
-                //Date & Time
                 System.out.println();
-
 
                 Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
@@ -63,8 +62,6 @@ public class OurCalendar {
                 //Date & Time
                 datetime1 = OurDateTime.Functionality.dateAndTime(true);
                 System.out.println();
-
-
 
                 System.out.print("Duration:\t");
                 duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
@@ -91,14 +88,50 @@ public class OurCalendar {
             }
         }
     }
-    public void editEvents(){
-        // todo: change information of an event according what type it is
 
+    public void editEvent() {
+        int choice;
+        boolean flag = false;
+        String title;
+        Event searchedEvent = null;
+
+        do {
+            System.out.println("Change:\n1) Event\n2) Appointment\n3) Project\n4) Exit");
+            //Choosing one of the above options
+            choice = Validate.checkAndReturnIntBetween(1, 4);
+            //Printing all the events, appointments or projects:
+            for (Event event : events) {
+                if (choice == 1 && event instanceof Event) {
+                    System.out.println(event.toString());
+                } else if (choice == 2 && event instanceof Appointment) {
+                    System.out.println(event.toString());
+                } else if (choice == 3 && event instanceof Project) {
+                    System.out.println(event.toString());
+                }
+            }
+
+            System.out.println("Type the title of the event you want to change:");
+            //Finding the title of the event:
+            while (!flag) {
+                title = Validate.strInput();
+                searchedEvent = eventSearch(title, choice);
+                if (searchedEvent == null) {
+                    System.out.println("You typed wrong title. Try again.");
+                } else {
+                    flag = true;
+                }
+            }
+            //Changing the fields of the chosen event:
+            searchedEvent.editEvent();
+            System.out.println();
+        } while (choice != 4);
     }
+
+
     public void changeProjectCondition(){
         System.out.println("Please provide the name of the Project you wish to update its status");
         String title = Validate.strInput();
-        Event event = eventSearch(title);
+        Event event = eventSearch(title, 3);
 
         if(event instanceof Project project){
             boolean status = project.isFinished();
@@ -144,10 +177,14 @@ public class OurCalendar {
 
 
     // TODO: 11/11/23 allow multiple titles of events but only if they are different types
-    public Event eventSearch(String title){
+    public Event eventSearch(String title, int type){
 
         for(Event event : getEvents()){
-            if (event.getTitle().equals(title)){
+            if (event.getTitle().equals(title) && event instanceof Event && type == 1) {
+                return event;
+            } else if (event.getTitle().equals(title) && event instanceof Appointment && type == 2) {
+                return event;
+            } else if (event.getTitle().equals(title) && event instanceof Project && type == 3) {
                 return event;
             }
         }
