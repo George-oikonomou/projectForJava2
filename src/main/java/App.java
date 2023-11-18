@@ -9,13 +9,21 @@ public class App {
         calendarListFiller();
         System.out.println("add an event enter (1)");
         int choice = input.nextInt();
+        ICSFile file = new ICSFile("calendar.ics");
         switch (choice) {
             case 1:
                 calendar.addEvents();
                 break;
             case 2:
-                ICSFile file = new ICSFile("calendar.ics");
                 file.StoreEvents(calendar.getEvents());
+                break;
+            case 3:
+                file.LoadEvents();
+                ArrayList <Event> eventsToPrint = calendar.getEvents();
+                for (Event event : eventsToPrint){
+                    System.out.println(event);
+                }
+                break;
         }
         TimeService.stop();
     }
@@ -56,6 +64,7 @@ public class App {
 
         calendar.setEvents(events);
     }
+
 }
 
 
