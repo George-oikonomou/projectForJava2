@@ -52,10 +52,6 @@ public class Project extends Event{
                     setDeadline(Validate.deadline(getDateTime()));
                     break;
                 }
-                case 5: {
-                    setFinished(!isFinished());
-                    break;
-                }
             }
         } while (option != 5);
     }
