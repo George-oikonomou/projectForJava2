@@ -12,21 +12,17 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class ICSFile {
-
-    String filePath;
-
+    private final String filePath;
     public ICSFile(String filePath) {
         this.filePath = filePath;
     }
 
     /**
-     * method that will load the contents of the file int the array list of events
-     * in the calendar folder
-     * fileName the path of the file we want to load
+     * method that loads Events from the ics file and saves it the "events" ArrayList on hour calendar
+     * see documentation for more info
      */
     public void LoadEvents() {
         //these 2 lines make sure that the logs of the ical4j library are not printed on the stdout
@@ -104,7 +100,6 @@ public class ICSFile {
             }
         }catch (IOException | ParserException e){
             System.out.println("error reading from the file");
-            e.printStackTrace();
         }
         App.calendar.setEvents(events);
     }
@@ -168,21 +163,6 @@ public class ICSFile {
         } catch (IOException e) {
             System.out.println("error could not save file");
         }
-    }
-
-    /**
-     * returns true if file exists
-     * @param fileName the file name
-     * @return returns its path
-     */
-    public static boolean ICSFilePath(String fileName) {
-        Path path = Paths.get(fileName);
-
-        if (Files.exists(path)) {
-            System.out.println("file exists");
-            return true;
-        }
-        return false;
     }
 
     private static class Functionality{
