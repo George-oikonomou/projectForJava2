@@ -180,7 +180,7 @@ public class OurCalendar {
     public Event eventSearch(String title, int type){
 
         for(Event event : getEvents()){
-            if (event.getTitle().equals(title) && event instanceof Event && type == 1) {
+            if (event.getTitle().equals(title) && type == 1) {
                 return event;
             } else if (event.getTitle().equals(title) && event instanceof Appointment && type == 2) {
                 return event;

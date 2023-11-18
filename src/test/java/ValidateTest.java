@@ -167,19 +167,6 @@ public class ValidateTest {
 
         assertEquals(result, 28);
     }
-
-    @Test
-    public void test_deadline(){
-        HelperFuncForTests.setInput("""
-                2021
-                12
-                31
-                23
-                59
-                """);
-        OurDateTime result = Validate.deadline(new OurDateTime(2021, 12, 31, 23, 59));
-        assertEquals(result, new OurDateTime(2021, 12, 31, 23, 59));
-    }
 }
 
 

@@ -29,12 +29,13 @@ public class Appointment extends Event {
 
         do {
             //Picking one option to change a field
-            System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time" +
-                    "4) Duration or\n5) Exit");
+            System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time\n" +
+                    "4) Duration\n5) or Exit");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1: {
-                    System.out.print("\nType the new title:\t");
+                    System.out.println("\nType the new title:\t");
+                    //print the input stream
                     setTitle(Validate.strInput());
                     break;
                 }
