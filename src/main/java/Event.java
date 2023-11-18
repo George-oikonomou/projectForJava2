@@ -40,7 +40,7 @@ public class Event {
 
         do {
             //Picking one option to change a field
-            System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time or\n4)Exit");
+            System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date\n4) Date & Time or\n5)Exit");
             option = Validate.checkAndReturnIntBetween(1, 4);
             switch (option) {
                 case 1: {   //Changing title:
@@ -50,38 +50,29 @@ public class Event {
                 }
                 case 2: {   //Changing description:
                     System.out.print("\nType the new description:\t");
-                    setDescription(Validate.strInput());;
+                    setDescription(Validate.strInput());
                     break;
                 }
                 case 3: {   //Changing the date and the time if the user wants to:
                     System.out.print("\nType the new date:\t");
-                    if (dateTime.getTime().equals(null)) {  //if the event has no time and only date:
-                        System.out.println("\nDo you want to add time?\n1) Yes\n2) No");
-                        choice = Validate.checkAndReturnIntBetween(1,2);
-                        if (choice == 1)
-                            setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                        else
-                            setDateTime(OurDateTime.Functionality.dateAndTime(false));
-                    } else {
-                        System.out.println("\nDo you want to remove time?\n1) Yes\n2) No");
-                        choice = Validate.checkAndReturnIntBetween(1,2);
-                        if (choice == 1)
-                            setDateTime(OurDateTime.Functionality.dateAndTime(false));
-                        else
-                            setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                    }
+                    setDateTime(OurDateTime.Functionality.dateAndTime(false));
                     break;
                 }
+                case 4: {
+                    System.out.print("\nType the new date and time:\t");
+                    setDateTime(OurDateTime.Functionality.dateAndTime(true));
+                    break;
+                }
+                
             }
-        } while (option != 4);
+        } while (option != 5);
     }
 
     @Override
     public String toString() {
-        return "Event{" +
-                "dateTime:" + dateTime +
-                "title:" + title +
-                "description:" + description +
-                '}';
+        return "Event:\n" +
+                "\tdateTime:" + dateTime + "\n" +
+                "\ttitle:" + title + "\n" +
+                "\tdescription:" + description + "\n";
     }
 }
