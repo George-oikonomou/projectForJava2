@@ -58,12 +58,11 @@ public class Project extends Event{
 
     @Override
     public String toString() {
-        return "Project{" +
-                "dateTime:" + super.getDateTime() +
-                "title:" + super.getTitle() +
-                "description:" + super.getDescription() +
-                "deadline" + deadline +
-                "isFinished" + isFinished +
-                '}';
+        return "Project:\n" +
+                "\tdateTime:" + getDateTime() + "\n" +
+                "\ttitle:" + getTitle() + "\n" +
+                "\tdescription:" + getDescription() + "\n" +
+                "\tdeadline:" + deadline + "\n" +
+                "\tisFinished:" + isFinished + "\n";
     }
 }

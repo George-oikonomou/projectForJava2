@@ -50,26 +50,17 @@ public class Event {
                 }
                 case 2: {   //Changing description:
                     System.out.print("\nType the new description:\t");
-                    setDescription(Validate.strInput());;
+                    setDescription(Validate.strInput());
                     break;
                 }
                 case 3: {   //Changing the date and the time if the user wants to:
                     System.out.print("\nType the new date:\t");
-                    if (dateTime.getTime().equals(null)) {  //if the event has no time and only date:
-                        System.out.println("\nDo you want to add time?\n1) Yes\n2) No");
-                        choice = Validate.checkAndReturnIntBetween(1,2);
-                        if (choice == 1)
-                            setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                        else
-                            setDateTime(OurDateTime.Functionality.dateAndTime(false));
-                    } else {
-                        System.out.println("\nDo you want to remove time?\n1) Yes\n2) No");
-                        choice = Validate.checkAndReturnIntBetween(1,2);
-                        if (choice == 1)
-                            setDateTime(OurDateTime.Functionality.dateAndTime(false));
-                        else
-                            setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                    }
+                    System.out.println("\nDo you want to remove time?\n1) Yes\n2) No");
+                    choice = Validate.checkAndReturnIntBetween(1,2);
+                    if (choice == 1)
+                        setDateTime(OurDateTime.Functionality.dateAndTime(false));
+                    else
+                        setDateTime(OurDateTime.Functionality.dateAndTime(true));
                     break;
                 }
             }
@@ -78,10 +69,9 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
-                "dateTime:" + dateTime +
-                "title:" + title +
-                "description:" + description +
-                '}';
+        return "Event:\n" +
+                "\tdateTime:" + dateTime + "\n" +
+                "\ttitle:" + title + "\n" +
+                "\tdescription:" + description + "\n";
     }
 }

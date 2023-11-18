@@ -1,3 +1,5 @@
+import java.time.Duration;
+
 public class Appointment extends Event {
     private int durationInMin;                     //how much the date will last
 
@@ -14,6 +16,13 @@ public class Appointment extends Event {
         this.durationInMin= durationInMin;
     }
 
+    public static int ICSFormatToDuration(String string) {
+        Duration duration = Duration.parse(string);
+        int hours = duration.toHoursPart();
+        int minutes = duration.toMinutesPart();
+        minutes = minutes + hours * 60;
+        return minutes;
+    }
     @Override
     public void editEvent() {
         int option;
@@ -49,11 +58,10 @@ public class Appointment extends Event {
     }
     @Override
     public String toString() {
-        return "Appointment{" +
-                "dateTime:" + super.getDateTime() +
-                "title:" + super.getTitle() +
-                "description:" + super.getDescription() +
-                "durationInMin:" + durationInMin +
-                '}';
+        return "Appointment:\n" +
+                "\tdateTime:" + getDateTime() + "\n" +
+                "\ttitle:" + getTitle() + "\n" +
+                "\tdescription:" + getDescription() + "\n" +
+                "\tdurationInMin:" + durationInMin + "\n";
     }
 }

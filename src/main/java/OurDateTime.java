@@ -1,5 +1,9 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class OurDateTime {
     private int year;
     private int month;
@@ -87,6 +91,12 @@ public class OurDateTime {
         this.time = time;
     }
 
+
+@Override
+    public String toString(){
+        return getDate() + " " + getTime();
+    }
+
     public static class Functionality{
         public static OurDateTime dateAndTime(boolean choice) {
             int year, month, day;
@@ -112,6 +122,27 @@ public class OurDateTime {
             }
             //return object
             return new OurDateTime(year, month, day);
+        }
+
+        public static OurDateTime ICSFormatToOurDateTime(String string) {
+            int year, month, day, hour, minutes;
+            if(string.length() == 8){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+                year = dateTime.getYear();
+                month = dateTime.getMonthValue();
+                day = dateTime.getDayOfMonth();
+                return new OurDateTime(year,month,day);
+            }else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
+                LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+                year = dateTime.getYear();
+                month = dateTime.getMonthValue();
+                day = dateTime.getDayOfMonth();
+                hour = dateTime.getHour();
+                minutes = dateTime.getMinute();
+                return new OurDateTime(year,month,day,hour,minutes);
+            }
         }
     }
 }
