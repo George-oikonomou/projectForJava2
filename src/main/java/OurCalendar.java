@@ -101,7 +101,7 @@ public class OurCalendar {
             choice = Validate.checkAndReturnIntBetween(1, 4);
             //Printing all the events, appointments or projects:
             for (Event event : events) {
-                if (choice == 1 && event instanceof Event) {
+                if (choice == 1 && event != null) {
                     System.out.println(event.toString());
                 } else if (choice == 2 && event instanceof Appointment) {
                     System.out.println(event.toString());
