@@ -26,6 +26,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mnode.ical4j</groupId>
+            <artifactId>ical4j</artifactId>
+            <version>3.2.12</version> <!-- Use the latest version -->
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.8</version> <!-- Adjust version as needed -->
+        </dependency>
+        <dependency>
             <groupId>gr.hua.dit.oop2</groupId>
             <artifactId>calendar</artifactId>
             <version>1.0.0</version>

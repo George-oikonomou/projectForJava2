@@ -1,5 +1,10 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class OurDateTime {
     private int year;
     private int month;
@@ -146,22 +151,23 @@ public class OurDateTime {
          * I made it so we can extract the DateTime from the files
          * and create a OurDateTime object with it.
          */
-        public static OurDateTime StringToOurDateTime(String string){
-            int year , month ,day, hour, minutes;
-            String[] words = string.split(" ");
-            String date = words[0];
-            String[] dateParts = date.split("/");
-            year = Integer.parseInt(dateParts[0]);
-            month = Integer.parseInt(dateParts[1]);
-            day = Integer.parseInt(dateParts[2]);
-
-            if(words.length == 1){
+        public static OurDateTime ICSFormatToOurDateTime(String string) {
+            int year, month, day, hour, minutes;
+            if(string.length() == 8){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+                year = dateTime.getYear();
+                month = dateTime.getMonthValue();
+                day = dateTime.getDayOfMonth();
                 return new OurDateTime(year,month,day);
-            }else{
-                String time = words[1];
-                String[] timeParts = time.split(":");
-                hour = Integer.parseInt(timeParts[0]);
-                minutes = Integer.parseInt(timeParts[1]);
+            }else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
+                LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+                year = dateTime.getYear();
+                month = dateTime.getMonthValue();
+                day = dateTime.getDayOfMonth();
+                hour = dateTime.getHour();
+                minutes = dateTime.getMinute();
                 return new OurDateTime(year,month,day,hour,minutes);
             }
         }
