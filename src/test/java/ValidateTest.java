@@ -132,7 +132,7 @@ public class ValidateTest {
     }
 
     @Test
-    public void test_day_in_month_with_31_days(){
+    public void test_day_in_month_with_31_or_30_days(){
         HelperFuncForTests.setInput("""
                 31
                 """);
@@ -146,14 +146,39 @@ public class ValidateTest {
         int result2 = Validate.day(4, 2023, 1);
         assertEquals(result2, 28);
     }
+    @Test
     public void test_day_with_Custom_values(){
         HelperFuncForTests.setInput("""
                 26
-                21
+                28
                 """);
-        int result = Validate.day(4, 2023, 24);
+        int result = Validate.day(4, 2023, 27);
 
-        assertEquals(result, 21);
+        assertEquals(result, 28);
+    }
+
+    @Test
+    public void test_day_with_custom_values(){
+        HelperFuncForTests.setInput("""
+                26
+                28
+                """);
+        int result = Validate.day(4, 2023, 27);
+
+        assertEquals(result, 28);
+    }
+
+    @Test
+    public void test_deadline(){
+        HelperFuncForTests.setInput("""
+                2021
+                12
+                31
+                23
+                59
+                """);
+        OurDateTime result = Validate.deadline(new OurDateTime(2021, 12, 31, 23, 59));
+        assertEquals(result, new OurDateTime(2021, 12, 31, 23, 59));
     }
 }
 
