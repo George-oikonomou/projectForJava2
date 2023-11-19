@@ -142,11 +142,54 @@ public class OurCalendar {
         }
     }
 
-    private void shortList(){
-        // TODO: the list must always be sorted by time of expiration t
-        //  he closest event to the current time must show up first
+    static void sortList(ArrayList<Event> events) {
+        int n = events.size();
+        System.out.println("Events before sorting:");
+        printEvents(events);
+        for (int i = 1; i < n; ++i) {
+            Event keyEvent = events.get(i);
+            OurDateTime keyDateTime = keyEvent.getDateTime();
+            int j = i - 1;
+
+            // Move events with a DateTime greater than keyDateTime ahead of keyDateTime
+            while (j >= 0 && compareDateTime(events.get(j).getDateTime(), keyDateTime) > 0) {
+                events.set(j + 1, events.get(j));
+                j = j - 1;
+            }
+            events.set(j + 1, keyEvent);
+        }
+
+        System.out.println("Events after sorting:");
+        printEvents(events);
     }
 
+    private static int compareDateTime(OurDateTime dateTime1, OurDateTime dateTime2) {
+        int yearComparison = Integer.compare(dateTime1.getYear(), dateTime2.getYear());
+        if (yearComparison != 0) {
+            return yearComparison;
+        }
+
+        int monthComparison = Integer.compare(dateTime1.getMonth(), dateTime2.getMonth());
+        if (monthComparison != 0) {
+            return monthComparison;
+        }
+
+        int dayComparison = Integer.compare(dateTime1.getDay(), dateTime2.getDay());
+        if (dayComparison != 0) {
+            return dayComparison;
+        }
+        int hourComparison = Integer.compare(dateTime1.getHour(), dateTime2.getHour());
+        if (hourComparison != 0) {
+            return hourComparison;
+        }
+        return Integer.compare(dateTime1.getMinute(), dateTime2.getMinute());
+
+    }
+    private static void printEvents(ArrayList<Event> events) {
+        for (Event event : events) {
+            System.out.println(event.toString());
+        }
+    }
     public void printUpcomingEvents(String time){
 
         // TODO: print events until the specified time given
