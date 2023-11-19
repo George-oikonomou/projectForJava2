@@ -12,6 +12,8 @@ public class OurDateTime {
     private int minute;
     private String date;
     private String time;
+    private int CalculationFormat;
+
 
     public OurDateTime (int year, int month, int day, int hour, int minute) {
         this.year = year;
@@ -21,6 +23,7 @@ public class OurDateTime {
         this.minute = minute;
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
+
     }
     /**
      * constructor that creates a OurDateTime but for events that do not have time
@@ -46,6 +49,7 @@ public class OurDateTime {
         this.minute = teller.now().getMinute();
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
+        setCalculationFormat();
     }
 
     public int getYear() {
@@ -53,46 +57,62 @@ public class OurDateTime {
     }
     public void setYear(int year) {
         this.year = year;
+        setDate();
     }
     public int getMonth() {
         return month;
     }
     public void setMonth(int month) {
         this.month = month;
+        setDate();
     }
     public int getDay() {
         return day;
     }
     public void setDay(int day) {
         this.day = day;
+        setDate();
     }
     public int getHour() {
         return hour;
     }
     public void setHour(int hour) {
         this.hour = hour;
+        setTime();
     }
     public int getMinute() {
         return minute;
     }
     public void setMinute(int minute) {
         this.minute = minute;
+        setTime();
     }
     public String getDate() {
         return date;
     }
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate() {
+        this.date = Validate.date(year,month,day);
+        setCalculationFormat();
     }
     public String getTime() {
         return time;
     }
-    public void setTime(String time) {
-        this.time = time;
+    public void setTime() {
+        this.time = Validate.time(minute,hour);
+        setCalculationFormat();
     }
 
+    public int getCalculationFormat() {
+        return CalculationFormat;
+    }
 
-@Override
+    public void setCalculationFormat() {
+        String date = getDate().replace("/","");
+        String time = getTime().replace(":","");
+        this.CalculationFormat = Integer.parseInt(date+time);
+    }
+
+    @Override
     public String toString(){
         return getDate() + " " + getTime();
     }
