@@ -206,7 +206,7 @@ public class OurCalendar {
     }
 
     public Event reminder(){
-        // TODO: 8/11/23 return the next event for a reminder to the user
+        OurDateTime liveTime = new OurDateTime();
         return null;
     }
 
