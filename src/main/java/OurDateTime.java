@@ -15,6 +15,7 @@ public class OurDateTime {
     private long CalculationFormat;
 
 
+
     public OurDateTime (int year, int month, int day, int hour, int minute) {
         this.year = year;
         this.month = month;
@@ -23,6 +24,7 @@ public class OurDateTime {
         this.minute = minute;
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
+        setCalculationFormat();
 
     }
     /**
@@ -35,7 +37,11 @@ public class OurDateTime {
         this.year = year;
         this.month = month;
         this.day = day;
+        this.hour = 0;
+        this.minute = 0;
         this.date = Validate.date(year,month,day);
+        this.time = Validate.time(hour,minute);
+        setCalculationFormat();
     }
     /**
      * constructor that creates a OurDateTime object that contains the current
@@ -101,15 +107,20 @@ public class OurDateTime {
         this.time = Validate.time(minute,hour);
         setCalculationFormat();
     }
-
-    public long getCalculationFormat() {
+    public Long getCalculationFormat() {
         return CalculationFormat;
     }
 
     public void setCalculationFormat() {
-        String date = getDate().replace("/","");
-        String time = getTime().replace(":","");
-        this.CalculationFormat = Integer.parseInt(date+time);
+        String day = (getDay() < 10) ? "0" + getDay() : String.valueOf( getDay());
+        String month = (getMonth() < 10) ? "0" + getMonth() : String.valueOf(getMonth());
+        String hour = (getHour() < 10) ? "0" + getHour() : String.valueOf(getHour());
+        String minute = ( getMinute() < 10) ? "0" +  getMinute() : String.valueOf(getMinute());
+
+        String date = getYear() + month + day;
+        String time = hour + minute;
+        String dateTimeString = date + time;
+        this.CalculationFormat = Long.parseLong(dateTimeString);
     }
 
     @Override
