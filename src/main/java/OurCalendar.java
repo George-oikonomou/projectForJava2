@@ -1,6 +1,6 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
-
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 
 // TODO: 8/11/23 DECIDE IF YOU WANT TO HAVE 5 DIFF LISTS OR 1
@@ -147,9 +147,47 @@ public class OurCalendar {
         //  he closest event to the current time must show up first
     }
 
-    public void printUpcomingEvents(String time){
+    public void printUpcomingEvents() {
+        OurDateTime realDateTime = new OurDateTime();       //current date & time
+        DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
+        int eventHour, eventMin, eventMon, eventYear, eventDay;
+        int realHour = realDateTime.getHour();
+        int realMin = realDateTime.getMinute();
+        int realYear = realDateTime.getYear();
+        int realMon = realDateTime.getMonth();
+        int realDay = realDateTime.getDay();
 
-        // TODO: print events until the specified time given
+        System.out.println("\nUpcoming Events for today:\n");
+        for (Event event: events) {
+            eventHour = event.getDateTime().getHour();
+            eventMin = event.getDateTime().getMinute();
+            //if it's the same date and the time is from now until 23:59
+            if (event.getDateTime().getDate().equals(realDateTime.getDate()) && (eventHour == realHour && eventMin >= realMin) || (eventHour > realHour))
+                System.out.println(event.getTitle() + "\t" + event.getDateTime().getTime());
+        }
+        System.out.println("\nUpcoming Events this week:\n");
+        for (Event event: events) {     //if it's the same year and month and the day is from today until Sunday
+            eventHour = event.getDateTime().getHour();
+            eventMin = event.getDateTime().getMinute();
+            eventMon = event.getDateTime().getMonth();
+            eventYear = event.getDateTime().getYear();
+            eventDay = event.getDateTime().getDay();
+
+            if (eventYear == realYear && eventMon == realMon && (dayOfWeek.getValue() + eventDay - realDay) <= 7 &&
+            (eventDay == realDay && (eventHour == realHour && eventMin >= realMin || eventHour > realHour) || eventDay > realDay))
+                System.out.println(event.getTitle() + "\t" + event.getDateTime());
+        }
+        System.out.println("\nUpcoming Events this month:\n");
+        for (Event event: events) {     //if it's the same year and month and the day is from today until the last day of the month
+            eventHour = event.getDateTime().getHour();
+            eventMin = event.getDateTime().getMinute();
+            eventMon = event.getDateTime().getMonth();
+            eventYear = event.getDateTime().getYear();
+            eventDay = event.getDateTime().getDay();
+
+            if (eventYear == realYear && eventMon == realMon && (eventDay == realDay && (eventHour == realHour && eventMin >= realMin || eventHour > realHour) || eventDay > realDay))
+                System.out.println(event.getTitle() + "\t" + event.getDateTime());
+        }
     }
     public void printOldEvents(String time){
         // TODO: print events from the time specified to the current time

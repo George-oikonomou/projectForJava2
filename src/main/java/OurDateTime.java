@@ -1,5 +1,8 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
+
+import java.time.DayOfWeek;
+
 public class OurDateTime {
     private int year;
     private int month;
@@ -8,6 +11,7 @@ public class OurDateTime {
     private int minute;
     private String date;
     private String time;
+    private DayOfWeek dayOfWeek;
 
     public OurDateTime (int year, int month, int day, int hour, int minute) {
         this.year = year;
@@ -34,7 +38,9 @@ public class OurDateTime {
      * constructor that creates a OurDateTime object that contains the current
      */
     public OurDateTime() {
+
         TimeTeller teller = TimeService.getTeller();
+        this.dayOfWeek = teller.now().getDayOfWeek();
         this.year = teller.now().getYear();
         this.month = teller.now().getMonthValue();
         this.day = teller.now().getDayOfMonth();
@@ -85,6 +91,12 @@ public class OurDateTime {
     }
     public void setTime(String time) {
         this.time = time;
+    }
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public static class Functionality{
