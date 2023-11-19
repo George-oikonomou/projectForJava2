@@ -12,6 +12,7 @@ public class Validate {  //Checking the input value
                 System.out.println("You typed something wrong. Try again.");
             }
         } while(string.isEmpty());
+
         return string;
     }
 
@@ -27,7 +28,7 @@ public class Validate {  //Checking the input value
                     temp = scanner.nextInt();
                     if (temp < param1 || temp > param2) {
                         System.out.println("The number you typed is invalid, it should be between " + param1 + " and " +
-                                 param2 + ". Try again.");
+                                 param2 + ". Try again.\n");
                     } else {
                         scanner.nextLine();
                         check = true;
@@ -111,30 +112,14 @@ public class Validate {  //Checking the input value
         return new OurDateTime(year, month, day, hour, minute);
     }
 
-    public static String time(int minute, int hour){
+    public static String time(int minute, int hour) {
+        return String.format("%02d:%02d", hour, minute);
+    }
 
-        if (minute >= 10) {
-            return Integer.toString(hour).concat(":").concat(Integer.toString(minute));
-        } else {
-            if (hour >= 10)
-                return Integer.toString(hour).concat(":0").concat(Integer.toString(minute));
-            else
-                return  "0".concat(Integer.toString(hour)).concat(":0").concat(Integer.toString(minute));
-        }
-    }
     public static String date(int year, int month, int day) {
-        if (day >= 10) {
-            if (month >= 10)
-                 return Integer.toString(day).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-            else
-                return Integer.toString(day).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-        } else {
-            if (month >= 10)
-                return  "0".concat(Integer.toString(day)).concat("/").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-            else
-                return  "0".concat(Integer.toString(day)).concat("/0").concat(Integer.toString(month)).concat("/").concat(Integer.toString(year));
-        }
+        return String.format("%02d/%02d/%d", day, month, year);
     }
+
     public static int day(int month, int year, int day){
         if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
             return  checkAndReturnIntBetween(day, 31);

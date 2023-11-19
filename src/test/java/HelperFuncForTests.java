@@ -5,8 +5,15 @@ import java.io.PrintStream;
 public class HelperFuncForTests
 
 {
-    static void setInput(String input) {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+    static void setInput(Object input) {
+        ByteArrayInputStream inputStream = null;
+
+        if (input instanceof String) {
+            inputStream = new ByteArrayInputStream(((String) input).getBytes());
+        } else if (input instanceof Integer) {
+            inputStream = new ByteArrayInputStream(input.toString().getBytes());
+        }
+
         System.setIn(inputStream);
     }
 
