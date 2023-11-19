@@ -32,8 +32,9 @@ public class Project extends Event{
                     Do you want to Change:
                     1) Title
                     2) Description
-                    3) Date & Time4) Deadline
-                    5) Exit""");
+                    3) Date & Time
+                    4) Deadline
+                    5) Or Exit""");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1: {
