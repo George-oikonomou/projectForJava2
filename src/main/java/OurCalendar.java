@@ -182,7 +182,7 @@ public class OurCalendar {
     public Event eventSearch(String title, int type){
 
         for(Event event : getEvents()){
-            if (event.getTitle().equals(title) && type == 1) {
+            if (event.getTitle().equals(title) && type == 1 && !(event instanceof Appointment) && !(event instanceof Project)) {
                 return event;
             } else if (event.getTitle().equals(title) && event instanceof Appointment && type == 2) {
                 return event;
