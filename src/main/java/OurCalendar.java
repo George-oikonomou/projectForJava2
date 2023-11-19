@@ -203,7 +203,7 @@ public class OurCalendar {
             if (eventYear == realYear && eventMon == realMon && (eventDay == realDay && (eventHour == realHour && eventMin >= realMin || eventHour > realHour) || eventDay > realDay))
                 System.out.println(event.getTitle() + "\t" + event.getDateTime());
         }
-
+    }
     private static long compareEvents(Event event1, Event event2) {
         OurDateTime dateTime1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getDateTime();
         OurDateTime dateTime2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getDateTime();
