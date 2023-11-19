@@ -90,31 +90,15 @@ public class OurCalendar {
     }
 
     public void editEvent() {
-        int choice;
         boolean flag = false;
         String title;
         Event searchedEvent = null;
 
-        do {
-            System.out.println("Change:\n1) Event\n2) Appointment\n3) Project\n4) Exit");
-            //Choosing one of the above options
-            choice = Validate.checkAndReturnIntBetween(1, 4);
-            //Printing all the events, appointments or projects:
-            for (Event event : events) {
-                if (choice == 1 && event instanceof Event) {
-                    System.out.println(event.toString());
-                } else if (choice == 2 && event instanceof Appointment) {
-                    System.out.println(event.toString());
-                } else if (choice == 3 && event instanceof Project) {
-                    System.out.println(event.toString());
-                }
-            }
-
-            System.out.println("Type the title of the event you want to change:");
+        System.out.println("Type the title of the event you want to change:");
             //Finding the title of the event:
             while (!flag) {
                 title = Validate.strInput();
-                searchedEvent = eventSearch(title, choice);
+                searchedEvent = eventSearch(title);
                 if (searchedEvent == null) {
                     System.out.println("You typed wrong title. Try again.");
                 } else {
@@ -123,15 +107,13 @@ public class OurCalendar {
             }
             //Changing the fields of the chosen event:
             searchedEvent.editEvent();
-            System.out.println();
-        } while (choice != 4);
     }
 
 
     public void changeProjectCondition(){
         System.out.println("Please provide the name of the Project you wish to update its status");
         String title = Validate.strInput();
-        Event event = eventSearch(title, 3);
+        Event event = eventSearch(title);
 
         if(event instanceof Project project){
             boolean status = project.isFinished();
@@ -176,15 +158,11 @@ public class OurCalendar {
     }
 
 
-    // TODO: 11/11/23 allow multiple titles of events but only if they are different types
-    public Event eventSearch(String title, int type){
+    // TODO: 11/11/23 allow a different title for each event
+    public Event eventSearch(String title){
 
         for(Event event : getEvents()){
-            if (event.getTitle().equals(title) && event instanceof Event && type == 1) {
-                return event;
-            } else if (event.getTitle().equals(title) && event instanceof Appointment && type == 2) {
-                return event;
-            } else if (event.getTitle().equals(title) && event instanceof Project && type == 3) {
+            if (event.getTitle().equals(title)) {
                 return event;
             }
         }

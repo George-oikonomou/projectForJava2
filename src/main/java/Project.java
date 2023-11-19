@@ -27,6 +27,7 @@ public class Project extends Event{
         int option;
 
         do {
+            System.out.println("You are editing the project " + getTitle());
             //Picking one option to change a field
             System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time" +
                     "4) Deadline\n5) Exit");
