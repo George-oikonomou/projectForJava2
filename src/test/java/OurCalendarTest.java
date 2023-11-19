@@ -79,7 +79,7 @@ public class OurCalendarTest {
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 
-        Event actualEvent = ourCalendar.eventSearch("title", 1);
+        Event actualEvent = ourCalendar.eventSearch("title");
 
         assertEquals(expectedEvent,actualEvent);
     }
@@ -92,7 +92,7 @@ public class OurCalendarTest {
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 
-        Event actualEvent = ourCalendar.eventSearch("title", 1);
+        Event actualEvent = ourCalendar.eventSearch("title");
         assertNull(actualEvent);
     }
 
