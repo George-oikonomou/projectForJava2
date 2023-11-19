@@ -187,9 +187,24 @@ public class OurCalendar {
         // TODO: print the projects that are not finished and the deadline is due
     }
 
-    public Event reminder(){
+    public void reminder(){
         OurDateTime liveTime = new OurDateTime();
-        return null;
+        long formatLive = liveTime.getCalculationFormat();
+        Project closestDeadline = (Project) closestDeadlineSearch(formatLive);
+        Appointment closestAppointment = (Appointment) searchNextAppointment(formatLive);
+        if (closestAppointment == null && closestDeadline == null){
+            System.out.println("You dont have any reminders");
+        }else if (closestAppointment == null){
+            System.out.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
+        }else if(closestDeadline == null){
+            System.out.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
+        }else {
+            if (closestAppointment.getDateTime().getCalculationFormat() < closestDeadline.getDeadline().getCalculationFormat()){
+                System.out.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
+            }else {
+                System.out.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
+            }
+        }
     }
 
     public ArrayList<Event> getEvents() {
@@ -211,6 +226,30 @@ public class OurCalendar {
                 return event;
             } else if (event.getTitle().equals(title) && event instanceof Project && type == 3) {
                 return event;
+            }
+        }
+        return null;
+    }
+    public Event closestDeadlineSearch(long time){
+        long closestDeadline = Long.MAX_VALUE;
+        Event closestDeadlineProject = null;
+        for ( Event event : getEvents()){
+            if (event instanceof Project ){
+                if ((((Project) event).getDeadline().getCalculationFormat() > time && (((Project) event).getDeadline().getCalculationFormat() < closestDeadline))){
+                    closestDeadlineProject = event;
+                    closestDeadline = ((Project) event).getDeadline().getCalculationFormat();
+                }
+            }
+        }
+        return closestDeadlineProject;
+    }
+
+    public Event searchNextAppointment(long time){
+        for (Event event : getEvents()){
+            if (event instanceof Appointment){
+                if (event.getDateTime().getCalculationFormat() > time){
+                    return event;
+                }
             }
         }
         return null;

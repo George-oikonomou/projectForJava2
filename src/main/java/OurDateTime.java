@@ -12,7 +12,8 @@ public class OurDateTime {
     private int minute;
     private String date;
     private String time;
-    private Long CalculationFormat;
+    private long CalculationFormat;
+
 
 
     public OurDateTime (int year, int month, int day, int hour, int minute) {
@@ -106,7 +107,6 @@ public class OurDateTime {
         this.time = Validate.time(minute,hour);
         setCalculationFormat();
     }
-
     public Long getCalculationFormat() {
         return CalculationFormat;
     }
