@@ -10,26 +10,21 @@ public class App {
         System.out.println("add an event enter (1)");
         int choice = input.nextInt();
         ICSFile file = new ICSFile("calendar.ics");
-        do {
-            switch (choice) {
-                case 1:
-                    //edit the first event in the list
-                    Event event = calendar.getEvents().get(0);
-                    event.editEvent();
-                    break;
-                case 2:
-                    file.StoreEvents(calendar.getEvents());
-                    break;
-                case 3:
-                    
-                    break;
-                case 4:
-                    OurCalendar.sortList(calendar.getEvents());
-                    break;
-
-            }
-             choice = input.nextInt();
-        }while(choice !=5);
+        switch (choice) {
+            case 1:
+                calendar.addEvents();
+                break;
+            case 2:
+                file.StoreEvents(calendar.getEvents());
+                break;
+            case 3:
+                file.LoadEvents();
+                ArrayList <Event> eventsToPrint = calendar.getEvents();
+                for (Event event : eventsToPrint){
+                    System.out.println(event);
+                }
+                break;
+        }
         TimeService.stop();
     }
     public static void calendarListFiller() {
