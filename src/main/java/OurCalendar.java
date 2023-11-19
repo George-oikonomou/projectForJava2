@@ -144,11 +144,36 @@ public class OurCalendar {
         }
     }
 
-    private void shortList(){
-        // TODO: the list must always be sorted by time of expiration t
-        //  he closest event to the current time must show up first
+    public static void sortList(ArrayList<Event> events) {
+        int n = events.size();
+        printEvents(events);
+
+        for (int i = 1; i < n; ++i) {
+            Event keyEvent = events.get(i);
+            OurDateTime keyDateTime = keyEvent.getDateTime();
+            keyDateTime.setCalculationFormat();
+
+            int j = i - 1;
+
+            while (j >= 0 && compareEvents(events.get(j), keyEvent) > 0) {
+                events.set(j + 1, events.get(j));
+                j = j - 1;
+            }
+            events.set(j + 1, keyEvent);
+        }
     }
 
+    private static long compareEvents(Event event1, Event event2) {
+        OurDateTime dateTime1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getDateTime();
+        OurDateTime dateTime2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getDateTime();
+
+        return dateTime1.getCalculationFormat() - dateTime2.getCalculationFormat();
+    }
+    private static void printEvents(ArrayList<Event> events) {
+        for (Event event : events) {
+            System.out.println(event.toString());
+        }
+    }
     public void printUpcomingEvents(String time){
 
         // TODO: print events until the specified time given
