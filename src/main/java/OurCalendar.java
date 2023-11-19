@@ -145,6 +145,7 @@ public class OurCalendar {
     public static void sortList(ArrayList<Event> events) {
         int n = events.size();
         printEvents(events);
+
         for (int i = 1; i < n; ++i) {
             Event keyEvent = events.get(i);
             OurDateTime keyDateTime = keyEvent.getDateTime();
@@ -152,12 +153,19 @@ public class OurCalendar {
 
             int j = i - 1;
 
-            while (j >= 0 && events.get(j).getDateTime().getCalculationFormat() > keyDateTime.getCalculationFormat()) {
+            while (j >= 0 && compareEvents(events.get(j), keyEvent) > 0) {
                 events.set(j + 1, events.get(j));
                 j = j - 1;
             }
             events.set(j + 1, keyEvent);
         }
+    }
+
+    private static long compareEvents(Event event1, Event event2) {
+        OurDateTime dateTime1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getDateTime();
+        OurDateTime dateTime2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getDateTime();
+
+        return dateTime1.getCalculationFormat() - dateTime2.getCalculationFormat();
     }
     private static void printEvents(ArrayList<Event> events) {
         for (Event event : events) {
