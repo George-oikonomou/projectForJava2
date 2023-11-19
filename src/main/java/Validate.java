@@ -12,7 +12,7 @@ public class Validate {  //Checking the input value
                 System.out.println("You typed something wrong. Try again.");
             }
         } while(string.isEmpty());
-        System.out.print(string);
+
         return string;
     }
 

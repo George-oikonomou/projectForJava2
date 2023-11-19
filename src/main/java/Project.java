@@ -28,8 +28,12 @@ public class Project extends Event{
 
         do {
             //Picking one option to change a field
-            System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date & Time" +
-                    "4) Deadline\n5) Exit");
+            System.out.println("""
+                    Do you want to Change:
+                    1) Title
+                    2) Description
+                    3) Date & Time4) Deadline
+                    5) Exit""");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1: {

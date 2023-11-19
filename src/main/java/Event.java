@@ -41,7 +41,7 @@ public class Event {
         do {
             //Picking one option to change a field
             System.out.println("Do you want to Change:\n1) Title\n2) Description\n3) Date\n4) Date & Time or\n5)Exit");
-            option = Validate.checkAndReturnIntBetween(1, 4);
+            option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1: {   //Changing title:
                     System.out.print("\nType the new title:\t");

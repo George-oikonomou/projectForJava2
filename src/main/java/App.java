@@ -7,24 +7,43 @@ public class App {
 
     public static void main(String[] args) {
         calendarListFiller();
-        System.out.println("add an event enter (1)");
+        System.out.println("""
+                add an event enter (1)
+                edit an event enter (2)
+                save events to file enter (3)
+                load events from file enter (4)
+                exit enter (5)""");
+
         int choice = input.nextInt();
         ICSFile file = new ICSFile("calendar.ics");
-        switch (choice) {
-            case 1:
-                calendar.addEvents();
-                break;
-            case 2:
-                file.StoreEvents(calendar.getEvents());
-                break;
-            case 3:
-                file.LoadEvents();
-                ArrayList <Event> eventsToPrint = calendar.getEvents();
-                for (Event event : eventsToPrint){
-                    System.out.println(event);
-                }
-                break;
-        }
+        do {
+            switch (choice) {
+                case 1:
+                    calendar.addEvents();
+                    break;
+                case 2:
+                    calendar.editEvent();
+                    break;
+                case 3:
+                    file.StoreEvents(calendar.getEvents());
+                    break;
+                case 4:
+                    file.LoadEvents();
+                    ArrayList<Event> eventsToPrint = calendar.getEvents();
+                    for (Event event : eventsToPrint) {
+                        System.out.println(event);
+                    }
+                    break;
+            }
+            System.out.println("""
+                add an event enter (1)
+                edit an event enter (2)
+                save events to file enter (3)
+                load events from file enter (4)
+                exit enter (5)""");
+            choice = input.nextInt();
+
+        }while(choice != 5);
         TimeService.stop();
     }
     public static void calendarListFiller() {
