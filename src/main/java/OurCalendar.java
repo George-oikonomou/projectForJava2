@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class OurCalendar {
 
     private ArrayList <Event> events;           //has all the events
-    private TimeTeller teller;
+    private final TimeTeller teller;
 
     public OurCalendar() {
         this.events = new ArrayList<>();
@@ -101,12 +101,14 @@ public class OurCalendar {
             choice = Validate.checkAndReturnIntBetween(1, 4);
             //Printing all the events, appointments or projects:
             for (Event event : events) {
-                if (choice == 1 && event instanceof Event) {
-                    System.out.println(event.toString());
+                if (choice == 3 && event instanceof Project) {
+                    System.out.println(event);
                 } else if (choice == 2 && event instanceof Appointment) {
+                    System.out.println(event);
+                } else if (choice == 1 && !(event instanceof Appointment) && !(event instanceof Project)) {
                     System.out.println(event.toString());
-                } else if (choice == 3 && event instanceof Project) {
-                    System.out.println(event.toString());
+                } else if (choice == 4) {
+                    return;
                 }
             }
 
@@ -264,7 +266,7 @@ public class OurCalendar {
     public Event eventSearch(String title, int type){
 
         for(Event event : getEvents()){
-            if (event.getTitle().equals(title) && event instanceof Event && type == 1) {
+            if (event.getTitle().equals(title) && type == 1 && !(event instanceof Appointment) && !(event instanceof Project)) {
                 return event;
             } else if (event.getTitle().equals(title) && event instanceof Appointment && type == 2) {
                 return event;

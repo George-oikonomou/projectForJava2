@@ -9,7 +9,6 @@ public class ProjectTest {
     public void setUp() {
        dateTime = new OurDateTime(2023, 12, 13, 12, 0);
     }
-
     @Test
     public void testGetAndSetDeadline() {
         project = new Project(dateTime, "title", "description", dateTime);
