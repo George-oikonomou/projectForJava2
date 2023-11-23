@@ -39,12 +39,13 @@ public class OurCalendar {
                 String option;
 
                 System.out.println("\nDo you want to add a time for this event [Y/N]");
-                option = Validate.strInput();
+
                 while (true) {
-                    if (option.equals("Y")) {
+                    option = Validate.strInput();
+                    if (option.equalsIgnoreCase("Y")) {
                         datetime1 = OurDateTime.Functionality.dateAndTime(true);
                         break;
-                    } else if (option.equals("N")) {
+                    } else if (option.equalsIgnoreCase("N")) {
                         datetime1 = OurDateTime.Functionality.dateAndTime(false);
                         break;
                     } else {
@@ -67,7 +68,7 @@ public class OurCalendar {
                 duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
                 System.out.println();
 
-                Appointment newAppointment = new Appointment(datetime1, description, title, duration);
+                Appointment newAppointment = new Appointment(datetime1, title, description, duration);
                 events.add(newAppointment);
                 break;
             }
@@ -82,7 +83,7 @@ public class OurCalendar {
                 deadline = Validate.deadline(datetime1);
                 System.out.println();
 
-                Project newProject = new Project(datetime1, description, title, deadline);
+                Project newProject = new Project(datetime1, title, description, deadline);
                 events.add(newProject);
                 break;
             }
@@ -163,49 +164,6 @@ public class OurCalendar {
         }
     }
 
-
-    public void printUpcomingEvents() {
-        OurDateTime realDateTime = new OurDateTime();       //current date & time
-        DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
-        int eventHour, eventMin, eventMon, eventYear, eventDay;
-        int realHour = realDateTime.getHour();
-        int realMin = realDateTime.getMinute();
-        int realYear = realDateTime.getYear();
-        int realMon = realDateTime.getMonth();
-        int realDay = realDateTime.getDay();
-
-        System.out.println("\nUpcoming Events for today:\n");
-        for (Event event: events) {
-            eventHour = event.getDateTime().getHour();
-            eventMin = event.getDateTime().getMinute();
-            //if it's the same date and the time is from now until 23:59
-            if (event.getDateTime().getDate().equals(realDateTime.getDate()) && (eventHour == realHour && eventMin >= realMin) || (eventHour > realHour))
-                System.out.println(event.getTitle() + "\t" + event.getDateTime().getTime());
-        }
-        System.out.println("\nUpcoming Events this week:\n");
-        for (Event event: events) {     //if it's the same year and month and the day is from today until Sunday
-            eventHour = event.getDateTime().getHour();
-            eventMin = event.getDateTime().getMinute();
-            eventMon = event.getDateTime().getMonth();
-            eventYear = event.getDateTime().getYear();
-            eventDay = event.getDateTime().getDay();
-
-            if (eventYear == realYear && eventMon == realMon && (dayOfWeek.getValue() + eventDay - realDay) <= 7 &&
-            (eventDay == realDay && (eventHour == realHour && eventMin >= realMin || eventHour > realHour) || eventDay > realDay))
-                System.out.println(event.getTitle() + "\t" + event.getDateTime());
-        }
-        System.out.println("\nUpcoming Events this month:\n");
-        for (Event event: events) {     //if it's the same year and month and the day is from today until the last day of the month
-            eventHour = event.getDateTime().getHour();
-            eventMin = event.getDateTime().getMinute();
-            eventMon = event.getDateTime().getMonth();
-            eventYear = event.getDateTime().getYear();
-            eventDay = event.getDateTime().getDay();
-
-            if (eventYear == realYear && eventMon == realMon && (eventDay == realDay && (eventHour == realHour && eventMin >= realMin || eventHour > realHour) || eventDay > realDay))
-                System.out.println(event.getTitle() + "\t" + event.getDateTime());
-        }
-    }
     private static long compareEvents(Event event1, Event event2) {
         OurDateTime dateTime1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getDateTime();
         OurDateTime dateTime2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getDateTime();
@@ -217,15 +175,81 @@ public class OurCalendar {
             System.out.println(event.toString());
         }
     }
-    public void printUpcomingEvents(String time){
 
-        // TODO: print events until the specified time given
-
+    private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
+        OurDateTime realDateTime = new OurDateTime();       //current date & time
+        DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
+        int realDay = realDateTime.getDay();
+        for (Event event : events) {
+            int eventDay = event.getDateTime().getDay();
+            long eventFormat = event.getDateTime().getCalculationFormat();
+            if (eventFormat >= minTime && eventFormat < maxTime) {     //if the event is between minimum and maximum time
+                if (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7)  //if the event is upcoming
+                    System.out.println(event.getTitle() + "\t" + event.getDateTime());
+                else if (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue())
+                    System.out.println(event.getTitle() + "\t" + event.getDateTime());
+                else if (code == 1)
+                    System.out.println(event.getTitle() + "\t" + event.getDateTime());
+            }
+        }
     }
-    public void printOldEvents(String time){
-        // TODO: print events from the time specified to the current time
-    }
 
+    public void printUpcomingEvents(int choice){
+        OurDateTime realDateTime = new OurDateTime();       //current date & time
+        long format = realDateTime.getCalculationFormat();
+
+        switch (choice) {
+            case 1: {
+                System.out.println("\nUpcoming Events for today:\n");
+                //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
+                format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
+                timePeriod(format, realDateTime.getCalculationFormat(), 1);
+                break;
+            }
+            case 2: {
+                System.out.println("\nUpcoming Events this week:\n");
+                //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
+                format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                timePeriod(format, realDateTime.getCalculationFormat(), 2);
+                break;
+            }
+            default: {
+                System.out.println("\nUpcoming Events this month:\n");
+                //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
+                format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                timePeriod(format, realDateTime.getCalculationFormat(),1);
+                break;
+            }
+        }
+    }
+    public void printOldEvents(int choice){
+        OurDateTime realDateTime = new OurDateTime();       //current date & time
+        long format = realDateTime.getCalculationFormat();
+
+        switch (choice) {
+            case 1: {
+                System.out.println("\nOld Events from today:\n");
+                //from the realDateTime format we are changing the time to 00:00
+                format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
+                timePeriod(realDateTime.getCalculationFormat(), format,1);
+                break;
+            }
+            case 2: {
+                System.out.println("\nOld Events from this week:\n");
+                //from the realDateTime format the day and time become 01, 00:00
+                format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                timePeriod(realDateTime.getCalculationFormat(), format, 3);
+                break;
+            }
+            default: {
+                System.out.println("\nOld Events from this month:\n");
+                //from the realDateTime format the day and time become 01, 00:00
+                format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                timePeriod(realDateTime.getCalculationFormat(), format, 1);
+                break;
+            }
+        }
+    }
     public void printUnfinishedActive(String time){
         // TODO: print the projects that are not finished and the deadline is not due
     }

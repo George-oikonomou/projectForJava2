@@ -36,7 +36,7 @@ public class Event {
 
 
     public void editEvent() {
-        int option, choice;
+        int option;
 
         do {
             //Picking one option to change a field

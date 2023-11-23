@@ -83,7 +83,6 @@ public class Validate {  //Checking the input value
 
                 } else {
                     //TIME
-                    System.out.print("\nTIME\nHour:\t");
                     hour = checkAndReturnIntBetween(0, 23);
                     System.out.print("\tMinute:\t");
                     minute = checkAndReturnIntBetween(0, 59);

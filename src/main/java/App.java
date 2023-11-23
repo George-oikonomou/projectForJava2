@@ -1,22 +1,29 @@
 import gr.hua.dit.oop2.calendar.TimeService;
+import net.fortuna.ical4j.model.component.VLocation;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 public class App {
-    static Scanner input = new Scanner(System.in);
     static OurCalendar calendar = new OurCalendar();
 
     public static void main(String[] args) {
         calendarListFiller();
-        System.out.println("""
+
+        int choice, option;
+        ICSFile file = new ICSFile("calendar.ics");
+        do {
+            System.out.println("""
+                
                 add an event enter (1)
                 edit an event enter (2)
                 save events to file enter (3)
                 load events from file enter (4)
-                exit enter (5)""");
+                print upcoming events (5)
+                print old events (6)
+                exit enter (7)
+                
+                """);
 
-        int choice = input.nextInt();
-        ICSFile file = new ICSFile("calendar.ics");
-        do {
+            choice = Validate.checkAndReturnIntBetween(1, 7);
             switch (choice) {
                 case 1:
                     calendar.addEvents();
@@ -34,16 +41,27 @@ public class App {
                         System.out.println(event);
                     }
                     break;
+                case 5:
+                    System.out.println("""
+                print the upcoming events:
+                for today (1)
+                for this week (2)
+                for this month (3)""");
+                    option = Validate.checkAndReturnIntBetween(1, 3);
+                    calendar.printUpcomingEvents(option);
+                    break;
+                case 6:
+                    System.out.println("""
+                print the old events:
+                from today (1)
+                from this week (2)
+                from this month (3)""");
+                    option = Validate.checkAndReturnIntBetween(1, 3);
+                    calendar.printOldEvents(option);
+                    break;
             }
-            System.out.println("""
-                add an event enter (1)
-                edit an event enter (2)
-                save events to file enter (3)
-                load events from file enter (4)
-                exit enter (5)""");
-            choice = input.nextInt();
 
-        }while(choice != 5);
+        }while(choice != 7);
         TimeService.stop();
     }
     public static void calendarListFiller() {
@@ -70,7 +88,7 @@ public class App {
         Event event4 = new Appointment(dateTime3,"MyBday","dont you assholes forget",120);
         events.add(event4);
 
-        //past event that has the same name with a project. it is a different type of event so it should work
+        //past event that has the same name with a project. it is a different type of event, so it should work
         OurDateTime dateTime4 = new OurDateTime(2023,5,13);
         Event event5 = new Event(dateTime4,"Video Shoot","yo mamas ph shoot");
         events.add(event5);
