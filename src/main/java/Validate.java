@@ -19,26 +19,22 @@ public class Validate {  //Checking the input value
     //Checking if the integer has valid value
     public static int checkAndReturnIntBetween(int param1, int param2) {
         Scanner scanner = new Scanner(System.in);
-        int temp = 0;
-        boolean check = false;
+        int temp = -1;
 
-        while (!check) {
+        do {
             try {
-                do {
+                if (temp < param1 || temp > param2) {
+                    Validate.println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
                     temp = scanner.nextInt();
-                    if (temp < param1 || temp > param2) {
-                        Validate.println("The number you typed is invalid, it should be between " + param1 + " and " +
-                                 param2 + ". Try again.\n");
-                    } else {
-                        scanner.nextLine();
-                        check = true;
-                    }
-                }while (temp < param1 || temp > param2);
+                } else {
+                    scanner.nextLine();
+                }
             } catch (Exception e) {
                 Validate.println("You didnt type a number.Try again.");
                 scanner.nextLine();
             }
-        }
+        }while (temp < param1 || temp > param2);
+
         return temp;
     }
 
