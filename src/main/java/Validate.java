@@ -9,7 +9,7 @@ public class Validate {  //Checking the input value
         do {
             string = scanner.nextLine();
             if (string.isEmpty()) {
-                System.out.println("You typed something wrong. Try again.");
+                Validate.print("You typed something wrong. Try again.");
             }
         } while(string.isEmpty());
 
@@ -27,7 +27,7 @@ public class Validate {  //Checking the input value
                 do {
                     temp = scanner.nextInt();
                     if (temp < param1 || temp > param2) {
-                        System.out.println("The number you typed is invalid, it should be between " + param1 + " and " +
+                        Validate.print("The number you typed is invalid, it should be between " + param1 + " and " +
                                  param2 + ". Try again.\n");
                     } else {
                         scanner.nextLine();
@@ -35,7 +35,7 @@ public class Validate {  //Checking the input value
                     }
                 }while (temp < param1 || temp > param2);
             } catch (Exception e) {
-                System.out.println("You didnt type a number.Try again.");
+                Validate.print("You didnt type a number.Try again.");
                 scanner.nextLine();
             }
         }
@@ -107,7 +107,7 @@ public class Validate {  //Checking the input value
             minute = checkAndReturnIntBetween(0, 59);
         }
 
-        System.out.println();
+        Validate.print("");
         return new OurDateTime(year, month, day, hour, minute);
     }
 
@@ -132,6 +132,8 @@ public class Validate {  //Checking the input value
             }
         }
     }
-
+    public static void print(Object obj) {
+        System.out.println(obj);
+    }
     // TODO: 11/11/23 make a method that checks if a title already exists in the same type of an event
 }

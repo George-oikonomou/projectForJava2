@@ -28,7 +28,7 @@ public class Project extends Event{
 
         do {
             //Picking one option to change a field
-            System.out.println("""
+            Validate.print("""
                     Do you want to Change:
                     1) Title
                     2) Description
