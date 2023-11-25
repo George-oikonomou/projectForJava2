@@ -138,5 +138,9 @@ public class Validate {  //Checking the input value
     public static void print(Object obj) {
         System.out.print(obj);
     }
+
+    public static void printf(String format, Object... args) {
+        System.out.printf(format, args);
+    }
     // TODO: 11/11/23 make a method that checks if a title already exists in the same type of an event
 }
