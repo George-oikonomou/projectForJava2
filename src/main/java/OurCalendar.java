@@ -198,7 +198,6 @@ public class OurCalendar {
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
 
-
         if (choice == 1) {
             Validate.println("\nUpcoming Events for today:\n");
                 //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
