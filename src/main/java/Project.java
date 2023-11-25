@@ -28,7 +28,7 @@ public class Project extends Event{
 
         do {
             //Picking one option to change a field
-            Validate.print("""
+            Validate.println("""
                     Do you want to Change:
                     1) Title
                     2) Description
@@ -38,22 +38,22 @@ public class Project extends Event{
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1: {
-                    System.out.print("\nType the new title:\t");
+                    Validate.print("\nType the new title:\t");
                     setTitle(Validate.strInput());
                     break;
                 }
                 case 2: {
-                    System.out.print("\nType the new description:\t");
+                    Validate.print("\nType the new description:\t");
                     setDescription(Validate.strInput());
                     break;
                 }
                 case 3: {
-                    System.out.print("\nType the new date & time:\t");
+                    Validate.print("\nType the new date & time:\t");
                     setDateTime(OurDateTime.Functionality.dateAndTime(true));
                     break;
                 }
                 case 4: {
-                    System.out.print("\nType the new duration:\t");
+                    Validate.print("\nType the new duration:\t");
                     setDeadline(Validate.deadline(getDateTime()));
                     break;
                 }

@@ -1,5 +1,4 @@
 import gr.hua.dit.oop2.calendar.TimeService;
-import net.fortuna.ical4j.model.component.VLocation;
 
 import java.util.ArrayList;
 public class App {
@@ -11,7 +10,7 @@ public class App {
         int choice, option;
         ICSFile file = new ICSFile("calendar.ics");
         do {
-            Validate.print("""
+            Validate.println("""
                 
                 add an event enter (1)
                 edit an event enter (2)
@@ -38,11 +37,11 @@ public class App {
                     file.LoadEvents();
                     ArrayList<Event> eventsToPrint = calendar.getEvents();
                     for (Event event : eventsToPrint) {
-                        Validate.print(event);
+                        Validate.println(event);
                     }
                     break;
                 case 5:
-                    Validate.print("""
+                    Validate.println("""
                 print the upcoming events:
                 for today (1)
                 for this week (2)
@@ -51,7 +50,7 @@ public class App {
                     calendar.printUpcomingEvents(option);
                     break;
                 case 6:
-                    Validate.print("""
+                    Validate.println("""
                 print the old events:
                 from today (1)
                 from this week (2)

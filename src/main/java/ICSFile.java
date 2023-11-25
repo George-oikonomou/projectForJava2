@@ -9,9 +9,6 @@ import net.fortuna.ical4j.model.component.VEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class ICSFile {
@@ -42,7 +39,7 @@ public class ICSFile {
                     if (event.getProperty("CATEGORIES") != null) {
                         categoryVal = event.getProperty("CATEGORIES").getValue();
                     } else {
-                        Validate.print("Error: File does not have 'CATEGORIES' property file cannot be read");
+                        Validate.println("Error: File does not have 'CATEGORIES' property file cannot be read");
                         return;
                     }
                     String dateTime;
@@ -53,7 +50,7 @@ public class ICSFile {
                     String description = event.getDescription().getValue();
 
                     if (title == null || dateTime == null || description == null) {
-                        Validate.print("Error reading from file");
+                        Validate.println("Error reading from file");
                         return;
                     }
 
@@ -72,7 +69,7 @@ public class ICSFile {
                                 String due = dueProperty.getValue();
                                 ourDue = OurDateTime.Functionality.ICSFormatToOurDateTime(due);
                             } else {
-                                Validate.print("could not find due property in a project");
+                                Validate.println("could not find due property in a project");
                                 return;
                             }
                             String status = event.getStatus().getValue();
@@ -89,7 +86,7 @@ public class ICSFile {
                                 String duration = durationProperty.getValue();
                                 ourDuration = Appointment.ICSFormatToDuration(duration);
                             } else {
-                                Validate.print("could not find due property in a project");
+                                Validate.println("could not find due property in a project");
                                 return;
                             }
                             Appointment newAppointment = new Appointment(ourDateTime, title, description, ourDuration);
@@ -99,7 +96,7 @@ public class ICSFile {
                 }
             }
         }catch (IOException | ParserException e){
-            Validate.print("error reading from the file");
+            Validate.println("error reading from the file");
         }
         App.calendar.setEvents(events);
     }
@@ -112,9 +109,9 @@ public class ICSFile {
              */
             File file = new File(filePath);
             if (file.createNewFile()) {
-                Validate.print("File created " + file.getName());
+                Validate.println("File created " + file.getName());
             } else {
-                Validate.print("File already exists. Overwriting");
+                Validate.println("File already exists. Overwriting");
             }
 
             FileWriter fileWriter = new FileWriter(file);
@@ -158,10 +155,10 @@ public class ICSFile {
             }
             fileWriter.write("END:VCALENDAR\n");
             fileWriter.close();
-            Validate.print("successfully exported events to " + filePath);
+            Validate.println("successfully exported events to " + filePath);
 
         } catch (IOException e) {
-            Validate.print("error could not save file");
+            Validate.println("error could not save file");
         }
     }
 

@@ -9,7 +9,7 @@ public class Validate {  //Checking the input value
         do {
             string = scanner.nextLine();
             if (string.isEmpty()) {
-                Validate.print("You typed something wrong. Try again.");
+                Validate.println("You typed something wrong. Try again.");
             }
         } while(string.isEmpty());
 
@@ -27,7 +27,7 @@ public class Validate {  //Checking the input value
                 do {
                     temp = scanner.nextInt();
                     if (temp < param1 || temp > param2) {
-                        Validate.print("The number you typed is invalid, it should be between " + param1 + " and " +
+                        Validate.println("The number you typed is invalid, it should be between " + param1 + " and " +
                                  param2 + ". Try again.\n");
                     } else {
                         scanner.nextLine();
@@ -35,7 +35,7 @@ public class Validate {  //Checking the input value
                     }
                 }while (temp < param1 || temp > param2);
             } catch (Exception e) {
-                Validate.print("You didnt type a number.Try again.");
+                Validate.println("You didnt type a number.Try again.");
                 scanner.nextLine();
             }
         }
@@ -49,31 +49,31 @@ public class Validate {  //Checking the input value
 
 
         //Year:
-        System.out.print("\nDATE\nYear:\t");
+        Validate.print("\nDATE\nYear:\t");
         year = checkAndReturnIntBetween(dateTime.getYear(), 2024);
 
         //Month:
-        System.out.print("\tMonth:\t");
+        Validate.print("\tMonth:\t");
         if (year == dateTime.getYear()) {
             month = checkAndReturnIntBetween(dateTime.getMonth(), 12);
 
             //Day:
-            System.out.print("\tDay:\t");
+            Validate.print("\tDay:\t");
             if (month == dateTime.getMonth()) {
                 day = day(month, year, dateTime.getDay());
 
                 //TIME
-                System.out.print("\nTIME\nHour:\t");
+                Validate.print("\nTIME\nHour:\t");
                 if (day == dateTime.getDay()) {
                     if (dateTime.getMinute() + 15 > 59) {
                         hour = checkAndReturnIntBetween(dateTime.getHour() + 1, 23);
 
-                        System.out.print("\tMinute:\t");
+                        Validate.print("\tMinute:\t");
                         minute = checkAndReturnIntBetween(0, 59);
                     } else {
                         hour = checkAndReturnIntBetween(dateTime.getHour(), 23);
 
-                        System.out.print("\tMinute:\t");
+                        Validate.print("\tMinute:\t");
                         if (hour == dateTime.getHour()) {
                             minute = checkAndReturnIntBetween(dateTime.getMinute() + 15, 59);
                         } else {
@@ -84,30 +84,30 @@ public class Validate {  //Checking the input value
                 } else {
                     //TIME
                     hour = checkAndReturnIntBetween(0, 23);
-                    System.out.print("\tMinute:\t");
+                    Validate.print("\tMinute:\t");
                     minute = checkAndReturnIntBetween(0, 59);
                 }
             } else {
                 day = day(month, year, 1);
                 //TIME
-                System.out.print("\nTIME\nHour:\t");
+                Validate.print("\nTIME\nHour:\t");
                 hour = checkAndReturnIntBetween(0, 23);
-                System.out.print("\tMinute:\t");
+                Validate.print("\tMinute:\t");
                 minute = checkAndReturnIntBetween(0, 59);
             }
         } else {
             month = checkAndReturnIntBetween(1, 12);
             //Day:
-            System.out.print("\tDay:\t");
+            Validate.print("\tDay:\t");
             day = day(month,year, 1);
             //TIME
-            System.out.print("\nTIME\nHour:\t");
+            Validate.print("\nTIME\nHour:\t");
             hour = checkAndReturnIntBetween(0, 23);
-            System.out.print("\tMinute:\t");
+            Validate.print("\tMinute:\t");
             minute = checkAndReturnIntBetween(0, 59);
         }
 
-        Validate.print("");
+        Validate.println("");
         return new OurDateTime(year, month, day, hour, minute);
     }
 
@@ -132,8 +132,11 @@ public class Validate {  //Checking the input value
             }
         }
     }
-    public static void print(Object obj) {
+    public static void println(Object obj) {
         System.out.println(obj);
+    }
+    public static void print(Object obj) {
+        System.out.print(obj);
     }
     // TODO: 11/11/23 make a method that checks if a title already exists in the same type of an event
 }
