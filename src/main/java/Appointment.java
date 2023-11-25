@@ -16,6 +16,10 @@ public class Appointment extends Event {
         this.durationInMin= durationInMin;
     }
 
+    private void setDurationPrompt() {
+        Validate.print("\nType the new duration:\t");
+        setDuration(Validate.checkAndReturnIntBetween(15, 6 * 60));  //duration is minimum 15 minutes & maximum 6 hours
+    }
     public static int ICSFormatToDuration(String string) {
         Duration duration = Duration.parse(string);
         int hours = duration.toHoursPart();
@@ -38,36 +42,21 @@ public class Appointment extends Event {
                     5) or Exit""");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
-                case 1: {
-                    Validate.println("\nType the new title:\t");
-                    //print the input stream
-                    setTitle(Validate.strInput());
-                    break;
-                }
-                case 2: {
-                    Validate.print("\nType the new description:\t");
-                    setDescription(Validate.strInput());
-                    break;
-                }
-                case 3: {
-                    Validate.print("\nType the new date & time:\t");
-                    setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                    break;
-                }
-                case 4: {
-                    Validate.print("\nType the new duration:\t");
-                    setDuration(Validate.checkAndReturnIntBetween(15, 6 * 60));  //duration is minimum 15 minutes & maximum 6 hours
-                    break;
-                }
+                case 1 -> setTitlePrompt();
+                case 2 -> setDescriptionPrompt();
+                case 3 -> setDateTimePrompt(true);
+                case 4 -> setDurationPrompt();
             }
         } while (option != 5);
     }
     @Override
     public String toString() {
-        return "Appointment:\n" +
-                "\tdateTime:" + getDateTime() + "\n" +
-                "\ttitle:" + getTitle() + "\n" +
-                "\tdescription:" + getDescription() + "\n" +
-                "\tdurationInMin:" + durationInMin + "\n";
+        return """
+            Appointment:
+                dateTime: %s
+                title: %s
+                description: %s
+                durationInMin: %d
+            """.formatted(getDateTime(), getTitle(), getDescription(), durationInMin);
     }
 }

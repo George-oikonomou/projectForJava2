@@ -27,7 +27,7 @@ public class OurCalendar {
         choice = Validate.checkAndReturnIntBetween(1, 3);
         //Title
         Validate.print("\nTitle:\t");
-        title = Validate.strInput();
+        title = Validate.Title(this, choice);
         //Description
         Validate.print("\nDescription:\t");
         description = Validate.strInput();
@@ -56,6 +56,7 @@ public class OurCalendar {
 
                 Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
+                newEvent.setOurCalendar(this);
                 break;
             }
             case 2: {
@@ -70,6 +71,7 @@ public class OurCalendar {
 
                 Appointment newAppointment = new Appointment(datetime1, title, description, duration);
                 events.add(newAppointment);
+                newAppointment.setOurCalendar(this);
                 break;
             }
 
@@ -85,6 +87,7 @@ public class OurCalendar {
 
                 Project newProject = new Project(datetime1, title, description, deadline);
                 events.add(newProject);
+                newProject.setOurCalendar(this);
                 break;
             }
         }
@@ -287,15 +290,14 @@ public class OurCalendar {
 
 
     // TODO: 11/11/23 allow multiple titles of events but only if they are different types
-    public Event eventSearch(String title, int type){
-
-        for(Event event : getEvents()){
-            if (event.getTitle().equals(title) && type == 1 && !(event instanceof Appointment) && !(event instanceof Project)) {
-                return event;
-            } else if (event.getTitle().equals(title) && event instanceof Appointment && type == 2) {
-                return event;
-            } else if (event.getTitle().equals(title) && event instanceof Project && type == 3) {
-                return event;
+    public Event eventSearch(String title, int type) {
+        for (Event event : getEvents()) {
+            if (event.getTitle().equals(title)) {
+                if ((type == 1 && !(event instanceof Appointment) && !(event instanceof Project)) ||
+                        (type == 2 && event instanceof Appointment) ||
+                        (type == 3 && event instanceof Project)) {
+                    return event;
+                }
             }
         }
         return null;
@@ -324,6 +326,4 @@ public class OurCalendar {
         }
         return null;
     }
-
-
 }
