@@ -132,6 +132,15 @@ public class Validate {  //Checking the input value
             }
         }
     }
+    public static String Title(OurCalendar calendar,int type){
+       String title = strInput();
+       while (checkIfTitleExists(calendar, title, type)) {
+           Validate.println("This title already exists. Try again.");
+           title = strInput();
+       }
+       return title;
+    }
+
     public static void println(Object obj) {
         System.out.println(obj);
     }
@@ -142,5 +151,11 @@ public class Validate {  //Checking the input value
     public static void printf(String format, Object... args) {
         System.out.printf(format, args);
     }
-    // TODO: 11/11/23 make a method that checks if a title already exists in the same type of an event
+
+    public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) {
+        Event event = ourCalendar.eventSearch(title, type);
+        return event != null;
+    }
+
+
 }

@@ -1,4 +1,3 @@
-
 public class Project extends Event{
     private OurDateTime deadline;    //date and time of project deadline
     private boolean isFinished = false;     // boolean value that tells if the project is finished
@@ -22,6 +21,10 @@ public class Project extends Event{
         isFinished = finished;
     }
 
+    private void setDeadlinePrompt() {
+        Validate.print("\nType the new duration:\t");
+        setDeadline(Validate.deadline(getDateTime()));
+    }
     @Override
     public void editEvent() {
         int option;
@@ -37,37 +40,23 @@ public class Project extends Event{
                     5) Or Exit""");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
-                case 1: {
-                    Validate.print("\nType the new title:\t");
-                    setTitle(Validate.strInput());
-                    break;
-                }
-                case 2: {
-                    Validate.print("\nType the new description:\t");
-                    setDescription(Validate.strInput());
-                    break;
-                }
-                case 3: {
-                    Validate.print("\nType the new date & time:\t");
-                    setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                    break;
-                }
-                case 4: {
-                    Validate.print("\nType the new duration:\t");
-                    setDeadline(Validate.deadline(getDateTime()));
-                    break;
-                }
+                case 1 -> setTitlePrompt();
+                case 2 -> setDescriptionPrompt();
+                case 3 -> setDateTimePrompt(true);
+                case 4 -> setDeadlinePrompt();
             }
         } while (option != 5);
     }
 
     @Override
     public String toString() {
-        return "Project:\n" +
-                "\tdateTime:" + getDateTime() + "\n" +
-                "\ttitle:" + getTitle() + "\n" +
-                "\tdescription:" + getDescription() + "\n" +
-                "\tdeadline:" + deadline + "\n" +
-                "\tisFinished:" + isFinished + "\n";
+        return """
+            Project:
+                dateTime: %s
+                title: %s
+                description: %s
+                deadline: %s
+                isFinished: %s
+            """.formatted(getDateTime(), getTitle(), getDescription(), deadline, isFinished);
     }
 }

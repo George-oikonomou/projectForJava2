@@ -1,4 +1,5 @@
 public class Event {
+    private OurCalendar ourCalendar;
     private OurDateTime dateTime;
     private String title;
     private String description;
@@ -9,6 +10,12 @@ public class Event {
         this.description = description;
     }
 
+    public OurCalendar getOurCalendar() {
+        return ourCalendar;
+    }
+    public void setOurCalendar(OurCalendar ourCalendar) {
+        this.ourCalendar = ourCalendar;
+    }
     public OurDateTime getDateTime() {
         return dateTime;
     }
@@ -33,7 +40,30 @@ public class Event {
         this.description = description;
     }
 
+    protected void setTitlePrompt() {
+        Validate.print("\nType the new title:\t");
+        ourCalendar = getOurCalendar();
+        int objectType;
+        if (this instanceof Appointment) {
+            objectType = 2;
+        } else if (this instanceof Project) {
+            objectType = 3;
+        } else{
+            objectType = 1;
+        }
+        setTitle(Validate.Title(ourCalendar, objectType));
 
+    }
+
+    protected void setDescriptionPrompt() {
+        Validate.print("\nType the new description:\t");
+        setDescription(Validate.strInput());
+    }
+
+    protected void setDateTimePrompt(boolean withTime) {
+        Validate.print("\nType the new date & time:\t");
+        setDateTime(OurDateTime.Functionality.dateAndTime(withTime));
+    }
 
     public void editEvent() {
         int option;
@@ -49,36 +79,21 @@ public class Event {
                     5) Or Exit""");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
-                case 1: {   //Changing title:
-                    Validate.print("\nType the new title:\t");
-                    setTitle(Validate.strInput());
-                    break;
-                }
-                case 2: {   //Changing description:
-                    Validate.print("\nType the new description:\t");
-                    setDescription(Validate.strInput());
-                    break;
-                }
-                case 3: {   //Changing the date and the time if the user wants to:
-                    Validate.print("\nType the new date:\t");
-                    setDateTime(OurDateTime.Functionality.dateAndTime(false));
-                    break;
-                }
-                case 4: {
-                    Validate.print("\nType the new date and time:\t");
-                    setDateTime(OurDateTime.Functionality.dateAndTime(true));
-                    break;
-                }
-                
+                case 1 -> setTitlePrompt();
+                case 2 -> setDescriptionPrompt();
+                case 3 -> setDateTimePrompt(false);
+                case 4 -> setDateTimePrompt(true);
             }
         } while (option != 5);
     }
 
     @Override
     public String toString() {
-        return "Event:\n" +
-                "\tdateTime:" + dateTime + "\n" +
-                "\ttitle:" + title + "\n" +
-                "\tdescription:" + description + "\n";
+        return """
+            Event:
+                dateTime: %s
+                title: %s
+                description: %s
+            """.formatted(dateTime, title, description);
     }
 }
