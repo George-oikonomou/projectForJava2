@@ -14,15 +14,18 @@ public class App {
                 
                 add an event enter (1)
                 edit an event enter (2)
-                save events to file enter (3)
-                load events from file enter (4)
-                print upcoming events (5)
-                print old events (6)
-                exit enter (7)
+                change the condition of a project (3)
+                save events to file enter (4)
+                load events from file enter (5)
+                print upcoming events (6)
+                print old events (7)
+                print unfinished projects with uncompleted due deadline (8)
+                print unfinished projects with completed due deadline (9)
+                exit enter (10)
                 
                 """);
 
-            choice = Validate.checkAndReturnIntBetween(1, 7);
+            choice = Validate.checkAndReturnIntBetween(1, 10);
             switch (choice) {
                 case 1:
                     calendar.addEvents();
@@ -31,16 +34,19 @@ public class App {
                     calendar.editEvent();
                     break;
                 case 3:
-                    file.StoreEvents(calendar.getEvents());
+                    calendar.changeProjectCondition();
                     break;
                 case 4:
+                    file.StoreEvents(calendar.getEvents());
+                    break;
+                case 5:
                     file.LoadEvents();
                     ArrayList<Event> eventsToPrint = calendar.getEvents();
                     for (Event event : eventsToPrint) {
                         Validate.println(event);
                     }
                     break;
-                case 5:
+                case 6:
                     Validate.println("""
                 print the upcoming events:
                 for today (1)
@@ -49,7 +55,7 @@ public class App {
                     option = Validate.checkAndReturnIntBetween(1, 3);
                     calendar.printUpcomingEvents(option);
                     break;
-                case 6:
+                case 7:
                     Validate.println("""
                 print the old events:
                 from today (1)
@@ -58,9 +64,12 @@ public class App {
                     option = Validate.checkAndReturnIntBetween(1, 3);
                     calendar.printOldEvents(option);
                     break;
+                case 8, 9:
+                    calendar.printUnfinishedProject(choice);
+                    break;
             }
 
-        }while(choice != 7);
+        }while(choice != 10);
         TimeService.stop();
     }
     public static void calendarListFiller() {

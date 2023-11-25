@@ -198,28 +198,27 @@ public class OurCalendar {
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
 
-        switch (choice) {
-            case 1: {
-                Validate.println("\nUpcoming Events for today:\n");
+        if (choice == 1) {
+            Validate.println("\nUpcoming Events for today:\n");
                 //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
                 format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
-                break;
-            }
-            case 2: {
-                Validate.println("\nUpcoming Events this week:\n");
+        } else {
+                if (choice == 2)
+                    Validate.println("\nUpcoming Events this week:\n");
+                else
+                    Validate.println("\nUpcoming Events this month:\n");
                 //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
-                format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                timePeriod(format, realDateTime.getCalculationFormat(), 2);
-                break;
-            }
-            default: {
-                Validate.println("\nUpcoming Events this month:\n");
-                //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
-                format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                timePeriod(format, realDateTime.getCalculationFormat(),1);
-                break;
-            }
+                if (realDateTime.getMonth() == 12)   //if its December, we are changing the year and the month becomes January
+                    format = format + 89000000 - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                    //+89000000 changes the year by one and the month becomes January
+                else
+                    format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                System.out.println(format);
+                if (choice == 2)
+                    timePeriod(format, realDateTime.getCalculationFormat(), 2);
+               else
+                    timePeriod(format, realDateTime.getCalculationFormat(),1);
         }
     }
     public void printOldEvents(int choice){
@@ -250,11 +249,17 @@ public class OurCalendar {
             }
         }
     }
-    public void printUnfinishedActive(String time){
-        // TODO: print the projects that are not finished and the deadline is not due
-    }
-    public void printUnfinishedNotActive(String time){
-        // TODO: print the projects that are not finished and the deadline is due
+    public void printUnfinishedProject(int choice){
+        OurDateTime realDateTime = new OurDateTime();       //current date & time
+        long format = realDateTime.getCalculationFormat();
+        for (Event event : events) {
+            if (event instanceof Project && !((Project) event).isFinished()) {
+                if (choice == 8 && format < ((Project) event).getDeadline().getCalculationFormat())
+                    System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
+                else if (choice == 9 && format >= ((Project) event).getDeadline().getCalculationFormat())
+                    System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
+            }
+        }
     }
 
     public void reminder(){
