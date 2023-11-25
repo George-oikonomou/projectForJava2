@@ -1,5 +1,5 @@
 import gr.hua.dit.oop2.calendar.TimeService;
-
+import net.fortuna.ical4j.model.component.VLocation;
 import java.util.ArrayList;
 public class App {
     static OurCalendar calendar = new OurCalendar();
