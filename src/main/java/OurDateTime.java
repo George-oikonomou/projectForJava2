@@ -140,22 +140,22 @@ public class OurDateTime {
         public static OurDateTime dateAndTime(boolean choice) {
             int year, month, day;
             //Year:
-            System.out.print("\nDATE\nYear:\t");
+            Validate.print("\nDATE\nYear:\t");
             year =  Validate.checkAndReturnIntBetween(2023,2024);
             //Month:
-            System.out.print("\tMonth:\t");
+            Validate.print("\tMonth:\t");
             month = Validate.checkAndReturnIntBetween(1, 12);
             //Day:
-            System.out.print("\tDay:\t");
+            Validate.print("\tDay:\t");
             day = Validate.day(month ,year, 1);
 
             if(choice) {
                 int hour,minute;
                 //hour
-                System.out.print("\nTIME\nHour:\t");
+                Validate.print("\nTIME\nHour:\t");
                 hour = Validate.checkAndReturnIntBetween(0, 23);
                 //minute
-                System.out.print("\tMinute:\t");
+                Validate.print("\tMinute:\t");
                 minute = Validate.checkAndReturnIntBetween(0, 59);
                 return new OurDateTime(year, month, day, hour, minute);
             }
