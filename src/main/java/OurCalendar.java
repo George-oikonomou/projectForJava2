@@ -23,13 +23,13 @@ public class OurCalendar {
         OurDateTime datetime1, deadline;
 
         //NEW EVENT:
-        System.out.println("Make a new:\n1) Event\n2) Appointment\n3) Project\n");
+        Validate.println("Make a new:\n1) Event\n2) Appointment\n3) Project\n");
         choice = Validate.checkAndReturnIntBetween(1, 3);
         //Title
-        System.out.print("\nTitle:\t");
+        Validate.print("\nTitle:\t");
         title = Validate.strInput();
         //Description
-        System.out.print("\nDescription:\t");
+        Validate.print("\nDescription:\t");
         description = Validate.strInput();
 
         //Adding one event to the arraylist
@@ -38,7 +38,7 @@ public class OurCalendar {
                 //Date & Time
                 String option;
 
-                System.out.println("\nDo you want to add a time for this event [Y/N]");
+                Validate.println("\nDo you want to add a time for this event [Y/N]");
 
                 while (true) {
                     option = Validate.strInput();
@@ -49,10 +49,10 @@ public class OurCalendar {
                         datetime1 = OurDateTime.Functionality.dateAndTime(false);
                         break;
                     } else {
-                        System.out.println("Wrong input try again:\n");
+                        Validate.println("Wrong input try again:\n");
                     }
                 }
-                System.out.println();
+                Validate.println("");
 
                 Event newEvent = new Event(datetime1, title, description);
                 events.add(newEvent);
@@ -62,11 +62,11 @@ public class OurCalendar {
 
                 //Date & Time
                 datetime1 = OurDateTime.Functionality.dateAndTime(true);
-                System.out.println();
+                Validate.println("");
 
-                System.out.print("Duration:\t");
+                Validate.print("Duration:\t");
                 duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
-                System.out.println();
+                Validate.println("");
 
                 Appointment newAppointment = new Appointment(datetime1, title, description, duration);
                 events.add(newAppointment);
@@ -77,11 +77,11 @@ public class OurCalendar {
 
                 //Date & Time
                 datetime1 = OurDateTime.Functionality.dateAndTime(true);
-                System.out.println();
+                Validate.println("");
 
-                System.out.print("Deadline:\t");
+                Validate.print("Deadline:\t");
                 deadline = Validate.deadline(datetime1);
-                System.out.println();
+                Validate.println("");
 
                 Project newProject = new Project(datetime1, title, description, deadline);
                 events.add(newProject);
@@ -97,49 +97,49 @@ public class OurCalendar {
         Event searchedEvent = null;
 
         do {
-            System.out.println("Change:\n1) Event\n2) Appointment\n3) Project\n4) Exit");
+            Validate.println("Change:\n1) Event\n2) Appointment\n3) Project\n4) Exit");
             //Choosing one of the above options
             choice = Validate.checkAndReturnIntBetween(1, 4);
             //Printing all the events, appointments or projects:
             for (Event event : events) {
                 if (choice == 3 && event instanceof Project) {
-                    System.out.println(event);
+                    Validate.println(event);
                 } else if (choice == 2 && event instanceof Appointment) {
-                    System.out.println(event);
+                    Validate.println(event);
                 } else if (choice == 1 && !(event instanceof Appointment) && !(event instanceof Project)) {
-                    System.out.println(event.toString());
+                    Validate.println(event.toString());
                 } else if (choice == 4) {
                     return;
                 }
             }
 
-            System.out.println("Type the title of the event you want to change:");
+            Validate.println("Type the title of the event you want to change:");
             //Finding the title of the event:
             while (!flag) {
                 title = Validate.strInput();
                 searchedEvent = eventSearch(title, choice);
                 if (searchedEvent == null) {
-                    System.out.println("You typed wrong title. Try again.");
+                    Validate.println("You typed wrong title. Try again.");
                 } else {
                     flag = true;
                 }
             }
             //Changing the fields of the chosen event:
             searchedEvent.editEvent();
-            System.out.println();
+            Validate.println("");
         } while (choice != 4);
     }
 
 
     public void changeProjectCondition(){
-        System.out.println("Please provide the name of the Project you wish to update its status");
+        Validate.println("Please provide the name of the Project you wish to update its status");
         String title = Validate.strInput();
         Event event = eventSearch(title, 3);
 
         if(event instanceof Project project){
             boolean status = project.isFinished();
             project.setFinished(!status);
-            System.out.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
+            Validate.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
         }else{
             throw new IllegalArgumentException("Project does not exist");
         }
@@ -172,7 +172,7 @@ public class OurCalendar {
     }
     private static void printEvents(ArrayList<Event> events) {
         for (Event event : events) {
-            System.out.println(event.toString());
+            Validate.println(event.toString());
         }
     }
 
@@ -185,11 +185,11 @@ public class OurCalendar {
             long eventFormat = event.getDateTime().getCalculationFormat();
             if (eventFormat >= minTime && eventFormat < maxTime) {     //if the event is between minimum and maximum time
                 if (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7)  //if the event is upcoming
-                    System.out.println(event.getTitle() + "\t" + event.getDateTime());
+                    Validate.println(event.getTitle() + "\t" + event.getDateTime());
                 else if (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue())
-                    System.out.println(event.getTitle() + "\t" + event.getDateTime());
+                    Validate.println(event.getTitle() + "\t" + event.getDateTime());
                 else if (code == 1)
-                    System.out.println(event.getTitle() + "\t" + event.getDateTime());
+                    Validate.println(event.getTitle() + "\t" + event.getDateTime());
             }
         }
     }
@@ -200,21 +200,21 @@ public class OurCalendar {
 
         switch (choice) {
             case 1: {
-                System.out.println("\nUpcoming Events for today:\n");
+                Validate.println("\nUpcoming Events for today:\n");
                 //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
                 format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
                 break;
             }
             case 2: {
-                System.out.println("\nUpcoming Events this week:\n");
+                Validate.println("\nUpcoming Events this week:\n");
                 //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
                 format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(format, realDateTime.getCalculationFormat(), 2);
                 break;
             }
             default: {
-                System.out.println("\nUpcoming Events this month:\n");
+                Validate.println("\nUpcoming Events this month:\n");
                 //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
                 format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(format, realDateTime.getCalculationFormat(),1);
@@ -228,21 +228,21 @@ public class OurCalendar {
 
         switch (choice) {
             case 1: {
-                System.out.println("\nOld Events from today:\n");
+                Validate.println("\nOld Events from today:\n");
                 //from the realDateTime format we are changing the time to 00:00
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format,1);
                 break;
             }
             case 2: {
-                System.out.println("\nOld Events from this week:\n");
+                Validate.println("\nOld Events from this week:\n");
                 //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, 3);
                 break;
             }
             default: {
-                System.out.println("\nOld Events from this month:\n");
+                Validate.println("\nOld Events from this month:\n");
                 //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
@@ -263,16 +263,16 @@ public class OurCalendar {
         Project closestDeadline = (Project) closestDeadlineSearch(formatLive);
         Appointment closestAppointment = (Appointment) searchNextAppointment(formatLive);
         if (closestAppointment == null && closestDeadline == null){
-            System.out.println("You dont have any reminders");
+            Validate.println("You dont have any reminders");
         }else if (closestAppointment == null){
-            System.out.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
+            Validate.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
         }else if(closestDeadline == null){
-            System.out.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
+            Validate.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
         }else {
             if (closestAppointment.getDateTime().getCalculationFormat() < closestDeadline.getDeadline().getCalculationFormat()){
-                System.out.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
+                Validate.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
             }else {
-                System.out.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
+                Validate.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
             }
         }
     }

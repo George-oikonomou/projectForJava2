@@ -29,7 +29,7 @@ public class Appointment extends Event {
 
         do {
             //Picking one option to change a field
-            System.out.println("""
+            Validate.println("""
                     Do you want to Change:
                     1) Title
                     2) Description
@@ -39,23 +39,23 @@ public class Appointment extends Event {
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1: {
-                    System.out.println("\nType the new title:\t");
+                    Validate.println("\nType the new title:\t");
                     //print the input stream
                     setTitle(Validate.strInput());
                     break;
                 }
                 case 2: {
-                    System.out.print("\nType the new description:\t");
+                    Validate.print("\nType the new description:\t");
                     setDescription(Validate.strInput());
                     break;
                 }
                 case 3: {
-                    System.out.print("\nType the new date & time:\t");
+                    Validate.print("\nType the new date & time:\t");
                     setDateTime(OurDateTime.Functionality.dateAndTime(true));
                     break;
                 }
                 case 4: {
-                    System.out.print("\nType the new duration:\t");
+                    Validate.print("\nType the new duration:\t");
                     setDuration(Validate.checkAndReturnIntBetween(15, 6 * 60));  //duration is minimum 15 minutes & maximum 6 hours
                     break;
                 }
