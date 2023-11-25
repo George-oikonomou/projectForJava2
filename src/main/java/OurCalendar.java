@@ -209,8 +209,9 @@ public class OurCalendar {
                 else
                     System.out.println("\nUpcoming Events this month:\n");
                 //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
-                if (realDateTime.getMonth() != 12)   //if its December, we are changing the year and the month becomes January
+                if (realDateTime.getMonth() == 12)   //if its December, we are changing the year and the month becomes January
                     format = format + 89000000 - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                    //+89000000 changes the year by one and the month becomes January
                 else
                     format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 System.out.println(format);
@@ -253,9 +254,9 @@ public class OurCalendar {
         long format = realDateTime.getCalculationFormat();
         for (Event event : events) {
             if (event instanceof Project && !((Project) event).isFinished()) {
-                if (choice == 7 && format < ((Project) event).getDeadline().getCalculationFormat())
+                if (choice == 8 && format < ((Project) event).getDeadline().getCalculationFormat())
                     System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
-                else if (choice == 8 && format >= ((Project) event).getDeadline().getCalculationFormat())
+                else if (choice == 9 && format >= ((Project) event).getDeadline().getCalculationFormat())
                     System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
             }
         }
