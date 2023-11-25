@@ -42,7 +42,7 @@ public class ICSFile {
                     if (event.getProperty("CATEGORIES") != null) {
                         categoryVal = event.getProperty("CATEGORIES").getValue();
                     } else {
-                        System.out.println("Error: File does not have 'CATEGORIES' property file cannot be read");
+                        Validate.println("Error: File does not have 'CATEGORIES' property file cannot be read");
                         return;
                     }
                     String dateTime;
@@ -53,7 +53,7 @@ public class ICSFile {
                     String description = event.getDescription().getValue();
 
                     if (title == null || dateTime == null || description == null) {
-                        System.out.println("Error reading from file");
+                        Validate.println("Error reading from file");
                         return;
                     }
 
@@ -72,7 +72,7 @@ public class ICSFile {
                                 String due = dueProperty.getValue();
                                 ourDue = OurDateTime.Functionality.ICSFormatToOurDateTime(due);
                             } else {
-                                System.out.println("could not find due property in a project");
+                                Validate.println("could not find due property in a project");
                                 return;
                             }
                             String status = event.getStatus().getValue();
@@ -89,7 +89,7 @@ public class ICSFile {
                                 String duration = durationProperty.getValue();
                                 ourDuration = Appointment.ICSFormatToDuration(duration);
                             } else {
-                                System.out.println("could not find due property in a project");
+                                Validate.println("could not find due property in a project");
                                 return;
                             }
                             Appointment newAppointment = new Appointment(ourDateTime, title, description, ourDuration);
@@ -99,7 +99,7 @@ public class ICSFile {
                 }
             }
         }catch (IOException | ParserException e){
-            System.out.println("error reading from the file");
+            Validate.println("error reading from the file");
         }
         App.calendar.setEvents(events);
     }
@@ -112,9 +112,9 @@ public class ICSFile {
              */
             File file = new File(filePath);
             if (file.createNewFile()) {
-                System.out.println("File created " + file.getName());
+                Validate.println("File created " + file.getName());
             } else {
-                System.out.println("File already exists. Overwriting");
+                Validate.println("File already exists. Overwriting");
             }
 
             FileWriter fileWriter = new FileWriter(file);
@@ -158,10 +158,10 @@ public class ICSFile {
             }
             fileWriter.write("END:VCALENDAR\n");
             fileWriter.close();
-            System.out.println("successfully exported events to " + filePath);
+            Validate.println("successfully exported events to " + filePath);
 
         } catch (IOException e) {
-            System.out.println("error could not save file");
+            Validate.println("error could not save file");
         }
     }
 
