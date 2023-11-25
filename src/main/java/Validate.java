@@ -23,12 +23,9 @@ public class Validate {  //Checking the input value
 
         do {
             try {
-                if (temp < param1 || temp > param2) {
+                temp = scanner.nextInt();
+                if (temp < param1 || temp > param2)
                     Validate.println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
-                    temp = scanner.nextInt();
-                } else {
-                    scanner.nextLine();
-                }
             } catch (Exception e) {
                 Validate.println("You didnt type a number.Try again.");
                 scanner.nextLine();
@@ -37,7 +34,6 @@ public class Validate {  //Checking the input value
 
         return temp;
     }
-
 
     //Making an object DateTime & checking the value of date & time for the deadline
     public static OurDateTime deadline (OurDateTime dateTime) {
