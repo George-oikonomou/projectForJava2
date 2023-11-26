@@ -10,19 +10,17 @@ public class Event {
         this.description = description;
     }
 
-    public OurCalendar getOurCalendar() {
-        return ourCalendar;
-    }
-    public void setOurCalendar(OurCalendar ourCalendar) {this.ourCalendar = ourCalendar;}
+    public OurCalendar getOurCalendar() { return ourCalendar; }
+    public void setOurCalendar(OurCalendar ourCalendar) { this.ourCalendar = ourCalendar; }
 
-    public OurDateTime getDateTime() {return dateTime;}
-    public void setDateTime(OurDateTime dateTime) {this.dateTime = dateTime;}
+    public OurDateTime getDateTime() { return dateTime; }
+    public void setDateTime(OurDateTime dateTime) { this.dateTime = dateTime; }
 
-    public String getTitle() {return title;}
-    public void setTitle(String title) {this.title = title;}
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     protected void setTitlePrompt() {
         Validate.print("\nType the new title:\t");

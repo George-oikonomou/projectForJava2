@@ -42,49 +42,49 @@ public class OurDateTime {
         setCalculationFormat();
     }
 
-    public int getYear() {return year;}
+    public int getYear() { return year; }
     public void setYear(int year) {
         this.year = year;
         setDate();
     }
 
-    public int getMonth() {return month;}
+    public int getMonth() { return month; }
     public void setMonth(int month) {
         this.month = month;
         setDate();
     }
 
-    public int getDay() {return day;}
+    public int getDay() { return day; }
     public void setDay(int day) {
         this.day = day;
         setDate();
     }
 
-    public int getHour() {return hour;}
+    public int getHour() { return hour; }
     public void setHour(int hour) {
         this.hour = hour;
         setTime();
     }
 
-    public int getMinute() {return minute;}
+    public int getMinute() { return minute; }
     public void setMinute(int minute) {
         this.minute = minute;
         setTime();
     }
 
-    public String getDate() {return date;}
+    public String getDate() { return date; }
     public void setDate() {
         this.date = Validate.date(year,month,day);
         setCalculationFormat();
     }
 
-    public String getTime() {return time;}
+    public String getTime() { return time; }
     public void setTime() {
         this.time = Validate.time(minute,hour);
         setCalculationFormat();
     }
 
-    public Long getCalculationFormat() {return CalculationFormat;}
+    public Long getCalculationFormat() { return CalculationFormat; }
     public void setCalculationFormat() {
         String day = String.format("%02d", getDay());
         String month = String.format("%02d", getMonth());
@@ -96,11 +96,11 @@ public class OurDateTime {
         this.CalculationFormat = Long.parseLong(date + time);
     }
 
-    public DayOfWeek getDayOfWeek() {return dayOfWeek;}
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {this.dayOfWeek = dayOfWeek;}
+    public DayOfWeek getDayOfWeek() { return dayOfWeek; }
+    public void setDayOfWeek(DayOfWeek dayOfWeek) { this.dayOfWeek = dayOfWeek; }
 
     @Override
-    public String toString(){return getDate() + " " + getTime();}
+    public String toString(){ return getDate() + " " + getTime(); }
 
     public static class Functionality{
         public static OurDateTime dateAndTime(boolean choice) {

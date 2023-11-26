@@ -8,8 +8,8 @@ public class Appointment extends Event {
         this.durationInMin = durationInMin;
     }
 
-    public int getDuration() {return durationInMin;}
-    public void setDuration(int durationInMin) {this.durationInMin = durationInMin;}
+    public int getDuration() { return durationInMin; }
+    public void setDuration(int durationInMin) { this.durationInMin = durationInMin; }
 
     private void setDurationPrompt() {
         Validate.print("\nType the new duration:\t");

@@ -120,9 +120,9 @@ public class Validate {  //Checking the input value
        return title;
     }
 
-    public static void println(Object obj) {System.out.println(obj);}
-    public static void print(Object obj) {System.out.print(obj);}
-    public static void printf(String format, Object... args) {System.out.printf(format, args);}
+    public static void println(Object obj) { System.out.println(obj); }
+    public static void print(Object obj) { System.out.print(obj); }
+    public static void printf(String format, Object... args) { System.out.printf(format, args); }
 
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
 }
