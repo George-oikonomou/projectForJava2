@@ -148,6 +148,4 @@ public class Validate {  //Checking the input value
         Event event = ourCalendar.eventSearch(title, type);
         return event != null;
     }
-
-
 }

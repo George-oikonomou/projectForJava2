@@ -27,48 +27,37 @@ public class App {
 
             choice = Validate.checkAndReturnIntBetween(1, 10);
             switch (choice) {
-                case 1:
-                    calendar.addEvents();
-                    break;
-                case 2:
-                    calendar.editEvent();
-                    break;
-                case 3:
-                    calendar.changeProjectCondition();
-                    break;
-                case 4:
-                    file.StoreEvents(calendar.getEvents());
-                    break;
-                case 5:
+                case 1 -> calendar.addEvents();
+                case 2 -> calendar.editEvent();
+                case 3 -> calendar.changeProjectCondition();
+                case 4 -> file.StoreEvents(calendar.getEvents());
+                case 5 -> {
                     file.LoadEvents();
                     ArrayList<Event> eventsToPrint = calendar.getEvents();
                     for (Event event : eventsToPrint) {
                         Validate.println(event);
                     }
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     Validate.println("""
-                print the upcoming events:
-                for today (1)
-                for this week (2)
-                for this month (3)""");
+                            print the upcoming events:
+                            for today (1)
+                            for this week (2)
+                            for this month (3)""");
                     option = Validate.checkAndReturnIntBetween(1, 3);
                     calendar.printUpcomingEvents(option);
-                    break;
-                case 7:
+                }
+                case 7 -> {
                     Validate.println("""
-                print the old events:
-                from today (1)
-                from this week (2)
-                from this month (3)""");
+                            print the old events:
+                            from today (1)
+                            from this week (2)
+                            from this month (3)""");
                     option = Validate.checkAndReturnIntBetween(1, 3);
                     calendar.printOldEvents(option);
-                    break;
-                case 8, 9:
-                    calendar.printUnfinishedProject(choice);
-                    break;
+                }
+                case 8, 9 -> calendar.printUnfinishedProject(choice);
             }
-
         }while(choice != 10);
         TimeService.stop();
     }

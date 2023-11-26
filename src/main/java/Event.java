@@ -43,16 +43,12 @@ public class Event {
     protected void setTitlePrompt() {
         Validate.print("\nType the new title:\t");
         ourCalendar = getOurCalendar();
-        int objectType;
-        if (this instanceof Appointment) {
-            objectType = 2;
-        } else if (this instanceof Project) {
-            objectType = 3;
-        } else{
-            objectType = 1;
-        }
-        setTitle(Validate.Title(ourCalendar, objectType));
 
+        int objectType = (this instanceof Appointment)
+                   ? 2 : (this instanceof Project)
+                   ? 3 : 1;
+
+        setTitle(Validate.Title(ourCalendar, objectType));
     }
 
     protected void setDescriptionPrompt() {

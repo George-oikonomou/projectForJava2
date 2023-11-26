@@ -4,15 +4,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class OurDateTime {
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
-    private String date;
-    private String time;
+    private int year, month ,day ,hour ,minute;
+    private String date, time;
     private DayOfWeek dayOfWeek;
     private long CalculationFormat;
 
@@ -27,21 +21,10 @@ public class OurDateTime {
         setCalculationFormat();
 
     }
-    /**
-     * constructor that creates a OurDateTime but for events that do not have time
-     * @param year year of event
-     * @param month month of event
-     * @param day day of event
-     */
+
+     // constructor that creates a OurDateTime but for events that do not have time
     public OurDateTime(int year, int month, int day){
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.hour = 0;
-        this.minute = 0;
-        this.date = Validate.date(year,month,day);
-        this.time = Validate.time(hour,minute);
-        setCalculationFormat();
+        this(year,month,day,0,0);
     }
     /**
      * constructor that creates a OurDateTime object that contains the current
@@ -114,16 +97,16 @@ public class OurDateTime {
     }
 
     public void setCalculationFormat() {
-        String day = (getDay() < 10) ? "0" + getDay() : String.valueOf( getDay());
-        String month = (getMonth() < 10) ? "0" + getMonth() : String.valueOf(getMonth());
-        String hour = (getHour() < 10) ? "0" + getHour() : String.valueOf(getHour());
-        String minute = ( getMinute() < 10) ? "0" +  getMinute() : String.valueOf(getMinute());
+        String day = String.format("%02d", getDay());
+        String month = String.format("%02d", getMonth());
+        String hour = String.format("%02d", getHour());
+        String minute = String.format("%02d", getMinute());
 
         String date = getYear() + month + day;
         String time = hour + minute;
-        String dateTimeString = date + time;
-        this.CalculationFormat = Long.parseLong(dateTimeString);
+        this.CalculationFormat = Long.parseLong(date + time);
     }
+
 
     @Override
     public String toString(){
