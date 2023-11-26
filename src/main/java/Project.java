@@ -7,16 +7,12 @@ public class Project extends Event{
         this.deadline = deadline;
     }
 
-    public OurDateTime getDeadline() {
-        return deadline;
-    }
-
+    public OurDateTime getDeadline() {return deadline;}
     public void setDeadline(OurDateTime deadline) {this.deadline = deadline;}
 
     public boolean isFinished() {
         return isFinished;
     }
-
     public void setFinished(boolean finished) {
         isFinished = finished;
     }

@@ -1,25 +1,21 @@
 import java.time.Duration;
 
 public class Appointment extends Event {
-    private int durationInMin;                     //how much the date will last
+    private int durationInMin;//how much the date will last
 
     public Appointment(OurDateTime dateTime, String title, String description, int durationInMin) {
         super(dateTime, title, description);
         this.durationInMin = durationInMin;
     }
 
-    public int getDuration() {
-        return durationInMin;
-    }
-
-    public void setDuration(int durationInMin) {
-        this.durationInMin= durationInMin;
-    }
+    public int getDuration() {return durationInMin;}
+    public void setDuration(int durationInMin) {this.durationInMin = durationInMin;}
 
     private void setDurationPrompt() {
         Validate.print("\nType the new duration:\t");
         setDuration(Validate.checkAndReturnIntBetween(15, 6 * 60));  //duration is minimum 15 minutes & maximum 6 hours
     }
+
     public static int ICSFormatToDuration(String string) {
         Duration duration = Duration.parse(string);
         int hours = duration.toHoursPart();
@@ -27,6 +23,7 @@ public class Appointment extends Event {
         minutes = minutes + hours * 60;
         return minutes;
     }
+
     @Override
     public void editEvent() {
         int option;
@@ -49,6 +46,7 @@ public class Appointment extends Event {
             }
         } while (option != 5);
     }
+
     @Override
     public String toString() {
         return """
