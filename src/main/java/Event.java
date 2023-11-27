@@ -10,56 +10,32 @@ public class Event {
         this.description = description;
     }
 
-    public OurCalendar getOurCalendar() {
-        return ourCalendar;
-    }
-    public void setOurCalendar(OurCalendar ourCalendar) {
-        this.ourCalendar = ourCalendar;
-    }
-    public OurDateTime getDateTime() {
-        return dateTime;
-    }
+    public OurCalendar getOurCalendar() { return ourCalendar; }
+    public void setOurCalendar(OurCalendar ourCalendar) { this.ourCalendar = ourCalendar; }
 
-    public void setDateTime(OurDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
+    public OurDateTime getDateTime() { return dateTime; }
+    public void setDateTime(OurDateTime dateTime) { this.dateTime = dateTime; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     protected void setTitlePrompt() {
         Validate.print("\nType the new title:\t");
         ourCalendar = getOurCalendar();
-        int objectType;
-        if (this instanceof Appointment) {
-            objectType = 2;
-        } else if (this instanceof Project) {
-            objectType = 3;
-        } else{
-            objectType = 1;
-        }
+
+        int objectType = (this instanceof Appointment)
+                   ? 2 : (this instanceof Project)
+                   ? 3 : 1;
+
         setTitle(Validate.Title(ourCalendar, objectType));
-
     }
-
     protected void setDescriptionPrompt() {
         Validate.print("\nType the new description:\t");
         setDescription(Validate.strInput());
     }
-
     protected void setDateTimePrompt(boolean withTime) {
         Validate.print("\nType the new date & time:\t");
         setDateTime(OurDateTime.Functionality.dateAndTime(withTime));

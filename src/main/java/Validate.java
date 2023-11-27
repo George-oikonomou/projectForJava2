@@ -6,12 +6,9 @@ public class Validate {  //Checking the input value
     public static String strInput() {
         Scanner scanner = new Scanner(System.in);
         String string;
-        do {
-            string = scanner.nextLine();
-            if (string.isEmpty()) {
-                Validate.println("You typed something wrong. Try again.");
-            }
-        } while(string.isEmpty());
+
+        while ( (string = scanner.nextLine()).isEmpty() )
+            Validate.println("You typed something wrong. Try again.");
 
         return string;
     }
@@ -103,27 +100,17 @@ public class Validate {  //Checking the input value
         return new OurDateTime(year, month, day, hour, minute);
     }
 
-    public static String time(int minute, int hour) {
-        return String.format("%02d:%02d", hour, minute);
+    public static String time(int minute, int hour) { return String.format("%02d:%02d", hour, minute); }
+    public static String date(int year, int month, int day) { return String.format("%02d/%02d/%d", day, month, year); }
+
+    public static int day(int month, int year, int day) {
+        return switch (month) {
+            case 1, 3, 5, 7, 8, 10, 12 -> checkAndReturnIntBetween(day, 31);
+            case 2 -> checkAndReturnIntBetween(day, (year % 4 == 0) ? 29 : 28);
+            default -> checkAndReturnIntBetween(day, 30);
+        };
     }
 
-    public static String date(int year, int month, int day) {
-        return String.format("%02d/%02d/%d", day, month, year);
-    }
-
-    public static int day(int month, int year, int day){
-        if (month == 1 || month == 3 || month == 5 || month == 6 || month == 8 || month == 10 || month == 12) {
-            return  checkAndReturnIntBetween(day, 31);
-        } else if (month != 2) {
-            return checkAndReturnIntBetween(day, 30);
-        } else {
-            if (year % 4 == 0) {
-                return checkAndReturnIntBetween(day, 29);
-            } else {
-                return checkAndReturnIntBetween(day, 28);
-            }
-        }
-    }
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();
        while (checkIfTitleExists(calendar, title, type)) {
@@ -133,21 +120,9 @@ public class Validate {  //Checking the input value
        return title;
     }
 
-    public static void println(Object obj) {
-        System.out.println(obj);
-    }
-    public static void print(Object obj) {
-        System.out.print(obj);
-    }
+    public static void println(Object obj) { System.out.println(obj); }
+    public static void print(Object obj) { System.out.print(obj); }
+    public static void printf(String format, Object... args) { System.out.printf(format, args); }
 
-    public static void printf(String format, Object... args) {
-        System.out.printf(format, args);
-    }
-
-    public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) {
-        Event event = ourCalendar.eventSearch(title, type);
-        return event != null;
-    }
-
-
+    public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
 }

@@ -174,9 +174,8 @@ public class OurCalendar {
         return dateTime1.getCalculationFormat() - dateTime2.getCalculationFormat();
     }
     private static void printEvents(ArrayList<Event> events) {
-        for (Event event : events) {
+        for (Event event : events)
             Validate.println(event.toString());
-        }
     }
 
     private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
@@ -285,13 +284,8 @@ public class OurCalendar {
         }
     }
 
-    public ArrayList<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(ArrayList<Event> events) {
-        this.events = events;
-    }
+    public ArrayList<Event> getEvents() { return events; }
+    public void setEvents(ArrayList<Event> events) { this.events = events; }
 
 
     // TODO: 11/11/23 allow multiple titles of events but only if they are different types
