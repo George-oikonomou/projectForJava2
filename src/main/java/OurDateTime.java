@@ -101,7 +101,7 @@ public class OurDateTime {
         public static OurDateTime dateAndTime() {
             int year, month, day,hour,minute;
             //Year:
-            Validate.print("\nDATE\nYear:\t");
+            Validate.print("\nDATE\n\tYear:\t");
             year =  Validate.checkAndReturnIntBetween(2023,2024);
             //Month:
             Validate.print("\tMonth:\t");
@@ -111,7 +111,7 @@ public class OurDateTime {
             day = Validate.day(month ,year, 1);
 
             //hour
-            Validate.print("\nTIME\nHour:\t");
+            Validate.print("\nTIME\n\tHour:\t");
             hour = Validate.checkAndReturnIntBetween(0, 23);
             //minute
             Validate.print("\tMinute:\t");
