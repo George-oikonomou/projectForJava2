@@ -3,28 +3,30 @@ import gr.hua.dit.oop2.calendar.TimeTeller;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 
-// TODO: 8/11/23 DECIDE IF YOU WANT TO HAVE 5 DIFF LISTS OR 1
-//  THIS IS IMPLEMENTATION FOR 1 LIST SEE 1.3 ON PROJECT AND DISCORD
-
 public class OurCalendar {
 
-    private ArrayList <Event> events;           //has all the events
-    private final TimeTeller teller;
+    private ArrayList <Event> events;//has all the events
 
     public OurCalendar() {
         this.events = new ArrayList<>();
-        this.teller = TimeService.getTeller();
+        TimeTeller teller = TimeService.getTeller();
     }
 
+    public ArrayList<Event> getEvents() { return events; }
+    public void setEvents(ArrayList<Event> events) { this.events = events; }
+
     public void addEvents() {
-        int choice;
+        int choice, duration;
         String title, description;
-        int duration;
         OurDateTime datetime1, deadline;
 
         //NEW EVENT:
-        Validate.println("Make a new:\n1) Event\n2) Appointment\n3) Project\n");
-        choice = Validate.checkAndReturnIntBetween(1, 3);
+        Validate.println("""
+                Make a new:
+                    1) Appointment
+                    2) Project
+                """);
+        choice = Validate.checkAndReturnIntBetween(1, 2);
         //Title
         Validate.print("\nTitle:\t");
         title = Validate.Title(this, choice);
@@ -33,118 +35,79 @@ public class OurCalendar {
         description = Validate.strInput();
 
         //Adding one event to the arraylist
-        switch (choice) {
-            case 1: {
-                //Date & Time
-                String option;
+        datetime1 = OurDateTime.Functionality.dateAndTime();
+        Validate.println("");
+        if (choice == 1) {//Date & Time
 
-                Validate.println("\nDo you want to add a time for this event [Y/N]");
+            Validate.print("Duration:\t");
+            duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
+            Validate.println("");
 
-                while (true) {
-                    option = Validate.strInput();
-                    if (option.equalsIgnoreCase("Y")) {
-                        datetime1 = OurDateTime.Functionality.dateAndTime(true);
-                        break;
-                    } else if (option.equalsIgnoreCase("N")) {
-                        datetime1 = OurDateTime.Functionality.dateAndTime(false);
-                        break;
-                    } else {
-                        Validate.println("Wrong input try again:\n");
-                    }
-                }
-                Validate.println("");
+            Appointment newAppointment = new Appointment(datetime1, title, description, duration);
+            events.add(newAppointment);
+            newAppointment.setOurCalendar(this);
+        } else {//Date & Time
 
-                Event newEvent = new Event(datetime1, title, description);
-                events.add(newEvent);
-                newEvent.setOurCalendar(this);
-                break;
-            }
-            case 2: {
+            Validate.print("Deadline:\t");
+            deadline = Validate.deadline(datetime1);
+            Validate.println("");
 
-                //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime(true);
-                Validate.println("");
-
-                Validate.print("Duration:\t");
-                duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
-                Validate.println("");
-
-                Appointment newAppointment = new Appointment(datetime1, title, description, duration);
-                events.add(newAppointment);
-                newAppointment.setOurCalendar(this);
-                break;
-            }
-
-            default: {
-
-                //Date & Time
-                datetime1 = OurDateTime.Functionality.dateAndTime(true);
-                Validate.println("");
-
-                Validate.print("Deadline:\t");
-                deadline = Validate.deadline(datetime1);
-                Validate.println("");
-
-                Project newProject = new Project(datetime1, title, description, deadline);
-                events.add(newProject);
-                newProject.setOurCalendar(this);
-                break;
-            }
+            Project newProject = new Project(datetime1, title, description, deadline);
+            events.add(newProject);
+            newProject.setOurCalendar(this);
         }
     }
 
     public void editEvent() {
         int choice;
-        boolean flag = false;
         String title;
-        Event searchedEvent = null;
+        Event searchedEvent;
 
         do {
-            Validate.println("Change:\n1) Event\n2) Appointment\n3) Project\n4) Exit");
+            Validate.println("""
+                    Change:
+                        1) Appointment
+                        2) Project
+                        3) Exit""");
             //Choosing one of the above options
-            choice = Validate.checkAndReturnIntBetween(1, 4);
+            choice = Validate.checkAndReturnIntBetween(1, 3);
             //Printing all the events, appointments or projects:
             for (Event event : events) {
-                if (choice == 3 && event instanceof Project) {
+                if (choice == 2 && event instanceof Project || choice == 1 && event instanceof Appointment )
                     Validate.println(event);
-                } else if (choice == 2 && event instanceof Appointment) {
-                    Validate.println(event);
-                } else if (choice == 1 && !(event instanceof Appointment) && !(event instanceof Project)) {
-                    Validate.println(event.toString());
-                } else if (choice == 4) {
+                else if (choice == 3)
                     return;
-                }
             }
 
             Validate.println("Type the title of the event you want to change:");
             //Finding the title of the event:
-            while (!flag) {
+            while (true) {
                 title = Validate.strInput();
                 searchedEvent = eventSearch(title, choice);
-                if (searchedEvent == null) {
+                if (searchedEvent == null)
                     Validate.println("You typed wrong title. Try again.");
-                } else {
-                    flag = true;
-                }
+                else
+                   break;
             }
             //Changing the fields of the chosen event:
             searchedEvent.editEvent();
             Validate.println("");
-        } while (choice != 4);
+        } while (choice != 3);
     }
 
-
-    public void changeProjectCondition(){
+    public void changeProjectCondition() {
         Validate.println("Please provide the name of the Project you wish to update its status");
-        String title = Validate.strInput();
-        Event event = eventSearch(title, 3);
 
-        if(event instanceof Project project){
-            boolean status = project.isFinished();
-            project.setFinished(!status);
-            Validate.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
-        }else{
-            throw new IllegalArgumentException("Project does not exist");
+        while (true) {
+            String title = Validate.strInput();
+            Event event = eventSearch(title, 2);
+
+            if (event instanceof Project project) {
+                project.setFinished(!project.isFinished());
+                Validate.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
+                return; // Exit the method if a valid project name is provided
+            }
+            Validate.println("Project does not exist. Please try again.");
         }
     }
 
@@ -173,7 +136,7 @@ public class OurCalendar {
 
         return dateTime1.getCalculationFormat() - dateTime2.getCalculationFormat();
     }
-    private static void printEvents(ArrayList<Event> events) {
+    public static void printEvents(ArrayList<Event> events) {
         for (Event event : events)
             Validate.println(event.toString());
     }
@@ -284,27 +247,18 @@ public class OurCalendar {
         }
     }
 
-    public ArrayList<Event> getEvents() { return events; }
-    public void setEvents(ArrayList<Event> events) { this.events = events; }
-
-
-    // TODO: 11/11/23 allow multiple titles of events but only if they are different types
     public Event eventSearch(String title, int type) {
-        for (Event event : getEvents()) {
-            if (event.getTitle().equals(title)) {
-                if ((type == 1 && !(event instanceof Appointment) && !(event instanceof Project)) ||
-                        (type == 2 && event instanceof Appointment) ||
-                        (type == 3 && event instanceof Project)) {
+        for (Event event : events)
+            if (event.getTitle().equals(title))
+                if ((type == 1 && event instanceof Appointment) || (type == 2 && event instanceof Project))
                     return event;
-                }
-            }
-        }
+
         return null;
     }
     public Event closestDeadlineSearch(long time){
         long closestDeadline = Long.MAX_VALUE;
         Event closestDeadlineProject = null;
-        for ( Event event : getEvents()){
+        for ( Event event : events){
             if (event instanceof Project ){
                 if ((((Project) event).getDeadline().getCalculationFormat() > time && (((Project) event).getDeadline().getCalculationFormat() < closestDeadline))){
                     closestDeadlineProject = event;
@@ -314,15 +268,12 @@ public class OurCalendar {
         }
         return closestDeadlineProject;
     }
-
     public Event searchNextAppointment(long time){
-        for (Event event : getEvents()){
-            if (event instanceof Appointment){
-                if (event.getDateTime().getCalculationFormat() > time){
+        for (Event event : events)
+            if (event instanceof Appointment)
+                if (event.getDateTime().getCalculationFormat() > time)
                     return event;
-                }
-            }
-        }
+
         return null;
     }
 }

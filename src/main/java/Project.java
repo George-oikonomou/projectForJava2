@@ -21,8 +21,7 @@ public class Project extends Event{
     public void editEvent() {
         int option;
 
-        do {
-            //Picking one option to change a field
+        do {//Picking one option to change a field
             Validate.println("""
                     Do you want to Change:
                     1) Title
@@ -34,7 +33,7 @@ public class Project extends Event{
             switch (option) {
                 case 1 -> setTitlePrompt();
                 case 2 -> setDescriptionPrompt();
-                case 3 -> setDateTimePrompt(true);
+                case 3 -> setDateTimePrompt();
                 case 4 -> setDeadlinePrompt();
             }
         } while (option != 5);

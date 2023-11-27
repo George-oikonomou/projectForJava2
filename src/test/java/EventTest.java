@@ -7,19 +7,19 @@ public class EventTest {
 
     @Test
     public void testSetAndGetDateTime() {
-        Event event = new Event(dateTime, "title", "description");
+        Appointment appointment = new Appointment(dateTime, "title", "description",40);
         OurDateTime newDateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        event.setDateTime(newDateTime);
-        assertEquals(newDateTime, event.getDateTime());
+        appointment.setDateTime(newDateTime);
+        assertEquals(newDateTime, appointment.getDateTime());
     }
 
     @Test
     public void testSetAndGetTitleAndDescription() {
-        Event event = new Event(dateTime, "title", "description");
-        event.setTitle("Conference");
-        event.setDescription("International tech conference");
+        Appointment appointment = new Appointment(dateTime, "title", "description",40);
+        appointment.setTitle("Conference");
+        appointment.setDescription("International tech conference");
 
-        assertEquals("Conference", event.getTitle());
-        assertEquals("International tech conference", event.getDescription());
+        assertEquals("Conference", appointment.getTitle());
+        assertEquals("International tech conference", appointment.getDescription());
     }
 }

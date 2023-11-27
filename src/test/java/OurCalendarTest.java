@@ -61,8 +61,8 @@ public class OurCalendarTest {
         // Arrange
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> expectedEvents = new ArrayList<>();
-        expectedEvents.add(new Event(dateTime, "title", "description"));
-        expectedEvents.add(new Event(dateTime, "title2", "description"));
+        expectedEvents.add(new Project(dateTime,"title","description",dateTime));
+        expectedEvents.add(new Appointment(dateTime, "title2", "description",60));
 
         ourCalendar.setEvents(expectedEvents);
         ArrayList<Event> actualEvents = ourCalendar.getEvents();
@@ -74,11 +74,11 @@ public class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events = new ArrayList<>();
 
-        Event expectedEvent =new Event(dateTime, "title", "description");
+        Project expectedEvent =new Project(dateTime, "title", "description",dateTime);
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 
-        Event actualEvent = ourCalendar.eventSearch("title", 1);
+        Event actualEvent = ourCalendar.eventSearch("title", 2);
 
         assertEquals(expectedEvent,actualEvent);
     }
@@ -87,7 +87,7 @@ public class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events =new ArrayList<>();
 
-        Event expectedEvent =new Event(dateTime, "titleOfSomethingDifferent", "description");
+        Project expectedEvent =new Project(dateTime, "titleOfSomethingDifferent", "description",dateTime);
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 

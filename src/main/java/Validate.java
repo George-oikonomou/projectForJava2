@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Validate {  //Checking the input value
+public class Validate {//Checking the input value
 
     //Checking if the String is empty
     public static String strInput() {
@@ -33,7 +33,7 @@ public class Validate {  //Checking the input value
     }
 
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline (OurDateTime dateTime) {
+    public static OurDateTime deadline (OurDateTime dateTime) {//todo improve and fix bugs
         int year, month, day, hour, minute;
 
 
