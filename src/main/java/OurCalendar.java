@@ -35,10 +35,9 @@ public class OurCalendar {
         description = Validate.strInput();
 
         //Adding one event to the arraylist
-        datetime1 = OurDateTime.Functionality.dateAndTime();
+        datetime1 = OurDateTime.Functionality.dateAndTime(); //Date & Time
         Validate.println("");
-        if (choice == 1) {//Date & Time
-
+        if (choice == 1) {
             Validate.print("Duration:\t");
             duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
             Validate.println("");
@@ -47,7 +46,6 @@ public class OurCalendar {
             events.add(newAppointment);
             newAppointment.setOurCalendar(this);
         } else {//Date & Time
-
             Validate.print("Deadline:\t");
             deadline = Validate.deadline(datetime1);
             Validate.println("");
