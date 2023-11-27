@@ -14,7 +14,7 @@ public class Project extends Event{
     public void setFinished(boolean finished) { isFinished = finished; }
 
     private void setDeadlinePrompt() {
-        Validate.print("\nType the new duration:\t");
+        Validate.print("\nType the new deadline:\t");
         setDeadline(Validate.deadline(getDateTime()));
     }
     @Override
