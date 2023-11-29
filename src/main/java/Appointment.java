@@ -8,8 +8,8 @@ public class Appointment extends Event {
 
     public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
         super(dateTime, title, description);
-        setDurationInMin(dateTime,endDate);
         this.endDate = endDate;
+        setDurationInMin(dateTime,endDate);
     }
 
 
