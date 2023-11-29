@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Validate {  //Checking the input value
+public class Validate {//Checking the input value
 
     //Checking if the String is empty
     public static String strInput() {
@@ -8,32 +8,32 @@ public class Validate {  //Checking the input value
         String string;
 
         while ( (string = scanner.nextLine()).isEmpty() )
-            Validate.println("You typed something wrong. Try again.");
+            Validate.println("input can't be empty. Try again.");
 
         return string;
     }
 
     //Checking if the integer has valid value
     public static int checkAndReturnIntBetween(int param1, int param2) {
-        Scanner scanner = new Scanner(System.in);
         int temp = -1;
 
         do {
             try {
-                temp = scanner.nextInt();
+                String input = strInput();  // Use the strInput method to get a valid string input
+                temp = Integer.parseInt(input.trim());
+
                 if (temp < param1 || temp > param2)
-                    Validate.println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
-            } catch (Exception e) {
-                Validate.println("You didnt type a number.Try again.");
-                scanner.nextLine();
+                    System.out.println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
+            } catch (NumberFormatException e) {
+                System.out.println("Your input is not valid. Provide a valid number. Try again.\n");
             }
-        }while (temp < param1 || temp > param2);
+        } while (temp < param1 || temp > param2);
 
         return temp;
     }
 
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline (OurDateTime dateTime) {
+    public static OurDateTime deadline (OurDateTime dateTime) {//todo improve and fix bugs
         int year, month, day, hour, minute;
 
 

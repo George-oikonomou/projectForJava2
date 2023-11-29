@@ -58,12 +58,6 @@ public class ICSFile {
                     }
 
                     switch (categoryVal) {
-                        case "EVENT" -> {
-                            OurDateTime ourDateTime = OurDateTime.Functionality.ICSFormatToOurDateTime(dateTime);
-                            Event newEvent = new Event(ourDateTime, title, description);
-                            events.add(newEvent);
-
-                        }
                         case "PROJECT" -> {
                             OurDateTime ourDateTime = OurDateTime.Functionality.ICSFormatToOurDateTime(dateTime);
                             Property dueProperty = event.getProperty("DUE");

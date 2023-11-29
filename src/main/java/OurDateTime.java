@@ -21,11 +21,6 @@ public class OurDateTime {
         setCalculationFormat();
     }
 
-     // constructor that creates a OurDateTime but for events that do not have time
-    public OurDateTime(int year, int month, int day){
-        this(year,month,day,0,0);
-    }
-
     /**
      * constructor that creates a OurDateTime object that contains the current
      */
@@ -103,10 +98,10 @@ public class OurDateTime {
     public String toString(){ return getDate() + " " + getTime(); }
 
     public static class Functionality{
-        public static OurDateTime dateAndTime(boolean choice) {
-            int year, month, day;
+        public static OurDateTime dateAndTime() {
+            int year, month, day,hour,minute;
             //Year:
-            Validate.print("\nDATE\nYear:\t");
+            Validate.print("\nDATE\n\tYear:\t");
             year =  Validate.checkAndReturnIntBetween(2023,2024);
             //Month:
             Validate.print("\tMonth:\t");
@@ -115,39 +110,34 @@ public class OurDateTime {
             Validate.print("\tDay:\t");
             day = Validate.day(month ,year, 1);
 
-            if(choice) {
-                int hour,minute;
-                //hour
-                Validate.print("\nTIME\nHour:\t");
-                hour = Validate.checkAndReturnIntBetween(0, 23);
-                //minute
-                Validate.print("\tMinute:\t");
-                minute = Validate.checkAndReturnIntBetween(0, 59);
-                return new OurDateTime(year, month, day, hour, minute);
-            }
-            //return object
-            return new OurDateTime(year, month, day);
+            //hour
+            Validate.print("\nTIME\n\tHour:\t");
+            hour = Validate.checkAndReturnIntBetween(0, 23);
+            //minute
+            Validate.print("\tMinute:\t");
+            minute = Validate.checkAndReturnIntBetween(0, 59);
+            return new OurDateTime(year, month, day, hour, minute);
         }
 
-        public static OurDateTime ICSFormatToOurDateTime(String string) {
-            int year, month, day, hour, minutes;
+        public static OurDateTime ICSFormatToOurDateTime(String string) {//todo spyros
+            int year, month, day, hour = 0, minutes = 0;
+            DateTimeFormatter formatter;
             if(string.length() == 8) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
                 LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
                 year = dateTime.getYear();
                 month = dateTime.getMonthValue();
                 day = dateTime.getDayOfMonth();
-                return new OurDateTime(year,month,day);
             } else {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
+                formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
                 LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
                 year = dateTime.getYear();
                 month = dateTime.getMonthValue();
                 day = dateTime.getDayOfMonth();
                 hour = dateTime.getHour();
                 minutes = dateTime.getMinute();
-                return new OurDateTime(year,month,day,hour,minutes);
             }
+            return new OurDateTime(year,month,day,hour,minutes);
         }
     }
 }
