@@ -1,11 +1,35 @@
 import java.time.Duration;
+import java.util.Date;
 
 public class Appointment extends Event {
     private int durationInMin;//how much the date will last
 
-    public Appointment(OurDateTime dateTime, String title, String description, int durationInMin) {
+    private OurDateTime endDate;
+
+    public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
         super(dateTime, title, description);
-        this.durationInMin = durationInMin;
+        setDurationInMin(dateTime,endDate);
+        this.endDate = endDate;
+    }
+
+
+
+    public int getDurationInMin() {
+        return durationInMin;
+    }
+
+    public void setDurationInMin(OurDateTime dateTime, OurDateTime endDate) {
+            Date start = new Date(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
+            Date end = new Date(endDate.getYear(), endDate.getMonth(), endDate.getDay(),endDate.getHour(),endDate.getMinute());
+            this.durationInMin = (int) ( end.getTime() - start.getTime()) / 60000;
+    }
+
+    public OurDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(OurDateTime endDate) {
+        this.endDate = endDate;
     }
 
     public int getDuration() { return durationInMin; }

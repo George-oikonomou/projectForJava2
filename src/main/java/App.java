@@ -73,7 +73,8 @@ public class App {
 
         //future appointment
         OurDateTime dateTime3 = new OurDateTime(2024,2,28,0,0);
-        Appointment event4 = new Appointment(dateTime3,"MyBday","dont you assholes forget",120);
+        OurDateTime endDate3 = new OurDateTime(2024,3,28,0,0);
+        Appointment event4 = new Appointment(dateTime3,endDate3, "MyBday","dont you assholes forget");
         event4.setOurCalendar(calendar);
         events.add(event4);
 

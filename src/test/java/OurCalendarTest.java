@@ -7,6 +7,7 @@ public class OurCalendarTest {
     public OurCalendar calendar;
     public OurDateTime dateTime;
 
+
     @Test
     public void addEvents() {
     }
@@ -62,7 +63,6 @@ public class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> expectedEvents = new ArrayList<>();
         expectedEvents.add(new Project(dateTime,"title","description",dateTime));
-        expectedEvents.add(new Appointment(dateTime, "title2", "description",60));
 
         ourCalendar.setEvents(expectedEvents);
         ArrayList<Event> actualEvents = ourCalendar.getEvents();

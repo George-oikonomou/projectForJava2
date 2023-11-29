@@ -2,6 +2,7 @@ import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OurCalendar {
 
@@ -18,7 +19,7 @@ public class OurCalendar {
     public void addEvents() {
         int choice, duration;
         String title, description;
-        OurDateTime datetime1, deadline;
+        OurDateTime datetime1, endDate, deadline;
 
         //NEW EVENT:
         Validate.println("""
@@ -35,16 +36,16 @@ public class OurCalendar {
         description = Validate.strInput();
 
         //Adding one event to the arraylist
+        System.out.println("Enter the date and time that the event starts");
         datetime1 = OurDateTime.Functionality.dateAndTime(); //Date & Time
         Validate.println("");
         if (choice == 1) {
-            Validate.print("Duration:\t");
-            duration = Validate.checkAndReturnIntBetween(15, 6 * 60); //duration is minimum 15 minutes & maximum 6 hours
-            Validate.println("");
-
-            Appointment newAppointment = new Appointment(datetime1, title, description, duration);
+            System.out.println("Enter date and time that the event ends");
+            endDate = OurDateTime.Functionality.dateAndTime();
+            Appointment newAppointment = new Appointment(datetime1,endDate, title, description);
             events.add(newAppointment);
             newAppointment.setOurCalendar(this);
+
         } else {//Date & Time
             Validate.print("Deadline:\t");
             deadline = Validate.deadline(datetime1);

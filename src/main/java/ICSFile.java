@@ -13,6 +13,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.NoSuchElementException;
 
 public class ICSFile {
     private final String filePath;
@@ -35,61 +37,17 @@ public class ICSFile {
             CalendarBuilder builder = new CalendarBuilder();
             Calendar calendar = builder.build(inputStream);
 
-            for (Object component : calendar.getComponents(Component.VEVENT)){
+            for (Object component : calendar.getComponents(Component.VEVENT)) {
 
                 if (component instanceof VEvent event) {
-                    String categoryVal;
-                    if (event.getProperty("CATEGORIES") != null) {
-                        categoryVal = event.getProperty("CATEGORIES").getValue();
-                    } else {
-                        Validate.println("Error: File does not have 'CATEGORIES' property file cannot be read");
-                        return;
-                    }
-                    String dateTime;
-                    String title = event.getSummary().getValue();
-                    dateTime = event.getStartDate().getValue();
-
-
-                    String description = event.getDescription().getValue();
-
-                    if (title == null || dateTime == null || description == null) {
-                        Validate.println("Error reading from file");
-                        return;
+                    // try to create an appointment
+                    try {
+                        Appointment newAppointment = createAppointment(event);
+                    }catch (NoSuchElementException e){
+                        // TODO: 29/11/23 print error if event in file does not have the correct amount
+                        // TODO: 29/11/23 information
                     }
 
-                    switch (categoryVal) {
-                        case "PROJECT" -> {
-                            OurDateTime ourDateTime = OurDateTime.Functionality.ICSFormatToOurDateTime(dateTime);
-                            Property dueProperty = event.getProperty("DUE");
-                            OurDateTime ourDue;
-                            if (dueProperty != null) {
-                                String due = dueProperty.getValue();
-                                ourDue = OurDateTime.Functionality.ICSFormatToOurDateTime(due);
-                            } else {
-                                Validate.println("could not find due property in a project");
-                                return;
-                            }
-                            String status = event.getStatus().getValue();
-                            Project newProject = new Project(ourDateTime, title, description, ourDue);
-                            newProject.setFinished(status.equals("COMPLETED"));
-                            events.add(newProject);
-
-                        }
-                        case "APPOINTMENT" -> {
-                            OurDateTime ourDateTime = OurDateTime.Functionality.ICSFormatToOurDateTime(dateTime);
-                            Property durationProperty = event.getProperty("DURATION");
-                            int ourDuration;
-                            if (durationProperty != null) {
-                                String duration = durationProperty.getValue();
-                                ourDuration = Appointment.ICSFormatToDuration(duration);
-                            } else {
-                                Validate.println("could not find due property in a project");
-                                return;
-                            }
-                            Appointment newAppointment = new Appointment(ourDateTime, title, description, ourDuration);
-                            events.add(newAppointment);
-                        }
-                    }
                 }
             }
         }catch (IOException | ParserException e){
@@ -97,6 +55,21 @@ public class ICSFile {
         }
         App.calendar.setEvents(events);
     }
+
+    private Appointment createAppointment (VEvent event){
+        Date dtstart = event.getStartDate().getDate();
+        Date dtend = event.getEndDate().getDate();
+        String title = event.getSummary().getValue();
+        String description = event.getDescription().getValue();
+        if ( dtstart == null || dtend == null || title == null || description == null){
+            throw new NoSuchElementException();
+        }
+        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtstart.toString());
+        OurDateTime endDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtend.toString());
+
+        return new Appointment(startDate,endDate,title,description);
+    }
+
     public void StoreEvents(ArrayList<Event> events) {
 
         try {
