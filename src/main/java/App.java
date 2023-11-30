@@ -8,7 +8,7 @@ public class App {
         calendarListFiller();
 
         int choice, option;
-        ICSFile file = new ICSFile("calendar.ics");
+        ICSFile file = new ICSFile("greece.ics");
         do {
             Validate.println("""
                 
