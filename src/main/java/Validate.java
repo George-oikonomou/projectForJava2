@@ -61,8 +61,7 @@ public class Validate {//Checking the input value
     public static String date(int year, int month, int day) { return String.format("%02d/%02d/%d", day, month, year); }
     public static int day(int month, int year, int day) { return checkAndReturnIntBetween(day,getDaysInMonth(month, year)); }
 
-
-
+    public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();
        while (checkIfTitleExists(calendar, title, type)) {
@@ -75,6 +74,4 @@ public class Validate {//Checking the input value
     public static void println(Object obj) { System.out.println(obj); }
     public static void print(Object obj) { System.out.print(obj); }
     public static void printf(String format, Object... args) { System.out.printf(format, args); }
-
-    public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
 }
