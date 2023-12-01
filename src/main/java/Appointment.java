@@ -3,7 +3,6 @@ import java.time.LocalDateTime;
 
 public class Appointment extends Event {
     private int durationInMin;//how much the date will last
-
     private OurDateTime endDate;
 
     public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
@@ -13,6 +12,7 @@ public class Appointment extends Event {
     }
 
     public int getDurationInMin() {return durationInMin;}
+
     public void setDurationInMin(OurDateTime dateTime, OurDateTime endDate) {
         LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
         LocalDateTime end = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDay(), endDate.getHour(), endDate.getMinute());
