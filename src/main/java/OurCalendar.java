@@ -19,7 +19,6 @@ public class OurCalendar {
 
 
     public OurCalendar() {
-
         this.events = new ArrayList<>();
         TimeTeller teller = TimeService.getTeller();
     }
@@ -27,29 +26,14 @@ public class OurCalendar {
     public ArrayList<Event> getEvents() { return events; }
     public void setEvents(ArrayList<Event> events) { this.events = events; }
 
-    public Version getVersion() {
-        return version;
-    }
+    public Version getVersion() {return version;}
+    public void setVersion(Version version) {this.version = version;}
 
-    public void setVersion(Version version) {
-        this.version = version;
-    }
+    public ProdId getProdId() {return prodId;}
+    public void setProdId(ProdId prodId) {this.prodId = prodId;}
 
-    public ProdId getProdId() {
-        return prodId;
-    }
-
-    public void setProdId(ProdId prodId) {
-        this.prodId = prodId;
-    }
-
-    public CalScale getCalScale() {
-        return calScale;
-    }
-
-    public void setCalScale(CalScale calScale) {
-        this.calScale = calScale;
-    }
+    public CalScale getCalScale() {return calScale;}
+    public void setCalScale(CalScale calScale) {this.calScale = calScale;}
 
     public void addEvents() {
         int choice;
