@@ -52,7 +52,7 @@ public class Validate {//Checking the input value
     private static int getDaysInMonth(int month, int year) {
         return switch (month) {
             case 1, 3, 5, 7, 8, 10, 12 -> 31;
-            case 2 -> (year % 4 == 0) ? 29 : 28;
+            case 2 -> (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28;
             default -> 30;
         };
     }
