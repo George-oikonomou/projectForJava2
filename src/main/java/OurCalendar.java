@@ -1,5 +1,7 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
+import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
 
 import java.time.DayOfWeek;
@@ -10,6 +12,12 @@ public class OurCalendar {
 
     private ArrayList <Event> events;//has all the events
 
+    //if the file does not exist the new Vcalendar will have these values
+    private Version version = new Version("VERSION","2.0");
+    private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
+    private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
+
+
     public OurCalendar() {
 
         this.events = new ArrayList<>();
@@ -18,6 +26,30 @@ public class OurCalendar {
 
     public ArrayList<Event> getEvents() { return events; }
     public void setEvents(ArrayList<Event> events) { this.events = events; }
+
+    public Version getVersion() {
+        return version;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
+    }
+
+    public ProdId getProdId() {
+        return prodId;
+    }
+
+    public void setProdId(ProdId prodId) {
+        this.prodId = prodId;
+    }
+
+    public CalScale getCalScale() {
+        return calScale;
+    }
+
+    public void setCalScale(CalScale calScale) {
+        this.calScale = calScale;
+    }
 
     public void addEvents() {
         int choice;
