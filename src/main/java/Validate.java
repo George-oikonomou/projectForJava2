@@ -33,71 +33,28 @@ public class Validate {//Checking the input value
     }
 
     //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline (OurDateTime dateTime) {//todo improve and fix bugs
-        int year, month, day, hour, minute;
-
-
-        //Year:
-        Validate.print("\nDATE\nYear:\t");
-        year = checkAndReturnIntBetween(dateTime.getYear(), 2024);
-
-        //Month:
-        Validate.print("\tMonth:\t");
-        if (year == dateTime.getYear()) {
-            month = checkAndReturnIntBetween(dateTime.getMonth(), 12);
-
-            //Day:
-            Validate.print("\tDay:\t");
-            if (month == dateTime.getMonth()) {
-                day = day(month, year, dateTime.getDay());
-
-                //TIME
-                Validate.print("\nTIME\nHour:\t");
-                if (day == dateTime.getDay()) {
-                    if (dateTime.getMinute() + 15 > 59) {
-                        hour = checkAndReturnIntBetween(dateTime.getHour() + 1, 23);
-
-                        Validate.print("\tMinute:\t");
-                        minute = checkAndReturnIntBetween(0, 59);
-                    } else {
-                        hour = checkAndReturnIntBetween(dateTime.getHour(), 23);
-
-                        Validate.print("\tMinute:\t");
-                        if (hour == dateTime.getHour()) {
-                            minute = checkAndReturnIntBetween(dateTime.getMinute() + 15, 59);
-                        } else {
-                            minute = checkAndReturnIntBetween(0, 59);
-                        }
-                    }
-
-                } else {
-                    //TIME
-                    hour = checkAndReturnIntBetween(0, 23);
-                    Validate.print("\tMinute:\t");
-                    minute = checkAndReturnIntBetween(0, 59);
-                }
-            } else {
-                day = day(month, year, 1);
-                //TIME
-                Validate.print("\nTIME\nHour:\t");
-                hour = checkAndReturnIntBetween(0, 23);
-                Validate.print("\tMinute:\t");
-                minute = checkAndReturnIntBetween(0, 59);
-            }
-        } else {
-            month = checkAndReturnIntBetween(1, 12);
-            //Day:
-            Validate.print("\tDay:\t");
-            day = day(month,year, 1);
-            //TIME
-            Validate.print("\nTIME\nHour:\t");
-            hour = checkAndReturnIntBetween(0, 23);
-            Validate.print("\tMinute:\t");
-            minute = checkAndReturnIntBetween(0, 59);
-        }
+    public static OurDateTime deadline(OurDateTime dateTime) {
+        int year = getInput("\nDATE\n\tYear:\t", dateTime.getYear(), 2024);
+        int month = getInput("\tMonth:\t", (year == dateTime.getYear()) ? dateTime.getMonth() : 1, 12);
+        int day = getInput("\tDay:\t", (month == dateTime.getMonth() && year == dateTime.getYear())  ? dateTime.getDay() : 1, getDaysInMonth(month, year));
+        int hour = getInput("\nTIME\n\tHour:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear()) ? dateTime.getHour() : 0, 23);
+        int minute = getInput("\tMinute:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear() && hour == dateTime.getHour()) ? dateTime.getMinute() : 0, 59);
 
         Validate.println("");
         return new OurDateTime(year, month, day, hour, minute);
+    }
+
+    private static int getInput(String prompt, int lowerBound, int upperBound) {
+        Validate.print(prompt);
+        return checkAndReturnIntBetween(lowerBound, upperBound);
+    }
+
+    private static int getDaysInMonth(int month, int year) {
+        return switch (month) {
+            case 1, 3, 5, 7, 8, 10, 12 -> 31;
+            case 2 -> (year % 4 == 0) ? 29 : 28;
+            default -> 30;
+        };
     }
 
     public static String time(int minute, int hour) { return String.format("%02d:%02d", hour, minute); }
