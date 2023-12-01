@@ -59,14 +59,9 @@ public class Validate {//Checking the input value
 
     public static String time(int minute, int hour) { return String.format("%02d:%02d", hour, minute); }
     public static String date(int year, int month, int day) { return String.format("%02d/%02d/%d", day, month, year); }
+    public static int day(int month, int year, int day) { return checkAndReturnIntBetween(day,getDaysInMonth(month, year)); }
 
-    public static int day(int month, int year, int day) {
-        return switch (month) {
-            case 1, 3, 5, 7, 8, 10, 12 -> checkAndReturnIntBetween(day, 31);
-            case 2 -> checkAndReturnIntBetween(day, (year % 4 == 0) ? 29 : 28);
-            default -> checkAndReturnIntBetween(day, 30);
-        };
-    }
+
 
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();
