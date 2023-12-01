@@ -1,6 +1,5 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Appointment extends Event {
     private int durationInMin;//how much the date will last
@@ -13,12 +12,7 @@ public class Appointment extends Event {
         setDurationInMin(dateTime,endDate);
     }
 
-
-
-    public int getDurationInMin() {
-        return durationInMin;
-    }
-
+    public int getDurationInMin() {return durationInMin;}
     public void setDurationInMin(OurDateTime dateTime, OurDateTime endDate) {
         LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
         LocalDateTime end = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDay(), endDate.getHour(), endDate.getMinute());
@@ -26,20 +20,36 @@ public class Appointment extends Event {
         this.durationInMin = (int) durationInMinutes;
     }
 
-    public OurDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(OurDateTime endDate) {
-        this.endDate = endDate;
-    }
+    public OurDateTime getEndDate() {return endDate;}
+    public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
 
     public int getDuration() { return durationInMin; }
     public void setDuration(int durationInMin) { this.durationInMin = durationInMin; }
 
-    private void setDurationPrompt() {
-        Validate.print("\nType the new duration:\t");
-        setDuration(Validate.checkAndReturnIntBetween(15, 6 * 60));  //duration is minimum 15 minutes & maximum 6 hours
+    private void setEndDatePrompt() {
+        Validate.print("\nType the new, end date & time\t");
+        OurDateTime endDate = OurDateTime.Functionality.dateAndTime();
+        if (endDate.getCalculationFormat() < getDateTime().getCalculationFormat()) {
+            Validate.println("End date can't be before start date");
+            setEndDatePrompt();
+        } else {
+            setEndDate(endDate);
+            setDurationInMin(getDateTime(), endDate);
+        }
+    }
+
+    private String calculateDurationInDays(int durationInMin) {
+        int days = durationInMin / 1440;
+        int hours = (durationInMin % 1440) / 60;
+        int minutes = (durationInMin % 1440) % 60;
+
+        StringBuilder result = new StringBuilder();
+
+        if (days > 0) result.append(days).append(" days ");
+        if (hours > 0) result.append(hours).append(" hours ");
+        if (minutes > 0 || result.isEmpty()) result.append(minutes).append(" minutes");
+
+        return result.toString().trim();
     }
 
     public static int ICSFormatToDuration(String string) {
@@ -60,14 +70,14 @@ public class Appointment extends Event {
                     1) Title
                     2) Description
                     3) Date & Time
-                    4) Duration
+                    4) End Date & Time
                     5) or Exit""");
             option = Validate.checkAndReturnIntBetween(1, 5);
             switch (option) {
                 case 1 -> setTitlePrompt();
                 case 2 -> setDescriptionPrompt();
                 case 3 -> setDateTimePrompt();
-                case 4 -> setDurationPrompt();
+                case 4 -> setEndDatePrompt();
             }
         } while (option != 5);
     }
@@ -77,9 +87,10 @@ public class Appointment extends Event {
         return """
             Appointment:
                 dateTime: %s
+                end date & time: %s
                 title: %s
                 description: %s
-                durationInMin: %d
-            """.formatted(getDateTime(), getTitle(), getDescription(), durationInMin);
+                duration: %s
+            """.formatted(getDateTime(),getEndDate(), getTitle(), getDescription(), calculateDurationInDays(getDurationInMin()));
     }
 }
