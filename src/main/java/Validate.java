@@ -45,7 +45,7 @@ public class Validate {//Checking the input value
     }
 
     private static int getInput(String prompt, int lowerBound, int upperBound) {
-        Validate.print(prompt);
+        print(prompt);
         return checkAndReturnIntBetween(lowerBound, upperBound);
     }
 
