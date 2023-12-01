@@ -112,7 +112,6 @@ public class ICSFile {
             // Rest of the code...
         } catch (ValidationException e) {
 
-            e.printStackTrace();
             System.out.println("Calendar validation error: " + e.getMessage());
         }
 
