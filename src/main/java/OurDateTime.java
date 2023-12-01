@@ -1,5 +1,8 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
+import net.fortuna.ical4j.model.DateTime;
+
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,6 +11,7 @@ public class OurDateTime {
     private int year, month ,day ,hour ,minute;
     private String date, time;
     private DayOfWeek dayOfWeek;
+    private DateTime icsFormat;
     private long CalculationFormat;
 
     public OurDateTime (int year, int month, int day, int hour, int minute) {
@@ -19,6 +23,7 @@ public class OurDateTime {
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
         setCalculationFormat();
+        setIcsFormat();
     }
 
     /**
@@ -35,6 +40,20 @@ public class OurDateTime {
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
         setCalculationFormat();
+        setIcsFormat();
+    }
+
+    public DateTime getIcsFormat() {
+        return icsFormat;
+    }
+    public void setIcsFormat() {
+        String format = String.format("%04d%02d%02dT%02d%02d00", getYear(), getMonth(), getDay(), getHour(), getMinute());
+        try {
+            this.icsFormat = new DateTime(format);
+        } catch (ParseException e) {
+            System.out.println("could not create icsDateTime format");
+        }
+
     }
 
     public int getYear() { return year; }
@@ -121,21 +140,16 @@ public class OurDateTime {
 
         public static OurDateTime ICSFormatToOurDateTime(String string) {//todo spyros
             int year, month, day, hour = 0, minutes = 0;
-            DateTimeFormatter formatter;
             if(string.length() == 8) {
-                formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-                LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
-                year = dateTime.getYear();
-                month = dateTime.getMonthValue();
-                day = dateTime.getDayOfMonth();
+                year = Integer.parseInt(string.substring(0, 4));
+                month = Integer.parseInt(string.substring(4, 6));
+                day = Integer.parseInt(string.substring(6, 8));
             } else {
-                formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
-                LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
-                year = dateTime.getYear();
-                month = dateTime.getMonthValue();
-                day = dateTime.getDayOfMonth();
-                hour = dateTime.getHour();
-                minutes = dateTime.getMinute();
+                year = Integer.parseInt(string.substring(0, 4));
+                month = Integer.parseInt(string.substring(4, 6));
+                day = Integer.parseInt(string.substring(6, 8));
+                hour = Integer.parseInt(string.substring(10,12));
+                minutes = Integer.parseInt(string.substring(12,14));
             }
             return new OurDateTime(year,month,day,hour,minutes);
         }

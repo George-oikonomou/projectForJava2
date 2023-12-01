@@ -4,10 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EventTest {
     OurDateTime dateTime;
+    OurDateTime endDate;
 
     @Test
     public void testSetAndGetDateTime() {
-        Appointment appointment = new Appointment(dateTime, "title", "description",40);
+        dateTime = new OurDateTime(2023,11,22,22,0);
+        endDate = new OurDateTime(2024,2,2,11,11);
+        Appointment appointment = new Appointment(dateTime, endDate,"title", "description");
         OurDateTime newDateTime = new OurDateTime(2023, 12, 13, 12, 0);
         appointment.setDateTime(newDateTime);
         assertEquals(newDateTime, appointment.getDateTime());
@@ -15,7 +18,9 @@ public class EventTest {
 
     @Test
     public void testSetAndGetTitleAndDescription() {
-        Appointment appointment = new Appointment(dateTime, "title", "description",40);
+        dateTime = new OurDateTime(2023,11,22,22,0);
+        endDate = new OurDateTime(2024,2,2,11,11);
+        Appointment appointment = new Appointment(dateTime,endDate,"title", "description");
         appointment.setTitle("Conference");
         appointment.setDescription("International tech conference");
 
