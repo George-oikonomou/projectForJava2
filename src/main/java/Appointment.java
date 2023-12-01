@@ -1,4 +1,5 @@
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Appointment extends Event {
@@ -16,9 +17,10 @@ public class Appointment extends Event {
     }
 
     public void setDurationInMin(OurDateTime dateTime, OurDateTime endDate) {
-            Date start = new Date(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
-            Date end = new Date(endDate.getYear(), endDate.getMonth(), endDate.getDay(),endDate.getHour(),endDate.getMinute());
-            this.durationInMin = (int) ( end.getTime() - start.getTime()) / 60000;
+        LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
+        LocalDateTime end = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDay(), endDate.getHour(), endDate.getMinute());
+        long durationInMinutes = Duration.between(start, end).toMinutes();
+        this.durationInMin = (int) durationInMinutes;
     }
 
     public OurDateTime getEndDate() {
