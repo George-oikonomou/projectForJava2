@@ -1,11 +1,8 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
-
 import java.text.ParseException;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class OurDateTime {
     private int year, month ,day ,hour ,minute;
@@ -43,9 +40,7 @@ public class OurDateTime {
         setIcsFormat();
     }
 
-    public DateTime getIcsFormat() {
-        return icsFormat;
-    }
+    public DateTime getIcsFormat() { return icsFormat; }
     public void setIcsFormat() {
         String format = String.format("%04d%02d%02dT%02d%02d00", getYear(), getMonth(), getDay(), getHour(), getMinute());
         try {
@@ -53,7 +48,6 @@ public class OurDateTime {
         } catch (ParseException e) {
             System.out.println("could not create icsDateTime format");
         }
-
     }
 
     public int getYear() { return year; }
@@ -119,22 +113,12 @@ public class OurDateTime {
     public static class Functionality{
         public static OurDateTime dateAndTime() {
             int year, month, day,hour,minute;
-            //Year:
-            Validate.print("\nDATE\n\tYear:\t");
-            year =  Validate.checkAndReturnIntBetween(2023,2024);
-            //Month:
-            Validate.print("\tMonth:\t");
-            month = Validate.checkAndReturnIntBetween(1, 12);
-            //Day:
-            Validate.print("\tDay:\t");
-            day = Validate.day(month ,year, 1);
+            year = Validate.getInput("\nDATE\n\tYear:\t", 2023 ,2100);
+            month = Validate.getInput("\tMonth:\t", 1, 12);
+            day = Validate.getInput("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
+            hour = Validate.getInput("\nTIME\n\tHour:\t", 0, 23);
+            minute = Validate.getInput("\tMinute:\t", 0, 59);
 
-            //hour
-            Validate.print("\nTIME\n\tHour:\t");
-            hour = Validate.checkAndReturnIntBetween(0, 23);
-            //minute
-            Validate.print("\tMinute:\t");
-            minute = Validate.checkAndReturnIntBetween(0, 59);
             return new OurDateTime(year, month, day, hour, minute);
         }
 
