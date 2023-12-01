@@ -40,7 +40,7 @@ public class Validate {//Checking the input value
         int hour = getInput("\nTIME\n\tHour:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear()) ? dateTime.getHour() : 0, 23);
         int minute = getInput("\tMinute:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear() && hour == dateTime.getHour()) ? dateTime.getMinute() : 0, 59);
 
-        Validate.println("");
+        println("");
         return new OurDateTime(year, month, day, hour, minute);
     }
 
