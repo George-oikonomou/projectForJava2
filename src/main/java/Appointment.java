@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Appointment extends Event {
     private int durationInMin;//how much the date will last
-
     private OurDateTime endDate;
 
     public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
@@ -12,8 +11,6 @@ public class Appointment extends Event {
         this.endDate = endDate;
         setDurationInMin(dateTime,endDate);
     }
-
-
 
     public int getDurationInMin() {
         return durationInMin;

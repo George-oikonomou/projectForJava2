@@ -19,7 +19,6 @@ import java.util.NoSuchElementException;
 
 public class ICSFile {
     private final String filePath;
-
     public ICSFile(String filePath) {
         this.filePath = filePath;
     }
@@ -65,6 +64,9 @@ public class ICSFile {
                     System.out.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
                 }
             }
+            App.calendar.setCalScale(calendar.getCalendarScale());
+            App.calendar.setProdId(calendar.getProductId());
+            App.calendar.setVersion(calendar.getVersion());
         } catch (IOException | ParserException e) {
             System.out.println("error reading file");
         }
@@ -99,8 +101,9 @@ public class ICSFile {
 
     public void StoreEvents(ArrayList<Event> events) {
         Calendar calendar = new Calendar();
-        calendar.getProperties().add(new Version("VERSION","2.0"));
-        calendar.getProperties().add(new ProdId("-//JAVA HUA PROJECT ICS FILE Ltd.//EN"));
+        calendar.getProperties().add(App.calendar.getVersion());
+        calendar.getProperties().add(App.calendar.getProdId());
+        calendar.getProperties().add(App.calendar.getCalScale());
         for (Event event : events) {
             if (event instanceof Appointment appointment) {
                 calendar.getComponents().add(createVEvent(appointment));
