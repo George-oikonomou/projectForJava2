@@ -1,5 +1,7 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
+import net.fortuna.ical4j.model.property.Version;
+
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +11,7 @@ public class OurCalendar {
     private ArrayList <Event> events;//has all the events
 
     public OurCalendar() {
+
         this.events = new ArrayList<>();
         TimeTeller teller = TimeService.getTeller();
     }
@@ -17,7 +20,7 @@ public class OurCalendar {
     public void setEvents(ArrayList<Event> events) { this.events = events; }
 
     public void addEvents() {
-        int choice, duration;
+        int choice;
         String title, description;
         OurDateTime datetime1, endDate, deadline;
 
@@ -161,7 +164,7 @@ public class OurCalendar {
     public void printUpcomingEvents(int choice){
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
-
+        sortList(events);
         if (choice == 1) {
             Validate.println("\nUpcoming Events for today:\n");
                 //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
@@ -186,6 +189,7 @@ public class OurCalendar {
         }
     }
     public void printOldEvents(int choice){
+        sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
 
@@ -214,6 +218,7 @@ public class OurCalendar {
         }
     }
     public void printUnfinishedProject(int choice){
+        sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
         for (Event event : events) {
@@ -226,26 +231,6 @@ public class OurCalendar {
         }
     }
 
-    public void reminder(){
-        OurDateTime liveTime = new OurDateTime();
-        long formatLive = liveTime.getCalculationFormat();
-        Project closestDeadline = (Project) closestDeadlineSearch(formatLive);
-        Appointment closestAppointment = (Appointment) searchNextAppointment(formatLive);
-        if (closestAppointment == null && closestDeadline == null){
-            Validate.println("You dont have any reminders");
-        }else if (closestAppointment == null){
-            Validate.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
-        }else if(closestDeadline == null){
-            Validate.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
-        }else {
-            if (closestAppointment.getDateTime().getCalculationFormat() < closestDeadline.getDeadline().getCalculationFormat()){
-                Validate.println("Your next appointment is in "+ closestAppointment.getDateTime().toString());
-            }else {
-                Validate.println("Your next project deadline is in " + closestDeadline.getDeadline().toString());
-            }
-        }
-    }
-
     public Event eventSearch(String title, int type) {
         for (Event event : events)
             if (event.getTitle().equals(title))
@@ -254,25 +239,5 @@ public class OurCalendar {
 
         return null;
     }
-    public Event closestDeadlineSearch(long time){
-        long closestDeadline = Long.MAX_VALUE;
-        Event closestDeadlineProject = null;
-        for ( Event event : events){
-            if (event instanceof Project ){
-                if ((((Project) event).getDeadline().getCalculationFormat() > time && (((Project) event).getDeadline().getCalculationFormat() < closestDeadline))){
-                    closestDeadlineProject = event;
-                    closestDeadline = ((Project) event).getDeadline().getCalculationFormat();
-                }
-            }
-        }
-        return closestDeadlineProject;
-    }
-    public Event searchNextAppointment(long time){
-        for (Event event : events)
-            if (event instanceof Appointment)
-                if (event.getDateTime().getCalculationFormat() > time)
-                    return event;
 
-        return null;
-    }
 }

@@ -69,7 +69,7 @@ public class ICSFile {
                 }
             }
         } catch (IOException | ParserException e) {
-            Validate.println("There are some technical difficulties please refer to https://youtu.be/dQw4w9WgXcQ?si=j_2cYZW9et2z9xkb");
+            System.out.println("error reading file");
         }
         App.calendar.setEvents(events);
     }
@@ -102,6 +102,8 @@ public class ICSFile {
 
     public void StoreEvents(ArrayList<Event> events) {
         Calendar calendar = new Calendar();
+        calendar.getProperties().add(new Version("VERSION","2.0"));
+        calendar.getProperties().add(new ProdId("-//JAVA HUA PROJECT ICS FILE Ltd.//EN"));
         for (Event event : events) {
             if (event instanceof Appointment appointment) {
                 calendar.getComponents().add(createVEvent(appointment));
@@ -109,7 +111,19 @@ public class ICSFile {
                 calendar.getComponents().add(createVTodo(project));
             }
         }
+        try {
+            System.out.println(calendar);
+            calendar.validate();
+            // Rest of the code...
+        } catch (ValidationException e) {
+
+            e.printStackTrace();
+            System.out.println("Calendar validation error: " + e.getMessage());
+        }
+
         try (FileWriter fileWriter = new FileWriter(filePath)) {
+
+            calendar.validate();
             CalendarOutputter outPutter = new CalendarOutputter();
             outPutter.output(calendar, fileWriter);
             System.out.println("Calendar successfully written to " + filePath);
