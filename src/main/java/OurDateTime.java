@@ -112,13 +112,11 @@ public class OurDateTime {
 
     public static class Functionality{
         public static OurDateTime dateAndTime() {
-            int year, month, day,hour,minute;
-            year = Validate.getInput("\nDATE\n\tYear:\t", 2023 ,2100);
-            month = Validate.getInput("\tMonth:\t", 1, 12);
-            day = Validate.getInput("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
-            hour = Validate.getInput("\nTIME\n\tHour:\t", 0, 23);
-            minute = Validate.getInput("\tMinute:\t", 0, 59);
-
+            int year = Validate.getInput("\nDATE\n\tYear:\t", 2023 ,2100);
+            int month = Validate.getInput("\tMonth:\t", 1, 12);
+            int day = Validate.getInput("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
+            int hour = Validate.getInput("\nTIME\n\tHour:\t", 0, 23);
+            int minute = Validate.getInput("\tMinute:\t", 0, 59);
             return new OurDateTime(year, month, day, hour, minute);
         }
 
