@@ -53,4 +53,41 @@ public class AppointmentTest {
         // Expected result: 45 minutes
         assertEquals(45, result);
     }
+
+    @Test
+    public void durationInMinutesIsSetCorrectlyForDifferentDates() {
+            OurDateTime startDateTime = new OurDateTime(2023, 12, 31, 23, 30);
+            OurDateTime endDateTime = new OurDateTime(2024, 12, 31, 23, 30);
+            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
+
+            assertEquals(527040, appointment.getDurationInMin());
+    }
+
+    @Test
+    public void durationInMinutesIsSetCorrectlyForSameDates() {
+            OurDateTime startDateTime = new OurDateTime(2023, 12, 31, 23, 30);
+            OurDateTime endDateTime = new OurDateTime(2023, 12, 31, 23, 30);
+            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
+
+            assertEquals(0, appointment.getDurationInMin());
+    }
+
+    @Test
+    public void durationInMinutesIsSetCorrectlyForDatesInDifferentMonths() {
+            OurDateTime startDateTime = new OurDateTime(2023, 8, 30, 23, 30);
+            OurDateTime endDateTime = new OurDateTime(2023, 12, 1, 0, 30);
+            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
+
+            assertEquals(132540, appointment.getDurationInMin());
+    }
+
+    @Test
+    public void durationInMinutesIsSetCorrectlyForDatesInDifferentYears() {
+            OurDateTime startDateTime = new OurDateTime(2023, 12, 31, 23, 30);
+            OurDateTime endDateTime = new OurDateTime(2024, 1, 1, 0, 30);
+            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
+
+            assertEquals(60, appointment.getDurationInMin());
+    }
+
 }
