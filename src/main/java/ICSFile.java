@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
+//handle corrupt ics file exceptions
+
 public class ICSFile {
     private final String filePath;
 
