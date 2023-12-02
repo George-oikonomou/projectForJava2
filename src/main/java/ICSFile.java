@@ -24,7 +24,7 @@ public class ICSFile {
      * method that loads Events from the ics file and saves it the "events" ArrayList on hour calendar
      * see documentation for more info
      */
-    public void LoadEvents() {
+    public void loadEvents() {
         //these 2 lines make sure that the logs of the ical4j library are not printed on the stdout
         ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
         rootLogger.setLevel(Level.ERROR);
@@ -64,8 +64,10 @@ public class ICSFile {
             App.calendar.setCalScale(calendar.getCalendarScale());
             App.calendar.setProdId(calendar.getProductId());
             App.calendar.setVersion(calendar.getVersion());
-        } catch (IOException | ParserException | NullPointerException e) {
+        } catch (ParserException | NullPointerException e) {
             System.out.println("The file you have provided is corrupt ");
+        }catch (IOException e){
+            System.out.println("The file you provided does not exist");
         }
         App.calendar.setEvents(events);
     }
@@ -96,7 +98,7 @@ public class ICSFile {
         return new Project(startDate, title, description, dueDate);
     }
 
-    public void StoreEvents(ArrayList<Event> events) {
+    public void storeEvents(ArrayList<Event> events) {
         Calendar calendar = new Calendar();
         calendar.getProperties().add(App.calendar.getVersion());
         calendar.getProperties().add(App.calendar.getProdId());
