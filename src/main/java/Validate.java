@@ -34,7 +34,7 @@ public class Validate {//Checking the input value
 
     //Making an object DateTime & checking the value of date & time for the deadline
     public static OurDateTime deadline(OurDateTime dateTime) {
-        int year = getInput("\nDATE\n\tYear:\t", dateTime.getYear(), 2024);
+        int year = getInput("\nDATE\n\tYear:\t", dateTime.getYear(), 2100);
         int month = getInput("\tMonth:\t", (year == dateTime.getYear()) ? dateTime.getMonth() : 1, 12);
         int day = getInput("\tDay:\t", (month == dateTime.getMonth() && year == dateTime.getYear())  ? dateTime.getDay() : 1, getDaysInMonth(month, year));
         int hour = getInput("\nTIME\n\tHour:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear()) ? dateTime.getHour() : 0, 23);
@@ -44,12 +44,12 @@ public class Validate {//Checking the input value
         return new OurDateTime(year, month, day, hour, minute);
     }
 
-    private static int getInput(String prompt, int lowerBound, int upperBound) {
+    public static int getInput(String prompt, int lowerBound, int upperBound) {
         print(prompt);
         return checkAndReturnIntBetween(lowerBound, upperBound);
     }
 
-    private static int getDaysInMonth(int month, int year) {
+    public static int getDaysInMonth(int month, int year) {
         return switch (month) {
             case 1, 3, 5, 7, 8, 10, 12 -> 31;
             case 2 -> (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28;
@@ -59,7 +59,6 @@ public class Validate {//Checking the input value
 
     public static String time(int minute, int hour) { return String.format("%02d:%02d", hour, minute); }
     public static String date(int year, int month, int day) { return String.format("%02d/%02d/%d", day, month, year); }
-    public static int day(int month, int year, int day) { return checkAndReturnIntBetween(day,getDaysInMonth(month, year)); }
 
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
     public static String Title(OurCalendar calendar,int type){

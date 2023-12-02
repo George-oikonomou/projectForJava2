@@ -3,10 +3,8 @@ import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
-
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class OurCalendar {
 
@@ -255,5 +253,4 @@ public class OurCalendar {
 
         return null;
     }
-
 }
