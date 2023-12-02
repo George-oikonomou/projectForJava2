@@ -1,6 +1,7 @@
 import gr.hua.dit.oop2.calendar.TimeService;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Level;
+
 
 
 public class App {
@@ -17,9 +18,20 @@ public class App {
     }
     static OurCalendar calendar = new OurCalendar();
     public static void main(String[] args) {
-    if (args.length == 4){
 
-    }else if (args.length == 5){
+        if (args.length == 4){
+            File file = new File(args[3]);
+                if (file.exists()){
+                    System.out.println("file exists loading the events..");
+                    ICSFile ourFile = new ICSFile(args[3]);
+                    ourFile.loadEvents();
+                }else {
+                    System.out.println("file does not exist, creating new one");
+                    ICSFile ourFile = new ICSFile(args[3]);
+                    calendar.addEvents();
+                    ourFile.storeEvents(calendar.getEvents());
+                }
+        }else if (args.length == 5){
             AppChoices choice = null;
             for (AppChoices appChoices : AppChoices.values()){
                 if (appChoices.toString().equals(args[3])){
@@ -40,10 +52,9 @@ public class App {
             }else {
                 calendar.printUnfinishedProject(choice);
             }
-
-    }else {
+        }else {
             System.out.println("Incorrect number of arguments");
-    }
+        }
 
 
         calendarListFiller();

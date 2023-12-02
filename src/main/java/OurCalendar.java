@@ -1,5 +1,3 @@
-import gr.hua.dit.oop2.calendar.TimeService;
-import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
@@ -18,7 +16,6 @@ public class OurCalendar {
 
     public OurCalendar() {
         this.events = new ArrayList<>();
-        TimeTeller teller = TimeService.getTeller();
     }
 
     public ArrayList<Event> getEvents() { return events; }
@@ -73,22 +70,6 @@ public class OurCalendar {
             newProject.setOurCalendar(this);
         }
     }
-    public void changeProjectCondition() {
-        Validate.println("Please provide the name of the Project you wish to update its status");
-
-        while (true) {
-            String title = Validate.strInput();
-            Event event = eventSearch(title, 2);
-
-            if (event instanceof Project project) {
-                project.setFinished(!project.getIsFinished());
-                Validate.printf("The status of the Project is %s", project.getIsFinished() ? "Finished" : "Ongoing");
-                return; // Exit the method if a valid project name is provided
-            }
-            Validate.println("Project does not exist. Please try again.");
-        }
-    }
-
     public static void sortList(ArrayList<Event> events) {
         int n = events.size();
         printEvents(events);
