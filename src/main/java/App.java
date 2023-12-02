@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class App {
     static OurCalendar calendar = new OurCalendar();
-
     public static void main(String[] args) {
 
         calendarListFiller();
