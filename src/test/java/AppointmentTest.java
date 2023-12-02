@@ -2,92 +2,128 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppointmentTest {
-    public Appointment appointment;
-
-
-
     @Test
-    public void testICSFormatToDuration() {
-        // Example duration string in ISO 8601 format (PT2H30M means 2 hours and 30 minutes)
-        String durationString = "PT2H30M";
+    public void testCalculateDurationInDays() {
 
-        // Call the method
-        int result = Appointment.ICSFormatToDuration(durationString);
-
-        // Expected result: 2 hours + 30 minutes = 150 minutes
-        assertEquals(150, result);
+        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
+        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        assertEquals("1 day 2 hours 1 minute", appointment.calculateDurationInDays(1561));
+        assertEquals("1 day 1 hour", appointment.calculateDurationInDays(1500));
+        assertEquals("1 day", appointment.calculateDurationInDays(1440));
+        assertEquals("1 hour 1 minute", appointment.calculateDurationInDays(61));
+        assertEquals("1 hour", appointment.calculateDurationInDays(60));
+        assertEquals("1 minute", appointment.calculateDurationInDays(1));
     }
 
     @Test
-    public void testICSFormatToDurationWithZero() {
-        // Example duration string with zero hours and minutes
-        String durationString = "PT0H0M";
-
-        // Call the method
-        int result = Appointment.ICSFormatToDuration(durationString);
-
-        // Expected result: 0 minutes
-        assertEquals(0, result);
+    public void testSetEndDate() {
+        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
+        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        OurDateTime newEndDate = new OurDateTime(2021, 5, 14, 23, 59);
+        appointment.setEndDate(newEndDate);
+        assertEquals(newEndDate, appointment.getEndDate());
     }
 
     @Test
-    public void testICSFormatToDurationWithHoursOnly() {
-        // Example duration string with only hours (PT3H means 3 hours)
-        String durationString = "PT3H";
+    public void testSetDuration() {
+        OurDateTime dateTime = new OurDateTime(2023, 5, 12, 10, 56);
+        OurDateTime endDate = new OurDateTime(2024, 5, 14, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
 
-        // Call the method
-        int result = Appointment.ICSFormatToDuration(durationString);
-
-        // Expected result: 3 hours = 180 minutes
-        assertEquals(180, result);
+        appointment.setEndDate(endDate);
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("368 days 13 hours 3 minutes", appointment.getDuration());
     }
 
     @Test
-    public void testICSFormatToDurationWithMinutesOnly() {
-        // Example duration string with only minutes (PT45M means 45 minutes)
-        String durationString = "PT45M";
-
-        // Call the method
-        int result = Appointment.ICSFormatToDuration(durationString);
-
-        // Expected result: 45 minutes
-        assertEquals(45, result);
+    public void testToString() {
+        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
+        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        OurDateTime newEndDate = new OurDateTime(2021, 5, 14, 23, 59);
+        appointment.setEndDate(newEndDate);
+        appointment.setDuration(dateTime, newEndDate);
+        assertEquals("""
+                Appointment:
+                    title: title
+                    description: description
+                    dateTime: 12/05/2021 23:59
+                    end date & time: 14/05/2021 23:59
+                    duration: 2 days
+                """, appointment.toString());
     }
 
     @Test
-    public void durationInMinutesIsSetCorrectlyForDifferentDates() {
-            OurDateTime startDateTime = new OurDateTime(2023, 12, 31, 23, 30);
-            OurDateTime endDateTime = new OurDateTime(2024, 12, 31, 23, 30);
-            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
-
-            assertEquals(527040, appointment.getDurationInMin());
+    public void testCalculateDurationInDays2() {
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
+        OurDateTime endDate = new OurDateTime(2024, 5, 13, 22, 0);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("90 days 5 hours 1 minute", appointment.getDuration());
     }
 
     @Test
-    public void durationInMinutesIsSetCorrectlyForSameDates() {
-            OurDateTime startDateTime = new OurDateTime(2023, 12, 31, 23, 30);
-            OurDateTime endDateTime = new OurDateTime(2023, 12, 31, 23, 30);
-            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
-
-            assertEquals(0, appointment.getDurationInMin());
+    public void testDurationOnlyDays(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 14, 16, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("1 day", appointment.getDuration());
     }
 
     @Test
-    public void durationInMinutesIsSetCorrectlyForDatesInDifferentMonths() {
-            OurDateTime startDateTime = new OurDateTime(2023, 8, 30, 23, 30);
-            OurDateTime endDateTime = new OurDateTime(2023, 12, 1, 0, 30);
-            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
-
-            assertEquals(132540, appointment.getDurationInMin());
+    public void testDurationOnlyHours(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 13, 17, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("1 hour", appointment.getDuration());
     }
 
     @Test
-    public void durationInMinutesIsSetCorrectlyForDatesInDifferentYears() {
-            OurDateTime startDateTime = new OurDateTime(2023, 12, 31, 23, 30);
-            OurDateTime endDateTime = new OurDateTime(2024, 1, 1, 0, 30);
-            Appointment appointment = new Appointment(startDateTime, endDateTime, "Title", "Description");
-
-            assertEquals(60, appointment.getDurationInMin());
+    public void testDurationOnlyMinutes(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 13, 16, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("0 minutes", appointment.getDuration());
     }
 
+    @Test
+    public void testDurationDaysAndHours(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 14, 17, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("1 day 1 hour", appointment.getDuration());
+    }
+
+    @Test
+    public void testDurationDaysAndMinutes(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 15, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 14, 16, 0);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("1 day 1 minute", appointment.getDuration());
+    }
+
+    @Test
+    public void testDurationHoursAndMinutes(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 15, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 13, 17, 0);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("1 hour 1 minute", appointment.getDuration());
+    }
+
+    @Test
+    public void testDurationDaysHoursAndMinutes(){
+        OurDateTime dateTime = new OurDateTime(2024, 2, 13, 15, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 14, 17, 0);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("1 day 1 hour 1 minute", appointment.getDuration());
+    }
 }

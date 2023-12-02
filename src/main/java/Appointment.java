@@ -2,28 +2,25 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Appointment extends Event {
-    private int durationInMin;//how much the date will last
+    private String duration;
     private OurDateTime endDate;
 
     public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
         super(dateTime, title, description);
         this.endDate = endDate;
-        setDurationInMin(dateTime,endDate);
+        setDuration(dateTime,endDate);
     }
 
-    public int getDurationInMin() {return durationInMin;}
-    public void setDurationInMin(OurDateTime dateTime, OurDateTime endDate) {
+    public String getDuration() {return duration;}
+    public void setDuration(OurDateTime dateTime, OurDateTime endDate) {
         LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
         LocalDateTime end = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDay(), endDate.getHour(), endDate.getMinute());
         long durationInMinutes = Duration.between(start, end).toMinutes();
-        this.durationInMin = (int) durationInMinutes;
+        this.duration = calculateDurationInDays((int) durationInMinutes);
     }
 
     public OurDateTime getEndDate() {return endDate;}
     public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
-
-    public int getDuration() { return durationInMin; }
-    public void setDuration(int durationInMin) {} // needs fixing
 
     private void setEndDatePrompt() {
         while (true) {
@@ -32,7 +29,7 @@ public class Appointment extends Event {
 
             if (endDate.getCalculationFormat() >= getDateTime().getCalculationFormat()) {
                 setEndDate(endDate);
-                setDurationInMin(getDateTime(), endDate);
+                setDuration(getDateTime(), endDate);
                 break;
             }
 
@@ -40,27 +37,20 @@ public class Appointment extends Event {
         }
     }
 
-    private String calculateDurationInDays(int durationInMin) {
+    public String calculateDurationInDays(int durationInMin) {
         int days = durationInMin / 1440;
         int hours = (durationInMin % 1440) / 60;
         int minutes = (durationInMin % 1440) % 60;
 
         StringBuilder result = new StringBuilder();
 
-        if (days > 0) result.append(days).append(" days ");
-        if (hours > 0) result.append(hours).append(" hours ");
-        if (minutes > 0 || result.isEmpty()) result.append(minutes).append(" minutes");
-
-        return result.toString().trim();
+        return  result.append(days > 0 ? days + (days == 1 ? " day " : " days ") : "")
+                      .append(hours > 0 ? hours + (hours == 1 ? " hour " : " hours ") : "")
+                      .append(minutes > 0 || result.isEmpty() ? minutes + (minutes == 1 ? " minute" : " minutes") : "")
+                      .toString()
+                      .trim();
     }
 
-    public static int ICSFormatToDuration(String string) {//todo
-        Duration duration = Duration.parse(string);
-        int hours = duration.toHoursPart();
-        int minutes = duration.toMinutesPart();
-        minutes = minutes + hours * 60;
-        return minutes;
-    }
 
     @Override
     public void editEvent() {
@@ -93,6 +83,6 @@ public class Appointment extends Event {
                 dateTime: %s
                 end date & time: %s
                 duration: %s
-            """.formatted(getTitle(), getDescription(), getDateTime(), getEndDate(), calculateDurationInDays(getDuration()));
+            """.formatted(getTitle(), getDescription(), getDateTime(), getEndDate(), getDuration());
     }
 }
