@@ -1,10 +1,14 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import java.util.ArrayList;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App {
     static OurCalendar calendar = new OurCalendar();
 
     public static void main(String[] args) {
+
         calendarListFiller();
 
         int choice, option;

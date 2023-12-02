@@ -64,7 +64,7 @@ public class ICSFile {
             App.calendar.setCalScale(calendar.getCalendarScale());
             App.calendar.setProdId(calendar.getProductId());
             App.calendar.setVersion(calendar.getVersion());
-        } catch (IOException | ParserException e) {
+        } catch (IOException | ParserException | NullPointerException e) {
             System.out.println("The file you have provided is corrupt ");
         }
         App.calendar.setEvents(events);
