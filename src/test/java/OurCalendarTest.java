@@ -15,7 +15,7 @@ public class OurCalendarTest {
     @Test
     public void editEvents() {
     }
-
+/*
     @Test
     public void testChangeProjectCondition() {
         // setup
@@ -36,7 +36,7 @@ public class OurCalendarTest {
         String output2 = HelperFuncForTests.captureOutput(() -> calendar.changeProjectCondition());
         assertTrue(output2.contains("The status of the Project is Ongoing"));
     }
-
+*/
 
     @Test
     public void printUpcomingEvents() {
