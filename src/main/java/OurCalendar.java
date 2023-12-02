@@ -150,13 +150,13 @@ public class OurCalendar {
         long format = realDateTime.getCalculationFormat();
 
         switch (choice) {
-            case pastDay -> {
+            case pastday -> {
                 Validate.println("\nOld Events from today:\n");
                 //from the realDateTime format we are changing the time to 00:00
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
-            case pastWeek -> {
+            case pastweek -> {
                 Validate.println("\nOld Events from this week:\n");
                 //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();

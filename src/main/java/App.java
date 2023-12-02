@@ -10,9 +10,9 @@ public class App {
         day,
         week,
         month,
-        pastDay,
-        pastWeek,
-        pastMonth,
+        pastday,
+        pastweek,
+        pastmonth,
         todo,
         due
     }
@@ -47,7 +47,7 @@ public class App {
 
             if (choice.equals(AppChoices.day) || choice.equals(AppChoices.week) || choice.equals(AppChoices.month)){
                 calendar.printUpcomingEvents(choice);
-            } else if (choice.equals(AppChoices.pastDay) || choice.equals(AppChoices.pastWeek) || choice.equals(AppChoices.pastMonth)) {
+            } else if (choice.equals(AppChoices.pastday) || choice.equals(AppChoices.pastweek) || choice.equals(AppChoices.pastmonth)) {
                 calendar.printOldEvents(choice);
             }else {
                 calendar.printUnfinishedProject(choice);
