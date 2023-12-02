@@ -12,7 +12,6 @@ public class Appointment extends Event {
     }
 
     public int getDurationInMin() {return durationInMin;}
-
     public void setDurationInMin(OurDateTime dateTime, OurDateTime endDate) {
         LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
         LocalDateTime end = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDay(), endDate.getHour(), endDate.getMinute());
@@ -27,14 +26,17 @@ public class Appointment extends Event {
     public void setDuration(int durationInMin) { this.durationInMin = durationInMin; }
 
     private void setEndDatePrompt() {
-        Validate.print("\nType the new, end date & time\t");
-        OurDateTime endDate = OurDateTime.Functionality.dateAndTime();
-        if (endDate.getCalculationFormat() < getDateTime().getCalculationFormat()) {
+        while (true) {
+            Validate.print("\nType the new, end date & time\t");
+            OurDateTime endDate = OurDateTime.Functionality.dateAndTime();
+
+            if (endDate.getCalculationFormat() >= getDateTime().getCalculationFormat()) {
+                setEndDate(endDate);
+                setDurationInMin(getDateTime(), endDate);
+                break;
+            }
+
             Validate.println("End date can't be before start date");
-            setEndDatePrompt();
-        } else {
-            setEndDate(endDate);
-            setDurationInMin(getDateTime(), endDate);
         }
     }
 
@@ -52,7 +54,7 @@ public class Appointment extends Event {
         return result.toString().trim();
     }
 
-    public static int ICSFormatToDuration(String string) {
+    public static int ICSFormatToDuration(String string) {//todo
         Duration duration = Duration.parse(string);
         int hours = duration.toHoursPart();
         int minutes = duration.toMinutesPart();
@@ -86,11 +88,11 @@ public class Appointment extends Event {
     public String toString() {
         return """
             Appointment:
-                dateTime: %s
-                end date & time: %s
                 title: %s
                 description: %s
+                dateTime: %s
+                end date & time: %s
                 duration: %s
-            """.formatted(getDateTime(),getEndDate(), getTitle(), getDescription(), calculateDurationInDays(getDurationInMin()));
+            """.formatted(getTitle(), getDescription(), getDateTime(), getEndDate(), calculateDurationInDays(getDuration()));
     }
 }
