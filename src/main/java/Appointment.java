@@ -50,8 +50,7 @@ public class Appointment extends Event {
                       .toString()
                       .trim();
     }
-
-
+/*
     @Override
     public void editEvent() {
         int option;
@@ -73,7 +72,7 @@ public class Appointment extends Event {
             }
         } while (option != 5);
     }
-
+*/
     @Override
     public String toString() {
         return """
