@@ -44,7 +44,6 @@ public class ICSFile {
                         events.add(newAppointment);
                     } catch (NoSuchElementException e) {
                         System.out.println("the event " + count + " on the file has missing properties moving on to next event..");
-                        break;
                     }
                     count++;
 
