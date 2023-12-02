@@ -61,29 +61,6 @@ public class Appointment extends Event {
         minutes = minutes + hours * 60;
         return minutes;
     }
-
-    @Override
-    public void editEvent() {
-        int option;
-
-        do { //Picking one option to change a field
-            Validate.println("""
-                    Do you want to Change:
-                    1) Title
-                    2) Description
-                    3) Date & Time
-                    4) End Date & Time
-                    5) or Exit""");
-            option = Validate.checkAndReturnIntBetween(1, 5);
-            switch (option) {
-                case 1 -> setTitlePrompt();
-                case 2 -> setDescriptionPrompt();
-                case 3 -> setDateTimePrompt();
-                case 4 -> setEndDatePrompt();
-            }
-        } while (option != 5);
-    }
-
     @Override
     public String toString() {
         return """

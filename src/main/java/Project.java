@@ -18,28 +18,6 @@ public class Project extends Event{
         setDeadline(Validate.deadline(getDateTime()));
     }
     @Override
-    public void editEvent() {
-        int option;
-
-        do {//Picking one option to change a field
-            Validate.println("""
-                    Do you want to Change:
-                    1) Title
-                    2) Description
-                    3) Date & Time
-                    4) Deadline
-                    5) Or Exit""");
-            option = Validate.checkAndReturnIntBetween(1, 5);
-            switch (option) {
-                case 1 -> setTitlePrompt();
-                case 2 -> setDescriptionPrompt();
-                case 3 -> setDateTimePrompt();
-                case 4 -> setDeadlinePrompt();
-            }
-        } while (option != 5);
-    }
-
-    @Override
     public String toString() {
         return """
             Project:

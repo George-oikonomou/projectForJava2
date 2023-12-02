@@ -1,64 +1,53 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 
 public class App {
+
+    public enum AppChoices{
+        day,
+        week,
+        month,
+        pastday,
+        pastweek,
+        pastmonth,
+        todo,
+        due
+    }
     static OurCalendar calendar = new OurCalendar();
     public static void main(String[] args) {
+    if (args.length == 4){
+
+    }else if (args.length == 5){
+            AppChoices choice = null;
+            for (AppChoices appChoices : AppChoices.values()){
+                if (appChoices.toString().equals(args[3])){
+                    choice = appChoices;
+                }
+            }
+            if (choice == null){
+                System.out.println("error wrong functionality option");
+                System.exit(1);
+            }
+            ICSFile file = new ICSFile(args[4]);
+            file.loadEvents();
+
+            if (choice.equals(AppChoices.day) || choice.equals(AppChoices.week) || choice.equals(AppChoices.month)){
+                calendar.printUpcomingEvents(choice);
+            } else if (choice.equals(AppChoices.pastday) || choice.equals(AppChoices.pastweek) || choice.equals(AppChoices.pastmonth)) {
+                calendar.printOldEvents(choice);
+            }else {
+                calendar.printUnfinishedProject(choice);
+            }
+
+    }else {
+            System.out.println("Incorrect number of arguments");
+    }
+
 
         calendarListFiller();
-        int choice, option;
-        ICSFile file = new ICSFile("greece.ics");
-        do {
-            Validate.println("""
-                
-                add an event enter (1)
-                edit an event enter (2)
-                change the condition of a project (3)
-                save events to file enter (4)
-                load events from file enter (5)
-                print upcoming events (6)
-                print old events (7)
-                print unfinished projects with uncompleted due deadline (8)
-                print unfinished projects with completed due deadline (9)
-                exit enter (10)
-                
-                """);
 
-            choice = Validate.checkAndReturnIntBetween(1, 10);
-            switch (choice) {
-                case 1 -> calendar.addEvents();
-                case 2 -> calendar.editEvent();
-                case 3 -> calendar.changeProjectCondition();
-                case 4 -> file.StoreEvents(calendar.getEvents());
-                case 5 -> {
-                    file.LoadEvents();
-                    ArrayList<Event> eventsToPrint = calendar.getEvents();
-                    for (Event event : eventsToPrint) {
-                        Validate.println(event);
-                    }
-                }
-                case 6 -> {
-                    Validate.println("""
-                            print the upcoming events:
-                            for today (1)
-                            for this week (2)
-                            for this month (3)""");
-                    option = Validate.checkAndReturnIntBetween(1, 3);
-                    calendar.printUpcomingEvents(option);
-                }
-                case 7 -> {
-                    Validate.println("""
-                            print the old events:
-                            from today (1)
-                            from this week (2)
-                            from this month (3)""");
-                    option = Validate.checkAndReturnIntBetween(1, 3);
-                    calendar.printOldEvents(option);
-                }
-                case 8, 9 -> calendar.printUnfinishedProject(choice);
-            }
-        }while(choice != 10);
         TimeService.stop();
     }
     public static void calendarListFiller() {

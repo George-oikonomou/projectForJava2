@@ -73,44 +73,6 @@ public class OurCalendar {
             newProject.setOurCalendar(this);
         }
     }
-
-    public void editEvent() {
-        int choice;
-        String title;
-        Event searchedEvent;
-
-        do {
-            Validate.println("""
-                    Change:
-                        1) Appointment
-                        2) Project
-                        3) Exit""");
-            //Choosing one of the above options
-            choice = Validate.checkAndReturnIntBetween(1, 3);
-            //Printing all the events, appointments or projects:
-            for (Event event : events) {
-                if (choice == 2 && event instanceof Project || choice == 1 && event instanceof Appointment )
-                    Validate.println(event);
-                else if (choice == 3)
-                    return;
-            }
-
-            Validate.println("Type the title of the event you want to change:");
-            //Finding the title of the event:
-            while (true) {
-                title = Validate.strInput();
-                searchedEvent = eventSearch(title, choice);
-                if (searchedEvent == null)
-                    Validate.println("You typed wrong title. Try again.");
-                else
-                   break;
-            }
-            //Changing the fields of the chosen event:
-            searchedEvent.editEvent();
-            Validate.println("");
-        } while (choice != 3);
-    }
-
     public void changeProjectCondition() {
         Validate.println("Please provide the name of the Project you wish to update its status");
 
@@ -175,17 +137,17 @@ public class OurCalendar {
         }
     }
 
-    public void printUpcomingEvents(int choice){
+    public void printUpcomingEvents(App.AppChoices choice){
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
         sortList(events);
-        if (choice == 1) {
+        if (choice.equals(App.AppChoices.day)) {
             Validate.println("\nUpcoming Events for today:\n");
                 //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
                 format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
         } else {
-                if (choice == 2)
+                if (choice.equals(App.AppChoices.week))
                     Validate.println("\nUpcoming Events this week:\n");
                 else
                     Validate.println("\nUpcoming Events this month:\n");
@@ -196,50 +158,47 @@ public class OurCalendar {
                 else
                     format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 System.out.println(format);
-                if (choice == 2)
+                if (choice.equals(App.AppChoices.week))
                     timePeriod(format, realDateTime.getCalculationFormat(), 2);
                else
                     timePeriod(format, realDateTime.getCalculationFormat(),1);
         }
     }
-    public void printOldEvents(int choice){
+    public void printOldEvents(App.AppChoices choice){
         sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
 
         switch (choice) {
-            case 1: {
+            case pastday -> {
                 Validate.println("\nOld Events from today:\n");
                 //from the realDateTime format we are changing the time to 00:00
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
-                timePeriod(realDateTime.getCalculationFormat(), format,1);
-                break;
+                timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
-            case 2: {
+            case pastweek -> {
                 Validate.println("\nOld Events from this week:\n");
                 //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, 3);
-                break;
             }
-            default: {
+            default -> {
                 Validate.println("\nOld Events from this month:\n");
                 //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
-                break;
             }
         }
     }
-    public void printUnfinishedProject(int choice){
+    public void printUnfinishedProject(App.AppChoices choice){
         sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
         for (Event event : events) {
             if (event instanceof Project && !((Project) event).getIsFinished()) {
-                if (choice == 8 && format < ((Project) event).getDeadline().getCalculationFormat())
+                if (choice == App.AppChoices.todo && format < ((Project) event).getDeadline().getCalculationFormat())
                     System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
-                else if (choice == 9 && format >= ((Project) event).getDeadline().getCalculationFormat())
+                else if (choice == App.AppChoices.due && format >= ((Project) event).getDeadline().getCalculationFormat())
                     System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
             }
         }
