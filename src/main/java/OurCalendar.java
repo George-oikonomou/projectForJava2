@@ -13,7 +13,6 @@ public class OurCalendar {
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
-
     public OurCalendar() {
         this.events = new ArrayList<>();
     }
@@ -21,14 +20,14 @@ public class OurCalendar {
     public ArrayList<Event> getEvents() { return events; }
     public void setEvents(ArrayList<Event> events) { this.events = events; }
 
-    public Version getVersion() {return version;}
-    public void setVersion(Version version) {this.version = version;}
+    public Version getVersion() { return version; }
+    public void setVersion(Version version) { this.version = version; }
 
-    public ProdId getProdId() {return prodId;}
-    public void setProdId(ProdId prodId) {this.prodId = prodId;}
+    public ProdId getProdId() { return prodId; }
+    public void setProdId(ProdId prodId) { this.prodId = prodId; }
 
-    public CalScale getCalScale() {return calScale;}
-    public void setCalScale(CalScale calScale) {this.calScale = calScale;}
+    public CalScale getCalScale() { return calScale; }
+    public void setCalScale(CalScale calScale) { this.calScale = calScale; }
 
     public void addEvents() {
         int choice;
@@ -151,13 +150,13 @@ public class OurCalendar {
         long format = realDateTime.getCalculationFormat();
 
         switch (choice) {
-            case pastday -> {
+            case pastDay -> {
                 Validate.println("\nOld Events from today:\n");
                 //from the realDateTime format we are changing the time to 00:00
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
-            case pastweek -> {
+            case pastWeek -> {
                 Validate.println("\nOld Events from this week:\n");
                 //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
@@ -185,6 +184,16 @@ public class OurCalendar {
         }
     }
 
+    public Event eventSearch(String title, int type) {
+        for (Event event : events)
+            if (event.getTitle().equals(title))
+                if ((type == 1 && event instanceof Appointment) || (type == 2 && event instanceof Project))
+                    return event;
+
+        return null;
+    }
+
+    /*
     public void editEvent() {
         int choice;
         String title;
@@ -214,14 +223,13 @@ public class OurCalendar {
                 if (searchedEvent == null)
                     Validate.println("You typed wrong title. Try again.");
                 else
-                   break;
+                    break;
             }
             //Changing the fields of the chosen event:
             searchedEvent.editEvent();
             Validate.println("");
         } while (choice != 3);
     }
-
     public void changeProjectCondition() {
         Validate.println("Please provide the name of the Project you wish to update its status");
 
@@ -237,13 +245,5 @@ public class OurCalendar {
             Validate.println("Project does not exist. Please try again.");
         }
     }
-
-    public Event eventSearch(String title, int type) {
-        for (Event event : events)
-            if (event.getTitle().equals(title))
-                if ((type == 1 && event instanceof Appointment) || (type == 2 && event instanceof Project))
-                    return event;
-
-        return null;
-    }
+   */
 }
