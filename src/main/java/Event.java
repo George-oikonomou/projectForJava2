@@ -37,4 +37,5 @@ public abstract class Event {
         Validate.print("\nType the new date & time:\t");
         setDateTime(OurDateTime.Functionality.dateAndTime());
     }
+    public void editEvent() {}
 }
