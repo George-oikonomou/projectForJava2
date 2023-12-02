@@ -23,7 +23,7 @@ public class Appointment extends Event {
     public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
 
     public int getDuration() { return durationInMin; }
-    public void setDuration(int durationInMin) { this.durationInMin = durationInMin; }
+    public void setDuration(int durationInMin) {} // needs fixing
 
     private void setEndDatePrompt() {
         while (true) {

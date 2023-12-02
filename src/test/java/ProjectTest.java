@@ -21,6 +21,6 @@ public class ProjectTest {
     public void testGetAndSetIsFinished() {
         project = new Project(dateTime, "title", "description", dateTime);
         project.setFinished(true);
-        assertTrue(project.isFinished());
+        assertTrue(project.getIsFinished());
     }
 }

@@ -4,7 +4,6 @@ import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.property.*;
@@ -14,8 +13,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.NoSuchElementException;
-
-//handle corrupt ics file exceptions
 
 public class ICSFile {
     private final String filePath;
@@ -38,7 +35,7 @@ public class ICSFile {
             CalendarBuilder builder = new CalendarBuilder();
             Calendar calendar = builder.build(inputStream);
             int count = 1;
-            for (Object component : calendar.getComponents(Component.VEVENT)) {
+            for (Object component : calendar.getComponents()) {
 
                 if (component instanceof VEvent appointment) {
                     // try to create an appointment
@@ -67,8 +64,8 @@ public class ICSFile {
             App.calendar.setCalScale(calendar.getCalendarScale());
             App.calendar.setProdId(calendar.getProductId());
             App.calendar.setVersion(calendar.getVersion());
-        } catch (IOException | ParserException e) {
-            System.out.println("error reading file");
+        } catch (IOException | ParserException | NullPointerException e) {
+            System.out.println("The file you have provided is corrupt ");
         }
         App.calendar.setEvents(events);
     }
@@ -111,18 +108,7 @@ public class ICSFile {
                 calendar.getComponents().add(createVTodo(project));
             }
         }
-        try {
-            System.out.println(calendar);
-            calendar.validate();
-            // Rest of the code...
-        } catch (ValidationException e) {
-
-            System.out.println("Calendar validation error: " + e.getMessage());
-        }
-
         try (FileWriter fileWriter = new FileWriter(filePath)) {
-
-            calendar.validate();
             CalendarOutputter outPutter = new CalendarOutputter();
             outPutter.output(calendar, fileWriter);
             System.out.println("Calendar successfully written to " + filePath);

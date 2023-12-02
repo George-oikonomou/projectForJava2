@@ -119,8 +119,8 @@ public class OurCalendar {
             Event event = eventSearch(title, 2);
 
             if (event instanceof Project project) {
-                project.setFinished(!project.isFinished());
-                Validate.printf("The status of the Project is %s", project.isFinished() ? "Finished" : "Ongoing");
+                project.setFinished(!project.getIsFinished());
+                Validate.printf("The status of the Project is %s", project.getIsFinished() ? "Finished" : "Ongoing");
                 return; // Exit the method if a valid project name is provided
             }
             Validate.println("Project does not exist. Please try again.");
@@ -236,7 +236,7 @@ public class OurCalendar {
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
         for (Event event : events) {
-            if (event instanceof Project && !((Project) event).isFinished()) {
+            if (event instanceof Project && !((Project) event).getIsFinished()) {
                 if (choice == 8 && format < ((Project) event).getDeadline().getCalculationFormat())
                     System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
                 else if (choice == 9 && format >= ((Project) event).getDeadline().getCalculationFormat())

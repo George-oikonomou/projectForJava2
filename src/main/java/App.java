@@ -1,12 +1,12 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import java.util.ArrayList;
 
+
 public class App {
     static OurCalendar calendar = new OurCalendar();
-
     public static void main(String[] args) {
-        calendarListFiller();
 
+        calendarListFiller();
         int choice, option;
         ICSFile file = new ICSFile("greece.ics");
         do {
