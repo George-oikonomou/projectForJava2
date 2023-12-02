@@ -185,6 +185,59 @@ public class OurCalendar {
         }
     }
 
+    public void editEvent() {
+        int choice;
+        String title;
+        Event searchedEvent;
+
+        do {
+            Validate.println("""
+                    Change:
+                        1) Appointment
+                        2) Project
+                        3) Exit""");
+            //Choosing one of the above options
+            choice = Validate.checkAndReturnIntBetween(1, 3);
+            //Printing all the events, appointments or projects:
+            for (Event event : events) {
+                if (choice == 2 && event instanceof Project || choice == 1 && event instanceof Appointment )
+                    Validate.println(event);
+                else if (choice == 3)
+                    return;
+            }
+
+            Validate.println("Type the title of the event you want to change:");
+            //Finding the title of the event:
+            while (true) {
+                title = Validate.strInput();
+                searchedEvent = eventSearch(title, choice);
+                if (searchedEvent == null)
+                    Validate.println("You typed wrong title. Try again.");
+                else
+                   break;
+            }
+            //Changing the fields of the chosen event:
+            searchedEvent.editEvent();
+            Validate.println("");
+        } while (choice != 3);
+    }
+
+    public void changeProjectCondition() {
+        Validate.println("Please provide the name of the Project you wish to update its status");
+
+        while (true) {
+            String title = Validate.strInput();
+            Event event = eventSearch(title, 2);
+
+            if (event instanceof Project project) {
+                project.setFinished(!project.getIsFinished());
+                Validate.printf("The status of the Project is %s", project.getIsFinished() ? "Finished" : "Ongoing");
+                return; // Exit the method if a valid project name is provided
+            }
+            Validate.println("Project does not exist. Please try again.");
+        }
+    }
+
     public Event eventSearch(String title, int type) {
         for (Event event : events)
             if (event.getTitle().equals(title))
