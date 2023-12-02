@@ -32,7 +32,9 @@ public class Appointment extends Event {
     }
 
     public int getDuration() { return durationInMin; }
-    public void setDuration(int durationInMin) { this.durationInMin = durationInMin; }
+    public void setDuration(int durationInMin) {
+
+    }
 
     private void setDurationPrompt() {
         Validate.print("\nType the new duration:\t");
