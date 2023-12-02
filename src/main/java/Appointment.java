@@ -51,7 +51,6 @@ public class Appointment extends Event {
                       .trim();
     }
 
-
     @Override
     public void editEvent() {
         int option;
