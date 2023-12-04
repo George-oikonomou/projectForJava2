@@ -1,6 +1,6 @@
 import gr.hua.dit.oop2.calendar.TimeService;
 import java.io.File;
-import java.util.ArrayList;
+
 
 
 
@@ -55,36 +55,7 @@ public class App {
         }else {
             System.out.println("Incorrect number of arguments");
         }
-
-
-        calendarListFiller();
-
         TimeService.stop();
     }
-    public static void calendarListFiller() {
-        ArrayList<Event> events = new ArrayList<>();
 
-        //future project
-        OurDateTime deadline = new OurDateTime(2024, 5, 12, 23, 59);
-        OurDateTime dateTime2 = new OurDateTime(2024, 3, 15,0,0);
-        Project event3 = new Project(dateTime2, "Video Shoot", "You shot a bratty sis scene", deadline);
-        event3.setOurCalendar(calendar);
-        events.add(event3);
-
-        //future appointment
-        OurDateTime dateTime3 = new OurDateTime(2024,2,28,0,0);
-        OurDateTime endDate3 = new OurDateTime(2024,3,28,0,0);
-        Appointment event4 = new Appointment(dateTime3,endDate3, "MyBirthday","dont you assholes forget");
-        event4.setOurCalendar(calendar);
-        events.add(event4);
-
-        // a past project that its deadline is fucked
-        OurDateTime deadline2 = new OurDateTime(2023, 12, 31, 23, 59);
-        OurDateTime dateTime5 = new OurDateTime(2023, 4, 12,0,0);
-        Project event6 = new Project(dateTime5, "draw yo mama", "You didnt drew yo mama", deadline2);
-        event6.setOurCalendar(calendar);
-        events.add(event6);
-
-        calendar.setEvents(events);
-    }
 }
