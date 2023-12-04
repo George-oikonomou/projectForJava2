@@ -86,6 +86,5 @@ public class App {
         events.add(event6);
 
         calendar.setEvents(events);
-        OurCalendar.printEvents(events);
     }
 }
