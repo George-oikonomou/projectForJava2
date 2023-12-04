@@ -41,12 +41,16 @@
             <version>1.0.0</version>
         </dependency>
     </dependencies>
+
+    <!--this build thing came from chatgpt to fix an issue we had with the library
+    basically it creates a jar file with dependencies and then it makes it so its name
+    is just the program_name.jar we dont know any details.. -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version> <!-- Use the appropriate version -->
+                <version>3.6.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -56,6 +60,9 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <!-- Define a custom output file name without using the classifier -->
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>${project.artifactId}</finalName>
                 </configuration>
                 <executions>
                     <execution>
@@ -67,8 +74,20 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>App</mainClass>
+                        </manifest>
+                    </archive>
+                    <!-- Remove version information from the generated JAR name -->
+                    <finalName>${project.artifactId}</finalName>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>
