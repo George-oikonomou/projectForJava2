@@ -18,7 +18,7 @@ public class Project extends Event{
         setDeadline(Validate.deadline(getDateTime()));
     }
 
-   /*
+
     @Override
     public void editEvent() {
         int option;
@@ -40,7 +40,7 @@ public class Project extends Event{
             }
         } while (option != 5);
     }
-    */
+
     @Override
     public String toString() {
         return """

@@ -68,6 +68,7 @@ public class ICSFile {
             System.out.println("The file you have provided is corrupt ");
         }catch (IOException e){
             System.out.println("The file you provided does not exist");
+            System.exit(1);
         }
         App.calendar.setEvents(events);
     }

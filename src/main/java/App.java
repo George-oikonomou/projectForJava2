@@ -21,16 +21,16 @@ public class App {
 
         if (args.length == 1){
             File file = new File(args[0]);
+            ICSFile ourFile = new ICSFile(args[0]);
                 if (file.exists()){
                     System.out.println("file exists loading the events..");
-                    ICSFile ourFile = new ICSFile(args[0]);
                     ourFile.loadEvents();
                 }else {
                     System.out.println("file does not exist, creating new one");
-                    ICSFile ourFile = new ICSFile(args[0]);
-                    calendar.addEvents();
-                    ourFile.storeEvents(calendar.getEvents());
                 }
+                calendar.addEvents();
+                ourFile.storeEvents(calendar.getEvents());
+
         }else if (args.length == 2){
             AppChoices choice = null;
             for (AppChoices appChoices : AppChoices.values()){
@@ -74,7 +74,7 @@ public class App {
         //future appointment
         OurDateTime dateTime3 = new OurDateTime(2024,2,28,0,0);
         OurDateTime endDate3 = new OurDateTime(2024,3,28,0,0);
-        Appointment event4 = new Appointment(dateTime3,endDate3, "MyBday","dont you assholes forget");
+        Appointment event4 = new Appointment(dateTime3,endDate3, "MyBirthday","dont you assholes forget");
         event4.setOurCalendar(calendar);
         events.add(event4);
 

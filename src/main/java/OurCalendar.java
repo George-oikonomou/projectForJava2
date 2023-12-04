@@ -104,11 +104,11 @@ public class OurCalendar {
             long eventFormat = event.getDateTime().getCalculationFormat();
             if (eventFormat >= minTime && eventFormat < maxTime) {     //if the event is between minimum and maximum time
                 if (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7)  //if the event is upcoming
-                    Validate.println(event.getTitle() + "\t" + event.getDateTime());
+                    Validate.println(event);
                 else if (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue())
-                    Validate.println(event.getTitle() + "\t" + event.getDateTime());
+                    Validate.println(event);
                 else if (code == 1)
-                    Validate.println(event.getTitle() + "\t" + event.getDateTime());
+                    Validate.println(event);
             }
         }
     }
@@ -133,7 +133,6 @@ public class OurCalendar {
                     //+89000000 changes the year by one and the month becomes January
                 else
                     format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                System.out.println(format);
                 if (choice.equals(App.AppChoices.week))
                     timePeriod(format, realDateTime.getCalculationFormat(), 2);
                else
