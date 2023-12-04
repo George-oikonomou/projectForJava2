@@ -71,7 +71,6 @@ public class OurCalendar {
     }
     public static void sortList(ArrayList<Event> events) {
         int n = events.size();
-        printEvents(events);
 
         for (int i = 1; i < n; ++i) {
             Event keyEvent = events.get(i);
@@ -94,10 +93,7 @@ public class OurCalendar {
 
         return dateTime1.getCalculationFormat() - dateTime2.getCalculationFormat();
     }
-    public static void printEvents(ArrayList<Event> events) {
-        for (Event event : events)
-            Validate.println(event.toString());
-    }
+
 
     private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         OurDateTime realDateTime = new OurDateTime();       //current date & time
