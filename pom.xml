@@ -42,6 +42,9 @@
         </dependency>
     </dependencies>
 
+    <!--this build thing came from chatgpt to fix an issue we had with the library
+    basically it creates a jar file with dependencies and then it makes it so its name
+    is just the program_name.jar we dont know any details.. -->
     <build>
         <plugins>
             <plugin>
@@ -87,6 +90,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
