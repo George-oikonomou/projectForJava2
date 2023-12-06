@@ -32,13 +32,13 @@ public class Validate {//Checking the input value
         return temp;
     }
 
-    //Making an object DateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline(OurDateTime dateTime) {
-        int year = getInput("\nDATE\n\tYear:\t", dateTime.getYear(), 2100);
-        int month = getInput("\tMonth:\t", (year == dateTime.getYear()) ? dateTime.getMonth() : 1, 12);
-        int day = getInput("\tDay:\t", (month == dateTime.getMonth() && year == dateTime.getYear())  ? dateTime.getDay() : 1, getDaysInMonth(month, year));
-        int hour = getInput("\nTIME\n\tHour:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear()) ? dateTime.getHour() : 0, 23);
-        int minute = getInput("\tMinute:\t", (day == dateTime.getDay() && month == dateTime.getMonth() && year == dateTime.getYear() && hour == dateTime.getHour()) ? dateTime.getMinute() : 0, 59);
+    //Making an object OurDateTime & checking the value of date & time for the deadline
+    public static OurDateTime deadline(OurDateTime startDate) {
+        int year = getInput("\nDATE\n\tYear:\t", startDate.getYear(), 2100);
+        int month = getInput("\tMonth:\t", (year == startDate.getYear()) ? startDate.getMonth() : 1, 12);
+        int day = getInput("\tDay:\t", (month == startDate.getMonth() && year == startDate.getYear())  ? startDate.getDay() : 1, getDaysInMonth(month, year));
+        int hour = getInput("\nTIME\n\tHour:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear()) ? startDate.getHour() : 0, 23);
+        int minute = getInput("\tMinute:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear() && hour == startDate.getHour()) ? startDate.getMinute() : 0, 59);
 
         println("");
         return new OurDateTime(year, month, day, hour, minute);

@@ -5,8 +5,8 @@ import java.text.ParseException;
 import java.time.DayOfWeek;
 
 public class OurDateTime {
-    private int year, month ,day ,hour ,minute;
-    private String date, time;
+    private final int year,month,day,hour,minute;
+    private final String date,time;
     private DayOfWeek dayOfWeek;
     private DateTime icsFormat;
     private long CalculationFormat;
@@ -23,10 +23,7 @@ public class OurDateTime {
         setIcsFormat();
     }
 
-    /**
-     * constructor that creates a OurDateTime object that contains the current
-     */
-    public OurDateTime() {
+    public OurDateTime() { //* constructor that creates a OurDateTime object that contains the current date and time
         TimeTeller teller = TimeService.getTeller();
         this.dayOfWeek = teller.now().getDayOfWeek();
         this.year = teller.now().getYear();
@@ -50,47 +47,15 @@ public class OurDateTime {
         }
     }
 
-    public int getYear() { return year; }
-    public void setYear(int year) {
-        this.year = year;
-        setDate();
-    }
-
-    public int getMonth() { return month; }
-    public void setMonth(int month) {
-        this.month = month;
-        setDate();
-    }
-
-    public int getDay() { return day; }
-    public void setDay(int day) {
-        this.day = day;
-        setDate();
-    }
-
-    public int getHour() { return hour; }
-    public void setHour(int hour) {
-        this.hour = hour;
-        setTime();
-    }
-
-    public int getMinute() { return minute; }
-    public void setMinute(int minute) {
-        this.minute = minute;
-        setTime();
-    }
-
     public String getDate() { return date; }
-    public void setDate() {
-        this.date = Validate.date(year,month,day);
-        setCalculationFormat();
-    }
+    public int getYear() { return year; }
+    public int getMonth() { return month; }
+    public DayOfWeek getDayOfWeek() { return dayOfWeek; }
+    public int getDay() { return day; }
 
     public String getTime() { return time; }
-    public void setTime() {
-        this.time = Validate.time(minute,hour);
-        setCalculationFormat();
-    }
+    public int getHour() { return hour; }
+    public int getMinute() { return minute; }
 
     public Long getCalculationFormat() { return CalculationFormat; }
     public void setCalculationFormat() {
@@ -104,9 +69,6 @@ public class OurDateTime {
         this.CalculationFormat = Long.parseLong(date + time);
     }
 
-    public DayOfWeek getDayOfWeek() { return dayOfWeek; }
-    public void setDayOfWeek(DayOfWeek dayOfWeek) { this.dayOfWeek = dayOfWeek; }
-
     @Override
     public String toString(){ return getDate() + " " + getTime(); }
 
@@ -119,7 +81,6 @@ public class OurDateTime {
             int minute = Validate.getInput("\tMinute:\t", 0, 59);
             return new OurDateTime(year, month, day, hour, minute);
         }
-
         public static OurDateTime ICSFormatToOurDateTime(String string) {//todo spyros
             int year, month, day, hour = 0, minutes = 0;
             if(string.length() == 8) {
@@ -137,3 +98,34 @@ public class OurDateTime {
         }
     }
 }
+/*
+    public void setYear(int year) {
+        this.year = year;
+        setDate();
+    }
+    public void setMonth(int month) {
+        this.month = month;
+        setDate();
+    }
+    public void setDay(int day) {
+        this.day = day;
+        setDate();
+    }
+    public void setHour(int hour) {
+        this.hour = hour;
+        setTime();
+    }
+    public void setMinute(int minute) {
+        this.minute = minute;
+        setTime();
+    }
+    public void setTime() {
+        this.time = Validate.time(minute,hour);
+        setCalculationFormat();
+    }
+    public void setDate() {
+        this.date = Validate.date(year,month,day);
+        setCalculationFormat();
+    }
+    public void setDayOfWeek(DayOfWeek dayOfWeek) { this.dayOfWeek = dayOfWeek; }
+*/

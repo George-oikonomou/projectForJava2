@@ -49,7 +49,7 @@ public class AppointmentTest {
                 Appointment:
                     title: title
                     description: description
-                    dateTime: 12/05/2021 23:59
+                    start date & time: 12/05/2021 23:59
                     end date & time: 14/05/2021 23:59
                     duration: 2 days
                 """, appointment.toString());

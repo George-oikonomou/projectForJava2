@@ -2,8 +2,8 @@ public class Project extends Event{
     private OurDateTime deadline;    //date and time of project deadline
     private boolean isFinished = false;     // boolean value that tells if the project is finished
 
-    public Project(OurDateTime dateTime, String title, String description, OurDateTime deadline) {
-        super(dateTime, title, description);
+    public Project(OurDateTime startDate, String title, String description, OurDateTime deadline) {
+        super(startDate, title, description);
         this.deadline = deadline;
     }
 
@@ -13,12 +13,20 @@ public class Project extends Event{
     public boolean getIsFinished() { return isFinished; }
     public void setFinished(boolean finished) { isFinished = finished; }
 
-    private void setDeadlinePrompt() {
-        Validate.print("\nType the new deadline:\t");
-        setDeadline(Validate.deadline(getDateTime()));
+    @Override
+    public String toString() {
+        return """
+            Project:
+                title: %s
+                description: %s
+                Start date & time: %s
+                deadline: %s
+                isFinished: %s
+            """.formatted(getTitle(), getDescription(),getStartDate(),  deadline, isFinished);
     }
+}
 
-
+/*
     @Override
     public void editEvent() {
         int option;
@@ -35,21 +43,13 @@ public class Project extends Event{
             switch (option) {
                 case 1 -> setTitlePrompt();
                 case 2 -> setDescriptionPrompt();
-                case 3 -> setDateTimePrompt();
+                case 3 -> setStartDatePrompt();
                 case 4 -> setDeadlinePrompt();
             }
         } while (option != 5);
     }
-
-    @Override
-    public String toString() {
-        return """
-            Project:
-                dateTime: %s
-                title: %s
-                description: %s
-                deadline: %s
-                isFinished: %s
-            """.formatted(getDateTime(), getTitle(), getDescription(), deadline, isFinished);
+     private void setDeadlinePrompt() {
+        Validate.print("\nType the new deadline:\t");
+        setDeadline(Validate.deadline(getStartDate()));
     }
-}
+*/

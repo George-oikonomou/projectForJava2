@@ -123,7 +123,7 @@ public class ICSFile {
     private VEvent createVEvent(Appointment appointment) {
         VEvent event = new VEvent();
         event.getProperties().add(new Summary(appointment.getTitle()));
-        event.getProperties().add(new DtStart(appointment.getDateTime().getIcsFormat()));
+        event.getProperties().add(new DtStart(appointment.getStartDate().getIcsFormat()));
         event.getProperties().add(new DtEnd(appointment.getEndDate().getIcsFormat()));
         event.getProperties().add(new Description(appointment.getDescription()));
         return event;
@@ -133,10 +133,8 @@ public class ICSFile {
         VToDo vToDo = new VToDo();
         vToDo.getProperties().add(new Summary(project.getTitle()));
         vToDo.getProperties().add(new Description(project.getDescription()));
-        vToDo.getProperties().add(new DtStart(project.getDateTime().getIcsFormat()));
+        vToDo.getProperties().add(new DtStart(project.getStartDate().getIcsFormat()));
         vToDo.getProperties().add(new Due(project.getDeadline().getIcsFormat()));
         return vToDo;
     }
 }
-
-
