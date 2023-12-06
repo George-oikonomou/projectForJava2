@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 
 public class Appointment extends Event {
     private String duration;
-    private OurDateTime endDate;
+    private final OurDateTime endDate;
 
     public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description) {
         super(startDate, title, description);
@@ -20,7 +20,6 @@ public class Appointment extends Event {
     }
 
     public OurDateTime getEndDate() {return endDate;}
-    public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
 
     public String calculateDurationInDays(int durationInMin) {
         int days    = durationInMin / 1440;
@@ -81,4 +80,6 @@ public class Appointment extends Event {
         setEndDate(endDate);
         setDuration(getStartDate(), endDate);
     }
+    public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
+
 */

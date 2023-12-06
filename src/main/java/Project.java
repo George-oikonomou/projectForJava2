@@ -1,6 +1,6 @@
 public class Project extends Event{
-    private OurDateTime deadline;    //date and time of project deadline
-    private boolean isFinished = false;     // boolean value that tells if the project is finished
+    private final OurDateTime deadline;    //date and time of project deadline
+    private final boolean isFinished = false;     // boolean value that tells if the project is finished
 
     public Project(OurDateTime startDate, String title, String description, OurDateTime deadline) {
         super(startDate, title, description);
@@ -8,10 +8,7 @@ public class Project extends Event{
     }
 
     public OurDateTime getDeadline() { return deadline; }
-    public void setDeadline(OurDateTime deadline) { this.deadline = deadline; }
-
     public boolean getIsFinished() { return isFinished; }
-    public void setFinished(boolean finished) { isFinished = finished; }
 
     @Override
     public String toString() {
@@ -25,7 +22,6 @@ public class Project extends Event{
             """.formatted(getTitle(), getDescription(),getStartDate(),  deadline, isFinished);
     }
 }
-
 /*
     @Override
     public void editEvent() {
@@ -52,4 +48,7 @@ public class Project extends Event{
         Validate.print("\nType the new deadline:\t");
         setDeadline(Validate.deadline(getStartDate()));
     }
+
+      public void setFinished(boolean finished) { isFinished = finished; }
+    public void setDeadline(OurDateTime deadline) { this.deadline = deadline; }
 */

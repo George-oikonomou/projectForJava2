@@ -17,45 +17,6 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testSetEndDate() {
-        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
-        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
-        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
-        OurDateTime newEndDate = new OurDateTime(2021, 5, 14, 23, 59);
-        appointment.setEndDate(newEndDate);
-        assertEquals(newEndDate, appointment.getEndDate());
-    }
-
-    @Test
-    public void testSetDuration() {
-        OurDateTime dateTime = new OurDateTime(2023, 5, 12, 10, 56);
-        OurDateTime endDate = new OurDateTime(2024, 5, 14, 23, 59);
-        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
-
-        appointment.setEndDate(endDate);
-        appointment.setDuration(dateTime, endDate);
-        assertEquals("368 days 13 hours 3 minutes", appointment.getDuration());
-    }
-
-    @Test
-    public void testToString() {
-        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
-        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
-        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
-        OurDateTime newEndDate = new OurDateTime(2021, 5, 14, 23, 59);
-        appointment.setEndDate(newEndDate);
-        appointment.setDuration(dateTime, newEndDate);
-        assertEquals("""
-                Appointment:
-                    title: title
-                    description: description
-                    start date & time: 12/05/2021 23:59
-                    end date & time: 14/05/2021 23:59
-                    duration: 2 days
-                """, appointment.toString());
-    }
-
-    @Test
     public void testCalculateDurationInDays2() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
         OurDateTime endDate = new OurDateTime(2024, 5, 13, 22, 0);
@@ -127,3 +88,45 @@ public class AppointmentTest {
         assertEquals("1 day 1 hour 1 minute", appointment.getDuration());
     }
 }
+/*
+
+    @Test
+    public void testSetEndDate() {
+        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
+        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        OurDateTime newEndDate = new OurDateTime(2021, 5, 14, 23, 59);
+        appointment.setEndDate(newEndDate);
+        assertEquals(newEndDate, appointment.getEndDate());
+    }
+
+    @Test
+    public void testSetDuration() {
+        OurDateTime dateTime = new OurDateTime(2023, 5, 12, 10, 56);
+        OurDateTime endDate = new OurDateTime(2024, 5, 14, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+
+        appointment.setEndDate(endDate);
+        appointment.setDuration(dateTime, endDate);
+        assertEquals("368 days 13 hours 3 minutes", appointment.getDuration());
+    }
+
+    @Test
+    public void testToString() {
+        OurDateTime dateTime = new OurDateTime(2021, 5, 12, 23, 59);
+        OurDateTime endDate = new OurDateTime(2021, 5, 13, 23, 59);
+        Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
+        OurDateTime newEndDate = new OurDateTime(2021, 5, 14, 23, 59);
+        appointment.setEndDate(newEndDate);
+        appointment.setDuration(dateTime, newEndDate);
+        assertEquals("""
+                Appointment:
+                    title: title
+                    description: description
+                    start date & time: 12/05/2021 23:59
+                    end date & time: 14/05/2021 23:59
+                    duration: 2 days
+                """, appointment.toString());
+    }
+
+ */

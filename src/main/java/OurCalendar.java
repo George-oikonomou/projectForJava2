@@ -13,41 +13,19 @@ public class OurCalendar {
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
-    public OurCalendar() {
-        this.events = new ArrayList<>();
-    }
+    public OurCalendar() { this.events = new ArrayList<>(); }
 
-    public ArrayList<Event> getEvents() {
-        return events;
-    }
+    public ArrayList<Event> getEvents() { return events; }
+    public void setEvents(ArrayList<Event> events) { this.events = events; }
 
-    public void setEvents(ArrayList<Event> events) {
-        this.events = events;
-    }
+    public Version getVersion() { return version;}
+    public void setVersion(Version version) {this.version = version;}
 
-    public Version getVersion() {
-        return version;
-    }
+    public ProdId getProdId() { return prodId; }
+    public void setProdId(ProdId prodId) { this.prodId = prodId; }
 
-    public void setVersion(Version version) {
-        this.version = version;
-    }
-
-    public ProdId getProdId() {
-        return prodId;
-    }
-
-    public void setProdId(ProdId prodId) {
-        this.prodId = prodId;
-    }
-
-    public CalScale getCalScale() {
-        return calScale;
-    }
-
-    public void setCalScale(CalScale calScale) {
-        this.calScale = calScale;
-    }
+    public CalScale getCalScale() { return calScale; }
+    public void setCalScale(CalScale calScale) { this.calScale = calScale; }
 
     public void addEvents() {
         int choice;

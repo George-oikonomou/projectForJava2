@@ -1,6 +1,6 @@
 public abstract class Event {
-    private OurDateTime startDate;
-    private String title,description;
+    private final OurDateTime startDate;
+    private final String title,description;
 
     public Event(OurDateTime startDate, String title, String description) {
         this.startDate = startDate;
@@ -9,13 +9,8 @@ public abstract class Event {
     }
 
     public OurDateTime getStartDate() { return startDate; }
-    public void setStartDate(OurDateTime startDate) { this.startDate = startDate; }
-
     public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
     public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
 }
 
 /*
@@ -38,4 +33,8 @@ public abstract class Event {
 
     public OurCalendar getOurCalendar() { return ourCalendar; }
     public void setOurCalendar(OurCalendar ourCalendar) { this.ourCalendar = ourCalendar; }
+        public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) { this.description = description; }
+    public void setStartDate(OurDateTime startDate) { this.startDate = startDate; }
+
  */
