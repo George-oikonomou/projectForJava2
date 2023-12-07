@@ -121,9 +121,10 @@ public class OurDateTime {
             return new OurDateTime(year, month, day, hour, minute);
         }
 
-        public static OurDateTime ICSFormatToOurDateTime(String string) {//todo spyros
+        public static OurDateTime ICSFormatToOurDateTime(String string) {
             int year, month, day, hour = 0, minutes = 0;
-            if(string.length() == 8) {
+
+            if (string.length() == 8) {
                 year = Integer.parseInt(string.substring(0, 4));
                 month = Integer.parseInt(string.substring(4, 6));
                 day = Integer.parseInt(string.substring(6, 8));
@@ -131,10 +132,11 @@ public class OurDateTime {
                 year = Integer.parseInt(string.substring(0, 4));
                 month = Integer.parseInt(string.substring(4, 6));
                 day = Integer.parseInt(string.substring(6, 8));
-                hour = Integer.parseInt(string.substring(10,12));
-                minutes = Integer.parseInt(string.substring(12,14));
+                hour = Integer.parseInt(string.substring(9, 11));
+                minutes = Integer.parseInt(string.substring(11, 13));
             }
-            return new OurDateTime(year,month,day,hour,minutes);
+            return new OurDateTime(year, month, day, hour, minutes);
         }
+
     }
 }

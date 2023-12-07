@@ -1,5 +1,6 @@
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Status;
 import net.fortuna.ical4j.model.property.Version;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class OurCalendar {
             deadline = Validate.DateTime(datetime1);
             Validate.println("");
 
-            Project newProject = new Project(datetime1, title, description, deadline);
+            Project newProject = new Project(title, description, deadline, Status.VTODO_NEEDS_ACTION);
             events.add(newProject);
             newProject.setOurCalendar(this);
         }
@@ -76,7 +77,6 @@ public class OurCalendar {
             Event keyEvent = events.get(i);
             OurDateTime keyDateTime = keyEvent.getDateTime();
             keyDateTime.setCalculationFormat();
-
             int j = i - 1;
 
             while (j >= 0 && compareEvents(events.get(j), keyEvent) > 0) {

@@ -1,22 +1,65 @@
-import java.time.Duration;
+
+import net.fortuna.ical4j.model.property.Duration;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Appointment extends Event {
     private String duration;
     private OurDateTime endDate;
+    private Duration icsDuration;
 
     public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
         super(dateTime, title, description);
         this.endDate = endDate;
-        setDuration(dateTime,endDate);
+        setDurationWithDtend(dateTime,endDate);
+    }
+
+    public Appointment(OurDateTime dateTime, Duration icsDuration, String title, String description){
+        super(dateTime, title, description);
+        this.icsDuration = icsDuration;
+        setDurationWithIcsDuration(dateTime ,icsDuration);
     }
 
     public String getDuration() {return duration;}
-    public void setDuration(OurDateTime dateTime, OurDateTime endDate) {
+    public void setDurationWithDtend(OurDateTime dateTime, OurDateTime endDate) {
         LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
         LocalDateTime end = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDay(), endDate.getHour(), endDate.getMinute());
-        long durationInMinutes = Duration.between(start, end).toMinutes();
+        long durationInMinutes = java.time.Duration.between(start, end).toMinutes();
         this.duration = calculateDurationInDays((int) durationInMinutes);
+    }
+    private void setDurationWithIcsDuration(OurDateTime dateTime , Duration icsDuration){
+
+        // Define a pattern to match the iCal4j duration format
+        Pattern pattern = Pattern.compile("P(?:(\\d+)D)?T(?:(\\d+)H)?(?:(\\d+)M)?");
+        Matcher matcher = pattern.matcher(icsDuration.getValue());
+
+        int days = 0;
+        int hours = 0;
+        int minutes = 0;
+
+        if (matcher.find()) {
+            days = parseIntOrZero(matcher.group(1));
+            hours = parseIntOrZero(matcher.group(2));
+            minutes = parseIntOrZero(matcher.group(3));
+        }
+        LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
+        LocalDateTime end = start.plusDays(days).plusHours(hours).plusMinutes(minutes);
+        long durationInMinutes = java.time.Duration.between(start, end).toMinutes();
+        this.duration = calculateDurationInDays((int) durationInMinutes);
+        this.endDate = new OurDateTime(end.getYear(),end.getDayOfMonth(),end.getDayOfMonth(), end.getHour(), end.getMinute());
+    }
+    private static int parseIntOrZero(String value) {
+        return value != null ? Integer.parseInt(value) : 0;
+    }
+
+    public Duration getIcsDuration() {
+        return icsDuration;
+    }
+
+    public void setIcsDuration(Duration icsDuration) {
+        this.icsDuration = icsDuration;
     }
 
     public OurDateTime getEndDate() {return endDate;}
@@ -29,7 +72,7 @@ public class Appointment extends Event {
 
             if (endDate.getCalculationFormat() >= getDateTime().getCalculationFormat()) {
                 setEndDate(endDate);
-                setDuration(getDateTime(), endDate);
+                setDurationWithDtend(getDateTime(), endDate);
                 break;
             }
 
