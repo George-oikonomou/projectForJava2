@@ -13,6 +13,9 @@ public class Project extends Event{
         setFinished(status == Status.VTODO_COMPLETED);
     }
 
+    public void setFinished(boolean finished) { isFinished = finished; }
+
+    
     public Status getStatus() {
         return status;
     }
@@ -64,6 +67,5 @@ public class Project extends Event{
 
     }
 
-      public void setFinished(boolean finished) { isFinished = finished; }
     public void setDeadline(OurDateTime deadline) { this.deadline = deadline; }
 */
