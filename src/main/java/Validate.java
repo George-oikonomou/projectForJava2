@@ -33,7 +33,7 @@ public class Validate {//Checking the input value
     }
 
     //Making an object OurDateTime & checking the value of date & time for the deadline
-    public static OurDateTime deadline(OurDateTime startDate) {
+    public static OurDateTime dateTime(OurDateTime startDate) {
         int year = getInput("\nDATE\n\tYear:\t", startDate.getYear(), 2100);
         int month = getInput("\tMonth:\t", (year == startDate.getYear()) ? startDate.getMonth() : 1, 12);
         int day = getInput("\tDay:\t", (month == startDate.getMonth() && year == startDate.getYear())  ? startDate.getDay() : 1, getDaysInMonth(month, year));
