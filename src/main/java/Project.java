@@ -3,7 +3,8 @@ import net.fortuna.ical4j.model.property.Status;
 public class Project extends Event{
     private Status status;
     private final OurDateTime deadline;    //date and time of project deadline
-    private final boolean isFinished = false;     // boolean value that tells if the project is finished
+    private boolean isFinished = false;     // boolean value that tells if the project is finished
+    public void setFinished(boolean finished) { isFinished = finished; }
 
     public Project(String title, String description, OurDateTime deadline, Status status) {
         super(null, title, description);
@@ -13,7 +14,6 @@ public class Project extends Event{
         setFinished(status == Status.VTODO_COMPLETED);
     }
 
-    public void setFinished(boolean finished) { isFinished = finished; }
 
     
     public Status getStatus() {
