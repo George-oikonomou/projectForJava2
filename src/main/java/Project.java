@@ -34,6 +34,7 @@ public class Project extends Event{
             deadline: %s
             status: %s
         """, getTitle(), getDescription(), getDeadline(), getStatus().getValue());
+    }
 }
 /*
     @Override
