@@ -7,22 +7,22 @@ import java.util.ArrayList;
 
 public class OurCalendar {
 
-    private ArrayList <Event> events;//has all the events
+    private ArrayList<Event> events;//has all the events
+
+
 
     //if the file does not exist the new calendar will have these values
     private Version version = new Version("VERSION","2.0");
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
-    public OurCalendar() {
-        this.events = new ArrayList<>();
-    }
+    public OurCalendar() { this.events = new ArrayList<>(); }
 
     public ArrayList<Event> getEvents() { return events; }
     public void setEvents(ArrayList<Event> events) { this.events = events; }
 
-    public Version getVersion() { return version; }
-    public void setVersion(Version version) { this.version = version; }
+    public Version getVersion() { return version;}
+    public void setVersion(Version version) {this.version = version;}
 
     public ProdId getProdId() { return prodId; }
     public void setProdId(ProdId prodId) { this.prodId = prodId; }
@@ -33,7 +33,7 @@ public class OurCalendar {
     public void addEvents() {
         int choice;
         String title, description;
-        OurDateTime datetime1, endDate, deadline;
+        OurDateTime startDate, endDate, deadline;
 
         //NEW EVENT:
         Validate.println("""
@@ -51,32 +51,35 @@ public class OurCalendar {
 
         //Adding one event to the arraylist
         System.out.println("Enter the date and time that the event starts");
-        datetime1 = OurDateTime.Functionality.dateAndTime(); //Date & Time
+        startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
         Validate.println("");
         if (choice == 1) {
             System.out.println("Enter date and time that the event ends");
-            endDate = Validate.DateTime(datetime1);
-            Appointment newAppointment = new Appointment(datetime1,endDate, title, description);
-            events.add(newAppointment);
-            newAppointment.setOurCalendar(this);
 
+            endDate = Validate.DateTime(startDate);
+            Appointment newAppointment = new Appointment(startDate,endDate, title, description);
+
+          events.add(newAppointment);
         } else {//Date & Time
             Validate.print("Deadline:\t");
-            deadline = Validate.DateTime(datetime1);
+            deadline = Validate.DateTime(startDate);
+
             Validate.println("");
+
 
             Project newProject = new Project(title, description, deadline, Status.VTODO_NEEDS_ACTION);
             events.add(newProject);
-            newProject.setOurCalendar(this);
         }
     }
+
     public static void sortList(ArrayList<Event> events) {
         int n = events.size();
 
         for (int i = 1; i < n; ++i) {
             Event keyEvent = events.get(i);
-            OurDateTime keyDateTime = keyEvent.getDateTime();
-            keyDateTime.setCalculationFormat();
+            OurDateTime keyStartDate = keyEvent.getStartDate();
+            keyStartDate.setCalculationFormat();
+
             int j = i - 1;
 
             while (j >= 0 && compareEvents(events.get(j), keyEvent) > 0) {
@@ -88,93 +91,88 @@ public class OurCalendar {
     }
 
     private static long compareEvents(Event event1, Event event2) {
-        OurDateTime dateTime1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getDateTime();
-        OurDateTime dateTime2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getDateTime();
+        OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getStartDate();
+        OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getStartDate();
 
-        return dateTime1.getCalculationFormat() - dateTime2.getCalculationFormat();
+        return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
-
 
     private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
         int realDay = realDateTime.getDay();
+
         for (Event event : events) {
-            int eventDay = event.getDateTime().getDay();
-            long eventFormat = event.getDateTime().getCalculationFormat();
-            if (eventFormat >= minTime && eventFormat < maxTime) {     //if the event is between minimum and maximum time
-                if (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7)  //if the event is upcoming
-                    Validate.println(event);
-                else if (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue())
-                    Validate.println(event);
-                else if (code == 1)
-                    Validate.println(event);
+            int eventDay = event.getStartDate().getDay();
+            long eventFormat = event.getStartDate().getCalculationFormat();
+            if (eventFormat >= minTime && eventFormat < maxTime) { //if the event is between minimum and maximum time
+                boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7);//if the event is upcoming
+                boolean isOld = (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue());
+
+                if (isUpcoming || isOld || code == 1) Validate.println(event);
             }
         }
     }
 
-    public void printUpcomingEvents(App.AppChoices choice){
-        OurDateTime realDateTime = new OurDateTime();       //current date & time
+    public void printUpcomingEvents(App.AppChoices choice) {
+        OurDateTime realDateTime = new OurDateTime();//current date & time
         long format = realDateTime.getCalculationFormat();
         sortList(events);
-        if (choice.equals(App.AppChoices.day)) {
-            Validate.println("\nUpcoming Events for today:\n");
-                //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
+
+        switch (choice) {
+            case day -> {
+                Validate.println("\nUpcoming Events for today:\n");  //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
                 format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
-        } else {
-                if (choice.equals(App.AppChoices.week))
-                    Validate.println("\nUpcoming Events this week:\n");
-                else
-                    Validate.println("\nUpcoming Events this month:\n");
-                //from the realDateTime format we are changing the month from the current month to the next one and the day and time become 01, 00:00
-                if (realDateTime.getMonth() == 12)   //if its December, we are changing the year and the month becomes January
-                    format = format + 89000000 - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                    //+89000000 changes the year by one and the month becomes January
-                else
-                    format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                if (choice.equals(App.AppChoices.week))
-                    timePeriod(format, realDateTime.getCalculationFormat(), 2);
-               else
-                    timePeriod(format, realDateTime.getCalculationFormat(),1);
+            }
+            case week, month -> {
+                Validate.println("\nUpcoming Events " + ((choice == App.AppChoices.week) ? "this week" : "this month") + ":\n");
+
+                format += (realDateTime.getMonth() == 12) ? 89000000L : 1000000L
+                        - (realDateTime.getDay() - 1) * 10000L
+                        - realDateTime.getHour() * 100L
+                        - realDateTime.getMinute();
+
+                timePeriod(format, realDateTime.getCalculationFormat(), choice == App.AppChoices.week ? 2 : 1);
+            }
         }
     }
-    public void printOldEvents(App.AppChoices choice){
+
+    public void printOldEvents(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         long format = realDateTime.getCalculationFormat();
 
         switch (choice) {
-            case pastday -> {
+            case pastday -> {//from the realDateTime format we are changing the time to 00:00
                 Validate.println("\nOld Events from today:\n");
-                //from the realDateTime format we are changing the time to 00:00
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
-            case pastweek -> {
+            case pastweek -> {//from the realDateTime format the day and time become 01, 00:00
                 Validate.println("\nOld Events from this week:\n");
-                //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, 3);
             }
-            default -> {
+            default -> {//from the realDateTime format the day and time become 01, 00:00
                 Validate.println("\nOld Events from this month:\n");
-                //from the realDateTime format the day and time become 01, 00:00
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
         }
     }
-    public void printUnfinishedProject(App.AppChoices choice){
+
+    public void printUnfinishedProject(App.AppChoices choice) {
         sortList(events);
-        OurDateTime realDateTime = new OurDateTime();       //current date & time
+        OurDateTime realDateTime = new OurDateTime(); // Current date & time
         long format = realDateTime.getCalculationFormat();
+
         for (Event event : events) {
             if (event instanceof Project && !((Project) event).getIsFinished()) {
-                if (choice == App.AppChoices.todo && format < ((Project) event).getDeadline().getCalculationFormat())
-                    System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
-                else if (choice == App.AppChoices.due && format >= ((Project) event).getDeadline().getCalculationFormat())
-                    System.out.println(event.getTitle() + "\t" + event.getDateTime() + "\twith Deadline\t" + ((Project) event).getDeadline());
+                long deadlineFormat = ((Project) event).getDeadline().getCalculationFormat();
+
+                if ((choice == App.AppChoices.todo && format < deadlineFormat) || (choice == App.AppChoices.due && format >= deadlineFormat))
+                    System.out.println(event);
             }
         }
     }
@@ -187,7 +185,7 @@ public class OurCalendar {
 
         return null;
     }
-
+}
     /*
     public void editEvent() {
         int choice;
@@ -241,4 +239,3 @@ public class OurCalendar {
         }
     }
    */
-}

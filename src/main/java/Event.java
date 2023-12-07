@@ -1,41 +1,40 @@
 public abstract class Event {
-    private OurCalendar ourCalendar;
-    private OurDateTime dateTime;
-    private String title,description;
+    private final OurDateTime startDate;
+    private final String title,description;
 
-    public Event(OurDateTime datetime, String title, String description) {
-        this.dateTime = datetime;
+    public Event(OurDateTime startDate, String title, String description) {
+        this.startDate = startDate;
         this.title = title;
         this.description = description;
     }
 
-    public OurCalendar getOurCalendar() { return ourCalendar; }
-    public void setOurCalendar(OurCalendar ourCalendar) { this.ourCalendar = ourCalendar; }
-
-    public OurDateTime getDateTime() { return dateTime; }
-    public void setDateTime(OurDateTime dateTime) { this.dateTime = dateTime; }
-
+    public OurDateTime getStartDate() { return startDate; }
     public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
     public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+}
 
+/*
     protected void setTitlePrompt() {
         Validate.print("\nType the new title:\t");
         ourCalendar = getOurCalendar();
 
-        int objectType = (this instanceof Appointment) ? 1 : 2;
-
-        setTitle(Validate.Title(ourCalendar, objectType));
+        setTitle(Validate.Title(ourCalendar,  (this instanceof Appointment) ? 1 : 2));
     }
     protected void setDescriptionPrompt() {
         Validate.print("\nType the new description:\t");
         setDescription(Validate.strInput());
     }
-    protected void setDateTimePrompt() {
+    protected void setStartDatePrompt() {
         Validate.print("\nType the new date & time:\t");
-        setDateTime(OurDateTime.Functionality.dateAndTime());
+        setStartDate(OurDateTime.Functionality.dateAndTime());
     }
-    public void editEvent() {}
-}
+    public abstract void editEvent();
+        private OurCalendar ourCalendar;
+
+    public OurCalendar getOurCalendar() { return ourCalendar; }
+    public void setOurCalendar(OurCalendar ourCalendar) { this.ourCalendar = ourCalendar; }
+        public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) { this.description = description; }
+    public void setStartDate(OurDateTime startDate) { this.startDate = startDate; }
+
+ */

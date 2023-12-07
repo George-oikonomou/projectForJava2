@@ -2,16 +2,20 @@ import net.fortuna.ical4j.model.property.Status;
 
 public class Project extends Event{
     private Status status;
-    private OurDateTime deadline;    //date and time of project deadline
+    private final OurDateTime deadline;    //date and time of project deadline
     private boolean isFinished = false;     // boolean value that tells if the project is finished
+    public void setFinished(boolean finished) { isFinished = finished; }
 
     public Project(String title, String description, OurDateTime deadline, Status status) {
         super(null, title, description);
+
         this.deadline = deadline;
         this.status = status;
         setFinished(status == Status.VTODO_COMPLETED);
     }
 
+
+    
     public Status getStatus() {
         return status;
     }
@@ -22,17 +26,20 @@ public class Project extends Event{
     }
 
     public OurDateTime getDeadline() { return deadline; }
-    public void setDeadline(OurDateTime deadline) { this.deadline = deadline; }
-
     public boolean getIsFinished() { return isFinished; }
-    public void setFinished(boolean finished) { isFinished = finished; }
 
-    private void setDeadlinePrompt() {
-        Validate.print("\nType the new deadline:\t");
-        setDeadline(Validate.DateTime(getDateTime()));
+    @Override
+    public String toString() {
+        return String.format("""
+        Project:
+            title: %s
+            description: %s
+            deadline: %s
+            status: %s
+        """, getTitle(), getDescription(), getDeadline(), getStatus().getValue());
     }
-
-
+}
+/*
     @Override
     public void editEvent() {
         int option;
@@ -49,20 +56,16 @@ public class Project extends Event{
             switch (option) {
                 case 1 -> setTitlePrompt();
                 case 2 -> setDescriptionPrompt();
-                case 3 -> setDateTimePrompt();
+                case 3 -> setStartDatePrompt();
                 case 4 -> setDeadlinePrompt();
             }
         } while (option != 5);
     }
+     private void setDeadlinePrompt() {
+        Validate.print("\nType the new deadline:\t");
+        setDeadline(Validate.deadline(getStartDate()));
 
-    @Override
-    public String toString() {
-        return String.format("""
-        Project:
-            title: %s
-            description: %s
-            deadline: %s
-            status: %s
-        """, getTitle(), getDescription(), getDeadline(), getStatus().getValue());
     }
-}
+
+    public void setDeadline(OurDateTime deadline) { this.deadline = deadline; }
+*/

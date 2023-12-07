@@ -7,19 +7,21 @@ import java.util.regex.Pattern;
 
 public class Appointment extends Event {
     private String duration;
+  
     private OurDateTime endDate;
     private Duration icsDuration;
 
-    public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
-        super(dateTime, title, description);
+    public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description) {
+        super(startDate, title, description);
         this.endDate = endDate;
-        setDurationWithDtend(dateTime,endDate);
+         setDurationWithDtend(startDate,endDate);
     }
 
-    public Appointment(OurDateTime dateTime, Duration icsDuration, String title, String description){
-        super(dateTime, title, description);
+    
+    public Appointment(OurDateTime startDate, Duration icsDuration, String title, String description){
+        super(startDate, title, description);
         this.icsDuration = icsDuration;
-        setDurationWithIcsDuration(dateTime ,icsDuration);
+        setDurationWithIcsDuration(startDate ,icsDuration);
     }
 
     public String getDuration() {return duration;}
@@ -63,6 +65,7 @@ public class Appointment extends Event {
     }
 
     public OurDateTime getEndDate() {return endDate;}
+
     public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
 
     private void setEndDatePrompt() {
@@ -70,9 +73,9 @@ public class Appointment extends Event {
             Validate.print("\nType the new, end date & time\t");
             OurDateTime endDate = OurDateTime.Functionality.dateAndTime();
 
-            if (endDate.getCalculationFormat() >= getDateTime().getCalculationFormat()) {
+            if (endDate.getCalculationFormat() >= getStartDate().getCalculationFormat()) {
                 setEndDate(endDate);
-                setDurationWithDtend(getDateTime(), endDate);
+                setDurationWithDtend(getStartDate(), endDate);
                 break;
             }
 
@@ -81,19 +84,28 @@ public class Appointment extends Event {
     }
 
     public String calculateDurationInDays(int durationInMin) {
-        int days = durationInMin / 1440;
-        int hours = (durationInMin % 1440) / 60;
+        int days    = durationInMin / 1440;
+        int hours   = (durationInMin % 1440) / 60;
         int minutes = (durationInMin % 1440) % 60;
 
-        StringBuilder result = new StringBuilder();
-
-        return  result.append(days > 0 ? days + (days == 1 ? " day " : " days ") : "")
-                      .append(hours > 0 ? hours + (hours == 1 ? " hour " : " hours ") : "")
-                      .append(minutes > 0 || result.isEmpty() ? minutes + (minutes == 1 ? " minute" : " minutes") : "")
-                      .toString()
-                      .trim();
+        return String.format("%s%s%s",days > 0 ? days + (days == 1 ? " day " : " days ") : "",
+                                      hours > 0 ? hours + (hours == 1 ? " hour " : " hours ") : "",
+                                      (days == 0 && hours == 0) || minutes > 0 ? minutes + (minutes == 1 ? " minute" : " minutes") : "").trim();
     }
 
+    @Override
+    public String toString() {
+        return """
+            Appointment:
+                title: %s
+                description: %s
+                start date & time: %s
+                end date & time: %s
+                duration: %s
+            """.formatted(getTitle(), getDescription(), getStartDate(), getEndDate(), getDuration());
+    }
+}
+/*
     @Override
     public void editEvent() {
         int option;
@@ -110,21 +122,26 @@ public class Appointment extends Event {
             switch (option) {
                 case 1 -> setTitlePrompt();
                 case 2 -> setDescriptionPrompt();
-                case 3 -> setDateTimePrompt();
+                case 3 -> setStartDatePrompt();
                 case 4 -> setEndDatePrompt();
             }
         } while (option != 5);
     }
+*/
+    /*
+    private void setEndDatePrompt() {
+        OurDateTime endDate;
+        do {
+            Validate.print("\nType the new, end date & time\t");
+            endDate = OurDateTime.Functionality.dateAndTime();
+            if (endDate.getCalculationFormat() < getStartDate().getCalculationFormat())
+                 Validate.println("End date can't be before start date");
 
-    @Override
-    public String toString() {
-        return """
-            Appointment:
-                title: %s
-                description: %s
-                dateTime: %s
-                end date & time: %s
-                duration: %s
-            """.formatted(getTitle(), getDescription(), getDateTime(), getEndDate(), getDuration());
+        } while (endDate.getCalculationFormat() < getStartDate().getCalculationFormat());
+
+        setEndDate(endDate);
+        setDuration(getStartDate(), endDate);
     }
-}
+    public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
+
+*/
