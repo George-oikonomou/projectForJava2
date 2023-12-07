@@ -14,7 +14,7 @@ public class Appointment extends Event {
     public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description) {
         super(startDate, title, description);
         this.endDate = endDate;
-         setDurationWithDtend(dateTime,endDate);
+         setDurationWithDtend(startDate,endDate);
     }
 
     
