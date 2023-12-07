@@ -1,3 +1,4 @@
+import net.fortuna.ical4j.model.property.Status;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
@@ -63,7 +64,7 @@ public class OurCalendarTest {
         // Arrange
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> expectedEvents = new ArrayList<>();
-        expectedEvents.add(new Project(dateTime,"title","description",dateTime));
+        expectedEvents.add(new Project("title","description",dateTime, Status.VTODO_NEEDS_ACTION));
 
         ourCalendar.setEvents(expectedEvents);
         ArrayList<Event> actualEvents = ourCalendar.getEvents();
@@ -75,7 +76,7 @@ public class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events = new ArrayList<>();
 
-        Project expectedEvent =new Project(dateTime, "title", "description",dateTime);
+        Project expectedEvent =new Project("title", "description",dateTime, Status.VTODO_NEEDS_ACTION);
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 
@@ -88,7 +89,7 @@ public class OurCalendarTest {
         OurCalendar ourCalendar = new OurCalendar();
         ArrayList<Event> Events =new ArrayList<>();
 
-        Project expectedEvent =new Project(dateTime, "titleOfSomethingDifferent", "description",dateTime);
+        Project expectedEvent =new Project("titleOfSomethingDifferent", "description",dateTime, Status.VTODO_NEEDS_ACTION);
         Events.add(expectedEvent);
         ourCalendar.setEvents(Events);
 

@@ -45,6 +45,8 @@ public class App {
             ICSFile file = new ICSFile(args[1]);
             file.loadEvents();
 
+            System.out.println(calendar.getEvents());
+
             if (choice.equals(AppChoices.day) || choice.equals(AppChoices.week) || choice.equals(AppChoices.month)){
                 calendar.printUpcomingEvents(choice);
             } else if (choice.equals(AppChoices.pastday) || choice.equals(AppChoices.pastweek) || choice.equals(AppChoices.pastmonth)) {
