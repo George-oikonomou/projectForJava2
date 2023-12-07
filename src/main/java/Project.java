@@ -15,7 +15,7 @@ public class Project extends Event{
 
     private void setDeadlinePrompt() {
         Validate.print("\nType the new deadline:\t");
-        setDeadline(Validate.deadline(getDateTime()));
+        setDeadline(Validate.DateTime(getDateTime()));
     }
 
 

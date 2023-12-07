@@ -8,7 +8,7 @@ public class OurCalendar {
 
     private ArrayList <Event> events;//has all the events
 
-    //if the file does not exist the new Vcalendar will have these values
+    //if the file does not exist the new calendar will have these values
     private Version version = new Version("VERSION","2.0");
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
@@ -54,14 +54,14 @@ public class OurCalendar {
         Validate.println("");
         if (choice == 1) {
             System.out.println("Enter date and time that the event ends");
-            endDate = OurDateTime.Functionality.dateAndTime();
+            endDate = Validate.DateTime(datetime1);
             Appointment newAppointment = new Appointment(datetime1,endDate, title, description);
             events.add(newAppointment);
             newAppointment.setOurCalendar(this);
 
         } else {//Date & Time
             Validate.print("Deadline:\t");
-            deadline = Validate.deadline(datetime1);
+            deadline = Validate.DateTime(datetime1);
             Validate.println("");
 
             Project newProject = new Project(datetime1, title, description, deadline);
