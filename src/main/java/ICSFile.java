@@ -160,7 +160,7 @@ public class ICSFile {
         vToDo.getProperties().add(new Summary(project.getTitle()));
         vToDo.getProperties().add(new Description(project.getDescription()));
         vToDo.getProperties().add(new DtStart(project.getStartDate().getIcsFormat()));
-        vToDo.getProperties().add(new Due(project.getDeadline().getIcsFormat()));
+        vToDo.getProperties().add(new Due(project.getDue().getIcsFormat()));
         return vToDo;
     }
 }
