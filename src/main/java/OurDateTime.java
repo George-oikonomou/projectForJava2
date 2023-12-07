@@ -3,6 +3,7 @@ import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
 import java.text.ParseException;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
 public class OurDateTime {
     private final int year,month,day,hour,minute;
@@ -23,14 +24,18 @@ public class OurDateTime {
         setIcsFormat();
     }
 
-    public OurDateTime() { //* constructor that creates a OurDateTime object that contains the current date and time
-        TimeTeller teller = TimeService.getTeller();
-        this.dayOfWeek = teller.now().getDayOfWeek();
-        this.year = teller.now().getYear();
-        this.month = teller.now().getMonthValue();
-        this.day = teller.now().getDayOfMonth();
-        this.hour = teller.now().getHour();
-        this.minute = teller.now().getMinute();
+
+    /**
+     * constructor that creates a OurDateTime object that contains the current
+     */
+    public OurDateTime() {
+        CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.of(2024, 1, 1, 21, 40));
+        this.dayOfWeek = timeTeller.now().getDayOfWeek();
+        this.year = timeTeller.now().getYear();
+        this.month = timeTeller.now().getMonthValue();
+        this.day = timeTeller.now().getDayOfMonth();
+        this.hour = timeTeller.now().getHour();
+        this.minute = timeTeller.now().getMinute();
         this.date = Validate.date(year,month,day);
         this.time = Validate.time(minute,hour);
         setCalculationFormat();
