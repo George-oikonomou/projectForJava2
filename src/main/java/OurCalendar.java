@@ -55,7 +55,7 @@ public class OurCalendar {
         if (choice == 1) {
             System.out.println("Enter date and time that the event ends");
 
-            endDate = Validate.DateTime(datetime1);
+            endDate = Validate.DateTime(startDate);
             Appointment newAppointment = new Appointment(startDate,endDate, title, description);
 
           events.add(newAppointment);
