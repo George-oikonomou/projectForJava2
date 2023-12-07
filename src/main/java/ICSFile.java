@@ -11,9 +11,8 @@ import net.fortuna.ical4j.validate.ValidationException;
 import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.NoSuchElementException;
-
+import net.fortuna.ical4j.model.property.Duration;
 public class ICSFile {
     private final String filePath;
     public ICSFile(String filePath) {
@@ -74,29 +73,56 @@ public class ICSFile {
     }
 
     private Appointment createAppointment(VEvent appointment) {
-        Date dtstart = appointment.getStartDate().getDate();
-        Date dtend = appointment.getEndDate().getDate();
-        String title = appointment.getSummary().getValue();
-        String description = appointment.getDescription().getValue();
-        if (dtstart == null || dtend == null || title == null || description == null) {
-            throw new NoSuchElementException();
-        }
-        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtstart.toString());
-        OurDateTime endDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtend.toString());
-        return new Appointment(startDate, endDate, title, description);
-    }
 
-    private Project createProject(VToDo project) {
-        Date dtstart = project.getStartDate().getDate();
-        Date due = project.getDue().getDate();
-        String title = project.getSummary().getValue();
-        String description = project.getDescription().getValue();
-        if (dtstart == null || due == null || title == null || description == null) {
+        if (appointment.getSummary() == null){
             throw new NoSuchElementException();
         }
-        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtstart.toString());
-        OurDateTime dueDate = OurDateTime.Functionality.ICSFormatToOurDateTime(due.toString());
-        return new Project(startDate, title, description, dueDate);
+        String title = appointment.getSummary().getValue();
+
+        String description = "";
+        if (appointment.getDescription() != null) {
+            description = appointment.getDescription().getValue();
+        }
+
+        DtStart dtStart = appointment.getStartDate();
+        if(dtStart == null){
+            throw new NoSuchElementException();
+        }
+        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtStart.getValue());
+
+        DtEnd dtEnd = appointment.getEndDate();
+        Duration duration = appointment.getDuration();
+
+        if (duration != null){
+            return new Appointment(startDate,duration, title, description);
+        }else if (dtEnd != null) {
+            OurDateTime endDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtEnd.getValue());
+            return new Appointment(startDate, endDate, title, description);
+        }else{
+            throw new NoSuchElementException();
+        }
+    }
+    private Project createProject(VToDo project) {
+        if (project.getStatus() == null){
+            throw new NoSuchElementException();
+        }
+        Status status = project.getStatus();
+
+        if (project.getDue() == null) {
+            throw new NoSuchElementException();
+        }
+        OurDateTime dueDate = OurDateTime.Functionality.ICSFormatToOurDateTime(project.getDue().getValue());
+
+        if (project.getSummary() == null){
+            throw new NoSuchElementException();
+        }
+        String title = project.getSummary().getValue();
+
+        String description = "";
+        if (project.getDescription() != null){
+            description = project.getDescription().getValue();
+        }
+        return new Project(title, description, dueDate, status);
     }
 
     public void storeEvents(ArrayList<Event> events) {

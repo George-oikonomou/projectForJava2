@@ -1,5 +1,6 @@
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Status;
 import net.fortuna.ical4j.model.property.Version;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -65,7 +66,8 @@ public class OurCalendar {
 
             Validate.println("");
 
-            Project newProject = new Project(startDate, title, description, deadline);
+
+            Project newProject = new Project(title, description, deadline, Status.VTODO_NEEDS_ACTION);
             events.add(newProject);
         }
     }

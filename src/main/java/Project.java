@@ -1,10 +1,25 @@
+import net.fortuna.ical4j.model.property.Status;
+
 public class Project extends Event{
+    private Status status;
     private final OurDateTime deadline;    //date and time of project deadline
     private final boolean isFinished = false;     // boolean value that tells if the project is finished
 
-    public Project(OurDateTime startDate, String title, String description, OurDateTime deadline) {
-        super(startDate, title, description);
+    public Project(String title, String description, OurDateTime deadline, Status status) {
+        super(null, title, description);
+
         this.deadline = deadline;
+        this.status = status;
+        setFinished(status == Status.VTODO_COMPLETED);
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+        setFinished(status == Status.VTODO_COMPLETED);
     }
 
     public OurDateTime getDeadline() { return deadline; }
@@ -12,15 +27,13 @@ public class Project extends Event{
 
     @Override
     public String toString() {
-        return """
-            Project:
-                title: %s
-                description: %s
-                Start date & time: %s
-                deadline: %s
-                isFinished: %s
-            """.formatted(getTitle(), getDescription(),getStartDate(),  deadline, isFinished);
-    }
+        return String.format("""
+        Project:
+            title: %s
+            description: %s
+            deadline: %s
+            status: %s
+        """, getTitle(), getDescription(), getDeadline(), getStatus().getValue());
 }
 /*
     @Override
@@ -47,6 +60,7 @@ public class Project extends Event{
      private void setDeadlinePrompt() {
         Validate.print("\nType the new deadline:\t");
         setDeadline(Validate.deadline(getStartDate()));
+
     }
 
       public void setFinished(boolean finished) { isFinished = finished; }

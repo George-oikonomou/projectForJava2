@@ -13,6 +13,7 @@ public class App {
             case 1 -> handleSingleArgument(args[0]);
             case 2 -> handleDoubleArguments(args);
             default -> Validate.println("Incorrect number of arguments");
+
         }
         TimeService.stop();
     }
