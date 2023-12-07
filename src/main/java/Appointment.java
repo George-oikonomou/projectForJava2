@@ -75,7 +75,7 @@ public class Appointment extends Event {
 
             if (endDate.getCalculationFormat() >= getStartDate().getCalculationFormat()) {
                 setEndDate(endDate);
-                setDurationWithDtend(getDateTime(), endDate);
+                setDurationWithDtend(getStartDate(), endDate);
                 break;
             }
 
