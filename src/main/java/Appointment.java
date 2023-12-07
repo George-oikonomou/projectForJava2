@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Appointment extends Event {
     private String duration;
   
-    private final OurDateTime endDate;
+    private OurDateTime endDate;
     private Duration icsDuration;
 
     public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description) {
@@ -73,7 +73,7 @@ public class Appointment extends Event {
             Validate.print("\nType the new, end date & time\t");
             OurDateTime endDate = OurDateTime.Functionality.dateAndTime();
 
-            if (endDate.getCalculationFormat() >= getDateTime().getCalculationFormat()) {
+            if (endDate.getCalculationFormat() >= getStartDate().getCalculationFormat()) {
                 setEndDate(endDate);
                 setDurationWithDtend(getDateTime(), endDate);
                 break;
