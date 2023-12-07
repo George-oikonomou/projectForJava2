@@ -61,7 +61,7 @@ public class OurCalendar {
           events.add(newAppointment);
         } else {//Date & Time
             Validate.print("Deadline:\t");
-            deadline = Validate.deadline(startDate);
+            deadline = Validate.DateTime(startDate);
 
             Validate.println("");
 
