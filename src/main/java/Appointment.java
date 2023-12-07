@@ -1,9 +1,7 @@
-
 import net.fortuna.ical4j.model.property.Duration;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class Appointment extends Event {
     private String duration;
@@ -65,23 +63,6 @@ public class Appointment extends Event {
     }
 
     public OurDateTime getEndDate() {return endDate;}
-
-    public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
-
-    private void setEndDatePrompt() {
-        while (true) {
-            Validate.print("\nType the new, end date & time\t");
-            OurDateTime endDate = OurDateTime.Functionality.dateAndTime();
-
-            if (endDate.getCalculationFormat() >= getStartDate().getCalculationFormat()) {
-                setEndDate(endDate);
-                setDurationWithDtend(getStartDate(), endDate);
-                break;
-            }
-
-            Validate.println("End date can't be before start date");
-        }
-    }
 
     public String calculateDurationInDays(int durationInMin) {
         int days    = durationInMin / 1440;
