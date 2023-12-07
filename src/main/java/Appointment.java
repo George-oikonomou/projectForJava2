@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Appointment extends Event {
     private String duration;
     private OurDateTime endDate;
-
+    private Duration icsDuration;
 
     public Appointment(OurDateTime dateTime, OurDateTime endDate, String title, String description) {
         super(dateTime, title, description);
@@ -18,6 +18,7 @@ public class Appointment extends Event {
 
     public Appointment(OurDateTime dateTime, Duration icsDuration, String title, String description){
         super(dateTime, title, description);
+        this.icsDuration = icsDuration;
         setDurationWithIcsDuration(dateTime ,icsDuration);
     }
 
@@ -53,7 +54,13 @@ public class Appointment extends Event {
         return value != null ? Integer.parseInt(value) : 0;
     }
 
+    public Duration getIcsDuration() {
+        return icsDuration;
+    }
 
+    public void setIcsDuration(Duration icsDuration) {
+        this.icsDuration = icsDuration;
+    }
 
     public OurDateTime getEndDate() {return endDate;}
     public void setEndDate(OurDateTime endDate) {this.endDate = endDate;}
