@@ -4,7 +4,7 @@ import gr.hua.dit.oop2.calendar.TimeTeller;
 import java.time.LocalDateTime;
 
 public class CustomCurrentTime implements TimeTeller {
-    private LocalDateTime currentTime;
+    private final LocalDateTime currentTime;
 
 
     public CustomCurrentTime(LocalDateTime newTime) {
