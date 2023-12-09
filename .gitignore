@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 /calendar.ics
 /greece.ics
+/mycal.ics
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

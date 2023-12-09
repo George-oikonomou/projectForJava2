@@ -148,19 +148,24 @@ public class ICSFile {
 
     private VEvent createVEvent(Appointment appointment) {
         VEvent event = new VEvent();
+        event.getProperties().add(new Uid(appointment.getUuid()));
         event.getProperties().add(new Summary(appointment.getTitle()));
         event.getProperties().add(new DtStart(appointment.getStartDate().getIcsFormat()));
         event.getProperties().add(new DtEnd(appointment.getEndDate().getIcsFormat()));
-        event.getProperties().add(new Description(appointment.getDescription()));
+        if (!appointment.getDescription().isEmpty()) {
+            event.getProperties().add(new Description(appointment.getDescription()));
+        }
         return event;
     }
 
     private VToDo createVTodo(Project project) {
         VToDo vToDo = new VToDo();
         vToDo.getProperties().add(new Summary(project.getTitle()));
-        vToDo.getProperties().add(new Description(project.getDescription()));
-        vToDo.getProperties().add(new DtStart(project.getStartDate().getIcsFormat()));
+        if (!project.getDescription().isEmpty()) {
+            vToDo.getProperties().add(new Description(project.getDescription()));
+        }
         vToDo.getProperties().add(new Due(project.getDue().getIcsFormat()));
+        vToDo.getProperties().add(project.getStatus());
         return vToDo;
     }
 }
