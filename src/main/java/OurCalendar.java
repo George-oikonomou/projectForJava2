@@ -12,7 +12,7 @@ public class OurCalendar {
 
 
     //if the file does not exist the new calendar will have these values
-    private Version version = new Version("VERSION","2.0");
+    private Version version = new Version("2.0","2.0");
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
