@@ -1,5 +1,3 @@
-import gr.hua.dit.oop2.calendar.TimeService;
-import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
 import java.text.ParseException;
 import java.time.DayOfWeek;

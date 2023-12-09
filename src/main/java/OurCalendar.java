@@ -33,7 +33,7 @@ public class OurCalendar {
     public void addEvents() {
         int choice;
         String title, description;
-        OurDateTime startDate, endDate, deadline;
+        OurDateTime startDate, endDate, due;
 
         //NEW EVENT:
         Validate.println("""
@@ -61,13 +61,13 @@ public class OurCalendar {
 
           events.add(newAppointment);
         } else {//Date & Time
-            Validate.print("Deadline:\t");
-            deadline = Validate.DateTime(startDate);
+            Validate.print("Due:\t");
+            due = Validate.DateTime(startDate);
 
             Validate.println("");
 
 
-            Project newProject = new Project(title, description, deadline, Status.VTODO_NEEDS_ACTION);
+            Project newProject = new Project(title, description, due, Status.VTODO_NEEDS_ACTION);
             events.add(newProject);
         }
     }
@@ -77,8 +77,6 @@ public class OurCalendar {
 
         for (int i = 1; i < n; ++i) {
             Event keyEvent = events.get(i);
-            OurDateTime keyStartDate = keyEvent.getStartDate();
-            keyStartDate.setCalculationFormat();
 
             int j = i - 1;
 
@@ -91,8 +89,8 @@ public class OurCalendar {
     }
 
     private static long compareEvents(Event event1, Event event2) {
-        OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDeadline() : event1.getStartDate();
-        OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDeadline() : event2.getStartDate();
+        OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDue() : event1.getStartDate();
+        OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDue() : event2.getStartDate();
 
         return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
@@ -101,10 +99,18 @@ public class OurCalendar {
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
         int realDay = realDateTime.getDay();
-
+        int eventDay;
+        long eventFormat;
         for (Event event : events) {
-            int eventDay = event.getStartDate().getDay();
-            long eventFormat = event.getStartDate().getCalculationFormat();
+
+            if (event instanceof Project) {
+                 eventDay = ((Project) event).getDue().getDay();
+                 eventFormat = ((Project) event).getDue().getCalculationFormat();
+            } else{
+                 eventDay = event.getStartDate().getDay();
+                 eventFormat = event.getStartDate().getCalculationFormat();
+            }
+
             if (eventFormat >= minTime && eventFormat < maxTime) { //if the event is between minimum and maximum time
                 boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7);//if the event is upcoming
                 boolean isOld = (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue());
@@ -128,7 +134,7 @@ public class OurCalendar {
             case week, month -> {
                 Validate.println("\nUpcoming Events " + ((choice == App.AppChoices.week) ? "this week" : "this month") + ":\n");
 
-                format += (realDateTime.getMonth() == 12) ? 89000000L : 1000000L
+                format += ((realDateTime.getMonth() == 12) ? 89000000L : 1000000L)
                         - (realDateTime.getDay() - 1) * 10000L
                         - realDateTime.getHour() * 100L
                         - realDateTime.getMinute();
@@ -169,9 +175,9 @@ public class OurCalendar {
 
         for (Event event : events) {
             if (event instanceof Project && !((Project) event).getIsFinished()) {
-                long deadlineFormat = ((Project) event).getDeadline().getCalculationFormat();
+                long dueFormat = ((Project) event).getDue().getCalculationFormat();
 
-                if ((choice == App.AppChoices.todo && format < deadlineFormat) || (choice == App.AppChoices.due && format >= deadlineFormat))
+                if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
                     System.out.println(event);
             }
         }

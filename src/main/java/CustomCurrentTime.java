@@ -1,16 +1,13 @@
 import gr.hua.dit.oop2.calendar.TimeListener;
 import gr.hua.dit.oop2.calendar.TimeTeller;
-
 import java.time.LocalDateTime;
 
 public class CustomCurrentTime implements TimeTeller {
     private final LocalDateTime currentTime;
 
-
     public CustomCurrentTime(LocalDateTime newTime) {
         this.currentTime = newTime;
     }
-
 
     public LocalDateTime now() {
         return currentTime;
