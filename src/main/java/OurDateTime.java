@@ -16,12 +16,11 @@ public class OurDateTime {
         this.day = day;
         this.hour = hour;
         this.minute = minute;
-        this.date = Validate.date(year,month,day);
-        this.time = Validate.time(minute,hour);
+        this.date = Validate.date(year,month,day,true);
+        this.time = Validate.time(minute,hour,true);
         setCalculationFormat();
         setIcsFormat();
     }
-
 
     /**
      * constructor that creates a OurDateTime object that contains the current
@@ -34,8 +33,8 @@ public class OurDateTime {
         this.day = timeTeller.now().getDayOfMonth();
         this.hour = timeTeller.now().getHour();
         this.minute = timeTeller.now().getMinute();
-        this.date = Validate.date(year,month,day);
-        this.time = Validate.time(minute,hour);
+        this.date = Validate.date(year,month,day,true);
+        this.time = Validate.time(minute,hour,true);
         setCalculationFormat();
         setIcsFormat();
     }
@@ -62,13 +61,8 @@ public class OurDateTime {
 
     public Long getCalculationFormat() { return CalculationFormat; }
     public void setCalculationFormat() {
-        String day = String.format("%02d", getDay());
-        String month = String.format("%02d", getMonth());
-        String hour = String.format("%02d", getHour());
-        String minute = String.format("%02d", getMinute());
-
-        String date = getYear() + month + day;
-        String time = hour + minute;
+        String date = Validate.date(year,month,day,false);
+        String time = Validate.time(minute,hour,false);
         this.CalculationFormat = Long.parseLong(date + time);
     }
 
@@ -77,61 +71,22 @@ public class OurDateTime {
 
     public static class Functionality{
         public static OurDateTime dateAndTime() {
-            int year = Validate.getInput("\nDATE\n\tYear:\t", 2023 ,2100);
-            int month = Validate.getInput("\tMonth:\t", 1, 12);
-            int day = Validate.getInput("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
-            int hour = Validate.getInput("\nTIME\n\tHour:\t", 0, 23);
+            int year   = Validate.getInput("\nDATE\n\tYear:\t", 2023 ,2100);
+            int month  = Validate.getInput("\tMonth:\t", 1, 12);
+            int day    = Validate.getInput("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
+            int hour   = Validate.getInput("\nTIME\n\tHour:\t", 0, 23);
             int minute = Validate.getInput("\tMinute:\t", 0, 59);
             return new OurDateTime(year, month, day, hour, minute);
         }
 
         public static OurDateTime ICSFormatToOurDateTime(String string) {
-            int year, month, day, hour = 0, minutes = 0;
+            int year    = Integer.parseInt(string.substring(0, 4));
+            int month   = Integer.parseInt(string.substring(4, 6));
+            int day     = Integer.parseInt(string.substring(6, 8));
+            int hour    = (string.length() == 13) ? Integer.parseInt(string.substring(9, 11)) : 0;
+            int minutes = (string.length() == 13) ? Integer.parseInt(string.substring(11, 13)) : 0;
 
-            if (string.length() == 8) {
-                year = Integer.parseInt(string.substring(0, 4));
-                month = Integer.parseInt(string.substring(4, 6));
-                day = Integer.parseInt(string.substring(6, 8));
-            } else {
-                year = Integer.parseInt(string.substring(0, 4));
-                month = Integer.parseInt(string.substring(4, 6));
-                day = Integer.parseInt(string.substring(6, 8));
-                hour = Integer.parseInt(string.substring(9, 11));
-                minutes = Integer.parseInt(string.substring(11, 13));
-            }
             return new OurDateTime(year, month, day, hour, minutes);
         }
-
     }
 }
-/*
-    public void setYear(int year) {
-        this.year = year;
-        setDate();
-    }
-    public void setMonth(int month) {
-        this.month = month;
-        setDate();
-    }
-    public void setDay(int day) {
-        this.day = day;
-        setDate();
-    }
-    public void setHour(int hour) {
-        this.hour = hour;
-        setTime();
-    }
-    public void setMinute(int minute) {
-        this.minute = minute;
-        setTime();
-    }
-    public void setTime() {
-        this.time = Validate.time(minute,hour);
-        setCalculationFormat();
-    }
-    public void setDate() {
-        this.date = Validate.date(year,month,day);
-        setCalculationFormat();
-    }
-    public void setDayOfWeek(DayOfWeek dayOfWeek) { this.dayOfWeek = dayOfWeek; }
-*/

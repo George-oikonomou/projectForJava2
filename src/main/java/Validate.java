@@ -57,8 +57,15 @@ public class Validate {//Checking the input value
         };
     }
 
-    public static String time(int minute, int hour) { return String.format("%02d:%02d", hour, minute); }
-    public static String date(int year, int month, int day) { return String.format("%02d/%02d/%d", day, month, year); }
+    public static String time(int minute, int hour, boolean includeSeparators) {
+        return includeSeparators ? String.format("%02d:%02d", hour, minute)
+                                 : String.format("%02d%02d", hour, minute);
+    }
+
+    public static String date(int year, int month, int day, boolean includeSeparators) {
+        return includeSeparators ? String.format("%02d/%02d/%d", day, month, year)
+                                 : String.format("%d%02d%02d"  , year, month, day);
+    }
 
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
     public static String Title(OurCalendar calendar,int type){
@@ -72,5 +79,4 @@ public class Validate {//Checking the input value
 
     public static void println(Object obj) { System.out.println(obj); }
     public static void print(Object obj) { System.out.print(obj); }
-    public static void printf(String format, Object... args) { System.out.printf(format, args); }
 }

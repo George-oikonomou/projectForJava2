@@ -12,15 +12,13 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import net.fortuna.ical4j.model.property.Duration;
+
 public class ICSFile {
     private final String filePath;
-    public ICSFile(String filePath) {
-        this.filePath = filePath;
-    }
 
+    public ICSFile(String filePath) { this.filePath = filePath; }
     /**
-     * method that loads Events from the ics file and saves it the "events" ArrayList on hour calendar
+     * method that loads Events from the ics file and saves it the "events" ArrayList on our calendar
      * see documentation for more info
      */
     public void loadEvents() {
@@ -35,93 +33,64 @@ public class ICSFile {
             Calendar calendar = builder.build(inputStream);
             int count = 1;
             for (Object component : calendar.getComponents()) {
-
-                if (component instanceof VEvent appointment) {
-                    // try to create an appointment
-                    try {
+                try {
+                    if (component instanceof VEvent appointment) { // try to create an appointment
                         Appointment newAppointment = createAppointment(appointment);
                         events.add(newAppointment);
-                    } catch (NoSuchElementException e) {
-                        System.out.println("the event " + count + " on the file has missing properties moving on to next event..");
-                    }
-                    count++;
-
-                } else if (component instanceof VToDo project) {
-                    //try to create a project
-                    try {
+                    } else if (component instanceof VToDo project) {//try to create a project
                         Project newProject = createProject(project);
                         events.add(newProject);
-                    } catch (NoSuchElementException e) {
-                        System.out.println("the event " + count + " on the file has missing properties moving on to next event..");
+                    } else {
+                        System.out.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
                     }
-                    count++;
-
-                } else {
-                    System.out.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
+                } catch (NoSuchElementException e) {
+                    System.out.println("the event " + count + " on the file has missing properties moving on to next event..");
                 }
+
+                count++;
             }
             App.calendar.setCalScale(calendar.getCalendarScale());
             App.calendar.setProdId(calendar.getProductId());
             App.calendar.setVersion(calendar.getVersion());
+            App.calendar.setEvents(events);
         } catch (ParserException | NullPointerException e) {
             System.out.println("The file you have provided is corrupt ");
+            System.exit(1);
         }catch (IOException e){
             System.out.println("The file you provided does not exist");
             System.exit(1);
         }
-        App.calendar.setEvents(events);
     }
 
-    private Appointment createAppointment(VEvent appointment) {
+    public Appointment createAppointment(VEvent appointment) {
 
-        if (appointment.getSummary() == null){
-            throw new NoSuchElementException();
-        }
-        String title = appointment.getSummary().getValue();
+        if (appointment.getSummary() == null || appointment.getStartDate() == null || (appointment.getEndDate() == null && appointment.getDuration() == null))
+              throw new NoSuchElementException();
 
-        String description = "";
-        if (appointment.getDescription() != null) {
-            description = appointment.getDescription().getValue();
-        }
+        String  title = appointment.getSummary().getValue();
+        String description = ( appointment.getDescription() != null )
+                             ? appointment.getDescription().getValue()
+                             : "";
 
-        DtStart dtStart = appointment.getStartDate();
-        if(dtStart == null){
-            throw new NoSuchElementException();
-        }
-        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtStart.getValue());
+        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(appointment.getStartDate().getValue());
 
-        DtEnd dtEnd = appointment.getEndDate();
-        Duration duration = appointment.getDuration();
-
-        if (duration != null){
-            return new Appointment(startDate,duration, title, description);
-        }else if (dtEnd != null) {
-            OurDateTime endDate = OurDateTime.Functionality.ICSFormatToOurDateTime(dtEnd.getValue());
-            return new Appointment(startDate, endDate, title, description);
-        }else{
-            throw new NoSuchElementException();
-        }
+        return (appointment.getDuration() != null)
+                ? new Appointment(startDate, appointment.getDuration(), title, description)
+                : new Appointment(startDate, OurDateTime.Functionality.ICSFormatToOurDateTime(appointment.getEndDate().getValue()), title, description);
     }
+
     private Project createProject(VToDo project) {
-        if (project.getStatus() == null){
+        if (project.getStatus() == null || project.getDue() == null || project.getSummary() == null)
             throw new NoSuchElementException();
-        }
+
+        String title = project.getSummary().getValue();
+        String description = ( project.getDescription() != null )
+                ? project.getDescription().getValue()
+                : "";
+
+        OurDateTime dueDate = OurDateTime.Functionality.ICSFormatToOurDateTime(project.getDue().getValue());
         Status status = project.getStatus();
 
-        if (project.getDue() == null) {
-            throw new NoSuchElementException();
-        }
-        OurDateTime dueDate = OurDateTime.Functionality.ICSFormatToOurDateTime(project.getDue().getValue());
-
-        if (project.getSummary() == null){
-            throw new NoSuchElementException();
-        }
-        String title = project.getSummary().getValue();
-
-        String description = "";
-        if (project.getDescription() != null){
-            description = project.getDescription().getValue();
-        }
         return new Project(title, description, dueDate, status);
     }
 
@@ -131,11 +100,10 @@ public class ICSFile {
         calendar.getProperties().add(App.calendar.getProdId());
         calendar.getProperties().add(App.calendar.getCalScale());
         for (Event event : events) {
-            if (event instanceof Appointment appointment) {
+            if (event instanceof Appointment appointment)
                 calendar.getComponents().add(createVEvent(appointment));
-            } else if (event instanceof Project project) {
+            else if (event instanceof Project project)
                 calendar.getComponents().add(createVTodo(project));
-            }
         }
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             CalendarOutputter outPutter = new CalendarOutputter();
