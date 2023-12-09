@@ -160,6 +160,7 @@ public class ICSFile {
 
     private VToDo createVTodo(Project project) {
         VToDo vToDo = new VToDo();
+        vToDo.getProperties().add(new Uid(project.getUuid()));
         vToDo.getProperties().add(new Summary(project.getTitle()));
         if (!project.getDescription().isEmpty()) {
             vToDo.getProperties().add(new Description(project.getDescription()));
