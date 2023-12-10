@@ -32,36 +32,39 @@ public class OurCalendar {
         int choice;
         String title, description;
         OurDateTime startDate, endDate, due;
+        do {
+            //NEW EVENT:
+            Validate.println("""
+                    Make a new:
+                        1) Appointment
+                        2) Project
+                        3) Exit
+                    """);
+            choice = Validate.checkAndReturnIntBetween(1, 3);
+            if (choice == 3) break;
+            //Title
+            Validate.print("\nTitle:\t");
+            title = Validate.Title(this, choice);
+            //Description
+            Validate.print("\nDescription:\t");
+            description = Validate.strInput();
 
-        //NEW EVENT:
-        Validate.println("""
-                Make a new:
-                    1) Appointment
-                    2) Project
-                """);
-        choice = Validate.checkAndReturnIntBetween(1, 2);
-        //Title
-        Validate.print("\nTitle:\t");
-        title = Validate.Title(this, choice);
-        //Description
-        Validate.print("\nDescription:\t");
-        description = Validate.strInput();
+            //Adding one event to the arraylist
+            System.out.println("Enter the date and time that the event starts");
+            startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
+            Validate.println("");
+            if (choice == 1) {
+                System.out.println("Enter date and time that the event ends:\t");
 
-        //Adding one event to the arraylist
-        System.out.println("Enter the date and time that the event starts");
-        startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
-        Validate.println("");
-        if (choice == 1) {
-            System.out.println("Enter date and time that the event ends:\t");
+                endDate = Validate.DateTime(startDate);
+                events.add(new Appointment(startDate, endDate, title, description));
+            } else {//Date & Time
+                Validate.print("Enter Due date for the event:\t");
 
-            endDate = Validate.DateTime(startDate);
-            events.add( new Appointment(startDate,endDate, title, description) );
-        } else {//Date & Time
-            Validate.print("Enter Due date for the event:\t");
-
-            due = Validate.DateTime(startDate);
-            events.add( new Project(title, description, due, Status.VTODO_NEEDS_ACTION) );
-        }
+                due = Validate.DateTime(startDate);
+                events.add(new Project(title, description, due, Status.VTODO_NEEDS_ACTION));
+            }
+        } while (true);
     }
 
     public static void sortList(ArrayList<Event> events) {
