@@ -62,7 +62,7 @@ public class ICSFile {
         }
     }
 
-    public Appointment createAppointment(VEvent appointment) {
+    private Appointment createAppointment(VEvent appointment) {
 
         if (appointment.getSummary() == null || appointment.getStartDate() == null || (appointment.getEndDate() == null && appointment.getDuration() == null))
               throw new NoSuchElementException();
