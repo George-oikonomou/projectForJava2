@@ -27,9 +27,9 @@ public class OurDateTime {
      * to change the current time
      */
     public OurDateTime() {
-        CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.now());  
         //CHANGE HERE example
         //CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.of(2024,11,23,18,11));
+        CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.now());  
         this.dayOfWeek = timeTeller.now().getDayOfWeek();
         this.year = timeTeller.now().getYear();
         this.month = timeTeller.now().getMonthValue();
