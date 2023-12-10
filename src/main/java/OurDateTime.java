@@ -26,7 +26,7 @@ public class OurDateTime {
      * constructor that creates a OurDateTime object that contains the current
      */
     public OurDateTime() {
-        CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.of(2024, 1, 1, 21, 40));
+        CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.now());
         this.dayOfWeek = timeTeller.now().getDayOfWeek();
         this.year = timeTeller.now().getYear();
         this.month = timeTeller.now().getMonthValue();

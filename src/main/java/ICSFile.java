@@ -28,6 +28,7 @@ public class ICSFile {
         ArrayList<Event> events = new ArrayList<>();
 
         try {
+            //create cal object
             InputStream inputStream = new FileInputStream(filePath);
             CalendarBuilder builder = new CalendarBuilder();
             Calendar calendar = builder.build(inputStream);
@@ -41,6 +42,7 @@ public class ICSFile {
                     else
                         Validate.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
                 } catch (NoSuchElementException e) {
+                    // if something goes wrong here it will not terminate the program but move to the next comp
                     Validate.println("the event " + count + " on the file has missing properties moving on to next event..");
                 }
 
@@ -60,27 +62,30 @@ public class ICSFile {
     }
 
     private Appointment createAppointment(VEvent appointment) {
-
+        //must have properties
         if (appointment.getSummary() == null || appointment.getStartDate() == null || (appointment.getEndDate() == null && appointment.getDuration() == null))
               throw new NoSuchElementException();
 
         String  title = appointment.getSummary().getValue();
+        //optional property
         String description = ( appointment.getDescription() != null )
                              ? appointment.getDescription().getValue()
                              : "";
 
         OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(appointment.getStartDate().getValue());
-
+        // if i have duration get duration else get dtend
         return (appointment.getDuration() != null)
                 ? new Appointment(startDate, appointment.getDuration(), title, description)
                 : new Appointment(startDate, OurDateTime.Functionality.ICSFormatToOurDateTime(appointment.getEndDate().getValue()), title, description);
     }
 
     private Project createProject(VToDo project) {
+        //must have properties
         if (project.getStatus() == null || project.getDue() == null || project.getSummary() == null)
             throw new NoSuchElementException();
 
         String title = project.getSummary().getValue();
+        //optional
         String description = ( project.getDescription() != null )
                 ? project.getDescription().getValue()
                 : "";
@@ -93,6 +98,7 @@ public class ICSFile {
 
     public void storeEvents(ArrayList<Event> events) {
         Calendar calendar = new Calendar();
+        //basic calendar information
         calendar.getProperties().add(App.calendar.getVersion());
         calendar.getProperties().add(App.calendar.getProdId());
         calendar.getProperties().add(App.calendar.getCalScale());
@@ -102,6 +108,7 @@ public class ICSFile {
             else if (event instanceof Project project)
                 calendar.getComponents().add(createVTodo(project));
         }
+        //create ics file using the calendar object
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             CalendarOutputter outPutter = new CalendarOutputter();
             outPutter.output(calendar, fileWriter);
@@ -111,6 +118,11 @@ public class ICSFile {
         }
     }
 
+    /**
+     * create a vevent using the info of an ourEvent
+     * @param appointment the appointment that we will use to create a vEvent
+     * @return returns the vEvent
+     */
     private VEvent createVEvent(Appointment appointment) {
         VEvent event = new VEvent();
         event.getProperties().add(new Uid(appointment.getUuid()));
@@ -122,7 +134,6 @@ public class ICSFile {
         }
         return event;
     }
-
     private VToDo createVTodo(Project project) {
         VToDo vToDo = new VToDo();
         vToDo.getProperties().add(new Uid(project.getUuid()));
