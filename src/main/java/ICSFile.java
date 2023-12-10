@@ -34,15 +34,12 @@ public class ICSFile {
             int count = 1;
             for (Object component : calendar.getComponents()) {
                 try {
-                    if (component instanceof VEvent appointment) { // try to create an appointment
-                        Appointment newAppointment = createAppointment(appointment);
-                        events.add(newAppointment);
-                    } else if (component instanceof VToDo project) {//try to create a project
-                        Project newProject = createProject(project);
-                        events.add(newProject);
-                    } else {
+                    if (component instanceof VEvent appointment)  // try to create an appointment
+                        events.add(createAppointment(appointment));
+                    else if (component instanceof VToDo project) //try to create a project
+                        events.add(createProject(project));
+                    else
                         System.out.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
-                    }
                 } catch (NoSuchElementException e) {
                     System.out.println("the event " + count + " on the file has missing properties moving on to next event..");
                 }
