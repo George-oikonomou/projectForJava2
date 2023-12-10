@@ -6,7 +6,7 @@ loadEvents ():
     - we initialize an arraylist where the events that come from the file will be saved in
     - we create an input stream of the file, then we build with it a calendar object from the ical4j
     this object will give us the property of extracting the events as different components.
-    - we are looping throw the events from the calendar we just created.
+    - we are looping through the events from the calendar we just created.
     - we check what type of events are in this calendar if they are vEvents (appointments) we create
     an appointment object using the data from the component, and we add it to the list same for vTodo (projects)
     - if there is something wrong with the information of a single event, for example a vTodo does not contain
@@ -17,7 +17,7 @@ loadEvents ():
 
 createAppointment (), createProject:
     - gets the "must have" and the optional information of a component and creates the object, if a
-    "must have" property it will throw an exception that will be handled by the caller. 
+    "must have" property is missing it will throw an exception that will be handled by the caller. 
     - returns the corresponding object
 
 
@@ -30,5 +30,5 @@ StoreEvents ():
     - if the file does not exist it will create a new one and if it does it will overwrite it
 
 createVEvent (), createVTodo ():
-    - the get the properties of the events from our calendar and create the corresponding objects 
+    - they get the properties of the events from our calendar and create the corresponding objects 
 
