@@ -5,3 +5,4 @@ we use throughout the program
 - second constructor creates an OurDateTime object that has the current time, live or custom time
 use this to change the current time
 - then we have different methods to set these formats get them and a toString
+=
