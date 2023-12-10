@@ -57,16 +57,6 @@ public class Validate {//Checking the input value
         };
     }
 
-    public static String time(int minute, int hour, boolean includeSeparators) {
-        return includeSeparators ? String.format("%02d:%02d", hour, minute)
-                                 : String.format("%02d%02d", hour, minute);
-    }
-
-    public static String date(int year, int month, int day, boolean includeSeparators) {
-        return includeSeparators ? String.format("%02d/%02d/%d", day, month, year)
-                                 : String.format("%d%02d%02d"  , year, month, day);
-    }
-
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();

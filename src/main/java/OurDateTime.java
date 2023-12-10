@@ -16,8 +16,8 @@ public class OurDateTime {
         this.day = day;
         this.hour = hour;
         this.minute = minute;
-        this.date = Validate.date(year,month,day,true);
-        this.time = Validate.time(minute,hour,true);
+        this.date = date(year,month,day,true);
+        this.time = time(minute,hour,true);
         setCalculationFormat();
         setIcsFormat();
     }
@@ -33,10 +33,20 @@ public class OurDateTime {
         this.day = timeTeller.now().getDayOfMonth();
         this.hour = timeTeller.now().getHour();
         this.minute = timeTeller.now().getMinute();
-        this.date = Validate.date(year,month,day,true);
-        this.time = Validate.time(minute,hour,true);
+        this.date = date(year,month,day,true);
+        this.time = time(minute,hour,true);
         setCalculationFormat();
         setIcsFormat();
+    }
+
+    public static String time(int minute, int hour, boolean includeSeparators) {
+        return includeSeparators ? String.format("%02d:%02d", hour, minute)
+                                 : String.format("%02d%02d" , hour, minute);
+    }
+
+    public static String date(int year, int month, int day, boolean includeSeparators) {
+        return includeSeparators ? String.format("%02d/%02d/%d", day, month, year)
+                                 : String.format("%d%02d%02d"  , year, month, day);
     }
 
     public DateTime getIcsFormat() { return icsFormat; }
@@ -61,8 +71,8 @@ public class OurDateTime {
 
     public Long getCalculationFormat() { return CalculationFormat; }
     public void setCalculationFormat() {
-        String date = Validate.date(year,month,day,false);
-        String time = Validate.time(minute,hour,false);
+        String date = date(year,month,day,false);
+        String time = time(minute,hour,false);
         this.CalculationFormat = Long.parseLong(date + time);
     }
 
