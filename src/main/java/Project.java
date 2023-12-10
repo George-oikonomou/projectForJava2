@@ -13,7 +13,6 @@ public class Project extends Event{
         this.status = status;
         setFinished(status == Status.VTODO_COMPLETED);
     }
-
     public Status getStatus() { return status; }
     public OurDateTime getDue() { return due; }
     public boolean getIsFinished() { return isFinished; }

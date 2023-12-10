@@ -72,11 +72,11 @@ public class ICSFile {
                              ? appointment.getDescription().getValue()
                              : "";
 
-        OurDateTime startDate = OurDateTime.Functionality.ICSFormatToOurDateTime(appointment.getStartDate().getValue());
+        OurDateTime startDate = ICSFormatToOurDateTime(appointment.getStartDate().getValue());
         // if i have duration get duration else get dtend
         return (appointment.getDuration() != null)
                 ? new Appointment(startDate, appointment.getDuration(), title, description)
-                : new Appointment(startDate, OurDateTime.Functionality.ICSFormatToOurDateTime(appointment.getEndDate().getValue()), title, description);
+                : new Appointment(startDate, ICSFormatToOurDateTime(appointment.getEndDate().getValue()), title, description);
     }
 
     private Project createProject(VToDo project) {
@@ -90,7 +90,7 @@ public class ICSFile {
                 ? project.getDescription().getValue()
                 : "";
 
-        OurDateTime dueDate = OurDateTime.Functionality.ICSFormatToOurDateTime(project.getDue().getValue());
+        OurDateTime dueDate = ICSFormatToOurDateTime(project.getDue().getValue());
         Status status = project.getStatus();
 
         return new Project(title, description, dueDate, status);
@@ -144,5 +144,15 @@ public class ICSFile {
         vToDo.getProperties().add(new Due(project.getDue().getIcsFormat()));
         vToDo.getProperties().add(project.getStatus());
         return vToDo;
+    }
+
+    private OurDateTime ICSFormatToOurDateTime(String string) {
+        int year    = Integer.parseInt(string.substring(0, 4));
+        int month   = Integer.parseInt(string.substring(4, 6));
+        int day     = Integer.parseInt(string.substring(6, 8));
+        int hour    = (string.length() == 13) ? Integer.parseInt(string.substring(9, 11)) : 0;
+        int minutes = (string.length() == 13) ? Integer.parseInt(string.substring(11, 13)) : 0;
+
+        return new OurDateTime(year, month, day, hour, minutes);
     }
 }
