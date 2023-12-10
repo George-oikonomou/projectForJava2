@@ -1,4 +1,11 @@
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VToDo;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppointmentTest {
@@ -26,7 +33,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testDurationOnlyDays(){
+    public void testDurationOnlyDays() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
         OurDateTime endDate = new OurDateTime(2024, 2, 14, 16, 59);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
@@ -35,7 +42,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testDurationOnlyHours(){
+    public void testDurationOnlyHours() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
         OurDateTime endDate = new OurDateTime(2024, 2, 13, 17, 59);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
@@ -44,16 +51,16 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testDurationOnlyMinutes(){
+    public void testDurationOnlyMinutes() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
-        OurDateTime endDate = new OurDateTime(2024, 2, 13, 16, 59);
+        OurDateTime endDate = new OurDateTime(2024, 2, 13, 18, 50);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
         appointment.setDurationWithDtend(dateTime, endDate);
-        assertEquals("0 minutes", appointment.getDuration());
+        assertEquals("1 hour 51 minutes", appointment.getDuration());
     }
 
     @Test
-    public void testDurationDaysAndHours(){
+    public void testDurationDaysAndHours() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 16, 59);
         OurDateTime endDate = new OurDateTime(2024, 2, 14, 17, 59);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
@@ -62,7 +69,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testDurationDaysAndMinutes(){
+    public void testDurationDaysAndMinutes() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 15, 59);
         OurDateTime endDate = new OurDateTime(2024, 2, 14, 16, 0);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
@@ -71,7 +78,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testDurationHoursAndMinutes(){
+    public void testDurationHoursAndMinutes() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 15, 59);
         OurDateTime endDate = new OurDateTime(2024, 2, 13, 17, 0);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
@@ -80,13 +87,51 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testDurationDaysHoursAndMinutes(){
+    public void testDurationDaysHoursAndMinutes() {
         OurDateTime dateTime = new OurDateTime(2024, 2, 13, 15, 59);
         OurDateTime endDate = new OurDateTime(2024, 2, 14, 17, 0);
         Appointment appointment = new Appointment(dateTime, endDate, "title", "description");
         appointment.setDurationWithDtend(dateTime, endDate);
         assertEquals("1 day 1 hour 1 minute", appointment.getDuration());
     }
+
+    @Test
+    public void durationIsCalculatedCorrectlyWithDtend() {
+        OurDateTime startDate = new OurDateTime(2022, 1, 1, 10, 0);
+        OurDateTime endDate = new OurDateTime(2022, 1, 1, 12, 30);
+        Appointment appointment = new Appointment(startDate, endDate, "Meeting", "Team meeting");
+
+        assertEquals("2 hours 30 minutes", appointment.getDuration());
+    }
+
+    @Test
+    public void durationIsZeroWhenStartAndEndDatesAreTheSame() {
+        OurDateTime startDate = new OurDateTime(2022, 1, 1, 10, 0);
+        OurDateTime endDate = new OurDateTime(2022, 1, 1, 10, 0);
+        Appointment appointment = new Appointment(startDate, endDate, "Meeting", "Team meeting");
+
+        assertEquals("0 minutes", appointment.getDuration());
+    }
+
+    @Test
+    public void toStringReturnsCorrectFormat() {
+        OurDateTime startDate = new OurDateTime(2022, 1, 1, 10, 0);
+        OurDateTime endDate = new OurDateTime(2022, 1, 1, 12, 30);
+        Appointment appointment = new Appointment(startDate, endDate, "Meeting", "Team meeting");
+
+        String expected = """
+                Appointment:
+                    title: Meeting
+                    description: Team meeting
+                    start date & time: 01/01/2022 10:00
+                    end date & time: 01/01/2022 12:30
+                    duration: 2 hours 30 minutes
+                """;
+
+        assertEquals(expected, appointment.toString());
+    }
+
+
 }
 /*
 

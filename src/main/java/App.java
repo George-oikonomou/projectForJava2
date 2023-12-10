@@ -21,10 +21,10 @@ public class App {
     private static void handleSingleArgument(String arg) {
         ICSFile ourFile = new ICSFile(arg);
         if (new File(arg).exists()){
-            System.out.println("file exists loading the events..");
+            Validate.println("file exists loading the events..");
             ourFile.loadEvents();
         } else {
-            System.out.println("file does not exist, creating new one");
+            Validate.println("file does not exist, creating new one");
         }
         calendar.addEvents();
         ourFile.storeEvents(calendar.getEvents());

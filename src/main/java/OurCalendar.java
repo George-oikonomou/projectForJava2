@@ -9,8 +9,6 @@ public class OurCalendar {
 
     private ArrayList<Event> events;//has all the events
 
-
-
     //if the file does not exist the new calendar will have these values
     private Version version = new Version("2.0","2.0");
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
@@ -34,42 +32,39 @@ public class OurCalendar {
         int choice;
         String title, description;
         OurDateTime startDate, endDate, due;
+        do {
+            //NEW EVENT:
+            Validate.println("""
+                    Make a new:
+                        1) Appointment
+                        2) Project
+                        3) Exit
+                    """);
+            choice = Validate.checkAndReturnIntBetween(1, 3);
+            if (choice == 3) break;
+            //Title
+            Validate.print("\nTitle:\t");
+            title = Validate.Title(this, choice);
+            //Description
+            Validate.print("\nDescription:\t");
+            description = Validate.strInput();
 
-        //NEW EVENT:
-        Validate.println("""
-                Make a new:
-                    1) Appointment
-                    2) Project
-                """);
-        choice = Validate.checkAndReturnIntBetween(1, 2);
-        //Title
-        Validate.print("\nTitle:\t");
-        title = Validate.Title(this, choice);
-        //Description
-        Validate.print("\nDescription:\t");
-        description = Validate.strInput();
-
-        //Adding one event to the arraylist
-        System.out.println("Enter the date and time that the event starts");
-        startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
-        Validate.println("");
-        if (choice == 1) {
-            System.out.println("Enter date and time that the event ends");
-
-            endDate = Validate.DateTime(startDate);
-            Appointment newAppointment = new Appointment(startDate,endDate, title, description);
-
-          events.add(newAppointment);
-        } else {//Date & Time
-            Validate.print("Due:\t");
-            due = Validate.DateTime(startDate);
-
+            //Adding one event to the arraylist
+            Validate.println("Enter the date and time that the event starts");
+            startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
             Validate.println("");
+            if (choice == 1) {
+                Validate.println("Enter date and time that the event ends:\t");
 
+                endDate = Validate.DateTime(startDate);
+                events.add(new Appointment(startDate, endDate, title, description));
+            } else {//Date & Time
+                Validate.print("Enter Due date for the event:\t");
 
-            Project newProject = new Project(title, description, due, Status.VTODO_NEEDS_ACTION);
-            events.add(newProject);
-        }
+                due = Validate.DateTime(startDate);
+                events.add(new Project(title, description, due, Status.VTODO_NEEDS_ACTION));
+            }
+        } while (true);
     }
 
     public static void sortList(ArrayList<Event> events) {
@@ -82,7 +77,7 @@ public class OurCalendar {
 
             while (j >= 0 && compareEvents(events.get(j), keyEvent) > 0) {
                 events.set(j + 1, events.get(j));
-                j = j - 1;
+                j--;
             }
             events.set(j + 1, keyEvent);
         }
@@ -98,8 +93,7 @@ public class OurCalendar {
     private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
-        int realDay = realDateTime.getDay();
-        int eventDay;
+        int  eventDay, realDay = realDateTime.getDay();
         long eventFormat;
         for (Event event : events) {
 
@@ -155,15 +149,10 @@ public class OurCalendar {
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
-            case pastweek -> {//from the realDateTime format the day and time become 01, 00:00
-                Validate.println("\nOld Events from this week:\n");
+            case pastweek,pastmonth -> {//from the realDateTime format the day and time become 01, 00:00
+                Validate.println("\nOld Events from this " + ((choice == App.AppChoices.pastweek) ? "week" : "month") + ":\n");
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                timePeriod(realDateTime.getCalculationFormat(), format, 3);
-            }
-            default -> {//from the realDateTime format the day and time become 01, 00:00
-                Validate.println("\nOld Events from this month:\n");
-                format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                timePeriod(realDateTime.getCalculationFormat(), format, 1);
+                timePeriod(realDateTime.getCalculationFormat(), format, choice == App.AppChoices.pastweek ? 3 : 1);
             }
         }
     }
@@ -178,70 +167,16 @@ public class OurCalendar {
                 long dueFormat = ((Project) event).getDue().getCalculationFormat();
 
                 if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
-                    System.out.println(event);
+                    Validate.println(event);
             }
         }
     }
 
     public Event eventSearch(String title, int type) {
-        for (Event event : events)
-            if (event.getTitle().equals(title))
-                if ((type == 1 && event instanceof Appointment) || (type == 2 && event instanceof Project))
-                    return event;
-
-        return null;
+        return events.stream()
+                     .filter(event -> event.getTitle().equals(title))
+                     .filter(event -> (type == 1 && event instanceof Appointment) || (type == 2 && event instanceof Project))
+                     .findFirst()
+                     .orElse(null);
     }
 }
-    /*
-    public void editEvent() {
-        int choice;
-        String title;
-        Event searchedEvent;
-
-        do {
-            Validate.println("""
-                    Change:
-                        1) Appointment
-                        2) Project
-                        3) Exit""");
-            //Choosing one of the above options
-            choice = Validate.checkAndReturnIntBetween(1, 3);
-            //Printing all the events, appointments or projects:
-            for (Event event : events) {
-                if (choice == 2 && event instanceof Project || choice == 1 && event instanceof Appointment )
-                    Validate.println(event);
-                else if (choice == 3)
-                    return;
-            }
-
-            Validate.println("Type the title of the event you want to change:");
-            //Finding the title of the event:
-            while (true) {
-                title = Validate.strInput();
-                searchedEvent = eventSearch(title, choice);
-                if (searchedEvent == null)
-                    Validate.println("You typed wrong title. Try again.");
-                else
-                    break;
-            }
-            //Changing the fields of the chosen event:
-            searchedEvent.editEvent();
-            Validate.println("");
-        } while (choice != 3);
-    }
-    public void changeProjectCondition() {
-        Validate.println("Please provide the name of the Project you wish to update its status");
-
-        while (true) {
-            String title = Validate.strInput();
-            Event event = eventSearch(title, 2);
-
-            if (event instanceof Project project) {
-                project.setFinished(!project.getIsFinished());
-                Validate.printf("The status of the Project is %s", project.getIsFinished() ? "Finished" : "Ongoing");
-                return; // Exit the method if a valid project name is provided
-            }
-            Validate.println("Project does not exist. Please try again.");
-        }
-    }
-   */

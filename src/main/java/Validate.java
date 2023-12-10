@@ -23,9 +23,9 @@ public class Validate {//Checking the input value
                 temp = Integer.parseInt(input.trim());
 
                 if (temp < param1 || temp > param2)
-                    System.out.println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
+                    println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
             } catch (NumberFormatException e) {
-                System.out.println("Your input is not valid. Provide a valid number. Try again.\n");
+                    println("Your input is not valid. Provide a valid number. Try again.\n");
             }
         } while (temp < param1 || temp > param2);
 
@@ -57,9 +57,6 @@ public class Validate {//Checking the input value
         };
     }
 
-    public static String time(int minute, int hour) { return String.format("%02d:%02d", hour, minute); }
-    public static String date(int year, int month, int day) { return String.format("%02d/%02d/%d", day, month, year); }
-
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();
@@ -72,5 +69,4 @@ public class Validate {//Checking the input value
 
     public static void println(Object obj) { System.out.println(obj); }
     public static void print(Object obj) { System.out.print(obj); }
-    public static void printf(String format, Object... args) { System.out.printf(format, args); }
 }
