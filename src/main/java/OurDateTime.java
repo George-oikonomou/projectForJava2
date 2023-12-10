@@ -55,7 +55,7 @@ public class OurDateTime {
         try {
             this.icsFormat = new DateTime(format);
         } catch (ParseException e) {
-            System.out.println("could not create icsDateTime format");
+            Validate.println("could not create icsDateTime format");
         }
     }
 

@@ -50,11 +50,11 @@ public class OurCalendar {
             description = Validate.strInput();
 
             //Adding one event to the arraylist
-            System.out.println("Enter the date and time that the event starts");
+            Validate.println("Enter the date and time that the event starts");
             startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
             Validate.println("");
             if (choice == 1) {
-                System.out.println("Enter date and time that the event ends:\t");
+                Validate.println("Enter date and time that the event ends:\t");
 
                 endDate = Validate.DateTime(startDate);
                 events.add(new Appointment(startDate, endDate, title, description));
@@ -167,7 +167,7 @@ public class OurCalendar {
                 long dueFormat = ((Project) event).getDue().getCalculationFormat();
 
                 if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
-                    System.out.println(event);
+                    Validate.println(event);
             }
         }
     }

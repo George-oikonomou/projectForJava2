@@ -23,9 +23,9 @@ public class Validate {//Checking the input value
                 temp = Integer.parseInt(input.trim());
 
                 if (temp < param1 || temp > param2)
-                    System.out.println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
+                    println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
             } catch (NumberFormatException e) {
-                System.out.println("Your input is not valid. Provide a valid number. Try again.\n");
+                    println("Your input is not valid. Provide a valid number. Try again.\n");
             }
         } while (temp < param1 || temp > param2);
 
