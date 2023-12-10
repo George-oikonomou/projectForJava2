@@ -39,9 +39,9 @@ public class ICSFile {
                     else if (component instanceof VToDo project) //try to create a project
                         events.add(createProject(project));
                     else
-                        System.out.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
+                        Validate.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
                 } catch (NoSuchElementException e) {
-                    System.out.println("the event " + count + " on the file has missing properties moving on to next event..");
+                    Validate.println("the event " + count + " on the file has missing properties moving on to next event..");
                 }
 
                 count++;
@@ -51,10 +51,10 @@ public class ICSFile {
             App.calendar.setVersion(calendar.getVersion());
             App.calendar.setEvents(events);
         } catch (ParserException | NullPointerException e) {
-            System.out.println("The file you have provided is corrupt ");
+            Validate.println("The file you have provided is corrupt ");
             System.exit(1);
         }catch (IOException e){
-            System.out.println("The file you provided does not exist");
+            Validate.println("The file you provided does not exist");
             System.exit(1);
         }
     }
@@ -105,9 +105,9 @@ public class ICSFile {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             CalendarOutputter outPutter = new CalendarOutputter();
             outPutter.output(calendar, fileWriter);
-            System.out.println("Calendar successfully written to " + filePath);
+            Validate.println("Calendar successfully written to " + filePath);
         } catch (IOException | ValidationException e) {
-            System.out.println("There was an error saving your calendar");
+            Validate.println("There was an error saving your calendar");
         }
     }
 
