@@ -6,3 +6,8 @@ we use throughout the program
 use this to change the current time
 - then we have different methods to set these formats get them and a toString
 =
+
+
+    CustomCurrentTime:
+    It's a class that implements TimeTeller, so it can be able to change the LocalDateTime, to whatever DateTime we want.
+    It has a constructor for the field currentTime and the LocalDateTIme now() returns the currentTime.
