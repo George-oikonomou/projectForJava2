@@ -23,9 +23,10 @@ Methods:
         If thats true, we print the event.
 
     printUpcomingEvents:
-    It gets a choice, if the user wants to see the Upcoming Events for today, this week or this month.
+    It gets a choice, if the user wants to see the Upcoming Events that are sorted for today, this week or this month.
     If the user chose, for today:
         The variable format, from the current time, the day gets increaced by 1 and the time is 00:00.
+        If it's necessary, it changes month or/and year and the day becomes 1.
         Then we call timePeriod to print the events for today.
     This week & this month:
         The variable format, increaces the month by 1, the day becomes 1, and the time is 00:00.
@@ -33,7 +34,7 @@ Methods:
         Then we call timePeriod to print the events for this week/month.
 
     printOldEvents:
-    It gets a choice, if the user wants to see the Old Events for today, this week or this month.
+    It gets a choice, if the user wants to see the Old Events that are sorted for today, this week or this month.
     If the user chose, for today:
         The variable format, from the current time, changes the time to 00:00.
         Then we call timePeriod to print the events for today.
@@ -42,4 +43,12 @@ Methods:
         Then we call timePeriod to print the events for this week/month.
 
     printUnfinishdProject:
-    
+    It gets a choice, if the user wants to see the Projects that are sorted to see the todo and due Projects.
+    If a project is not Finished:
+        The due becomes a Calculation Format, and we check if it surpasses the realDateTime
+        If the user chose, todo:
+            We check if the due format is greater than the realDateTime Format and then the project is printed
+        Else:
+            We check if the due format is less than the realDateTime Format and we print this project.
+
+    eventSearch:
