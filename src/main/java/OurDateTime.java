@@ -53,9 +53,10 @@ public class OurDateTime {
         return includeSeparators ? String.format("%02d/%02d/%d", day, month, year)
                                  : String.format("%d%02d%02d"  , year, month, day);
     }
+
     public DateTime getIcsFormat() { return icsFormat; }
 
-    //this created the icsFormat of a date thats used in dtStart dtEnd due ..
+    //this created the icsFormat of a date that iss used in dtStart dtEnd due ...
     public void setIcsFormat() {
         String format = String.format("%04d%02d%02dT%02d%02d00", getYear(), getMonth(), getDay(), getHour(), getMinute());
         try {
@@ -82,19 +83,21 @@ public class OurDateTime {
         String time = time(minute,hour,false);
         this.CalculationFormat = Long.parseLong(date + time);
     }
+
     @Override
     public String toString(){ return getDate() + " " + getTime(); }
+
     public static class Functionality{
         /**
          * method that gets creates a valid datetime object based on the users input it has the proper restrictions
          * @return returns a ourDateTime object
          */
         public static OurDateTime dateAndTime() {
-            int year   = Validate.getInput("\nDATE\n\tYear:\t", 2023 ,2100);
-            int month  = Validate.getInput("\tMonth:\t", 1, 12);
-            int day    = Validate.getInput("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
-            int hour   = Validate.getInput("\nTIME\n\tHour:\t", 0, 23);
-            int minute = Validate.getInput("\tMinute:\t", 0, 59);
+            int year   = Validate.printMessageAndGetIntBetween("\nDATE\n\tYear:\t", 2023 ,2100);
+            int month  = Validate.printMessageAndGetIntBetween("\tMonth:\t", 1, 12);
+            int day    = Validate.printMessageAndGetIntBetween("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
+            int hour   = Validate.printMessageAndGetIntBetween("\nTIME\n\tHour:\t", 0, 23);
+            int minute = Validate.printMessageAndGetIntBetween("\tMinute:\t", 0, 59);
             return new OurDateTime(year, month, day, hour, minute);
         }
     }
