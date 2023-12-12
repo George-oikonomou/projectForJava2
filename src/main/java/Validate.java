@@ -1,54 +1,76 @@
 import java.util.Scanner;
 
-public class Validate {//Checking the input value
+public  class Validate {//General class for validating input
 
-    //Checking if the String is empty
+    /**
+     * @return String that is not empty
+     */
     public static String strInput() {
         Scanner scanner = new Scanner(System.in);
         String string;
 
-        while ( (string = scanner.nextLine()).isEmpty() )
-            Validate.println("input can't be empty. Try again.");
+        while ( (string = scanner.nextLine()).isEmpty() ) // while the String is empty repeat the loop asking for input
+            Validate.println("input can't be empty. Try again.");//and print the message
 
         return string;
     }
 
-    //Checking if the integer has valid value
-    public static int checkAndReturnIntBetween(int param1, int param2) {
+    /**
+     * @param lowerBound the lower bound
+     * @param upperBound the upper bound
+     * @return int between lower and upper bound
+     */
+    public static int checkAndReturnIntBetween(int lowerBound, int upperBound) {
+
         int temp = -1;
 
         do {
             try {
-                String input = strInput();  // Use the strInput method to get a valid string input
-                temp = Integer.parseInt(input.trim());
+                String input = strInput();
+                temp = Integer.parseInt(input.trim());//trims the input and parse it to int
 
-                if (temp < param1 || temp > param2)
-                    println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
+                if (temp < lowerBound || temp > upperBound)
+                    println("The number you typed is invalid, it should be between " + lowerBound + " and " + upperBound + ". Try again.\n");
             } catch (NumberFormatException e) {
                     println("Your input is not valid. Provide a valid number. Try again.\n");
             }
-        } while (temp < param1 || temp > param2);
+        } while (temp < lowerBound || temp > upperBound);
 
         return temp;
     }
 
-    //Making an object OurDateTime & checking the value of date & time for the deadline
+
+    /**
+     * @param startDate  of the event that the user is creating
+     * @return OurDateTime  object with a date and time after the startDate
+     */
     public static OurDateTime DateTime(OurDateTime startDate) {
-        int year = getInput("\nDATE\n\tYear:\t", startDate.getYear(), 2100);
-        int month = getInput("\tMonth:\t", (year == startDate.getYear()) ? startDate.getMonth() : 1, 12);
-        int day = getInput("\tDay:\t", (month == startDate.getMonth() && year == startDate.getYear())  ? startDate.getDay() : 1, getDaysInMonth(month, year));
-        int hour = getInput("\nTIME\n\tHour:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear()) ? startDate.getHour() : 0, 23);
-        int minute = getInput("\tMinute:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear() && hour == startDate.getHour()) ? startDate.getMinute() : 0, 59);
+        int year = printMessageAndGetIntBetween("\nDATE\n\tYear:\t", startDate.getYear(), 2100);
+        int month = printMessageAndGetIntBetween("\tMonth:\t", (year == startDate.getYear()) ? startDate.getMonth() : 1, 12);
+        int day = printMessageAndGetIntBetween("\tDay:\t", (month == startDate.getMonth() && year == startDate.getYear())  ? startDate.getDay() : 1, getDaysInMonth(month, year));
+        int hour = printMessageAndGetIntBetween("\nTIME\n\tHour:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear()) ? startDate.getHour() : 0, 23);
+        int minute = printMessageAndGetIntBetween("\tMinute:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear() && hour == startDate.getHour()) ? startDate.getMinute() : 0, 59);
 
         println("");
         return new OurDateTime(year, month, day, hour, minute);
     }
 
-    public static int getInput(String prompt, int lowerBound, int upperBound) {
+    /**
+     * @param prompt  to be displayed to the user
+     * @param lowerBound  of the input
+     * @param upperBound  of the input
+     * @return int between lowerBound and upperBound
+     */
+    public static int printMessageAndGetIntBetween(String prompt, int lowerBound, int upperBound) {
         print(prompt);
         return checkAndReturnIntBetween(lowerBound, upperBound);
     }
 
+    /**
+     * @param month to get the days of
+     * @param year to get the days of (used for leap years)
+     * @return the number of days in the month
+     */
     public static int getDaysInMonth(int month, int year) {
         return switch (month) {
             case 1, 3, 5, 7, 8, 10, 12 -> 31;
@@ -57,16 +79,30 @@ public class Validate {//Checking the input value
         };
     }
 
+    /**
+     * @param ourCalendar the calendar to search for the title
+     * @param title the title to search for
+     * @param type the type of event to search for
+     * @return true if a title exists for that type in given calendar, false otherwise
+     */
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
+
+
+    /**
+     * @param  calendar to search for the title
+     * @param  type of event to search for
+     * @return the title of the event that doesn't exist for that type in that calendar
+     */
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();
        while (checkIfTitleExists(calendar, title, type)) {
            Validate.println("This title already exists. Try again.");
            title = strInput();
        }
-       return title;
+       return title;//returns the unique title
     }
 
+    //for stage 2
     public static void println(Object obj) { System.out.println(obj); }
     public static void print(Object obj) { System.out.print(obj); }
 }

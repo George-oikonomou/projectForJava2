@@ -49,19 +49,20 @@ public class OurCalendar {
             Validate.print("\nDescription:\t");
             description = Validate.strInput();
 
-            //Adding one event to the arraylist
-            Validate.println("Enter the date and time that the event starts");
-            startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
-            Validate.println("");
-            if (choice == 1) {
-                Validate.println("Enter date and time that the event ends:\t");
+            if (choice == 1) { //Adding one event to the arraylist
+                Validate.println("Enter the date and time that the event starts");
+                startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
 
+                Validate.println("");
+
+                Validate.println("Enter date and time that the event ends:\t");
                 endDate = Validate.DateTime(startDate);
+
                 events.add(new Appointment(startDate, endDate, title, description));
             } else {//Date & Time
                 Validate.print("Enter Due date for the event:\t");
 
-                due = Validate.DateTime(startDate);
+                due = OurDateTime.Functionality.dateAndTime();
                 events.add(new Project(title, description, due, Status.VTODO_NEEDS_ACTION));
             }
         } while (true);
