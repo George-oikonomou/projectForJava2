@@ -93,9 +93,6 @@ The `Validate` class provides methods for validating user input and performing v
 - [OurCalendar Class General Information](OurCalendar_doc.md)
 - [OurDateTime Class General Information](OurDateTime_doc.md)
 - [TimeTeller Class General Information](TimeTeller_doc.md)
-- [Validate Class General Information](Validate_doc.md)
-
-
 
 
 [Back to top](#validate-class-general-information)
