@@ -42,7 +42,7 @@ public  class Validate {//General class for validating input
 
     /**
      * @param startDate the start date and time of the event that the user is creating
-     * @return OurDateTime  due / end date and time object of the event that the user is creating
+     * @return OurDateTime  object with a date and time after the startDate
      */
     public static OurDateTime DateTime(OurDateTime startDate) { //creates a new OurDateTime object with a date and time after the startDate
         int year = printMessageAndGetIntBetween("\nDATE\n\tYear:\t", startDate.getYear(), 2100);
