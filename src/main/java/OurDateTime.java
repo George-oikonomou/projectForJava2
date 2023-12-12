@@ -56,7 +56,7 @@ public class OurDateTime {
 
     public DateTime getIcsFormat() { return icsFormat; }
 
-    //this created the icsFormat of a date that iss used in dtStart dtEnd due ...
+    //this created the icsFormat of a date that is used in dtStart dtEnd due ...
     public void setIcsFormat() {
         String format = String.format("%04d%02d%02dT%02d%02d00", getYear(), getMonth(), getDay(), getHour(), getMinute());
         try {
