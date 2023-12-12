@@ -16,11 +16,11 @@ public  class Validate {//General class for validating input
     }
 
     /**
-     * @param param1 the lower bound
-     * @param param2 the upper bound
+     * @param lowerBound the lower bound
+     * @param upperBound the upper bound
      * @return int between lower and upper bound
      */
-    public static int checkAndReturnIntBetween(int param1, int param2) {
+    public static int checkAndReturnIntBetween(int lowerBound, int upperBound) {
 
         int temp = -1;
 
@@ -29,19 +29,19 @@ public  class Validate {//General class for validating input
                 String input = strInput();
                 temp = Integer.parseInt(input.trim());//trims the input and parse it to int
 
-                if (temp < param1 || temp > param2)
-                    println("The number you typed is invalid, it should be between " + param1 + " and " + param2 + ". Try again.\n");
+                if (temp < lowerBound || temp > upperBound)
+                    println("The number you typed is invalid, it should be between " + lowerBound + " and " + upperBound + ". Try again.\n");
             } catch (NumberFormatException e) {
                     println("Your input is not valid. Provide a valid number. Try again.\n");
             }
-        } while (temp < param1 || temp > param2);
+        } while (temp < lowerBound || temp > upperBound);
 
         return temp;
     }
 
 
     /**
-     * @param startDate the start date and time of the event that the user is creating
+     * @param startDate  of the event that the user is creating
      * @return OurDateTime  object with a date and time after the startDate
      */
     public static OurDateTime DateTime(OurDateTime startDate) {
@@ -56,10 +56,10 @@ public  class Validate {//General class for validating input
     }
 
     /**
-     * @param prompt the message to be displayed to the user
-     * @param lowerBound the lower bound of the input
-     * @param upperBound the upper bound of the input
-     * @return int between lower and upper bound
+     * @param prompt  to be displayed to the user
+     * @param lowerBound  of the input
+     * @param upperBound  of the input
+     * @return int between lowerBound and upperBound
      */
     public static int printMessageAndGetIntBetween(String prompt, int lowerBound, int upperBound) {
         print(prompt);
@@ -67,9 +67,9 @@ public  class Validate {//General class for validating input
     }
 
     /**
-     * @param month the month to get the days of
-     * @param year the year to get the days of (used for leap years)
-     * @return int the number of days in the month
+     * @param month to get the days of
+     * @param year to get the days of (used for leap years)
+     * @return the number of days in the month
      */
     public static int getDaysInMonth(int month, int year) {
         return switch (month) {
@@ -83,7 +83,7 @@ public  class Validate {//General class for validating input
      * @param ourCalendar the calendar to search for the title
      * @param title the title to search for
      * @param type the type of event to search for
-     * @return boolean true if a title exists for that type in given calendar, false otherwise
+     * @return true if a title exists for that type in given calendar, false otherwise
      */
     public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
 
@@ -91,7 +91,7 @@ public  class Validate {//General class for validating input
     /**
      * @param  calendar to search for the title
      * @param  type of event to search for
-     * @return String the title of the event that doesn't exist for that type in that calendar
+     * @return the title of the event that doesn't exist for that type in that calendar
      */
     public static String Title(OurCalendar calendar,int type){
        String title = strInput();
