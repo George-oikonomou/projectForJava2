@@ -2,7 +2,7 @@
 * [Validate Class General Information](#validate-class-general-information)
     * [Methods](#methods)
         * [strInput()](#strinput)
-        * [checkAndReturnIntBetween](#checkandreturnintbetweenint-param1-int-param2)
+        * [checkAndReturnIntBetween](#checkandreturnintbetweenint-lowerbound-int-upperbound)
         * [DateTime(OurDateTime startDate)](#datetimeourdatetime-startdate)
         * [printMessageAndGetIntBetween(String prompt, int lowerBound, int upperBound)](#printmessageandgetintbetweenstring-prompt-int-lowerbound-int-upperbound)
         * [getDaysInMonth(int month, int year)](#getdaysinmonthint-month-int-year)
