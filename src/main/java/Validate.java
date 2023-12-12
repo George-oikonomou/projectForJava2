@@ -44,14 +44,14 @@ public  class Validate {//General class for validating input
      * @param startDate the start date and time of the event that the user is creating
      * @return OurDateTime  object with a date and time after the startDate
      */
-    public static OurDateTime DateTime(OurDateTime startDate) { //creates a new OurDateTime object with a date and time after the startDate
+    public static OurDateTime DateTime(OurDateTime startDate) {
         int year = printMessageAndGetIntBetween("\nDATE\n\tYear:\t", startDate.getYear(), 2100);
         int month = printMessageAndGetIntBetween("\tMonth:\t", (year == startDate.getYear()) ? startDate.getMonth() : 1, 12);
         int day = printMessageAndGetIntBetween("\tDay:\t", (month == startDate.getMonth() && year == startDate.getYear())  ? startDate.getDay() : 1, getDaysInMonth(month, year));
         int hour = printMessageAndGetIntBetween("\nTIME\n\tHour:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear()) ? startDate.getHour() : 0, 23);
         int minute = printMessageAndGetIntBetween("\tMinute:\t", (day == startDate.getDay() && month == startDate.getMonth() && year == startDate.getYear() && hour == startDate.getHour()) ? startDate.getMinute() : 0, 59);
 
-        println("");//new line
+        println("");
         return new OurDateTime(year, month, day, hour, minute);
     }
 
