@@ -148,11 +148,12 @@ public class ICSFile {
     }
 
     private OurDateTime ICSFormatToOurDateTime(String string) {
+        System.out.println(string.length());
         int year    = Integer.parseInt(string.substring(0, 4));
         int month   = Integer.parseInt(string.substring(4, 6));
         int day     = Integer.parseInt(string.substring(6, 8));
-        int hour    = (string.length() == 13) ? Integer.parseInt(string.substring(9, 11)) : 0;
-        int minutes = (string.length() == 13) ? Integer.parseInt(string.substring(11, 13)) : 0;
+        int hour    = (string.length() == 15) ? Integer.parseInt(string.substring(9, 11)) : 0;
+        int minutes = (string.length() == 15) ? Integer.parseInt(string.substring(11, 13)) : 0;
 
         return new OurDateTime(year, month, day, hour, minutes);
     }
