@@ -1,4 +1,8 @@
+import gr.hua.dit.oop2.calendar.TimeEvent;
+import gr.hua.dit.oop2.calendar.TimeListener;
 import gr.hua.dit.oop2.calendar.TimeService;
+import gr.hua.dit.oop2.calendar.TimeTeller;
+
 import java.io.File;
 import java.util.Arrays;
 
@@ -9,7 +13,7 @@ public class App {
     static OurCalendar calendar = new OurCalendar();
 
     public static void main(String[] args) {
-        switch (args.length) {
+        switch (args.length) {//checks the number of arguments to determine in which scenario we are
             case 1 -> handleSingleArgument(args[0]);
             case 2 -> handleDoubleArguments(args);
             default -> Validate.println("Incorrect number of arguments");
@@ -31,13 +35,13 @@ public class App {
     }
 
     private static void handleDoubleArguments(String[] args) {
-        AppChoices choice = Arrays.stream(AppChoices.values())
-                                  .filter(appChoice -> appChoice.toString().equals(args[0]))
-                                  .findFirst()
-                                  .orElse(null);
+        AppChoices choice = Arrays.stream(AppChoices.values())//provides a stream array of the enum values
+                                  .filter(appChoice -> appChoice.toString().equals(args[0]))//filters the stream to find the enum value that matches the first argument
+                                  .findFirst()//returns the first match
+                                  .orElse(null);//if no match is found returns null
 
-        if (choice == null) {
-            Validate.println("Error: wrong functionality option. Program exiting...");
+        if (choice == null) {//if no match is found
+            Validate.println("Error: wrong functionality option. Program exiting...");//todo tell the user whats the correct format for the arguments *Spyros*
             System.exit(1);
         }
 
