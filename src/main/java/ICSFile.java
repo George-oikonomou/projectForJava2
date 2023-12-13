@@ -50,10 +50,7 @@ public class ICSFile {
             }
             App.calendar.setCalScale(calendar.getCalendarScale());
             App.calendar.setProdId(calendar.getProductId());
-            App.calendar.setVersion(new Version("2.0","2.0"));
-            System.out.println(App.calendar.getCalScale());
-            System.out.println(App.calendar.getProdId());
-            System.out.println(App.calendar.getVersion());
+            App.calendar.setVersion(calendar.getVersion());
             App.calendar.setEvents(events);
         } catch (ParserException | NullPointerException e) {
             Validate.println("The file you have provided is corrupt ");
