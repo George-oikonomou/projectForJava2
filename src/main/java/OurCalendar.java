@@ -123,13 +123,19 @@ public class OurCalendar {
         switch (choice) {
             case day -> {
                 Validate.println("\nUpcoming Events for today:\n");  //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
-                format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
+                if ( Validate.getDaysInMonth(realDateTime.getMonth(), realDateTime.getYear()) == realDateTime.getDay()) { //if it's the last day of the month, change month & day becomes 01
+                    format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
+                    if (realDateTime.getMonth() == 12)  //if its December, the month is January and year is increased by 1
+                        format = format + 88000000L;
+                } else {
+                    format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
+                }
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
             }
             case week, month -> {
                 Validate.println("\nUpcoming Events " + ((choice == App.AppChoices.week) ? "this week" : "this month") + ":\n");
-
-                format += ((realDateTime.getMonth() == 12) ? 89000000L : 1000000L)
+                //from the realDateTime format we are changing the month to the next one, making day 01, and time 00:00
+                format += ((realDateTime.getMonth() == 12) ? 89000000L : 1000000L)  //if month is December it changes year and month is January
                         - (realDateTime.getDay() - 1) * 10000L
                         - realDateTime.getHour() * 100L
                         - realDateTime.getMinute();
@@ -165,8 +171,7 @@ public class OurCalendar {
 
         for (Event event : events) {
             if (event instanceof Project && !((Project) event).getIsFinished()) {
-                long dueFormat = ((Project) event).getDue().getCalculationFormat();
-
+                long dueFormat = ((Project) event).getDue().getCalculationFormat(); //making a DueFormat to check if it surpasses the realDateTime
                 if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
                     Validate.println(event);
             }
