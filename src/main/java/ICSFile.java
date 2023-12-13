@@ -50,7 +50,7 @@ public class ICSFile {
             }
             App.calendar.setCalScale(calendar.getCalendarScale());
             App.calendar.setProdId(calendar.getProductId());
-            App.calendar.setVersion(calendar.getVersion());
+            App.calendar.setVersion(calendar.getVersion().getValue());
             App.calendar.setEvents(events);
         } catch (ParserException | NullPointerException e) {
             Validate.println("The file you have provided is corrupt ");
@@ -97,9 +97,13 @@ public class ICSFile {
     }
 
     public void storeEvents(ArrayList<Event> events) {
+        ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
+        rootLogger.setLevel(Level.ERROR);
+
         Calendar calendar = new Calendar();
-        //basic calendar information
-        calendar.getProperties().add(App.calendar.getVersion());
+        Version version = new Version();
+        version.setValue(App.calendar.getVersion());
+        calendar.getProperties().add((version));
         calendar.getProperties().add(App.calendar.getProdId());
         calendar.getProperties().add(App.calendar.getCalScale());
         for (Event event : events) {
