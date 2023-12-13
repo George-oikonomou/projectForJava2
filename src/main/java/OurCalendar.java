@@ -1,7 +1,6 @@
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Status;
-import net.fortuna.ical4j.model.property.Version;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ public class OurCalendar {
     private ArrayList<Event> events;//has all the events
 
     //if the file does not exist the new calendar will have these values
-    private Version version = new Version("2.0","2.0");
+    private String version = "VERSION:2.0";
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
@@ -19,8 +18,8 @@ public class OurCalendar {
     public ArrayList<Event> getEvents() { return events; }
     public void setEvents(ArrayList<Event> events) { this.events = events; }
 
-    public Version getVersion() { return version;}
-    public void setVersion(Version version) {this.version = version;}
+    public String getVersion() { return version;}
+    public void setVersion(String version) {this.version = version;}
 
     public ProdId getProdId() { return prodId; }
     public void setProdId(ProdId prodId) { this.prodId = prodId; }
