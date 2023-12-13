@@ -1,3 +1,5 @@
+BEGIN:VCALENDAR
+VERSION:2.0
 PRODID:-//java project team//java calendar//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
