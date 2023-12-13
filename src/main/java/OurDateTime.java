@@ -1,3 +1,5 @@
+import gr.hua.dit.oop2.calendar.TimeService;
+import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
 import java.text.ParseException;
 import java.time.DayOfWeek;
@@ -27,15 +29,16 @@ public class OurDateTime {
      * to change the current time
      */
     public OurDateTime() {
+        TimeTeller teller = TimeService.getTeller();
         //CHANGE HERE example
-        //CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.of(2024,11,23,18,11));
-        CustomCurrentTime timeTeller = new CustomCurrentTime(LocalDateTime.now());  
-        this.dayOfWeek = timeTeller.now().getDayOfWeek();
-        this.year = timeTeller.now().getYear();
-        this.month = timeTeller.now().getMonthValue();
-        this.day = timeTeller.now().getDayOfMonth();
-        this.hour = timeTeller.now().getHour();
-        this.minute = timeTeller.now().getMinute();
+        //LocalDateTime realTime = LocalDateTime.of(2023,12,9,18,11);
+        LocalDateTime realTime = teller.now();
+        this.dayOfWeek = realTime.getDayOfWeek();
+        this.year = realTime.getYear();
+        this.month = realTime.getMonthValue();
+        this.day = realTime.getDayOfMonth();
+        this.hour = realTime.getHour();
+        this.minute = realTime.getMinute();
         this.date = date(year,month,day,true);
         this.time = time(minute,hour,true);
         setCalculationFormat();
