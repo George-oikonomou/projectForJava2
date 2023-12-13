@@ -148,7 +148,7 @@ public class ICSFile {
     }
 
     private OurDateTime ICSFormatToOurDateTime(String string) {
-        System.out.println(string.length());
+
         int year    = Integer.parseInt(string.substring(0, 4));
         int month   = Integer.parseInt(string.substring(4, 6));
         int day     = Integer.parseInt(string.substring(6, 8));
