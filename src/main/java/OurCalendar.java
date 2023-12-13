@@ -67,21 +67,7 @@ public class OurCalendar {
         } while (true);
     }
 
-    public static void sortList(ArrayList<Event> events) {
-        int n = events.size();
-
-        for (int i = 1; i < n; ++i) {
-            Event keyEvent = events.get(i);
-
-            int j = i - 1;
-
-            while (j >= 0 && compareEvents(events.get(j), keyEvent) > 0) {
-                events.set(j + 1, events.get(j));
-                j--;
-            }
-            events.set(j + 1, keyEvent);
-        }
-    }
+    public static void sortList(ArrayList<Event> events) {events.sort((event1, event2) -> (int) (compareEvents(event1, event2)));}
 
     private static long compareEvents(Event event1, Event event2) {
         OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDue() : event1.getStartDate();
