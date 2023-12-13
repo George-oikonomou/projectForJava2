@@ -63,7 +63,7 @@ public class OurCalendar {
                 Validate.print("Enter Due date for the event:\t");
 
                 due = OurDateTime.Functionality.dateAndTime();
-                events.add(new Project(title, description, due, Status.VTODO_NEEDS_ACTION));
+                events.add(new Project(title, description, due, Status.VTODO_IN_PROCESS));
             }
         } while (true);
     }
