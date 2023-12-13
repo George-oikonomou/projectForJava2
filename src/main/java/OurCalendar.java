@@ -9,7 +9,7 @@ public class OurCalendar {
     private ArrayList<Event> events;//has all the events
 
     //if the file does not exist the new calendar will have these values
-    private String version = "VERSION:2.0";
+    private String version = "2.0";
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
