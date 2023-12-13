@@ -97,6 +97,9 @@ public class ICSFile {
     }
 
     public void storeEvents(ArrayList<Event> events) {
+        ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
+        rootLogger.setLevel(Level.ERROR);
+
         Calendar calendar = new Calendar();
         Version version = new Version();
         version.setValue(App.calendar.getVersion());
