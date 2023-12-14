@@ -65,7 +65,7 @@ The superclass is named `Event`.
 - ### Project
     - This class has 
       - a constructor, 
-      - Setters and Getters 
+      - Setters and Getters,
       - and toString().
 
     - In this class we have the fields:
