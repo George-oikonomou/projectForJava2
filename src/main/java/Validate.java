@@ -72,12 +72,15 @@ public  class Validate {//General class for validating input
      * @return the number of days in the month
      */
     public static int getDaysInMonth(int month, int year) {
-        return switch (month) {
-            case 1, 3, 5, 7, 8, 10, 12 -> 31;
-            case 2 -> (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28;
-            default -> 30;
-        };
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+            return 31;
+        } else if (month == 2) {
+            return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28;
+        } else {
+            return 30;
+        }
     }
+
 
     //for stage 2
     public static void println(Object obj) { System.out.println(obj); }

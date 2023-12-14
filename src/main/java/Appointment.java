@@ -68,13 +68,11 @@ public class Appointment extends Event {
 
     @Override
     public String toString() {
-        return """
-            Appointment:
-                title: %s
-                description: %s
-                start date & time: %s
-                end date & time: %s
-                duration: %s
-            """.formatted(getTitle(), getDescription(), getStartDate(), getEndDate(), getDuration());
+        return "Appointment:\n"+
+                "\ttitle:"+ getTitle() + "\n"+
+                "\tdescription:"+ getDescription() + "\n" +
+                "\tstart date & time:" + getStartDate() + "\n" +
+                "\tend date & time:" + getEndDate() + "\n" +
+                "\tduration:" + getDuration() + "\n";
     }
 }

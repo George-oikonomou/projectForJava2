@@ -19,12 +19,10 @@ public class Project extends Event{
 
     @Override
     public String toString() {
-        return String.format("""
-        Project:
-            title: %s
-            description: %s
-            due: %s
-            status: %s
-        """, getTitle(), getDescription(), getDue(), getStatus().getValue());
+        return "Project:\n"+
+                "\ttitle:"+ getTitle() + "\n"+
+                "\tdescription:"+ getDescription() + "\n"+
+                "\tdue:"+ getDue() +" \n"+
+                "\tstatus:"+ getStatus().getValue() +"\n";
     }
 }

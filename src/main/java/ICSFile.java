@@ -8,10 +8,10 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.validate.ValidationException;
-import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+
 
 public class ICSFile {
     private final String filePath;
@@ -23,8 +23,7 @@ public class ICSFile {
      */
     public void loadEvents() {
         //these 2 lines make sure that the logs of the ical4j library are not printed on the stdout
-        ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
-        rootLogger.setLevel(Level.ERROR);
+
         ArrayList<Event> events = new ArrayList<>();
 
         try {
@@ -35,10 +34,10 @@ public class ICSFile {
             int count = 1;
             for (Object component : calendar.getComponents()) {
                 try {
-                    if (component instanceof VEvent appointment)  // try to create an appointment
-                        events.add(createAppointment(appointment));
-                    else if (component instanceof VToDo project) //try to create a project
-                        events.add(createProject(project));
+                    if (component instanceof VEvent)  // try to create an appointment
+                        events.add(createAppointment((VEvent) component));
+                    else if (component instanceof VToDo ) //try to create a project
+                        events.add(createProject((VToDo) component));
                     else
                         Validate.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
                 } catch (NoSuchElementException e) {
@@ -97,8 +96,7 @@ public class ICSFile {
     }
 
     public void storeEvents(ArrayList<Event> events) {
-        ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
-        rootLogger.setLevel(Level.ERROR);
+
 
         Calendar calendar = new Calendar();
         Version version = new Version();
@@ -107,10 +105,10 @@ public class ICSFile {
         calendar.getProperties().add(App.calendar.getProdId());
         calendar.getProperties().add(App.calendar.getCalScale());
         for (Event event : events) {
-            if (event instanceof Appointment appointment)
-                calendar.getComponents().add(createVEvent(appointment));
-            else if (event instanceof Project project)
-                calendar.getComponents().add(createVTodo(project));
+            if (event instanceof Appointment )
+                calendar.getComponents().add(createVEvent((Appointment) event));
+            else if (event instanceof Project)
+                calendar.getComponents().add(createVTodo((Project) event));
         }
         //create ics file using the calendar object
         try (FileWriter fileWriter = new FileWriter(filePath)) {

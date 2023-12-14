@@ -10,9 +10,14 @@ public class App {
 
     public static void main(String[] args) {
         switch (args.length) {//checks the number of arguments to determine in which scenario we are
-            case 1 -> handleSingleArgument(args[0]);
-            case 2 -> handleDoubleArguments(args);
-            default -> Validate.println("Incorrect number of arguments");
+            case 1 : {
+                handleSingleArgument(args[0]);
+                break;
+            }
+            case 2 : { handleDoubleArguments(args);
+                break;
+            }
+            default : Validate.println("Incorrect number of arguments");
 
         }
         TimeService.stop();
@@ -45,9 +50,19 @@ public class App {
         file.loadEvents();
 
         switch (choice) {
-            case day, week, month -> calendar.printUpcomingEvents(choice);
-            case pastday, pastweek, pastmonth -> calendar.printOldEvents(choice);
-            default -> calendar.printUnfinishedProject(choice);
+            case day :
+            case week:
+            case month: {
+                calendar.printUpcomingEvents(choice);
+                break;
+            }
+            case pastday :
+            case pastweek:
+            case pastmonth:{
+                calendar.printOldEvents(choice);
+                break;
+            }
+            default : calendar.printUnfinishedProject(choice);
         }
     }
 }

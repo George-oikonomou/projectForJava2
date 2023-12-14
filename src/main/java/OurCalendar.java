@@ -33,12 +33,11 @@ public class OurCalendar {
         OurDateTime startDate, endDate, due;
         do {
             //NEW EVENT:
-            Validate.println("""
-                    Make a new:
-                        1) Appointment
-                        2) Project
-                        3) Exit
-                    """);
+            Validate.println("Make a new:\n"+
+                                  "\t1) Appointment\n"+
+                                  "\t2) Project\n"+
+                                  "\t3) Exit\n");
+
             choice = Validate.checkAndReturnIntBetween(1, 3);
             if (choice == 3) break;
             //Title
@@ -106,7 +105,7 @@ public class OurCalendar {
         sortList(events);
 
         switch (choice) {
-            case day -> {
+            case day : {
                 Validate.println("\nUpcoming Events for today:\n");  //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
                 if ( Validate.getDaysInMonth(realDateTime.getMonth(), realDateTime.getYear()) == realDateTime.getDay()) { //if it's the last day of the month, change month & day becomes 01
                     format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
@@ -116,8 +115,10 @@ public class OurCalendar {
                     format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 }
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
+                break;
             }
-            case week, month -> {
+            case week :
+            case month : {
                 Validate.println("\nUpcoming Events " + ((choice == App.AppChoices.week) ? "this week" : "this month") + ":\n");
                 //from the realDateTime format we are changing the month to the next one, making day 01, and time 00:00
                 format += ((realDateTime.getMonth() == 12) ? 89000000L : 1000000L)  //if month is December it changes year and month is January
@@ -126,6 +127,7 @@ public class OurCalendar {
                         - realDateTime.getMinute();
 
                 timePeriod(format, realDateTime.getCalculationFormat(), choice == App.AppChoices.week ? 2 : 1);
+                break;
             }
         }
     }
@@ -136,15 +138,18 @@ public class OurCalendar {
         long format = realDateTime.getCalculationFormat();
 
         switch (choice) {
-            case pastday -> {//from the realDateTime format we are changing the time to 00:00
+            case pastday : {//from the realDateTime format we are changing the time to 00:00
                 Validate.println("\nOld Events from today:\n");
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
+                break;
             }
-            case pastweek,pastmonth -> {//from the realDateTime format the day and time become 01, 00:00
+            case pastweek:
+            case pastmonth : {//from the realDateTime format the day and time become 01, 00:00
                 Validate.println("\nOld Events from this " + ((choice == App.AppChoices.pastweek) ? "week" : "month") + ":\n");
                 format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
                 timePeriod(realDateTime.getCalculationFormat(), format, choice == App.AppChoices.pastweek ? 3 : 1);
+                break;
             }
         }
     }
