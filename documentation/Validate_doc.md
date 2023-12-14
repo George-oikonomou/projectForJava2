@@ -6,8 +6,6 @@
         * [DateTime](#datetimeourdatetime-startdate)
         * [printMessageAndGetIntBetween](#printmessageandgetintbetweenstring-prompt-int-lowerbound-int-upperbound)
         * [getDaysInMonth](#getdaysinmonthint-month-int-year)
-        * [checkIfTitleExists](#checkiftitleexistsourcalendar-ourcalendar-string-title-int-type)
-        * [Title](#titleourcalendar-calendar-int-type)
         * [Other Helper Methods](#other-helper-methods)
 
 # Validate Class General Information
@@ -58,26 +56,6 @@ The `Validate` class provides methods for validating user input and performing v
 - This method returns the number of days in a given month, considering leap years.
 
 <hr>
-
-
-### `checkIfTitleExists(OurCalendar ourCalendar, String title, int type)`
-
-- This method checks if a title already exists for a given event type in the provided calendar.
-  - it uses the `eventSearch(title, type)` method from the [OurCalendar](OurCalendar_doc.md) class to search for the title.
-- It returns `true` if the title is found for the `specified type`.Different Types are allowed to have the same Title.
-- if it is not found, it returns `false`.
-
-<hr>
-
-
-### `Title(OurCalendar calendar, int type)`
-
-- This method is used to get a unique title for a new event for a given event type in the provided calendar.
-  - it uses the `checkIfTitleExists` method to check if the title already exists.
-- if it does, it prompts the user to enter a new title until a unique title is provided.
-
-<hr>
-
 
 ### Other Helper Methods
 -  the purpose of these methods are for the stage 2 of the project currently they are typical print methods.

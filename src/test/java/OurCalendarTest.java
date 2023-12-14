@@ -71,30 +71,4 @@ public class OurCalendarTest {
 
         assertEquals(expectedEvents, actualEvents);
     }
-    @Test
-    public void testEventSearchWhenEventIsFound() {
-        OurCalendar ourCalendar = new OurCalendar();
-        ArrayList<Event> Events = new ArrayList<>();
-
-        Project expectedEvent =new Project("title", "description",dateTime, Status.VTODO_NEEDS_ACTION);
-        Events.add(expectedEvent);
-        ourCalendar.setEvents(Events);
-
-        Event actualEvent = ourCalendar.eventSearch("title", 2);
-
-        assertEquals(expectedEvent,actualEvent);
-    }
-    @Test
-    public void testEventSearchWhenEventIsNotFound() {
-        OurCalendar ourCalendar = new OurCalendar();
-        ArrayList<Event> Events =new ArrayList<>();
-
-        Project expectedEvent =new Project("titleOfSomethingDifferent", "description",dateTime, Status.VTODO_NEEDS_ACTION);
-        Events.add(expectedEvent);
-        ourCalendar.setEvents(Events);
-
-        Event actualEvent = ourCalendar.eventSearch("title", 1);
-        assertNull(actualEvent);
-    }
-
 }

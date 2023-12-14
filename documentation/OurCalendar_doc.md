@@ -7,7 +7,6 @@
     * [printUpcomingEvents](#printupcomingeventsappappchoices-choice)
     * [printOldEvents](#printoldeventsappappchoices-choice)
     * [printUnfinishedProject](#printoldeventsappappchoices-choice)
-    * [Event eventSearch](#event-eventsearchstring-title-int-type)
 <hr>
 
 ## OurCalendar Class General Information
@@ -87,11 +86,6 @@
       We check if the due format is greater than the realDateTime Format and then the project is printed.
       - Else:
       We check if the due format is less than the realDateTime Format and then the project is printed.
-<hr>
-
-- ### `Event eventSearch(String title, int type)`
-    - Gets title and type of event
-    - Returns null if the event doesn't exist, or the event if the event exists. 
 <hr>
 
 - [Event Class General Information](Events_doc.md)
