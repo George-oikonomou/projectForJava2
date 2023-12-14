@@ -1,4 +1,3 @@
-
 * [App Class General Information](#app-class-general-information)
     * [Methods](#methods)
         * [main](#mainstring-args)
