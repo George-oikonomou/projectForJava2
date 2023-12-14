@@ -7,7 +7,7 @@
              * [setDurationWithIcsDuration](#setdurationwithicsdurationourdatetime-datetime-ourdatetime-enddate)
              * [parseIntOrZero](#parseintorzerostring-value)
              * [calculateDurationInDays](#calculatedurationindaysint-durationinmin)
-       
+        * [Project](#project)
 
 ## Superclass general information:
 
@@ -62,7 +62,7 @@ The superclass is named `Event`.
 
 <hr>
 
-- ### Project:
+- ### Project
     - This class has 
       - a constructor, 
       - Setters and Getters 
