@@ -1,8 +1,55 @@
-- properties : year, month, day, hour, minute: the core values of an ourDateTime object
-- date, time, icsFormat, calculationFormat : different formats we create with the core properties that
-we use throughout the program
-- the first constructor creates and OurDateTime object using values we give it
-- second constructor creates an OurDateTime object that has the current time, live or custom time
-use this to change the current time
-- then we have different methods to set these formats get them and a toString
-=
+* [OurDateTime class General Information](#ourdatetime-class-general-information)
+  * [Methods](#methods)
+    * [time](#timeint-minute-int-hour-boolean-includeseparators)
+    * [date](#dateint-year-int-month-int-day-boolean-includeseparators)
+* [Functionality class](#functionality-class)
+    * [dateAndTime](#dateandtime)
+<hr>
+
+# OurDateTime
+
+## OurDateTime Class General Information
+- This class has :
+    - `2 constructor`
+      - one that sets a `specific DateTime` from the user
+      - one that sets the `current real or custom DateTime`
+    - Setters and Getters
+    - toString()
+- In this class we have the field:
+    - year
+    - month
+    - day
+    - hour
+    - minute
+    - date
+    - time
+    - dayOfWeek
+    - icsFormat
+    - CalculationFormat for the date & time
+<hr>
+
+## Methods
+
+<hr>
+
+- ### `time(int minute, int hour, boolean includeSeparators)`
+  - Gets the minutes, the hour and a boolean if the time will be in this form `HH:MM` or in this form `HHMM`.
+  - The hour and the minutes become a string based on the chosen form.
+  - Then it returns the string.
+
+- ### `date(int year, int month, int day, boolean includeSeparators)`
+  - Gets the year, the month, the day and a boolean if the time will be in this form `YYYY/MM/DD` or in this form `YYYYMMDD`.
+  - The year, the month and the days become a string based on the chosen form.
+  - Then it returns the string.
+
+<hr>
+
+# Functionality 
+
+## Functionality class
+- This class contains the method `dateAndTime()` that makes a valid ourDateTime object.
+<hr>
+
+### `dateAndTime()`
+- The user types the desirable year, month, day, hour and minute.
+- Returns the new OurDateTime object.
