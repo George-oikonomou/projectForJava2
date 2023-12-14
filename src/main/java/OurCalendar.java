@@ -93,7 +93,7 @@ public class OurCalendar {
 
             if (eventFormat >= minTime && eventFormat < maxTime) { //if the event is between minimum and maximum time
                 boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7);//if the event is upcoming
-                boolean isOld = (code == 3 && (1 + eventDay - realDay) <= dayOfWeek.getValue());
+                boolean isOld = (code == 3 && (1 + realDay - eventDay) <= dayOfWeek.getValue());
 
                 if (isUpcoming || isOld || code == 1) Validate.println(event);
             }
