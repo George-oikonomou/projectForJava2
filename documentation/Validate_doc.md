@@ -1,13 +1,13 @@
 
 * [Validate Class General Information](#validate-class-general-information)
     * [Methods](#methods)
-        * [strInput()](#strinput)
+        * [strInput](#strinput)
         * [checkAndReturnIntBetween](#checkandreturnintbetweenint-lowerbound-int-upperbound)
-        * [DateTime(OurDateTime startDate)](#datetimeourdatetime-startdate)
-        * [printMessageAndGetIntBetween(String prompt, int lowerBound, int upperBound)](#printmessageandgetintbetweenstring-prompt-int-lowerbound-int-upperbound)
-        * [getDaysInMonth(int month, int year)](#getdaysinmonthint-month-int-year)
-        * [checkIfTitleExists(OurCalendar ourCalendar, String title, int type)](#checkiftitleexistsourcalendar-ourcalendar-string-title-int-type)
-        * [Title(OurCalendar calendar, int type)](#titleourcalendar-calendar-int-type)
+        * [DateTime](#datetimeourdatetime-startdate)
+        * [printMessageAndGetIntBetween](#printmessageandgetintbetweenstring-prompt-int-lowerbound-int-upperbound)
+        * [getDaysInMonth](#getdaysinmonthint-month-int-year)
+        * [checkIfTitleExists](#checkiftitleexistsourcalendar-ourcalendar-string-title-int-type)
+        * [Title](#titleourcalendar-calendar-int-type)
         * [Other Helper Methods](#other-helper-methods)
 
 # Validate Class General Information
