@@ -43,7 +43,7 @@ public class OurCalendar {
             if (choice == 3) break;
             //Title
             Validate.print("\nTitle:\t");
-            title = Validate.Title(this, choice);
+            title = Validate.strInput();
             //Description
             Validate.print("\nDescription:\t");
             description = Validate.strInput();
@@ -161,13 +161,5 @@ public class OurCalendar {
                     Validate.println(event);
             }
         }
-    }
-
-    public Event eventSearch(String title, int type) {
-        return events.stream()
-                     .filter(event -> event.getTitle().equals(title))
-                     .filter(event -> (type == 1 && event instanceof Appointment) || (type == 2 && event instanceof Project))
-                     .findFirst()
-                     .orElse(null);
     }
 }

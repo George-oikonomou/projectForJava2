@@ -79,29 +79,6 @@ public  class Validate {//General class for validating input
         };
     }
 
-    /**
-     * @param ourCalendar the calendar to search for the title
-     * @param title the title to search for
-     * @param type the type of event to search for
-     * @return true if a title exists for that type in given calendar, false otherwise
-     */
-    public static boolean checkIfTitleExists(OurCalendar ourCalendar, String title, int type) { return ourCalendar.eventSearch(title, type) != null; }
-
-
-    /**
-     * @param  calendar to search for the title
-     * @param  type of event to search for
-     * @return the title of the event that doesn't exist for that type in that calendar
-     */
-    public static String Title(OurCalendar calendar,int type){
-       String title = strInput();
-       while (checkIfTitleExists(calendar, title, type)) {
-           Validate.println("This title already exists. Try again.");
-           title = strInput();
-       }
-       return title;//returns the unique title
-    }
-
     //for stage 2
     public static void println(Object obj) { System.out.println(obj); }
     public static void print(Object obj) { System.out.print(obj); }
