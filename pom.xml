@@ -113,7 +113,7 @@
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>gr.hua.dit.oop2.Main</mainClass>
+                                <mainClass>App</mainClass>
                             </manifest>
                         </archive>
                     </configuration>

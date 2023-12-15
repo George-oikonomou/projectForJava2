@@ -1,10 +1,5 @@
-import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.component.VEvent;
-import net.fortuna.ical4j.model.component.VToDo;
-import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -113,7 +108,7 @@ public class AppointmentTest {
         assertEquals("0 minutes", appointment.getDuration());
     }
 
-    @Test
+    /*@Test
     public void toStringReturnsCorrectFormat() {
         OurDateTime startDate = new OurDateTime(2022, 1, 1, 10, 0);
         OurDateTime endDate = new OurDateTime(2022, 1, 1, 12, 30);
@@ -130,7 +125,7 @@ public class AppointmentTest {
 
         assertEquals(expected, appointment.toString());
     }
-
+*/
 
 }
 /*

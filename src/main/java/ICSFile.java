@@ -1,5 +1,3 @@
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
