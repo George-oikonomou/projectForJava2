@@ -1,5 +1,3 @@
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
@@ -8,7 +6,6 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.validate.ValidationException;
-import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -23,8 +20,6 @@ public class ICSFile {
      */
     public void loadEvents() {
         //these 2 lines make sure that the logs of the ical4j library are not printed on the stdout
-        ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
-        rootLogger.setLevel(Level.ERROR);
         ArrayList<Event> events = new ArrayList<>();
 
         try {
@@ -97,8 +92,6 @@ public class ICSFile {
     }
 
     public void storeEvents(ArrayList<Event> events) {
-        ch.qos.logback.classic.Logger rootLogger = (Logger) LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
-        rootLogger.setLevel(Level.ERROR);
 
         Calendar calendar = new Calendar();
         Version version = new Version();
