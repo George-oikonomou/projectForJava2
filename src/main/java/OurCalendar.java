@@ -77,7 +77,7 @@ public class OurCalendar {
 
         return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
-    //todo
+
     private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
@@ -101,7 +101,7 @@ public class OurCalendar {
             }
         }
     }
-    //todo
+   
     public void printUpcomingEvents(App.AppChoices choice) {
         OurDateTime realDateTime = new OurDateTime();//current date & time
         long format = realDateTime.getCalculationFormat();
@@ -131,7 +131,7 @@ public class OurCalendar {
             }
         }
     }
-    //todo
+   
     public void printOldEvents(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
@@ -150,7 +150,7 @@ public class OurCalendar {
             }
         }
     }
-    //todo
+   
     public void printUnfinishedProject(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime(); // Current date & time
