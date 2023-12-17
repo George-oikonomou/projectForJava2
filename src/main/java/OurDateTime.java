@@ -31,8 +31,8 @@ public class OurDateTime {
     public OurDateTime() {
         TimeTeller teller = TimeService.getTeller();
         //CHANGE HERE example
-        //LocalDateTime realTime = LocalDateTime.of(2023,12,9,18,11);
-        LocalDateTime realTime = teller.now();
+        LocalDateTime realTime = LocalDateTime.of(2024,1,29,18,11);
+        //LocalDateTime realTime = teller.now();
         this.dayOfWeek = realTime.getDayOfWeek();
         this.year = realTime.getYear();
         this.month = realTime.getMonthValue();

@@ -82,21 +82,23 @@ public class OurCalendar {
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
         int  eventDay, realDay = realDateTime.getDay();
+        int realMonth = realDateTime.getMonth();
         long eventFormat;
         for (Event event : events) {
 
             if (event instanceof Project) {
                  eventDay = ((Project) event).getDue().getDay();
                  eventFormat = ((Project) event).getDue().getCalculationFormat();
-            } else{
+            } else {
                  eventDay = event.getStartDate().getDay();
                  eventFormat = event.getStartDate().getCalculationFormat();
             }
 
-            if (eventFormat >= minTime && eventFormat < maxTime) { //if the event is between minimum and maximum time
-                boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7);//if the event is upcoming
-                boolean isOld = (code == 3 && (1 + realDay - eventDay) <= dayOfWeek.getValue());
-
+            if (eventFormat >= minTime && eventFormat < maxTime || minTime == maxTime) { //if the event is between minimum and maximum time
+                boolean forWeek = (realMonth < event.getStartDate().getMonth() + 1 && realDay - eventDay >= 25 || realMonth == 2 && (realDay - eventDay >= 22) || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 29) && realDay - eventDay >= 23 || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 30 && realDay - eventDay >= 24;
+                boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay <= 7) || forWeek);//if the event is upcoming
+                forWeek = (event.getStartDate().getMonth() == realMonth - 1 && realDay - eventDay <= -25 || realMonth == 2 && (realDay - eventDay <= -22) || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 29) && realDay - eventDay <= -23  || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 30 && realDay - eventDay <= -24;
+                boolean isOld = (code == 3 && (1 + realDay - eventDay) <= dayOfWeek.getValue() || forWeek);
                 if (isUpcoming || isOld || code == 1) Validate.println(event);
             }
         }
@@ -119,15 +121,19 @@ public class OurCalendar {
                 }
                 timePeriod(format, realDateTime.getCalculationFormat(), 1);
             }
-            case week, month -> {
-                Validate.println("\nUpcoming Events " + ((choice == App.AppChoices.week) ? "this week" : "this month") + ":\n");
+            case week -> {
+                Validate.println("\nUpcoming Events this week:\n");
+                timePeriod(format, format, 2);
+            }
+            case month -> {
+                Validate.println("\nUpcoming Events this month:\n");
                 //from the realDateTime format we are changing the month to the next one, making day 01, and time 00:00
                 format += ((realDateTime.getMonth() == 12) ? 89000000L : 1000000L)  //if month is December it changes year and month is January
                         - (realDateTime.getDay() - 1) * 10000L
                         - realDateTime.getHour() * 100L
                         - realDateTime.getMinute();
 
-                timePeriod(format, realDateTime.getCalculationFormat(), choice == App.AppChoices.week ? 2 : 1);
+                timePeriod(format, realDateTime.getCalculationFormat(), 1);
             }
         }
     }
@@ -143,10 +149,14 @@ public class OurCalendar {
                 format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
                 timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
-            case pastweek,pastmonth -> {//from the realDateTime format the day and time become 01, 00:00
-                Validate.println("\nOld Events from this " + ((choice == App.AppChoices.pastweek) ? "week" : "month") + ":\n");
-                format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                timePeriod(realDateTime.getCalculationFormat(), format, choice == App.AppChoices.pastweek ? 3 : 1);
+            case pastweek -> {
+                Validate.println("\nOld Events from this week:\n");
+                timePeriod(format, format,3);
+            }
+            case pastmonth -> {//from the realDateTime format the day and time become 01, 00:00
+                    Validate.println("\nOld Events from this month:\n");
+                    format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
+                    timePeriod(realDateTime.getCalculationFormat(), format, 1);
             }
         }
     }
