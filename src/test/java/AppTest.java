@@ -18,4 +18,11 @@ public class AppTest {
         assertTrue(Arrays.stream(App.AppChoices.values())
                 .anyMatch(choice -> choice.toString().equals(args[0])));
     }
+
+    @Test
+    public void testMainWithfalseArguments() {
+        String[] args = {"iman", "myFile.ics"};
+        assertFalse(Arrays.stream(App.AppChoices.values())
+                .anyMatch(choice -> choice.toString().equals(args[0])));
+    }
 }
