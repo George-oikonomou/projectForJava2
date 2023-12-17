@@ -9,6 +9,14 @@ public class App {
     static OurCalendar calendar = new OurCalendar();
 
     public static void main(String[] args) {
+        System.out.println ("""
+  #     #                                                                                    #####                                                        #                    ### ### ###\s
+  #  #  # ###### #       ####   ####  #    # ######   #####  ####     ####  #    # #####    #     #   ##   #      ###### #    # #####    ##   #####      # #   #####  #####    # # # # # #\s
+  #  #  # #      #      #    # #    # ##  ## #          #   #    #   #    # #    # #    #   #        #  #  #      #      ##   # #    #  #  #  #    #    #   #  #    # #    #   # # # # # #\s
+  #  #  # #####  #      #      #    # # ## # #####      #   #    #   #    # #    # #    #   #       #    # #      #####  # #  # #    # #    # #    #   #     # #    # #    #   # # # # # #\s
+  #  #  # #      #      #      #    # #    # #          #   #    #   #    # #    # #####    #       ###### #      #      #  # # #    # ###### #####    ####### #####  #####     #   #   # \s
+  #  #  # #      #      #    # #    # #    # #          #   #    #   #    # #    # #   #    #     # #    # #      #      #   ## #    # #    # #   #    #     # #      #                  \s
+  ## ##   ###### ######  ####   ####  #    # ######     #    ####     ####   ####  #    #    #####  #    # ###### ###### #    # #####  #    # #    #   #     # #      #         #   #   #""");
         switch (args.length) {//checks the number of arguments to determine in which scenario we are
             case 1 -> handleSingleArgument(args[0]);
             case 2 -> handleDoubleArguments(args);
@@ -16,6 +24,14 @@ public class App {
 
         }
         TimeService.stop();
+        System.out.println("""
+                  #####                                            ### ### ###\s
+                 #     #  ####   ####  #####  #####  #   # ######  # # # # # #\s
+                 #       #    # #    # #    # #    #  # #  #       # # # # # #\s
+                 #  #### #    # #    # #    # #####    #   #####   # # # # # #\s
+                 #     # #    # #    # #    # #    #   #   #        #   #   # \s
+                 #     # #    # #    # #    # #    #   #   #                  \s
+                  #####   ####   ####  #####  #####    #   ######   #   #   #""");
     }
 
     private static void handleSingleArgument(String arg) {
