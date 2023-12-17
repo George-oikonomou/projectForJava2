@@ -6,7 +6,6 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.validate.ValidationException;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
