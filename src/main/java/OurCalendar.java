@@ -95,9 +95,9 @@ public class OurCalendar {
             }
 
             if (eventFormat >= minTime && eventFormat < maxTime || minTime == maxTime) { //if the event is between minimum and maximum time
-                boolean forWeek = (realMonth < realMonth + 1 && realDay - eventDay >= 25 || realMonth == 2 && (realDay - eventDay >= 22) || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 29) && realDay - eventDay >= 23;
-                boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay == 7) || forWeek);//if the event is upcoming
-                forWeek = (realMonth > realMonth - 1 && realDay - eventDay <= -25 || realMonth == 2 && (realDay - eventDay <= -22) || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 29) && realDay - eventDay <= -23;
+                boolean forWeek = (realMonth < event.getStartDate().getMonth() + 1 && realDay - eventDay >= 25 || realMonth == 2 && (realDay - eventDay >= 22) || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 29) && realDay - eventDay >= 23 || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 30 && realDay - eventDay >= 24;
+                boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay <= 7) || forWeek);//if the event is upcoming
+                forWeek = (event.getStartDate().getMonth() == realMonth - 1 && realDay - eventDay <= -25 || realMonth == 2 && (realDay - eventDay <= -22) || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 29) && realDay - eventDay <= -23  || Validate.getDaysInMonth(realMonth, realDateTime.getYear()) == 30 && realDay - eventDay <= -24;
                 boolean isOld = (code == 3 && (1 + realDay - eventDay) <= dayOfWeek.getValue() || forWeek);
                 if (isUpcoming || isOld || code == 1) Validate.println(event);
             }
