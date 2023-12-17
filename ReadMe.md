@@ -27,6 +27,10 @@ the program will ask you to reenter the information</li>
 it had any)</li>
 <li>The program will close</li>
 
+#### :change current time:
+You can change the current time from the second consturctor in the OurDateTime class which creates an object that 
+has the current time 
+
 # <ins>#collaborators</ins>
 
 <li><em>George Oikonomou (it2022078) </em></li>
