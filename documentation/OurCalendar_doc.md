@@ -50,11 +50,9 @@
    it's for Old Events this week and code 1 is for the other prints.
     - If the event in the enhanced for-loop is between this time period, it prints the event.
     - For code 2: We check if the difference between the day of the event and the currentDay
-  ,plus, the Day of the week, is not greater than 7. If the month is different, but it's the same week, we check if the difference of the days is >=25, if it's february, its >=23 or >=22
-  depending on the year and if the month ends at 30 days, it's >=24.
+  ,plus, the Day of the week, is not greater than 7.
     - For code 3: We check if the difference between the day of the event and the currentDay plus 1,
-  is not greater than the Day of the week. If that's true, we print the event. If the month is different, but it's the same week, we check if the difference of the days is <=-25, if it's february, its <=-23 or <=-22
-      depending on the year and if the month ends at 30 days, it's <=-24.
+  is not greater than the Day of the week. If that's true, we print the event.
 <hr>
 
 
@@ -64,9 +62,7 @@
     The variable format, from the current time, changes the day and increases it by 1 and the time is 00:00.
     If it's necessary, it changes month or/and year and the day becomes 1.
     Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for today.
-  - If the user chose,this week:
-    The format doesn't matter and the event gets printed by [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code).
-  - If the user chose,this month:
+  - If the user chose, this week or this month:
     The variable format, increases the month by 1, the day becomes 1, and the time is 00:00.
     If the month is 12, the year is increased by 1 and the month is January.
     Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for this week/month.
@@ -77,9 +73,7 @@
     - If the user chose, for today:
       The variable format, from the current time, changes the time to 00:00.
       Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for today.
-    - If the user chose,this week:
-      The format doesn't matter and the event gets printed by [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code).
-    - If the user chose, this month:
+    - If the user chose, this week or this month:
       The variable format, changes the day to 1, and the time to 00:00.
       Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for this week/month.
 <hr>
