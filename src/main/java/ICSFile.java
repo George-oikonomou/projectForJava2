@@ -6,6 +6,7 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.validate.ValidationException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -82,8 +83,8 @@ public class ICSFile {
         String title = project.getSummary().getValue();
         //optional
         String description = ( project.getDescription() != null )
-                ? project.getDescription().getValue()
-                : "";
+                           ? project.getDescription().getValue()
+                           : "";
 
         OurDateTime dueDate = ICSFormatToOurDateTime(project.getDue().getValue());
         Status status = project.getStatus();

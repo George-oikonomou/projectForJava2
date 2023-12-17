@@ -34,11 +34,13 @@ public class OurCalendar {
         do {
             //NEW EVENT:
             Validate.println("""
-                    Make a new:
-                        1) Appointment
-                        2) Project
-                        3) Exit
-                    """);
+                  __________________
+                 |   Make a new:    |
+                 |   1) Appointment |
+                 |   2) Project     |
+                 |   3) Exit        |
+                 |__________________|
+            """);
             choice = Validate.checkAndReturnIntBetween(1, 3);
             if (choice == 3) break;
             //Title
@@ -69,13 +71,13 @@ public class OurCalendar {
 
     public static void sortList(ArrayList<Event> events) {events.sort((event1, event2) -> (int) (compareEvents(event1, event2)));}
 
-    private static long compareEvents(Event event1, Event event2) {
+    protected static long compareEvents(Event event1, Event event2) {
         OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDue() : event1.getStartDate();
         OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDue() : event2.getStartDate();
 
         return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
-
+    //todo
     private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         OurDateTime realDateTime = new OurDateTime();       //current date & time
         DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
@@ -99,7 +101,7 @@ public class OurCalendar {
             }
         }
     }
-
+    //todo
     public void printUpcomingEvents(App.AppChoices choice) {
         OurDateTime realDateTime = new OurDateTime();//current date & time
         long format = realDateTime.getCalculationFormat();
@@ -129,7 +131,7 @@ public class OurCalendar {
             }
         }
     }
-
+    //todo
     public void printOldEvents(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime();       //current date & time
@@ -148,7 +150,7 @@ public class OurCalendar {
             }
         }
     }
-
+    //todo
     public void printUnfinishedProject(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime(); // Current date & time

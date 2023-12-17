@@ -49,7 +49,7 @@ public class Appointment extends Event {
         long durationInMinutes = java.time.Duration.between(start, end).toMinutes();
         this.duration = calculateDurationInDays((int) durationInMinutes);
         this.endDate = new OurDateTime(end.getYear(),end.getDayOfMonth(),end.getDayOfMonth(), end.getHour(), end.getMinute());
-    }
+    }//todo
 
     private static int parseIntOrZero(String value) {
         return value != null ? Integer.parseInt(value)
