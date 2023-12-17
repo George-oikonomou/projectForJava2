@@ -81,7 +81,7 @@ and adds them to the component of the calendar
 <hr>
 
 ### `IcsFormatToOurDateTime()`
-- takes the format of the ics version of a date/time (due, dtstart, dtend..)
+- takes the format of the ics version of a date/time (due, dtstart, dtend...)
 - creates objects with this information that has formats that are useful
 to the application
 

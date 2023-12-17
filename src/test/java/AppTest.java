@@ -1,12 +1,26 @@
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
-    /*@Test
-    void testMainWithIncorrectArguments() {
+    @Test
+    public void testMainWithOneArgument() {
+        String[] args = {"day"};
+        assertTrue(Arrays.stream(App.AppChoices.values())
+                .anyMatch(choice -> choice.toString().equals(args[0])));
+    }
 
-        String outputStream = HelperFuncForTests.captureOutput(() -> App.main(new String[]{}));
+    @Test
+    public void testMainWithTwoArguments() {
+        String[] args = {"day", "myFile.ics"};
+        assertTrue(Arrays.stream(App.AppChoices.values())
+                .anyMatch(choice -> choice.toString().equals(args[0])));
+    }
 
-        assertEquals("Incorrect argument input" + System.lineSeparator(), outputStream);
-    }*/
+    @Test
+    public void testMainWithfalseArguments() {
+        String[] args = {"iman", "myFile.ics"};
+        assertFalse(Arrays.stream(App.AppChoices.values())
+                .anyMatch(choice -> choice.toString().equals(args[0])));
+    }
 }

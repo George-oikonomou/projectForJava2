@@ -9,6 +9,7 @@ public class App {
     static OurCalendar calendar = new OurCalendar();
 
     public static void main(String[] args) {
+
         System.out.println ("""
   #     #                                                                                    #####                                                        #                    ### ### ###\s
   #  #  # ###### #       ####   ####  #    # ######   #####  ####     ####  #    # #####    #     #   ##   #      ###### #    # #####    ##   #####      # #   #####  #####    # # # # # #\s
@@ -20,10 +21,16 @@ public class App {
         switch (args.length) {//checks the number of arguments to determine in which scenario we are
             case 1 -> handleSingleArgument(args[0]);
             case 2 -> handleDoubleArguments(args);
-            default -> Validate.println("Incorrect number of arguments");
-
+            default -> Validate.println("""
+                 ____________________________________________________________________________________________
+                |                                                                                            |
+                |    Error: wrong number of arguments. Program exiting...                                    |
+                |    Correct format: java -jar  ProjectForJava2-1.0-SNAPSHOT.jar [functionality] [file]      |
+                |    functionality:  {Optional} day, week, month, pastday, pastweek, pastmonth, todo, due    |
+                |    file: the path to the file you want to use                                              |
+                |____________________________________________________________________________________________|
+            """);
         }
-        TimeService.stop();
         System.out.println("""
                   #####                                            ### ### ###\s
                  #     #  ####   ####  #####  #####  #   # ######  # # # # # #\s
@@ -32,17 +39,32 @@ public class App {
                  #     # #    # #    # #    # #    #   #   #        #   #   # \s
                  #     # #    # #    # #    # #    #   #   #                  \s
                   #####   ####   ####  #####  #####    #   ######   #   #   #""");
+                           
+        TimeService.stop();
     }
 
     private static void handleSingleArgument(String arg) {
         ICSFile ourFile = new ICSFile(arg);
         if (new File(arg).exists()){
-            Validate.println("file exists loading the events..");
+            Validate.println("""
+                 ____________________________________
+                |                                    |
+                |  file exists loading the events..  |
+                |____________________________________|
+
+            """);
             ourFile.loadEvents();
         } else {
-            Validate.println("file does not exist, creating new one");
+            Validate.println("""
+                 ___________________________________________
+                |                                           |
+                |  file does not exist ,creating new one..  |
+                |___________________________________________|
+            
+            """);
         }
         calendar.addEvents();
+        OurCalendar.sortList(calendar.getEvents());
         ourFile.storeEvents(calendar.getEvents());
     }
 
@@ -53,7 +75,15 @@ public class App {
                                   .orElse(null);//if no match is found returns null
 
         if (choice == null) {//if no match is found
-            Validate.println("Error: wrong functionality option. Program exiting...");//todo tell the user whats the correct format for the arguments *Spyros*
+            Validate.println("""
+                 ____________________________________________________________________________________________
+                |                                                                                            |
+                |    Error: wrong functionality option. Program exiting...                                   |
+                |    Correct format: java -jar  ProjectForJava2-1.0-SNAPSHOT.jar [functionality] [file]      |
+                |    functionality: day, week, month, pastday, pastweek, pastmonth, todo, due                |
+                |    file: the path to the file you want to use                                              |
+                |____________________________________________________________________________________________|
+            """);
             System.exit(1);
         }
 
