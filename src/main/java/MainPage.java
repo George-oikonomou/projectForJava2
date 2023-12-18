@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class MainPage extends JFrame implements ActionListener {
     JButton newEventButton;
+    private Image backgroundImage;
 
     MainPage(){
         this.setTitle("Calendar");
@@ -12,17 +13,25 @@ public class MainPage extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setSize(1000,500);
         this.setVisible(true);
-        this.getContentPane().setBackground(new Color(51,153,255));
+        this.backgroundImage = new ImageIcon("mainscreen.png").getImage();
         this.setLayout(null);
         CreateNewEventButton();
         this.add(getNewEventButton());
+
     }
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    }
+
 
     private void CreateNewEventButton(){
         newEventButton = new JButton();
-        newEventButton.setBounds(30,150,170,60);
+        newEventButton.setBounds(30,140,170,60);
         newEventButton.addActionListener(this);
         newEventButton.setText("New Event");
+        newEventButton.setFont(new Font("Comic Sans",Font.BOLD,25));
         setNewEventButton(newEventButton);
     }
 
@@ -35,8 +44,8 @@ public class MainPage extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource()==newEventButton) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == newEventButton) {
             Validate.println("new Event Button");
             newEventButton.setEnabled(true);
         }
