@@ -3,7 +3,7 @@
     * [addEvents](#addevents)
     * [sortList](#sortlistarraylistevent-events)
     * [compareEvents](#compareeventsevent-event1-event-event2)
-    * [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code)
+    * [printBetween](#printBetweenint-minTime-int-MaxTime)
     * [printUpcomingEvents](#printupcomingeventsappappchoices-choice)
     * [printOldEvents](#printoldeventsappappchoices-choice)
     * [printUnfinishedProject](#printoldeventsappappchoices-choice)
@@ -44,38 +44,25 @@
     - It returns a long number from the difference of the Calculation Format of the two events.
 <hr>
 
-- ### `timePeriod(long maxTime, long minTime, int code)`
-    - Gets two Calculation Formats, to check if the event is between this time period, and it gets a code.
-    - If the code is 2, it's for Upcoming Events for this week, if it's 3,
-   it's for Old Events this week and code 1 is for the other prints.
-    - If the event in the enhanced for-loop is between this time period, it prints the event.
-    - For code 2: We check if the difference between the day of the event and the currentDay
-  ,plus, the Day of the week, is not greater than 7.
-    - For code 3: We check if the difference between the day of the event and the currentDay plus 1,
-  is not greater than the Day of the week. If that's true, we print the event.
+- ### `printBetween(int minTime, int MaxTime)`
+    - gets 2 times a and prints any event between those 2 times. 
+    - it uses the calculated format of the event object which we can easily do comparisons with
+
 <hr>
 
-
 - ### `printUpcomingEvents(App.AppChoices choice)`
-  - Gets a choice, if the user wants to see the Upcoming Events that are sorted for today, this week or this month.
-  - If the user chose, for today:
-    The variable format, from the current time, changes the day and increases it by 1 and the time is 00:00.
-    If it's necessary, it changes month or/and year and the day becomes 1.
-    Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for today.
-  - If the user chose, this week or this month:
-    The variable format, increases the month by 1, the day becomes 1, and the time is 00:00.
-    If the month is 12, the year is increased by 1 and the month is January.
-    Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for this week/month.
+    - it produces 2 values a minimum time and a maximum time
+    - minimum time : this is the current time because we want to print future events
+    - maximum time : this time depends on what the user wants to see
+    - it calls the printBetween to print between min and max time
+
 <hr>
 
 - ### `printOldEvents(App.AppChoices choice)`
-    - Gets a choice, if the user wants to see the Old Events that are sorted for today, this week or this month.
-    - If the user chose, for today:
-      The variable format, from the current time, changes the time to 00:00.
-      Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for today.
-    - If the user chose, this week or this month:
-      The variable format, changes the day to 1, and the time to 00:00.
-      Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for this week/month.
+    - it produces 2 values a minimum time and a maximum time
+    - minimum time : this time depends on what the user wants to see
+    - maximum time : this is the current time because we want to print past events
+
 <hr>
 
 - ### `printUnfinishedProject(App.AppChoices choice)`
