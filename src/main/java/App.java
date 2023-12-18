@@ -9,10 +9,8 @@ public class App {
     static OurCalendar calendar = new OurCalendar();
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Replace "path/to/your/image.jpg" with the actual path to your image file
-            MainPage frame = new MainPage();
-        });
+        // Replace "path/to/your/image.jpg" with the actual path to your image file
+        SwingUtilities.invokeLater(MainPage::new);
         TimeService.stop();
     }
 }
