@@ -84,7 +84,6 @@ public class OurCalendar {
     private void printBetween(long minTime, long maxTime) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         long eventTime;
         for (Event event : events) {
-
             if (event instanceof Project) {
                 eventTime = ((Project) event).getDue().getCalculationFormat();
             } else{
@@ -137,7 +136,7 @@ public class OurCalendar {
         sortList(events);
         switch (choice) {
             case pastday -> {
-                //LocalTime.MAX sets the time of a date time object to 23:59 basically giving us the end of the day
+                //LocalTime.MIN sets the time of a date time object to 00:00 basically giving us the start of the day
                 LocalDateTime startOfDay = currentTime.with(LocalTime.MIN);
                 minTime = new OurDateTime(startOfDay.getYear(),startOfDay.getMonthValue()
                         ,startOfDay.getDayOfMonth(),startOfDay.getHour(),startOfDay.getMinute());
