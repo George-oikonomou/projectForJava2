@@ -2,13 +2,11 @@ import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
 import java.text.ParseException;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 public class OurDateTime {
     private final int year,month,day,hour,minute;
     private final String date,time;
-    private DayOfWeek dayOfWeek;
     private DateTime icsFormat;
     private long CalculationFormat;
     //constructor to create an ourDateTime object with the values we give
@@ -31,9 +29,8 @@ public class OurDateTime {
     public OurDateTime() {
         TimeTeller teller = TimeService.getTeller();
         //CHANGE HERE example
-        //LocalDateTime realTime = LocalDateTime.of(2023,12,9,18,11);
+        //LocalDateTime realTime = LocalDateTime.of(2024,2,29,18,11);
         LocalDateTime realTime = teller.now();
-        this.dayOfWeek = realTime.getDayOfWeek();
         this.year = realTime.getYear();
         this.month = realTime.getMonthValue();
         this.day = realTime.getDayOfMonth();
@@ -72,7 +69,6 @@ public class OurDateTime {
     public String getDate() { return date; }
     public int getYear() { return year; }
     public int getMonth() { return month; }
-    public DayOfWeek getDayOfWeek() { return dayOfWeek; }
     public int getDay() { return day; }
 
     public String getTime() { return time; }

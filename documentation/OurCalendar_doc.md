@@ -3,7 +3,7 @@
     * [addEvents](#addevents)
     * [sortList](#sortlistarraylistevent-events)
     * [compareEvents](#compareeventsevent-event1-event-event2)
-    * [printBetween]
+    * [printBetween](#printBetweenint-minTime-int-MaxTime)
     * [printUpcomingEvents](#printupcomingeventsappappchoices-choice)
     * [printOldEvents](#printoldeventsappappchoices-choice)
     * [printUnfinishedProject](#printoldeventsappappchoices-choice)
@@ -44,25 +44,25 @@
     - It returns a long number from the difference of the Calculation Format of the two events.
 <hr>
 
-- ### `printBetween(long minTime, long maxTime)`
+- ### `printBetween(int minTime, int MaxTime)`
     - gets 2 times a and prints any event between those 2 times. 
     - it uses the calculated format of the event object which we can easily do comparisons with
 
+<hr>
 
 - ### `printUpcomingEvents(App.AppChoices choice)`
-    - it produces to values a minimum time and a maximum time
-    - minimum time : this is the current time because we want to print future event
+    - it produces 2 values a minimum time and a maximum time
+    - minimum time : this is the current time because we want to print future events
     - maximum time : this time depends on what the user wants to see
     - it calls the printBetween to print between min and max time
 
+<hr>
+
 - ### `printOldEvents(App.AppChoices choice)`
-    - Gets a choice, if the user wants to see the Old Events that are sorted for today, this week or this month.
-    - If the user chose, for today:
-      The variable format, from the current time, changes the time to 00:00.
-      Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for today.
-    - If the user chose, this week or this month:
-      The variable format, changes the day to 1, and the time to 00:00.
-      Then we call [timePeriod](#timeperiodlong-maxtime-long-mintime-int-code) to print the events for this week/month.
+    - it produces 2 values a minimum time and a maximum time
+    - minimum time : this time depends on what the user wants to see
+    - maximum time : this is the current time because we want to print past events
+
 <hr>
 
 - ### `printUnfinishedProject(App.AppChoices choice)`

@@ -130,9 +130,35 @@ public class OurCalendar {
         printBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
     public void printOldEvents(App.AppChoices choice) {
-
+        OurDateTime maxTime = new OurDateTime(); //if we want to print an old event the max time should be the current time
+        OurDateTime minTime = new OurDateTime(); //this value will always change based on the choice
+        LocalDateTime currentTime = LocalDateTime.of(maxTime.getYear(),maxTime.getMonth()
+                ,maxTime.getDay(),maxTime.getHour(),maxTime.getMinute());
+        sortList(events);
+        switch (choice) {
+            case pastday -> {
+                //LocalTime.MAX sets the time of a date time object to 23:59 basically giving us the end of the day
+                LocalDateTime startOfDay = currentTime.with(LocalTime.MIN);
+                minTime = new OurDateTime(startOfDay.getYear(),startOfDay.getMonthValue()
+                        ,startOfDay.getDayOfMonth(),startOfDay.getHour(),startOfDay.getMinute());
+            }
+            case pastweek -> {
+                //the temporalAdjuster sets the current time to monday (start of week) and the sets the time to 00:00
+                LocalDateTime startOfWeek = currentTime.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+                        .with(LocalTime.MIN);
+                minTime = new OurDateTime(startOfWeek.getYear(),startOfWeek.getMonthValue(),
+                        startOfWeek.getDayOfMonth(),startOfWeek.getHour(),startOfWeek.getMinute());
+            }
+            case pastmonth -> {
+                // set the current month day to 1 and time to 00:00
+                LocalDateTime startOfMonth = currentTime.withDayOfMonth(1).with(LocalTime.MIN);
+                minTime = new OurDateTime(startOfMonth.getYear(),startOfMonth.getMonthValue(),
+                        startOfMonth.getDayOfMonth(),startOfMonth.getHour(),startOfMonth.getMinute());
+            }
+        }
+        printBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
-   
+
     public void printUnfinishedProject(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime(); // Current date & time
