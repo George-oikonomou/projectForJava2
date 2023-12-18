@@ -91,7 +91,7 @@ public class OurCalendar {
                 eventTime = event.getStartDate().getCalculationFormat();
             }
             if (eventTime >= minTime && eventTime <= maxTime) { //if the event is between minimum and maximum time
-                System.out.println(event);
+                Validate.println(event);
             }
         }
     }
