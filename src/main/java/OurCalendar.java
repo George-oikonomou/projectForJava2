@@ -2,6 +2,9 @@ import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Status;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
 public class OurCalendar {
@@ -78,77 +81,56 @@ public class OurCalendar {
         return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
 
-    private void timePeriod(long maxTime, long minTime, int code) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
-        OurDateTime realDateTime = new OurDateTime();       //current date & time
-        DayOfWeek dayOfWeek = realDateTime.getDayOfWeek();
-        int  eventDay, realDay = realDateTime.getDay();
-        long eventFormat;
+    private void printBetween(long minTime, long maxTime) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
+        long eventTime;
         for (Event event : events) {
 
             if (event instanceof Project) {
-                 eventDay = ((Project) event).getDue().getDay();
-                 eventFormat = ((Project) event).getDue().getCalculationFormat();
+                eventTime = ((Project) event).getDue().getCalculationFormat();
             } else{
-                 eventDay = event.getStartDate().getDay();
-                 eventFormat = event.getStartDate().getCalculationFormat();
+                eventTime = event.getStartDate().getCalculationFormat();
             }
-
-            if (eventFormat >= minTime && eventFormat < maxTime) { //if the event is between minimum and maximum time
-                boolean isUpcoming = (code == 2 && (dayOfWeek.getValue() + eventDay - realDay) <= 7);//if the event is upcoming
-                boolean isOld = (code == 3 && (1 + realDay - eventDay) <= dayOfWeek.getValue());
-
-                if (isUpcoming || isOld || code == 1) Validate.println(event);
+            if (eventTime >= minTime && eventTime <= maxTime) { //if the event is between minimum and maximum time
+                System.out.println(event);
             }
         }
     }
-   
-    public void printUpcomingEvents(App.AppChoices choice) {
-        OurDateTime realDateTime = new OurDateTime();//current date & time
-        long format = realDateTime.getCalculationFormat();
-        sortList(events);
 
+    public void printUpcomingEvents(App.AppChoices choice) {
+        OurDateTime minTime = new OurDateTime(); //if we want to print an upcoming event the min time should be the current time
+        OurDateTime maxTime = new OurDateTime(); //this value will always change based on the choice
+        LocalDateTime currentTime = LocalDateTime.of(minTime.getYear(),minTime.getMonth()
+                ,minTime.getDay(),minTime.getHour(),minTime.getMinute());
+        sortList(events);
         switch (choice) {
             case day -> {
-                Validate.println("\nUpcoming Events for today:\n");  //from the realDateTime format we are changing the day from today to tomorrow and the time becomes 00:00
-                if ( Validate.getDaysInMonth(realDateTime.getMonth(), realDateTime.getYear()) == realDateTime.getDay()) { //if it's the last day of the month, change month & day becomes 01
-                    format = format + 1000000L - (realDateTime.getDay() - 1) * 10000L - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
-                    if (realDateTime.getMonth() == 12)  //if its December, the month is January and year is increased by 1
-                        format = format + 88000000L;
-                } else {
-                    format = format + 10000 - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
-                }
-                timePeriod(format, realDateTime.getCalculationFormat(), 1);
+                //LocalTime.MAX sets the time of a date time object to 23:59 basically giving us the end of the day
+                LocalDateTime endOfDay = currentTime.with(LocalTime.MAX);
+                maxTime = new OurDateTime(endOfDay.getYear(),endOfDay.getMonthValue()
+                        ,endOfDay.getDayOfMonth(),endOfDay.getHour(),endOfDay.getMinute());
             }
-            case week, month -> {
-                Validate.println("\nUpcoming Events " + ((choice == App.AppChoices.week) ? "this week" : "this month") + ":\n");
-                //from the realDateTime format we are changing the month to the next one, making day 01, and time 00:00
-                format += ((realDateTime.getMonth() == 12) ? 89000000L : 1000000L)  //if month is December it changes year and month is January
-                        - (realDateTime.getDay() - 1) * 10000L
-                        - realDateTime.getHour() * 100L
-                        - realDateTime.getMinute();
-
-                timePeriod(format, realDateTime.getCalculationFormat(), choice == App.AppChoices.week ? 2 : 1);
+            case week -> {
+                //the temporalAdjuster sets advances the current time to next sunday and the sets the time to 23:59
+                LocalDateTime endOfSunday = currentTime.with(TemporalAdjusters.next(DayOfWeek.SUNDAY))
+                        .with(LocalTime.MAX);
+                maxTime = new OurDateTime(endOfSunday.getYear(),endOfSunday.getMonthValue(),
+                        endOfSunday.getDayOfMonth(),endOfSunday.getHour(),endOfSunday.getMinute());
+            }
+            case month -> {
+                /*getMonth gets the month from current time
+                inputDateTime.toLocalDate().isLeapYear() this checks if the year is a leap year
+                then we set the length of the month considering if it is a leap year.
+                Then at the end we put back the time so we don't lose it */
+                LocalDateTime endOfMonth = currentTime.withDayOfMonth(currentTime.getMonth().
+                                length(currentTime.toLocalDate().isLeapYear())).with(LocalDateTime.now().toLocalTime());
+                maxTime = new OurDateTime(endOfMonth.getYear(),endOfMonth.getMonthValue(),
+                        endOfMonth.getDayOfMonth(),endOfMonth.getHour(),endOfMonth.getMinute());
             }
         }
+        printBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
-   
     public void printOldEvents(App.AppChoices choice) {
-        sortList(events);
-        OurDateTime realDateTime = new OurDateTime();       //current date & time
-        long format = realDateTime.getCalculationFormat();
 
-        switch (choice) {
-            case pastday -> {//from the realDateTime format we are changing the time to 00:00
-                Validate.println("\nOld Events from today:\n");
-                format = format - realDateTime.getMinute() - (realDateTime.getHour() * 100L);
-                timePeriod(realDateTime.getCalculationFormat(), format, 1);
-            }
-            case pastweek,pastmonth -> {//from the realDateTime format the day and time become 01, 00:00
-                Validate.println("\nOld Events from this " + ((choice == App.AppChoices.pastweek) ? "week" : "month") + ":\n");
-                format = format - (realDateTime.getDay() - 1) * 10000L - realDateTime.getHour() * 100L - realDateTime.getMinute();
-                timePeriod(realDateTime.getCalculationFormat(), format, choice == App.AppChoices.pastweek ? 3 : 1);
-            }
-        }
     }
    
     public void printUnfinishedProject(App.AppChoices choice) {
