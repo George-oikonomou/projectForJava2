@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 public class MainPage extends JFrame implements ActionListener {
     JButton newEventButton;
     private Image backgroundImage;
+    JButton editEventButton;
+    JButton printEventButton;
 
     MainPage(){
         this.setTitle("Calendar");
@@ -17,22 +19,33 @@ public class MainPage extends JFrame implements ActionListener {
         this.setLayout(null);
         CreateNewEventButton();
         this.add(getNewEventButton());
+        CreateEditEventButton();
+        this.add(getEditEventButton());
 
     }
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-    }
+//    @Override
+//    public void paint(Graphics g) {
+//        super.paint(g);
+//        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+//    }
 
 
     private void CreateNewEventButton(){
         newEventButton = new JButton();
-        newEventButton.setBounds(30,140,170,60);
+        newEventButton.setBounds(30,80,170,60);
         newEventButton.addActionListener(this);
         newEventButton.setText("New Event");
         newEventButton.setFont(new Font("Comic Sans",Font.BOLD,25));
         setNewEventButton(newEventButton);
+    }
+
+    private void CreateEditEventButton(){
+        editEventButton = new JButton();
+        editEventButton.setBounds(30,160,170,60);
+        editEventButton.addActionListener(this);
+        editEventButton.setText("Edit Event");
+        editEventButton.setFont(new Font("Comic Sans",Font.BOLD,25));
+        setEditEventButton(editEventButton);
     }
 
     public void setNewEventButton(JButton newEventButton) {
@@ -43,11 +56,20 @@ public class MainPage extends JFrame implements ActionListener {
         return newEventButton;
     }
 
+    public void setEditEventButton(JButton editEventButton) {this.editEventButton = editEventButton;}
+
+    public JButton getEditEventButton() {
+        return editEventButton;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newEventButton) {
             Validate.println("new Event Button");
             newEventButton.setEnabled(true);
+        } else if (e.getSource() == editEventButton)  {
+            Validate.println("edit Event Button");
+            editEventButton.setEnabled(true);
         }
     }
 }
