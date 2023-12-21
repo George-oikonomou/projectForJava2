@@ -3,29 +3,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainPage extends JFrame implements ActionListener {
+public class MainPage extends JFrame  implements ActionListener {
     JButton newEventButton;
-    private Image backgroundImage;
+    private final Image backgroundImage;
     JButton editEventButton;
     JButton changeProjectStatusButton;
     JButton printEventButton;
-
+    JPanel menuPanel;
+    JPanel printPanel;
     MainPage(){
         this.setTitle("Calendar");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        this.setResizable(true);
+        this.setLayout(new BorderLayout(10,10));
         this.setSize(1000,500);
         this.setVisible(true);
         this.backgroundImage = new ImageIcon("mainscreen.png").getImage();
-        this.setLayout(null);
+        this.menuPanel = new JPanel();
+        this.printPanel = new JPanel();
+        menuPanel.setBackground(Color.cyan);
+        printPanel.setBackground(Color.pink);
+        menuPanel.setPreferredSize(new Dimension(200, 500));
+        printPanel.setPreferredSize(new Dimension(500, 500));
+        this.add(menuPanel, BorderLayout.WEST);
+        this.add(printPanel, BorderLayout.CENTER);
         CreateNewEventButton();
-        this.add(getNewEventButton());
+        menuPanel.add(getNewEventButton());
         CreateEditEventButton();
-        this.add(getEditEventButton());
+        menuPanel.add(getEditEventButton());
         CreateChangeProjectStatusButton();
-        this.add(getChangeProjectStatusButton());
+        menuPanel.add(getChangeProjectStatusButton());
         CreatePrintEventButton();
-        this.add(getPrintEventButton());
+        menuPanel.add(getPrintEventButton());
+
+
     }
 //    @Override
 //    public void paint(Graphics g) {
