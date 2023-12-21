@@ -7,6 +7,7 @@ public class MainPage extends JFrame implements ActionListener {
     JButton newEventButton;
     private Image backgroundImage;
     JButton editEventButton;
+    JButton changeProjectStatusButton;
     JButton printEventButton;
 
     MainPage(){
@@ -21,7 +22,10 @@ public class MainPage extends JFrame implements ActionListener {
         this.add(getNewEventButton());
         CreateEditEventButton();
         this.add(getEditEventButton());
-
+        CreateChangeProjectStatusButton();
+        this.add(getChangeProjectStatusButton());
+        CreatePrintEventButton();
+        this.add(getPrintEventButton());
     }
 //    @Override
 //    public void paint(Graphics g) {
@@ -48,18 +52,48 @@ public class MainPage extends JFrame implements ActionListener {
         setEditEventButton(editEventButton);
     }
 
+    private void CreateChangeProjectStatusButton(){
+        changeProjectStatusButton = new JButton();
+        changeProjectStatusButton.setBounds(30,240,170,90);
+        changeProjectStatusButton.addActionListener(this);
+        changeProjectStatusButton.setText("<html>Change Projects<br /> Status</html>");
+        changeProjectStatusButton.setFont(new Font("Comic Sans",Font.BOLD,20));
+        setChangeProjectStatusButton(changeProjectStatusButton);
+    }
+
+    private void CreatePrintEventButton(){
+        printEventButton = new JButton();
+        printEventButton.setBounds(30,350,170,60);
+        printEventButton.addActionListener(this);
+        printEventButton.setText("Print Event");
+        printEventButton.setFont(new Font("Comic Sans",Font.BOLD,25));
+        setPrintEventButton(printEventButton);
+    }
+
     public void setNewEventButton(JButton newEventButton) {
         this.newEventButton = newEventButton;
     }
-
     public JButton getNewEventButton() {
         return newEventButton;
     }
 
     public void setEditEventButton(JButton editEventButton) {this.editEventButton = editEventButton;}
-
     public JButton getEditEventButton() {
         return editEventButton;
+    }
+
+    public void setChangeProjectStatusButton(JButton changeProjectStatusButton) {
+        this.changeProjectStatusButton = changeProjectStatusButton;
+    }
+    public JButton getChangeProjectStatusButton() {
+        return changeProjectStatusButton;
+    }
+
+    public void setPrintEventButton(JButton printEventButton) {
+        this.printEventButton = printEventButton;
+    }
+    public JButton getPrintEventButton() {
+        return printEventButton;
     }
 
     @Override
@@ -70,6 +104,12 @@ public class MainPage extends JFrame implements ActionListener {
         } else if (e.getSource() == editEventButton)  {
             Validate.println("edit Event Button");
             editEventButton.setEnabled(true);
+        } else if (e.getSource() == changeProjectStatusButton) {
+            Validate.println("change Project Status Button");
+            changeProjectStatusButton.setEnabled(true);
+        } else if (e.getSource() == printEventButton) {
+            Validate.println("print Event Button");
+            printEventButton.setEnabled(true);
         }
     }
 }
