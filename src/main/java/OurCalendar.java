@@ -41,14 +41,14 @@ public class OurCalendar {
         createAppointment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AppointmetGui();
+                AppointmentGui appointmentGui = new AppointmentGui();
             }
         });
 
         createProject.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProjectGui();
+                ProjectGui projectGui = new ProjectGui();
             }
         });
     }
