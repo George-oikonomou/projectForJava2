@@ -1,6 +1,8 @@
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
-import net.fortuna.ical4j.model.property.Status;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,47 +32,28 @@ public class OurCalendar {
     public CalScale getCalScale() { return calScale; }
     public void setCalScale(CalScale calScale) { this.calScale = calScale; }
 
-    public void addEvents() {
-        int choice;
-        String title, description;
-        OurDateTime startDate, endDate, due;
-        do {
-            //NEW EVENT:
-            Validate.println("""
-                  __________________
-                 |   Make a new:    |
-                 |   1) Appointment |
-                 |   2) Project     |
-                 |   3) Exit        |
-                 |__________________|
-            """);
-            choice = Validate.checkAndReturnIntBetween(1, 3);
-            if (choice == 3) break;
-            //Title
-            Validate.print("\nTitle:\t");
-            title = Validate.strInput();
-            //Description
-            Validate.print("\nDescription:\t");
-            description = Validate.strInput();
+    public void addEvents(JPanel printPanel) {
+        JButton createAppointment = new JButton("Create Appointment");
+        JButton createProject = new JButton("Create Project");
+        printPanel.add(createAppointment);
+        printPanel.add(createProject);
 
-            if (choice == 1) { //Adding one event to the arraylist
-                Validate.println("Enter the date and time that the event starts");
-                startDate = OurDateTime.Functionality.dateAndTime(); //Date & Time
-
-                Validate.println("");
-
-                Validate.println("Enter date and time that the event ends:\t");
-                endDate = Validate.DateTime(startDate);
-
-                events.add(new Appointment(startDate, endDate, title, description));
-            } else {//Date & Time
-                Validate.print("Enter Due date for the event:\t");
-
-                due = OurDateTime.Functionality.dateAndTime();
-                events.add(new Project(title, description, due, Status.VTODO_IN_PROCESS));
+        createAppointment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AppointmetGui();
             }
-        } while (true);
+        });
+
+        createProject.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ProjectGui();
+            }
+        });
     }
+
+
 
     public static void sortList(ArrayList<Event> events) {events.sort((event1, event2) -> (int) (compareEvents(event1, event2)));}
 
