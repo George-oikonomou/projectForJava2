@@ -1,8 +1,6 @@
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -38,18 +36,17 @@ public class OurCalendar {
         printPanel.add(createAppointment);
         printPanel.add(createProject);
 
-        createAppointment.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AppointmentGui appointmentGui = new AppointmentGui();
-            }
+        createAppointment.addActionListener(e -> {
+            printPanel.removeAll();
+            AppointmentGUI appointmentGui = new AppointmentGUI();
+            printPanel.add(appointmentGui);
+            printPanel.revalidate();
+            printPanel.repaint();
+            createAppointment.setEnabled(true);
         });
 
-        createProject.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ProjectGui projectGui = new ProjectGui();
-            }
+        createProject.addActionListener(e -> {
+            ProjectGui projectGui = new ProjectGui();
         });
     }
 
