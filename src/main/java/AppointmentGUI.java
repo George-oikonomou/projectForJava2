@@ -1,5 +1,4 @@
 import com.toedter.calendar.JDateChooser;
-
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
@@ -7,55 +6,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AppointmentGUI extends JPanel {
-    private final JDateChooser startDateChooser;
+    private JDateChooser startDateChooser;
     private final JSpinner startTimeSpinner;
-    private final JDateChooser endDateChooser;
-    private final JSpinner endTimeSpinner;
+    private JDateChooser endDateChooser;
+    private JSpinner endTimeSpinner;
     private final JTextField title;
     private final JTextArea description;
     private final JButton create;
 
     public AppointmentGUI() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(410, 250));
+        setLayout(new FlowLayout(FlowLayout.LEFT));        // Layout and Size Settings
+        setPreferredSize(new Dimension(420, 250));
 
-        this.startDateChooser = new JDateChooser();
-        JTextField dateTextField = ((JTextField) startDateChooser.getDateEditor().getUiComponent());
-        dateTextField.setEditable(false);
-        startDateChooser.setPreferredSize(new Dimension(100, 20));
+        startDateChooser = configureStartDate();// Start Date Configuration
+        startTimeSpinner = configureTime();// Start Time Configuration
 
-        // Set the minimum date for the startDateChooser to January 1, 2024
-        Calendar minDateCalendar = Calendar.getInstance();
-        minDateCalendar.set(2024, Calendar.JANUARY, 1);
-        startDateChooser.setMinSelectableDate(minDateCalendar.getTime());
 
-        this.startTimeSpinner = new JSpinner(new SpinnerDateModel());
-        JSpinner.DateEditor startTimeEditor = new JSpinner.DateEditor(startTimeSpinner, "HH:mm");
-        startTimeSpinner.setEditor(startTimeEditor);
-        JFormattedTextField spinnerEditor = ((JSpinner.DefaultEditor) startTimeSpinner.getEditor()).getTextField();
-        JFormattedTextField spinnerTextField = spinnerEditor;
-        spinnerTextField.setEditable(false);
-        spinnerTextField.setPreferredSize(new Dimension(40, 20));
+        endDateChooser = configureEndDate();// End Date Configuration
+        endTimeSpinner = configureTime();// End Time Configuration
 
-        this.endDateChooser = new JDateChooser();
-        dateTextField = ((JTextField) endDateChooser.getDateEditor().getUiComponent());
-        dateTextField.setEditable(false);
-        endDateChooser.setPreferredSize(new Dimension(100, 20));
 
-        // Set the minimum date for the endDateChooser to January 1, 2024
-        endDateChooser.setMinSelectableDate(minDateCalendar.getTime());
-
-        this.endTimeSpinner = new JSpinner(new SpinnerDateModel());
-        JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeSpinner, "HH:mm");
-        endTimeSpinner.setEditor(endTimeEditor);
-        spinnerEditor = ((JSpinner.DefaultEditor) endTimeSpinner.getEditor()).getTextField();
-        spinnerTextField = spinnerEditor;
-        spinnerTextField.setEditable(false);
-        spinnerTextField.setPreferredSize(new Dimension(40, 20));
-
+        // Appointment Details
         this.title = new JTextField("Appointment Name", 10);
         this.description = new JTextArea("Appointment Description", 5, 20);
         this.create = new JButton("Create");
@@ -64,10 +42,13 @@ public class AppointmentGUI extends JPanel {
         descriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
 
+        // Event Listeners
         this.title.addFocusListener(new ClearTextFocusListener("Appointment Name", title));
         this.description.addFocusListener(new ClearTextFocusListener("Appointment Description", description));
         this.create.addActionListener(new ButtonListener());
+        startDateChooser.addPropertyChangeListener("date", new StartDateChangeListener());
 
+        // GUI Components Placement
         add(new JLabel("Enter the start date of the appointment"));
 
         add(startDateChooser);
@@ -78,6 +59,43 @@ public class AppointmentGUI extends JPanel {
         add(title);
         add(descriptionScrollPane);
         add(create);
+
+    }
+
+
+
+    private JSpinner configureTime() {
+        JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
+        timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
+        JFormattedTextField timeTextField = ((JSpinner.DefaultEditor) timeSpinner.getEditor()).getTextField();
+        timeTextField.setEditable(false);
+        timeTextField.setPreferredSize(new Dimension(40, 20));
+        return timeSpinner;
+    }
+
+
+
+    private JDateChooser configureEndDate() {
+        final JDateChooser endDateChooser = new JDateChooser();
+        this.endDateChooser = new JDateChooser();
+        JTextField endDateTextField = ((JTextField) endDateChooser.getDateEditor().getUiComponent());
+        endDateTextField.setEditable(false);
+        endDateChooser.setPreferredSize(new Dimension(100, 20));
+
+        endDateChooser.setMinSelectableDate(new GregorianCalendar(2024, Calendar.JANUARY, 1).getTime());
+        return endDateChooser;
+    }
+
+
+
+    private JDateChooser configureStartDate() {
+        final JDateChooser startDateChooser = new JDateChooser();
+        this.startDateChooser = new JDateChooser();
+        startDateChooser.setPreferredSize(new Dimension(100, 20));
+        JTextField startDateTextField = ((JTextField) startDateChooser.getDateEditor().getUiComponent());
+        startDateTextField.setEditable(false);
+        startDateChooser.setMinSelectableDate(new GregorianCalendar(2024, Calendar.JANUARY, 1).getTime());
+        return startDateChooser;
     }
 
     private class ButtonListener implements ActionListener{
@@ -111,4 +129,25 @@ public class AppointmentGUI extends JPanel {
             }
         }
     }
+
+    private class StartDateChangeListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            Date newStartDate = (Date) evt.getNewValue();
+
+            // Check if both start and end dates have been selected
+            if (newStartDate != null && endDateChooser.getDate() != null) {
+
+                if(endDateChooser.getDate().equals(newStartDate))
+                    endDateChooser.setDate(newStartDate);
+                else if (endDateChooser.getDate().before(newStartDate) && !endDateChooser.getDate().equals(newStartDate))
+                    endDateChooser.setDate(null);
+
+            }
+
+            // Update the minimum date of endDateChooser when the start date changes
+            endDateChooser.setMinSelectableDate(newStartDate);
+        }
+    }
+
 }
