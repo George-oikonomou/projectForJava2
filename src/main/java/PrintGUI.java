@@ -14,12 +14,6 @@ public class PrintGUI extends JPanel {
     public PrintGUI(ArrayList<Event> eventList) {
         setPreferredSize(new Dimension(250,400));
         listModel = new DefaultListModel<>();
-        OurDateTime time = new OurDateTime(2024, 12, 4, 21, 12);
-        OurDateTime endTime = new OurDateTime(2024, 1, 25, 21, 40);
-        eventList.add(new Appointment(time, endTime, "Iman", "imanasou"));
-        eventList.add(new Appointment(time, endTime, "In", "imanasou"));
-        eventList.add(new Appointment(time, endTime, "Ima", "imanasou"));
-        eventList.add(new Project("imanasusuuu","iamannaan",time, Status.VTODO_NEEDS_ACTION));
 
         for (Event event : eventList) {
             JPanel panel = createPanelForEvent(event);
