@@ -20,7 +20,7 @@ public class AppointmentGUI extends JPanel {
 
     public AppointmentGUI() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(410, 250));
+        setPreferredSize(new Dimension(420, 250));
 
         this.startDateChooser = new JDateChooser();
         JTextField dateTextField = ((JTextField) startDateChooser.getDateEditor().getUiComponent());
@@ -45,7 +45,7 @@ public class AppointmentGUI extends JPanel {
         dateTextField.setEditable(false);
         endDateChooser.setPreferredSize(new Dimension(100, 20));
 
-        // Set the minimum date for the endDateChooser to January 1, 2024
+        // Set the minimum date for the endDateChooser to/home/spyrosgew/UNI/dataStructures/Data-Structures January 1, 2024
         endDateChooser.setMinSelectableDate(minDateCalendar.getTime());
 
         this.endTimeSpinner = new JSpinner(new SpinnerDateModel());
@@ -72,7 +72,7 @@ public class AppointmentGUI extends JPanel {
 
         add(startDateChooser);
         add(startTimeSpinner);
-        add(new JLabel("Enter the end date of the appointment"));
+        add(new JLabel("Enter the end date of the appointment  "));
         add(endDateChooser);
         add(endTimeSpinner);
         add(title);
