@@ -31,6 +31,7 @@ public class OurCalendar {
     public void setCalScale(CalScale calScale) { this.calScale = calScale; }
 
     public void addEvents(JPanel printPanel) {
+        printPanel.removeAll();
         JButton createAppointment = new JButton("Create Appointment");
         JButton createProject = new JButton("Create Project");
         printPanel.add(createAppointment);

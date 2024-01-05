@@ -25,6 +25,13 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version> <!-- Check for the latest version on Maven Central -->
+        </dependency>
+
         <dependency>
             <groupId>gr.hua.dit.oop2</groupId>
             <artifactId>calendar</artifactId>
