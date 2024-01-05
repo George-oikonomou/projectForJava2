@@ -32,6 +32,7 @@ public class MainPage extends JFrame implements ActionListener {
 
     private void createPanels() {
         menuPanel = new JPanel();
+        menuPanel.setLayout(new FlowLayout());
         printPanel = new JPanel();
         menuPanel.setBackground(Color.cyan);
         printPanel.setBackground(Color.pink);
@@ -59,27 +60,27 @@ public class MainPage extends JFrame implements ActionListener {
     }
 
     private void createNewEventButton() {
-        newEventButton = createButton("New Event", 30, 80, 170, 60);
+        newEventButton = createButton("New Event");
     }
 
     private void createEditEventButton() {
-        editEventButton = createButton("Edit Event", 30, 160, 170, 60);
+        editEventButton = createButton("Edit Event");
     }
 
     private void createChangeProjectStatusButton() {
-        changeProjectStatusButton = createButton("<html>Change Projects<br /> Status</html>", 30, 240, 170, 90);
+        changeProjectStatusButton = createButton("<html>Change Projects<br /> Status</html>");
     }
 
     private void createPrintEventButton() {
-        printEventButton = createButton("Print Event", 30, 350, 170, 60);
+        printEventButton = createButton("Print Event");
     }
 
-    private JButton createButton(String text, int x, int y, int width, int height) {
+    private JButton createButton(String text) {
         JButton button = new JButton();
-        button.setBounds(x, y, width, height);
+        button.setPreferredSize(new Dimension(170,60));
         button.addActionListener(this);
         button.setText(text);
-        button.setFont(new Font("Comic Sans", Font.BOLD, 25));
+        button.setFont(new Font("Comic Sans", Font.BOLD, 17));
         return button;
     }
 
