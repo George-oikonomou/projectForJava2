@@ -23,9 +23,10 @@ public class AppointmentGUI extends JPanel {
     private JButton create;
 
     public AppointmentGUI() {
+
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
         setPreferredSize(new Dimension(420, 250));
-
+        
         this.title = new JTextField("Appointment Name", 10);
         this.title.addFocusListener(new ClearTextFocusListener("Appointment Name", title));
 

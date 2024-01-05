@@ -67,8 +67,10 @@ public class OurCalendar {
         return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
 
-    private void printBetween(long minTime, long maxTime) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
+    private ArrayList<Event> eventsBetween(long minTime, long maxTime) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         long eventTime;
+        ArrayList<Event> eventsToBePrinted = new ArrayList<>();
+
         for (Event event : events) {
             if (event instanceof Project) {
                 eventTime = ((Project) event).getDue().getCalculationFormat();
@@ -76,12 +78,61 @@ public class OurCalendar {
                 eventTime = event.getStartDate().getCalculationFormat();
             }
             if (eventTime >= minTime && eventTime <= maxTime) { //if the event is between minimum and maximum time
-                Validate.println(event);
+                eventsToBePrinted.add(event);
             }
         }
+        return eventsToBePrinted;
     }
 
-    public void printUpcomingEvents(App.AppChoices choice) {
+    public void printEvents(JPanel printPanel) {
+        printPanel.removeAll();
+
+        JButton day = new JButton("Day");
+        JButton week = new JButton("Week");
+        JButton month = new JButton("Month");
+        JButton pastDay = new JButton("PastDay");
+        JButton pastWeek = new JButton("PastWeek");
+        JButton pastMonth = new JButton("PastMonth");
+        JButton todo = new JButton("Todo");
+        JButton due = new JButton("Due");
+
+        printPanel.add(day);
+        printPanel.add(week);
+        printPanel.add(month);
+        printPanel.add(pastDay);
+        printPanel.add(pastWeek);
+        printPanel.add(pastMonth);
+        printPanel.add(todo);
+        printPanel.add(due);
+
+        addActionListener(day, App.AppChoices.day, printPanel);
+        addActionListener(week, App.AppChoices.week, printPanel);
+        addActionListener(month, App.AppChoices.month, printPanel);
+        addActionListener(pastDay, App.AppChoices.pastday, printPanel);
+        addActionListener(pastWeek, App.AppChoices.pastweek, printPanel);
+        addActionListener(pastMonth, App.AppChoices.pastmonth, printPanel);
+        addActionListener(todo, App.AppChoices.todo, printPanel);
+        addActionListener(due, App.AppChoices.due, printPanel);
+    }
+
+    private void addActionListener(JButton button, App.AppChoices choice, JPanel printPanel) {
+        button.addActionListener(e -> performAction(choice, printPanel));
+    }
+
+    private void performAction(App.AppChoices choice, JPanel printPanel) {
+        printPanel.removeAll();
+
+        switch (choice) {
+            case day, week, month -> printPanel.add(new PrintGUI(printUpcomingEvents(choice)));
+            case pastday, pastweek, pastmonth ->  printPanel.add(new PrintGUI(printOldEvents(choice)));
+            case todo, due -> printPanel.add(new PrintGUI(printUnfinishedProject(choice)));
+        }
+
+        printPanel.revalidate();
+        printPanel.repaint();
+    }
+
+    public ArrayList<Event> printUpcomingEvents(App.AppChoices choice) {
         OurDateTime minTime = new OurDateTime(); //if we want to print an upcoming event the min time should be the current time
         OurDateTime maxTime = new OurDateTime(); //this value will always change based on the choice
         LocalDateTime currentTime = LocalDateTime.of(minTime.getYear(),minTime.getMonth()
@@ -112,9 +163,9 @@ public class OurCalendar {
                         endOfMonth.getDayOfMonth(),endOfMonth.getHour(),endOfMonth.getMinute());
             }
         }
-        printBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
+        return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
-    public void printOldEvents(App.AppChoices choice) {
+    public ArrayList<Event> printOldEvents(App.AppChoices choice) {
         OurDateTime maxTime = new OurDateTime(); //if we want to print an old event the max time should be the current time
         OurDateTime minTime = new OurDateTime(); //this value will always change based on the choice
         LocalDateTime currentTime = LocalDateTime.of(maxTime.getYear(),maxTime.getMonth()
@@ -141,20 +192,22 @@ public class OurCalendar {
                         startOfMonth.getDayOfMonth(),startOfMonth.getHour(),startOfMonth.getMinute());
             }
         }
-        printBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
+        return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
 
-    public void printUnfinishedProject(App.AppChoices choice) {
+    public ArrayList<Event> printUnfinishedProject(App.AppChoices choice) {
         sortList(events);
         OurDateTime realDateTime = new OurDateTime(); // Current date & time
         long format = realDateTime.getCalculationFormat();
+        ArrayList<Event> eventsToBePrinted = new ArrayList<>();
 
         for (Event event : events) {
             if (event instanceof Project && !((Project) event).getIsFinished()) {
                 long dueFormat = ((Project) event).getDue().getCalculationFormat(); //making a DueFormat to check if it surpasses the realDateTime
                 if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
-                    Validate.println(event);
+                    eventsToBePrinted.add(event);
             }
         }
+        return eventsToBePrinted;
     }
 }
