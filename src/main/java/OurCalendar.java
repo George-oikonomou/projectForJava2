@@ -47,7 +47,12 @@ public class OurCalendar {
         });
 
         createProject.addActionListener(e -> {
+            printPanel.removeAll();
             ProjectGui projectGui = new ProjectGui();
+            printPanel.add(projectGui);
+            printPanel.revalidate();
+            printPanel.repaint();
+            createProject.setEnabled(true);
         });
     }
 
@@ -100,7 +105,7 @@ public class OurCalendar {
                 /*getMonth gets the month from current time
                 inputDateTime.toLocalDate().isLeapYear() this checks if the year is a leap year
                 then we set the length of the month considering if it is a leap year.
-                Then at the end we put back the time so we don't lose it */
+                Then at the end we put back the time, so we don't lose it */
                 LocalDateTime endOfMonth = currentTime.withDayOfMonth(currentTime.getMonth().
                                 length(currentTime.toLocalDate().isLeapYear())).with(LocalDateTime.now().toLocalTime());
                 maxTime = new OurDateTime(endOfMonth.getYear(),endOfMonth.getMonthValue(),
