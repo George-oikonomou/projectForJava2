@@ -82,22 +82,4 @@ public class OurDateTime {
         String time = time(minute,hour,false);
         this.CalculationFormat = Long.parseLong(date + time);
     }
-
-    @Override
-    public String toString(){ return getDate() + " " + getTime(); }
-
-    public static class Functionality{
-        /**
-         * method that gets creates a valid datetime object based on the users input it has the proper restrictions
-         * @return returns a ourDateTime object
-         */
-        public static OurDateTime dateAndTime() {
-            int year   = Validate.printMessageAndGetIntBetween("\nDATE\n\tYear:\t", 2023 ,2100);
-            int month  = Validate.printMessageAndGetIntBetween("\tMonth:\t", 1, 12);
-            int day    = Validate.printMessageAndGetIntBetween("\tDay:\t", 1, Validate.getDaysInMonth(month, year));
-            int hour   = Validate.printMessageAndGetIntBetween("\nTIME\n\tHour:\t", 0, 23);
-            int minute = Validate.printMessageAndGetIntBetween("\tMinute:\t", 0, 59);
-            return new OurDateTime(year, month, day, hour, minute);
-        }
-    }
 }

@@ -1,5 +1,4 @@
 import gr.hua.dit.oop2.calendar.TimeService;
-
 import javax.swing.*;
 
 public class App {
