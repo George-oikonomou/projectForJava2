@@ -82,4 +82,8 @@ public class OurDateTime {
         String time = time(minute,hour,false);
         this.CalculationFormat = Long.parseLong(date + time);
     }
+
+    @Override
+    public String toString(){ return getDate() + " " + getTime(); }
+
 }
