@@ -39,7 +39,7 @@ public class OurCalendar {
 
         createAppointment.addActionListener(e -> {
             printPanel.removeAll();
-            AppointmentGUI appointmentGui = new AppointmentGUI();
+            AppointmentGUI appointmentGui = new AppointmentGUI(events);
             printPanel.add(appointmentGui);
             printPanel.revalidate();
             printPanel.repaint();
