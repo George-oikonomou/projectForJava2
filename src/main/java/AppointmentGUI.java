@@ -67,7 +67,7 @@ public class AppointmentGUI extends JPanel {
     }
 
     public void createAppointment() {
-        if(Validate.validateInput(startDateChooser, endDateChooser, title, description)) return;
+        if(Validate.Input(startDateChooser,title, description) || endDateChooser.getDate() == null) return;
 
         OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
         OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);
@@ -75,6 +75,14 @@ public class AppointmentGUI extends JPanel {
         if (Validate.Dates(startDateTime, endDateTime)) return;
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
+
+        JOptionPane.showMessageDialog(null, "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        //restart the fields
+        title.setText("Appointment Name");
+        description.setText("Appointment Description");
+        startDateChooser.setDate(null);
+        endDateChooser.setDate(null);
     }
 
     private class ButtonListener implements ActionListener{
@@ -107,6 +115,8 @@ public class AppointmentGUI extends JPanel {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             Date newStartDate = (Date) evt.getNewValue();
+
+            if (newStartDate == null) return;
 
             // Extract only the date part from newStartDate
             Date startDate = DateUtils.truncate(newStartDate, Calendar.DATE);
