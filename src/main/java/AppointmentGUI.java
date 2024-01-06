@@ -1,7 +1,5 @@
 import com.toedter.calendar.JDateChooser;
-import net.fortuna.ical4j.model.DateTime;
 import org.apache.commons.lang3.time.DateUtils;
-
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
@@ -11,22 +9,21 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 
 public class AppointmentGUI extends JPanel {
-    private JDateChooser startDateChooser;
+    private final JDateChooser startDateChooser;
     private final JSpinner startTimeSpinner;
-    private JDateChooser endDateChooser;
-    private JSpinner endTimeSpinner;
-    private JTextField title;
-    private JTextArea description;
-    private JScrollPane descriptionScrollPane;
-    private JButton create;
-    private ArrayList<Event> events;
+    private final JDateChooser endDateChooser;
+    private final JSpinner endTimeSpinner;
+    private final JTextField title;
+    private final JTextArea description;
+    private final JScrollPane descriptionScrollPane;
+    private final JButton create;
+    private final ArrayList<Event> events;
 
     public AppointmentGUI(ArrayList<Event> events) {
 
@@ -44,12 +41,12 @@ public class AppointmentGUI extends JPanel {
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
 
 
-        startDateChooser = configureDate();// Start Date Configuration
+        startDateChooser = DateTimeManager.configureDate(100,20);// Start Date Configuration
         startDateChooser.addPropertyChangeListener("date", new StartDateChangeListener());
-        startTimeSpinner = configureTime();// Start Time Configuration
+        startTimeSpinner = DateTimeManager.configureTime(40,20);// Start Time Configuration
 
-        endDateChooser = configureDate();// End Date Configuration
-        endTimeSpinner = configureTime();// End Time Configuration
+        endDateChooser =  DateTimeManager.configureDate(100,20);// End Date Configuration
+        endTimeSpinner = DateTimeManager.configureTime(40,20);// End Time Configuration
 
         this.create = new JButton("Create");
         this.create.addActionListener(new ButtonListener());
@@ -69,68 +66,14 @@ public class AppointmentGUI extends JPanel {
         add(create);
     }
 
-
-    private JSpinner configureTime() {
-        JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
-                 timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
-
-        JFormattedTextField timeTextField = ((JSpinner.DefaultEditor) timeSpinner.getEditor()).getTextField();
-                            timeTextField.setEditable(false);
-                            timeTextField.setPreferredSize(new Dimension(40, 20));
-
-        return timeSpinner;
-    }
-
-    private JDateChooser configureDate() {
-        JDateChooser DateChooser = new JDateChooser();
-
-        DateChooser.setPreferredSize(new Dimension(100, 20));
-        DateChooser.setMinSelectableDate(new GregorianCalendar(2024, Calendar.JANUARY, 1).getTime());
-
-        JTextField startDateTextField = ((JTextField) DateChooser.getDateEditor().getUiComponent());
-                   startDateTextField.setEditable(false);
-
-        return DateChooser;
-    }
-
     public void createAppointment() {
-        Date startTime = (Date) startTimeSpinner.getValue();
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTime(startTime);
-        int startHour = startCalendar.get(Calendar.HOUR_OF_DAY);
-        int startMinute = startCalendar.get(Calendar.MINUTE);
+        if(Validate.validateInput(startDateChooser, endDateChooser, title, description)) return;
 
+        OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
+        OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);
 
-        if ( startDateChooser.getDate() == null || endDateChooser.getDate() == null ||title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description")) {
-            JOptionPane.showMessageDialog(null, "Please fill in all the fields","Error",JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        if (Validate.Dates(startDateTime, endDateTime)) return;
 
-        // Extracting date and time components for start and end
-        int startYear = startDateChooser.getCalendar().get(Calendar.YEAR);
-        int startMonth = startDateChooser.getCalendar().get(Calendar.MONTH) + 1; // Month is zero-based
-        int startDay = startDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH);
-
-        int endYear = endDateChooser.getCalendar().get(Calendar.YEAR);
-        int endMonth = endDateChooser.getCalendar().get(Calendar.MONTH) + 1;
-        int endDay = endDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH);
-
-        Date endTime = (Date) endTimeSpinner.getValue();
-        Calendar endCalendar = Calendar.getInstance();
-        endCalendar.setTime(endTime);
-        int endHour = endCalendar.get(Calendar.HOUR_OF_DAY);
-        int endMinute = endCalendar.get(Calendar.MINUTE);
-
-
-        // Creating OurDateTime objects for start and end
-        OurDateTime startDateTime = new OurDateTime(startYear, startMonth, startDay, startHour, startMinute);
-        OurDateTime endDateTime = new OurDateTime(endYear, endMonth, endDay, endHour, endMinute);
-
-        if (startDateTime.getCalculationFormat() > endDateTime.getCalculationFormat()){
-            JOptionPane.showMessageDialog(null, "Start date cant be after end date","Error",JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // Now, create an Appointment object
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
     }
 
@@ -142,29 +85,22 @@ public class AppointmentGUI extends JPanel {
         }
     }
 
-    private class ClearTextFocusListener implements FocusListener {
-        private final String defaultText;
-        private final JTextComponent textComponent;
-
-        public ClearTextFocusListener(String defaultText, JTextComponent textComponent) {
-            this.defaultText = defaultText;
-            this.textComponent = textComponent;
-        }
+    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
 
         @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
+            public void focusGained(FocusEvent e) {
+                if (textComponent.getText().equals(defaultText)) {
+                    textComponent.setText("");
+                }
             }
-        }
 
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                textComponent.setText(defaultText);
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textComponent.getText().isEmpty()) {
+                    textComponent.setText(defaultText);
+                }
             }
         }
-    }
 
     private class StartDateChangeListener implements PropertyChangeListener {
 
