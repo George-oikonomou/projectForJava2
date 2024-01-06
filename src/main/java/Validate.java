@@ -5,8 +5,8 @@ import javax.swing.text.JTextComponent;
 
 public  class Validate {//General class for validating input
 
-    public static boolean validateInput(JDateChooser startDateChooser, JDateChooser endDateChooser, JTextComponent title, JTextComponent description) {
-        if (startDateChooser.getDate() == null || endDateChooser.getDate() == null || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description")){
+    public static boolean Input(JDateChooser startDateChooser, JTextComponent title, JTextComponent description) {
+        if (startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description")){
             JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return true;
         }
