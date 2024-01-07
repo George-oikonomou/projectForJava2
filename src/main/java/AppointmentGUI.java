@@ -1,7 +1,5 @@
 import com.toedter.calendar.JDateChooser;
-import net.fortuna.ical4j.model.DateTime;
 import org.apache.commons.lang3.time.DateUtils;
-
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
@@ -11,13 +9,13 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AppointmentGUI extends JPanel {
+    private JPanel printPanel;
     private JDateChooser startDateChooser;
     private final JSpinner startTimeSpinner;
     private JDateChooser endDateChooser;
@@ -28,9 +26,10 @@ public class AppointmentGUI extends JPanel {
     private JButton create;
     private ArrayList<Event> events;
 
-    public AppointmentGUI(ArrayList<Event> events) {
+    public AppointmentGUI(ArrayList<Event> events, JPanel printPanel) {
 
         this.events = events;
+        this.printPanel = printPanel;
 
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
         setPreferredSize(new Dimension(420, 250));
@@ -130,8 +129,12 @@ public class AppointmentGUI extends JPanel {
             JOptionPane.showMessageDialog(null, "Start date cant be after end date","Error",JOptionPane.ERROR_MESSAGE);
             return;
         }
+        printPanel.removeAll();
+        printPanel.revalidate();
+        printPanel.repaint();
         // Now, create an Appointment object
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
+        JOptionPane.showMessageDialog(null,"created new Appointment " + title.getText() );
     }
 
     private class ButtonListener implements ActionListener{
