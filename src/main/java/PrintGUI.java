@@ -53,7 +53,7 @@ public class PrintGUI extends JPanel {
             panel.add(new JLabel("Title: " + project.getTitle()));
             panel.add(new JLabel("Description: " + project.getDescription()));
             panel.add(new JLabel("Due Date: " + project.getDue()));
-            panel.add(new JLabel("Status: " + project.getStatus().toString()));
+            panel.add(new JLabel("Status: " + project.getStatus().getValue()));
         }
 
         panel.addMouseListener(new MouseAdapter() {

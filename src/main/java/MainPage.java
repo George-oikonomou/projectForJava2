@@ -100,7 +100,9 @@ public class MainPage extends JFrame implements ActionListener {
             Validate.println("edit Event Button");
             editEventButton.setEnabled(true);
         } else if (e.getSource() == changeProjectStatusButton) {
-            Validate.println("change Project Status Button");
+            calendar.changeStatus(getPrintPanel());
+            printPanel.revalidate();
+            printPanel.repaint();
             changeProjectStatusButton.setEnabled(true);
         } else if (e.getSource() == printEventButton) {
             calendar.printEvents(getPrintPanel());
