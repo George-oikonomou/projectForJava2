@@ -48,7 +48,7 @@ public class OurCalendar {
 
         createProject.addActionListener(e -> {
             printPanel.removeAll();
-            ProjectGui projectGui = new ProjectGui();
+            ProjectGui projectGui = new ProjectGui(events);
             printPanel.add(projectGui);
             printPanel.revalidate();
             printPanel.repaint();
@@ -114,6 +114,14 @@ public class OurCalendar {
         addActionListener(todo, App.AppChoices.todo, printPanel);
         addActionListener(due, App.AppChoices.due, printPanel);
     }
+
+
+    public void changeStatus(JPanel printPanel) {
+        printPanel.removeAll();
+        ChangeStatusGui changeStatusGui = new ChangeStatusGui(events);
+        printPanel.add(changeStatusGui);
+    }
+
 
     private void addActionListener(JButton button, App.AppChoices choice, JPanel printPanel) {
         button.addActionListener(e -> performAction(choice, printPanel));
