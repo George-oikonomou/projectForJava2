@@ -12,8 +12,13 @@ import java.util.NoSuchElementException;
 
 public class ICSFile {
     private final String filePath;
-
-    public ICSFile(String filePath) { this.filePath = filePath; }
+    private final OurCalendar calendar;
+    public ICSFile(String filePath) {
+        this.calendar = new OurCalendar();
+        this.filePath = filePath;
+    }
+    public String getFileName() { return filePath.substring(filePath.lastIndexOf('\\') + 1 ); }
+    public OurCalendar getCalendar() { return calendar; }
     /**
      * method that loads Events from the ics file and saves it the "events" ArrayList on our calendar
      * see documentation for more info
@@ -43,10 +48,10 @@ public class ICSFile {
 
                 count++;
             }
-            App.calendar.setCalScale(calendar.getCalendarScale());
-            App.calendar.setProdId(calendar.getProductId());
-            App.calendar.setVersion(calendar.getVersion().getValue());
-            App.calendar.setEvents(events);
+            this.calendar.setCalScale(calendar.getCalendarScale());
+            this.calendar.setProdId(calendar.getProductId());
+            this.calendar.setVersion(calendar.getVersion().getValue());
+            this.calendar.setEvents(events);
         } catch (ParserException | NullPointerException e) {
             Validate.println("The file you have provided is corrupt ");
             System.exit(1);
@@ -95,10 +100,10 @@ public class ICSFile {
 
         Calendar calendar = new Calendar();
         Version version = new Version();
-        version.setValue(App.calendar.getVersion());
+        version.setValue(this.calendar.getVersion());
         calendar.getProperties().add((version));
-        calendar.getProperties().add(App.calendar.getProdId());
-        calendar.getProperties().add(App.calendar.getCalScale());
+        calendar.getProperties().add(this.calendar.getProdId());
+        calendar.getProperties().add(this.calendar.getCalScale());
         for (Event event : events) {
             if (event instanceof Appointment appointment)
                 calendar.getComponents().add(createVEvent(appointment));
@@ -152,5 +157,9 @@ public class ICSFile {
         int minutes = (string.length() == 15) ? Integer.parseInt(string.substring(11, 13)) : 0;
 
         return new OurDateTime(year, month, day, hour, minutes);
+    }
+    @Override
+    public String toString() {
+        return getFileName();
     }
 }

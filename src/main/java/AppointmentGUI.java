@@ -23,12 +23,9 @@ public class AppointmentGUI extends JPanel {
     private final JTextArea description;
     private final JScrollPane descriptionScrollPane;
     private final JButton create;
-    private final ArrayList<Event> events;
+    private final JComboBox<String> icsFilesDropdown;
 
-    public AppointmentGUI(ArrayList<Event> events) {
-
-        this.events = events;
-
+    public AppointmentGUI() {
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
         setPreferredSize(new Dimension(420, 250));
         
@@ -47,8 +44,20 @@ public class AppointmentGUI extends JPanel {
 
         endDateChooser =  DateTimeManager.configureDate(100,20);// End Date Configuration
         endTimeSpinner = DateTimeManager.configureTime(40,20);// End Time Configuration
+        this.icsFilesDropdown = new JComboBox<>();
+
+        for (ICSFile icsFile : App.getAllIcsFiles()) {
+          icsFilesDropdown.addItem(icsFile.getFileName());
+        }
 
         this.create = new JButton("Create");
+
+        if (App.getAllIcsFiles().isEmpty()) {
+            icsFilesDropdown.addItem("No ICS Files");
+            create.setEnabled(false);
+        }
+
+
         this.create.addActionListener(new ButtonListener());
 
         addComponents();// GUI Components Placement
@@ -63,11 +72,18 @@ public class AppointmentGUI extends JPanel {
         add(endTimeSpinner);
         add(title);
         add(descriptionScrollPane);
+        add(new JLabel("Select ICS File:"));
+        add(icsFilesDropdown);
         add(create);
     }
 
     public void createAppointment() {
-        if(Validate.Input(startDateChooser,title, description) || endDateChooser.getDate() == null) return;
+        if(startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description") || endDateChooser.getDate() == null || App.getAllIcsFiles().isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ArrayList<Event> events =  App.getAllIcsFiles().get(icsFilesDropdown.getSelectedIndex()).getCalendar().getEvents();
 
         OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
         OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);
