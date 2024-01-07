@@ -87,7 +87,7 @@ public class OurCalendar {
 
     public static void changeStatus(JPanel printPanel) {
         printPanel.removeAll();
-        ChangeStatusGui changeStatusGui = new ChangeStatusGui(events);
+        ChangeStatusGui changeStatusGui = new ChangeStatusGui();
         printPanel.add(changeStatusGui);
     }
 
