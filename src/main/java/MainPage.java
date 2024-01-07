@@ -3,8 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class MainPage extends JFrame implements ActionListener {
-    OurCalendar calendar;
+
     JButton newEventButton;
     JButton editEventButton;
     JButton changeProjectStatusButton;
@@ -13,9 +14,9 @@ public class MainPage extends JFrame implements ActionListener {
     JPanel printPanel;
 
     public MainPage() {
-        this.calendar = new OurCalendar();
         initializeFrame();
         createPanels();
+        new MenuManager(this);
         setPanels();
         createButtons();
         addButtonsToPanel();
@@ -91,7 +92,7 @@ public class MainPage extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newEventButton) {
-            calendar.addEvents(getPrintPanel());
+            OurCalendar.addEvents(getPrintPanel());
             printPanel.revalidate();
             printPanel.repaint();
             newEventButton.setEnabled(true);
@@ -100,12 +101,12 @@ public class MainPage extends JFrame implements ActionListener {
             Validate.println("edit Event Button");
             editEventButton.setEnabled(true);
         } else if (e.getSource() == changeProjectStatusButton) {
-            calendar.changeStatus(getPrintPanel());
+            OurCalendar.changeStatus(getPrintPanel());
             printPanel.revalidate();
             printPanel.repaint();
             changeProjectStatusButton.setEnabled(true);
         } else if (e.getSource() == printEventButton) {
-            calendar.printEvents(getPrintPanel());
+            PrintGUI.printEvents(getPrintPanel());
             printPanel.revalidate();
             printPanel.repaint();
             printEventButton.setEnabled(true);
