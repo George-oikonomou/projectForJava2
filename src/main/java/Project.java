@@ -1,7 +1,9 @@
 import net.fortuna.ical4j.model.property.Status;
 
+import javax.swing.*;
+
 public class Project extends Event{
-    private final Status status;
+    private Status status;
     private final OurDateTime due;    //date and time of project deadline
     private boolean isFinished = false;     // boolean value that tells if the project is finished
 
@@ -13,6 +15,7 @@ public class Project extends Event{
         this.status = status;
         setFinished(status == Status.VTODO_COMPLETED);
     }
+    public void setStatus(Status status) { this.status = status; }
     public Status getStatus() { return status; }
     public OurDateTime getDue() { return due; }
     public boolean getIsFinished() { return isFinished; }
