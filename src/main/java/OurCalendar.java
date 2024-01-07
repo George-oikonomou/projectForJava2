@@ -49,7 +49,7 @@ public class OurCalendar {
 
         createProject.addActionListener(e -> {
             printPanel.removeAll();
-            ProjectGui projectGui = new ProjectGui(events);
+            ProjectGui projectGui = new ProjectGui();
             printPanel.add(projectGui);
             printPanel.revalidate();
             printPanel.repaint();
@@ -87,9 +87,12 @@ public class OurCalendar {
 
     public static void changeStatus(JPanel printPanel) {
         printPanel.removeAll();
-        ChangeStatusGui changeStatusGui = new ChangeStatusGui(events);
+
+        ChangeStatusGui changeStatusGui = new ChangeStatusGui();
         printPanel.add(changeStatusGui);
     }
+
+
     public static ArrayList<Event> printUpcomingEvents(App.AppChoices choice,ArrayList<Event> events) {
         OurDateTime minTime = new OurDateTime(); //if we want to print an upcoming event the min time should be the current time
         OurDateTime maxTime = new OurDateTime(); //this value will always change based on the choice
