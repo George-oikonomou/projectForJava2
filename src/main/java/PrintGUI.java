@@ -1,45 +1,77 @@
-import net.fortuna.ical4j.model.property.Status;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class PrintGUI extends JPanel {
-
+    private final ArrayList<ICSFile> allFiles;
     private JList<JPanel> printList;
     private  DefaultListModel<JPanel> listModel;
     private static final ArrayList<ICSFile> selectedFiles = new ArrayList<>();
-    private static final ArrayList <Event> AllSelectedCalendarEvents = new ArrayList<>();
-    public PrintGUI(ArrayList<Event> eventList) {
-        setPreferredSize(new Dimension(250,400));
+    private static final ArrayList <Event> selectedEvents = new ArrayList<>();
+    private JScrollPane scrollPane;
+
+    public PrintGUI(ArrayList <ICSFile> allFiles) {
+        this.allFiles = allFiles;
+        setLayout(new FlowLayout());
+        setPreferredSize(new Dimension(450,500));
+        setBackground(Color.PINK);
+        JButton day = new JButton("Day");
+        JButton week = new JButton("Week");
+        JButton month = new JButton("Month");
+        JButton pastDay = new JButton("PastDay");
+        JButton pastWeek = new JButton("PastWeek");
+        JButton pastMonth = new JButton("PastMonth");
+        JButton todo = new JButton("Todo");
+        JButton due = new JButton("Due");
+        JButton selectFiles = createStyledButton();
+
+        this.add(selectFiles);
+
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setPreferredSize(new Dimension(4096, 1));
+        separator.setForeground(Color.BLACK);
+        add(separator);
+        add(day);
+        add(week);
+        add(month);
+        add(pastDay);
+        add(pastWeek);
+        add(pastMonth);
+        add(todo);
+        add(due);
+
+        day.addActionListener(e -> performAction(App.AppChoices.day));
+        week.addActionListener(e -> performAction(App.AppChoices.week));
+        month.addActionListener(e -> performAction(App.AppChoices.month));
+        pastDay.addActionListener(e -> performAction(App.AppChoices.pastday));
+        pastWeek.addActionListener(e -> performAction(App.AppChoices.pastweek));
+        pastMonth.addActionListener(e -> performAction(App.AppChoices.pastmonth));
+        todo.addActionListener(e -> performAction(App.AppChoices.todo));
+        due.addActionListener(e -> performAction(App.AppChoices.due));
+
+        selectFiles.addActionListener(e -> selectMultipleFiles());
+    }
+
+    public void printEvents() {
+
         listModel = new DefaultListModel<>();
 
-        for (Event event : eventList) {
+        for (Event event : selectedEvents) {
             JPanel panel = createPanelForEvent(event);
             listModel.addElement(panel);
         }
 
         printList = new JList<>(listModel);
 
-        printList.setPreferredSize(new Dimension(230, (eventList.size() == 0 ?  1 : eventList.size()) *78 ));
+        printList.setPreferredSize(new Dimension(230, (selectedEvents.isEmpty() ?  1 : selectedEvents.size()) * 78 ));
         printList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         printList.setCellRenderer(new PanelListCellRenderer());
 
-        printList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedIndex = printList.getSelectedIndex();
-                if (selectedIndex != -1) {
-                    JPanel selectedPanel = listModel.getElementAt(selectedIndex);
-                    handleSelection(selectedPanel);
-                }
-            }
-        });
-
-        JScrollPane scrollPane = new JScrollPane(printList);
-        setLayout(new BorderLayout());
-        add(scrollPane, BorderLayout.CENTER);
+        scrollPane = new JScrollPane(printList);
+        scrollPane.setPreferredSize(new Dimension(250,350));
+        add(scrollPane);
+        revalidate();
+        repaint();
     }
 
     private JPanel createPanelForEvent(Event event) {
@@ -58,57 +90,9 @@ public class PrintGUI extends JPanel {
             panel.add(new JLabel("Status: " + project.getStatus().getValue()));
         }
 
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    handleSelection(panel);
-                }
-            }
-        });
-
         return panel;
     }
-    public static void printEvents(JPanel printPanel) {
-        printPanel.removeAll();
 
-        JButton day = new JButton("Day");
-        JButton week = new JButton("Week");
-        JButton month = new JButton("Month");
-        JButton pastDay = new JButton("PastDay");
-        JButton pastWeek = new JButton("PastWeek");
-        JButton pastMonth = new JButton("PastMonth");
-        JButton todo = new JButton("Todo");
-        JButton due = new JButton("Due");
-        JButton selectFiles = createStyledButton();
-
-
-        printPanel.add(selectFiles);
-
-        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        separator.setPreferredSize(new Dimension(4096, 1));
-        separator.setForeground(Color.BLACK);
-        printPanel.add(separator);
-        printPanel.add(day);
-        printPanel.add(week);
-        printPanel.add(month);
-        printPanel.add(pastDay);
-        printPanel.add(pastWeek);
-        printPanel.add(pastMonth);
-        printPanel.add(todo);
-        printPanel.add(due);
-
-
-        addActionListener(day, App.AppChoices.day, printPanel);
-        addActionListener(week, App.AppChoices.week, printPanel);
-        addActionListener(month, App.AppChoices.month, printPanel);
-        addActionListener(pastDay, App.AppChoices.pastday, printPanel);
-        addActionListener(pastWeek, App.AppChoices.pastweek, printPanel);
-        addActionListener(pastMonth, App.AppChoices.pastmonth, printPanel);
-        addActionListener(todo, App.AppChoices.todo, printPanel);
-        addActionListener(due, App.AppChoices.due, printPanel);
-        selectFiles.addActionListener(e -> selectMultipleFiles(printPanel));
-    }
     private static JButton createStyledButton() {
         JButton button = new JButton("Select calendars");
         button.setFont(new Font("Arial", Font.BOLD, 14));
@@ -119,12 +103,12 @@ public class PrintGUI extends JPanel {
 
         return button;
     }
-    private static void selectMultipleFiles(JPanel printPanel) {
+    private void selectMultipleFiles() {
         selectedFiles.clear();
 
         DefaultListModel<ICSFile> allIcsFileListModel = new DefaultListModel<>();
 
-        for (ICSFile icsFile : App.getAllIcsFiles()) {
+        for (ICSFile icsFile : allFiles) {
             allIcsFileListModel.addElement(icsFile);
         }
 
@@ -133,7 +117,7 @@ public class PrintGUI extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(fileList);
 
-        int result = JOptionPane.showConfirmDialog(printPanel, scrollPane, "Select ICS Files", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(this,scrollPane, "Select ICS Files", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION) {
             int[] selectedIcsFilesIndices = fileList.getSelectedIndices();
@@ -144,27 +128,28 @@ public class PrintGUI extends JPanel {
         }
     }
 
-    private static void addActionListener(JButton button, App.AppChoices choice, JPanel printPanel) {
-        button.addActionListener(e -> performAction(choice, printPanel));
-    }
-
-    private static void performAction(App.AppChoices choice, JPanel printPanel) {
-        AllSelectedCalendarEvents.clear();
-        printPanel.removeAll();
-        for ( ICSFile icsFile : selectedFiles){
-            AllSelectedCalendarEvents.addAll(icsFile.getCalendar().getEvents());
-        }
+    private void performAction(App.AppChoices choice) {
+        selectedEvents.clear();
+        if (scrollPane != null)
+            remove(scrollPane);
         switch (choice) {
-               case day, week, month -> printPanel.add(new PrintGUI(OurCalendar.printUpcomingEvents(choice, AllSelectedCalendarEvents)));
-               case pastday, pastweek, pastmonth ->  printPanel.add(new PrintGUI(OurCalendar.printOldEvents(choice, AllSelectedCalendarEvents)));
-               case todo, due -> printPanel.add(new PrintGUI(OurCalendar.printUnfinishedProject(choice, AllSelectedCalendarEvents)));
+            case day, week, month -> {
+                for (ICSFile icsFile : selectedFiles) {
+                    selectedEvents.addAll(icsFile.getCalendar().printUpcomingEvents(choice));
+                }
+            }
+            case pastday, pastweek, pastmonth -> {
+                for (ICSFile icsFile : selectedFiles) {
+                    selectedEvents.addAll(icsFile.getCalendar().printOldEvents(choice));
+                }
+            }
+            case todo, due -> {
+                for (ICSFile icsFile : selectedFiles) {
+                    selectedEvents.addAll(icsFile.getCalendar().printUnfinishedProject(choice));
+                }
+            }
         }
-
-        printPanel.revalidate();
-        printPanel.repaint();
-    }
-    private void handleSelection(JPanel selectedPanel) {
-        // Implement your logic when a panel is selected
+        printEvents();
     }
 
     private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {

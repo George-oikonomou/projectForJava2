@@ -1,7 +1,5 @@
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
-import javax.swing.*;
-import java.awt.*;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,31 +29,7 @@ public class OurCalendar {
     public CalScale getCalScale() { return calScale; }
     public void setCalScale(CalScale calScale) { this.calScale = calScale; }
 
-    public static void addEvents(JPanel printPanel) {
-        printPanel.removeAll();
-        JButton createAppointment = new JButton("Create Appointment");
-        JButton createProject = new JButton("Create Project");
-        printPanel.add(createAppointment);
-        printPanel.add(createProject);
 
-        createAppointment.addActionListener(e -> {
-            printPanel.removeAll();
-            AppointmentGUI appointmentGui = new AppointmentGUI();
-            printPanel.add(appointmentGui);
-            printPanel.revalidate();
-            printPanel.repaint();
-            createAppointment.setEnabled(true);
-        });
-
-        createProject.addActionListener(e -> {
-            printPanel.removeAll();
-            ProjectGui projectGui = new ProjectGui();
-            printPanel.add(projectGui);
-            printPanel.revalidate();
-            printPanel.repaint();
-            createProject.setEnabled(true);
-        });
-    }
 
 
 
@@ -68,7 +42,7 @@ public class OurCalendar {
         return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
     }
 
-    private static ArrayList<Event> eventsBetween(long minTime, long maxTime,ArrayList<Event> events) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
+    private ArrayList<Event> eventsBetween(long minTime, long maxTime) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
         long eventTime;
         ArrayList<Event> eventsToBePrinted = new ArrayList<>();
 
@@ -85,20 +59,13 @@ public class OurCalendar {
         return eventsToBePrinted;
     }
 
-    public static void changeStatus(JPanel printPanel) {
-        printPanel.removeAll();
 
-        ChangeStatusGui changeStatusGui = new ChangeStatusGui();
-        printPanel.add(changeStatusGui);
-    }
-
-
-    public static ArrayList<Event> printUpcomingEvents(App.AppChoices choice,ArrayList<Event> events) {
+    public ArrayList<Event> printUpcomingEvents(App.AppChoices choice) {
         OurDateTime minTime = new OurDateTime(); //if we want to print an upcoming event the min time should be the current time
         OurDateTime maxTime = new OurDateTime(); //this value will always change based on the choice
         LocalDateTime currentTime = LocalDateTime.of(minTime.getYear(),minTime.getMonth()
                 ,minTime.getDay(),minTime.getHour(),minTime.getMinute());
-        sortList(events);
+
         switch (choice) {
             case day -> {
                 //LocalTime.MAX sets the time of a date time object to 23:59 basically giving us the end of the day
@@ -124,14 +91,13 @@ public class OurCalendar {
                         endOfMonth.getDayOfMonth(),endOfMonth.getHour(),endOfMonth.getMinute());
             }
         }
-        return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat(),events);
+        return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
-    public static ArrayList<Event> printOldEvents(App.AppChoices choice,ArrayList<Event> events) {
+    public ArrayList<Event> printOldEvents(App.AppChoices choice) {
         OurDateTime maxTime = new OurDateTime(); //if we want to print an old event the max time should be the current time
         OurDateTime minTime = new OurDateTime(); //this value will always change based on the choice
         LocalDateTime currentTime = LocalDateTime.of(maxTime.getYear(),maxTime.getMonth()
                 ,maxTime.getDay(),maxTime.getHour(),maxTime.getMinute());
-        sortList(events);
         switch (choice) {
             case pastday -> {
                 //LocalTime.MIN sets the time of a date time object to 00:00 basically giving us the start of the day
@@ -153,11 +119,11 @@ public class OurCalendar {
                         startOfMonth.getDayOfMonth(),startOfMonth.getHour(),startOfMonth.getMinute());
             }
         }
-        return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat(),events);
+        return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
 
-    public static ArrayList<Event> printUnfinishedProject(App.AppChoices choice, ArrayList<Event> events) {
-        sortList(events);
+    public ArrayList<Event> printUnfinishedProject(App.AppChoices choice) {
+
         OurDateTime realDateTime = new OurDateTime(); // Current date & time
         long format = realDateTime.getCalculationFormat();
         ArrayList<Event> eventsToBePrinted = new ArrayList<>();
