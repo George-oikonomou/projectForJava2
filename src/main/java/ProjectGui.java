@@ -19,7 +19,7 @@ public class ProjectGui extends JPanel {
     private final JDateChooser due;
     private final JSpinner dueTimeSpinner;
     private final JButton create;
-    private final JComboBox<String> icsFilesDropdown;
+    private final SingleCalendarSelect calendarSelect;
 
     public ProjectGui(ArrayList<ICSFile> allFiles) {
 
@@ -58,22 +58,17 @@ public class ProjectGui extends JPanel {
         spinnerEditor.setEditable(false);
         spinnerEditor.setPreferredSize(new Dimension(40, 20));
 
-        this.icsFilesDropdown = new JComboBox<>();
+        this.calendarSelect = new SingleCalendarSelect(allFiles);
 
-        for (ICSFile icsFile : allFiles) {
-            icsFilesDropdown.addItem(icsFile.getFileName());
-        }
-        if (allFiles.isEmpty()) {
-            icsFilesDropdown.addItem("No ICS Files");
-            create.setEnabled(false);
-        }
+        if (calendarSelect.isEmpty()) create.setEnabled(false);
+
 
         add(new JLabel("Enter the due date of the project"));
         add(due);
         add(dueTimeSpinner);
         add(title);
         add(descriptionScrollPane);
-        add(icsFilesDropdown);
+        add(calendarSelect);
         add(create);
     }
 
@@ -89,7 +84,7 @@ public class ProjectGui extends JPanel {
             JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList<Event> events = allFiles.get(icsFilesDropdown.getSelectedIndex()).getCalendar().getEvents();
+        ArrayList<Event> events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
 
         // Extracting date and time components for due and end
         int dueYear = due.getCalendar().get(Calendar.YEAR);

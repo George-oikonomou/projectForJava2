@@ -9,15 +9,27 @@ import java.util.ArrayList;
 public class OurCalendar {
 
     private ArrayList<Event> events;//has all the events
+    private final ArrayList<Project> projects;
 
     //if the file does not exist the new calendar will have these values
     private String version = "2.0";
     private ProdId prodId = new ProdId("-//java project team//java calendar//EN");
     private CalScale calScale = new CalScale(CalScale.VALUE_GREGORIAN);
 
-    public OurCalendar() { this.events = new ArrayList<>(); }
+    public OurCalendar() {
+        this.events = new ArrayList<>();
+        this.projects = new ArrayList<>();
+    }
 
     public ArrayList<Event> getEvents() { return events; }
+    public ArrayList<Project> getProjects(){
+        for (Event event : events){
+            if (event instanceof Project project){
+                projects.add(project);
+            }
+        }
+        return projects;
+    }
     public void setEvents(ArrayList<Event> events) { this.events = events; }
 
     public String getVersion() { return version;}
@@ -28,10 +40,6 @@ public class OurCalendar {
 
     public CalScale getCalScale() { return calScale; }
     public void setCalScale(CalScale calScale) { this.calScale = calScale; }
-
-
-
-
 
     public static void sortList(ArrayList<Event> events) {events.sort((event1, event2) -> (int) (compareEvents(event1, event2)));} //TODO CHECK IF IT WORKS
 

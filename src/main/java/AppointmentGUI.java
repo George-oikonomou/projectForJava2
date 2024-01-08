@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class AppointmentGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
     private final JDateChooser startDateChooser;
@@ -24,44 +23,29 @@ public class AppointmentGUI extends JPanel {
     private final JTextArea description;
     private final JScrollPane descriptionScrollPane;
     private final JButton create;
-    private final JComboBox<String> icsFilesDropdown;
+    private final SingleCalendarSelect calendarSelect;
 
     public AppointmentGUI(ArrayList<ICSFile> allFiles) {
+
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
         setPreferredSize(new Dimension(420, 250));
         
         this.title = new JTextField("Appointment Name", 10);
         this.title.addFocusListener(new ClearTextFocusListener("Appointment Name", title));
-
         this.description = new JTextArea("Appointment Description", 5, 20);
         this.description.addFocusListener(new ClearTextFocusListener("Appointment Description", description));
         this.descriptionScrollPane = new JScrollPane(description, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
-
-
         startDateChooser = DateTimeManager.configureDate(100,20);// Start Date Configuration
         startDateChooser.addPropertyChangeListener("date", new StartDateChangeListener());
         startTimeSpinner = DateTimeManager.configureTime(40,20);// Start Time Configuration
-
         endDateChooser =  DateTimeManager.configureDate(100,20);// End Date Configuration
         endTimeSpinner = DateTimeManager.configureTime(40,20);// End Time Configuration
-        this.icsFilesDropdown = new JComboBox<>();
-
-        for (ICSFile icsFile : allFiles) {
-          icsFilesDropdown.addItem(icsFile.getFileName());
-        }
-
+        this.calendarSelect = new SingleCalendarSelect(allFiles);
         this.create = new JButton("Create");
-
-        if (allFiles.isEmpty()) {
-            icsFilesDropdown.addItem("No ICS Files");
-            create.setEnabled(false);
-        }
-
-
+        if (calendarSelect.isEmpty()) create.setEnabled(false);
         this.create.addActionListener(new ButtonListener());
-
         addComponents();// GUI Components Placement
     }
 
@@ -75,17 +59,17 @@ public class AppointmentGUI extends JPanel {
         add(title);
         add(descriptionScrollPane);
         add(new JLabel("Select ICS File:"));
-        add(icsFilesDropdown);
+        add(calendarSelect);
         add(create);
     }
 
     public void createAppointment() {
-        if(startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description") || endDateChooser.getDate() == null || allFiles.isEmpty() ){
+        if(startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description") || endDateChooser.getDate() == null || calendarSelect.isEmpty() ){
             JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        ArrayList<Event> events =  allFiles.get(icsFilesDropdown.getSelectedIndex()).getCalendar().getEvents();
+        ArrayList<Event> events =  allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
 
         OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
         OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);
@@ -107,7 +91,6 @@ public class AppointmentGUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             createAppointment();
-
         }
     }
 
