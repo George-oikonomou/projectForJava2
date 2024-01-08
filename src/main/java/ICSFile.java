@@ -17,7 +17,13 @@ public class ICSFile {
         this.calendar = new OurCalendar();
         this.filePath = filePath;
     }
-    public String getFileName() { return filePath.substring(filePath.lastIndexOf('\\') + 1 ); }
+    public String getFileName() {
+        if (System.getProperty("os.name").toLowerCase().contains("windows"))
+            return filePath.substring(filePath.lastIndexOf('\\') + 1 );
+        else
+            return filePath.substring(filePath.lastIndexOf('/') + 1 );
+    }
+
     public OurCalendar getCalendar() { return calendar; }
     /**
      * method that loads Events from the ics file and saves it the "events" ArrayList on our calendar

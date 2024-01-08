@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ProjectGui extends JPanel {
+    private final ArrayList<ICSFile> allFiles;
     private final JTextField title;
     private final JTextArea description;
     private final JDateChooser due;
@@ -20,7 +21,9 @@ public class ProjectGui extends JPanel {
     private final JButton create;
     private final JComboBox<String> icsFilesDropdown;
 
-    public ProjectGui() {
+    public ProjectGui(ArrayList<ICSFile> allFiles) {
+
+        this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setPreferredSize(new Dimension(410, 350));
 
@@ -39,7 +42,7 @@ public class ProjectGui extends JPanel {
         this.title.addFocusListener(new ClearTextFocusListener("Project Name", title));
 
         this.description = new JTextArea("Project Description", 5, 20);
-        this.description.addFocusListener(new ProjectGui.ClearTextFocusListener("Project Description", description));
+        this.description.addFocusListener(new ClearTextFocusListener("Project Description", description));
         this.create = new JButton("Create");
         this.create.addActionListener(new ProjectGui.ButtonListener());
 
@@ -52,16 +55,15 @@ public class ProjectGui extends JPanel {
         JSpinner.DateEditor dueTimeEditor = new JSpinner.DateEditor(dueTimeSpinner, "HH:mm");
         dueTimeSpinner.setEditor(dueTimeEditor);
         JFormattedTextField spinnerEditor = ((JSpinner.DefaultEditor) dueTimeSpinner.getEditor()).getTextField();
-        JFormattedTextField spinnerTextField = spinnerEditor;
-        spinnerTextField.setEditable(false);
-        spinnerTextField.setPreferredSize(new Dimension(40, 20));
+        spinnerEditor.setEditable(false);
+        spinnerEditor.setPreferredSize(new Dimension(40, 20));
 
         this.icsFilesDropdown = new JComboBox<>();
 
-        for (ICSFile icsFile : App.getAllIcsFiles()) {
+        for (ICSFile icsFile : allFiles) {
             icsFilesDropdown.addItem(icsFile.getFileName());
         }
-        if (App.getAllIcsFiles().isEmpty()) {
+        if (allFiles.isEmpty()) {
             icsFilesDropdown.addItem("No ICS Files");
             create.setEnabled(false);
         }
@@ -71,6 +73,7 @@ public class ProjectGui extends JPanel {
         add(dueTimeSpinner);
         add(title);
         add(descriptionScrollPane);
+        add(icsFilesDropdown);
         add(create);
     }
 
@@ -82,11 +85,11 @@ public class ProjectGui extends JPanel {
         int dueMinute = dueCalendar.get(Calendar.MINUTE);
 
         Validate.Input(due, title, description);
-        if (App.getAllIcsFiles().isEmpty() ){
+        if (allFiles.isEmpty() ){
             JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList<Event> events =  App.getAllIcsFiles().get(icsFilesDropdown.getSelectedIndex()).getCalendar().getEvents();
+        ArrayList<Event> events = allFiles.get(icsFilesDropdown.getSelectedIndex()).getCalendar().getEvents();
 
         // Extracting date and time components for due and end
         int dueYear = due.getCalendar().get(Calendar.YEAR);
@@ -106,27 +109,20 @@ public class ProjectGui extends JPanel {
     }
 
 
-    private class ClearTextFocusListener implements FocusListener {
-        private final String defaultText;
-        private final JTextComponent textComponent;
-
-        public ClearTextFocusListener(String defaultText, JTextComponent textComponent) {
-            this.defaultText = defaultText;
-            this.textComponent = textComponent;
-        }
+    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
 
         @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
+            public void focusGained(FocusEvent e) {
+                if (textComponent.getText().equals(defaultText)) {
+                    textComponent.setText("");
+                }
             }
-        }
 
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                textComponent.setText(defaultText);
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textComponent.getText().isEmpty()) {
+                    textComponent.setText(defaultText);
+                }
             }
         }
-    }
 }

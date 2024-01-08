@@ -7,15 +7,17 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class ChangeStatusGui extends JPanel{
-    private JList<JPanel> projectList;
-    private DefaultListModel<JPanel> listModel;
-    private JTextField enterTitle;
-    private JButton searchTitle;
+    private final ArrayList<ICSFile> allFiles;
+    private final JList<JPanel> projectList;
+    private final DefaultListModel<JPanel> listModel;
+    private final JTextField enterTitle;
+    private final JButton searchTitle;
     private static final ArrayList<ICSFile> selectedFiles = new ArrayList<>();
     private static final ArrayList <Event> AllSelectedCalendarEvents = new ArrayList<>();
 
-    public ChangeStatusGui() {
+    public ChangeStatusGui(ArrayList<ICSFile> allFiles) {
 
+        this.allFiles = allFiles;
         setPreferredSize(new Dimension(300, 450));
         listModel = new DefaultListModel<>();
         this.searchTitle = new JButton("Search");
@@ -64,13 +66,13 @@ public class ChangeStatusGui extends JPanel{
 
         return button;
     }
-    private static void selectMultipleFiles(JPanel printPanel) {
+    private void selectMultipleFiles(JPanel printPanel) {
         selectedFiles.clear();
         AllSelectedCalendarEvents.clear();
 
         DefaultListModel<ICSFile> allIcsFileListModel = new DefaultListModel<>();
 
-        for (ICSFile icsFile : App.getAllIcsFiles()) {
+        for (ICSFile icsFile : allFiles) {
             allIcsFileListModel.addElement(icsFile);
         }
 
@@ -165,27 +167,20 @@ public class ChangeStatusGui extends JPanel{
         }
     }
 
-    private class ClearTextFocusListener implements FocusListener {
-        private final String defaultText;
-        private final JTextComponent textComponent;
-
-        public ClearTextFocusListener(String defaultText, JTextComponent textComponent) {
-            this.defaultText = defaultText;
-            this.textComponent = textComponent;
-        }
+    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
 
         @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
+            public void focusGained(FocusEvent e) {
+                if (textComponent.getText().equals(defaultText)) {
+                    textComponent.setText("");
+                }
             }
-        }
 
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                textComponent.setText(defaultText);
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textComponent.getText().isEmpty()) {
+                    textComponent.setText(defaultText);
+                }
             }
         }
-    }
 }
