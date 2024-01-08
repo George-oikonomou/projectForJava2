@@ -12,8 +12,9 @@ public class ChangeStatusGui extends JPanel{
     private final DefaultListModel<JPanel> listModel;
     private final JTextField enterTitle;
     private final JButton searchTitle;
-    private static final ArrayList<ICSFile> selectedFiles = new ArrayList<>();
-    private static final ArrayList <Event> AllSelectedCalendarEvents = new ArrayList<>();
+    private final SingleCalendarSelect calendarSelect;
+    private ArrayList<Project> projects;
+
 
     public ChangeStatusGui(ArrayList<ICSFile> allFiles) {
 
@@ -25,17 +26,21 @@ public class ChangeStatusGui extends JPanel{
         this.enterTitle = new JTextField("Enter Project Title", 10);
         this.enterTitle.setMaximumSize(new Dimension(300, enterTitle.getPreferredSize().height));
         this.enterTitle.addFocusListener(new ClearTextFocusListener("Enter Project Title", enterTitle));
-        JButton selectFiles = createStyledButton();
+        this.calendarSelect = new SingleCalendarSelect(allFiles);
+        calendarSelect.addActionListener(e -> fillProjects());
+        if (calendarSelect.isEmpty()){
+            searchTitle.setEnabled(false);
+        }else {
+            calendarSelect.setSelectedIndex(0);
+        }
 
-
-        add(selectFiles);
+        add(calendarSelect);
 
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
         separator.setPreferredSize(new Dimension(4096, 1));
         separator.setForeground(Color.BLACK);
         add(enterTitle);
         add(searchTitle);
-        selectFiles.addActionListener(e -> selectMultipleFiles(this));
 
         projectList = new JList<>(listModel);
         projectList.setPreferredSize(new Dimension(230,1500));
@@ -46,7 +51,7 @@ public class ChangeStatusGui extends JPanel{
             if (!e.getValueIsAdjusting()) {
                 int selectedIndex = projectList.getSelectedIndex();
                 if (selectedIndex != -1) {
-                    handleSelection((Project) AllSelectedCalendarEvents.get(selectedIndex));
+                    handleSelection( projects.get(selectedIndex));
                 }
             }
         });
@@ -56,60 +61,19 @@ public class ChangeStatusGui extends JPanel{
         add(scrollPane, BorderLayout.CENTER);
 
     }
-    private static JButton createStyledButton() {
-        JButton button = new JButton("Select calendars");
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setForeground(Color.WHITE);
-        button.setBackground(Color.BLUE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
 
-        return button;
-    }
-    private void selectMultipleFiles(JPanel printPanel) {
-        selectedFiles.clear();
-        AllSelectedCalendarEvents.clear();
-
-        DefaultListModel<ICSFile> allIcsFileListModel = new DefaultListModel<>();
-
-        for (ICSFile icsFile : allFiles) {
-            allIcsFileListModel.addElement(icsFile);
-        }
-
-        JList<ICSFile> fileList = new JList<>(allIcsFileListModel);
-        fileList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        JScrollPane scrollPane = new JScrollPane(fileList);
-
-        int result = JOptionPane.showConfirmDialog(printPanel, scrollPane, "Select ICS Files", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            int[] selectedIcsFilesIndices = fileList.getSelectedIndices();
-
-            for (int i : selectedIcsFilesIndices) {
-                selectedFiles.add(allIcsFileListModel.getElementAt(i));
-            }
-        }
-        for ( ICSFile icsFile : selectedFiles){
-            for (Event event : icsFile.getCalendar().getEvents()){
-                if (event instanceof Project project){
-                    AllSelectedCalendarEvents.add(project);
-                }
-            }
-
-        }
+    private void fillProjects(){
+        projects = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getProjects();
     }
 
     private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             listModel.clear();
-            for (Event event : AllSelectedCalendarEvents) {
-                if (event instanceof Project project) {
-                    if (event.getTitle().equalsIgnoreCase(enterTitle.getText())){
-                        JPanel panel = createPanelForProject(project);
-                        listModel.addElement(panel);
-                    }
+            for (Project project : projects) {
+                if (project.getTitle().equalsIgnoreCase(enterTitle.getText())){
+                    JPanel panel = createPanelForProject(project);
+                    listModel.addElement(panel);
                 }
             }
         }
@@ -133,10 +97,7 @@ public class ChangeStatusGui extends JPanel{
                     handleSelection(project);
             }
         });
-
         return panel;
-
-
     }
     private void handleSelection(Project project) {
         // Toggle the status of the project
@@ -147,7 +108,7 @@ public class ChangeStatusGui extends JPanel{
         }
 
         // Find the index of the selected project in the listModel
-        int selectedIndex = AllSelectedCalendarEvents.indexOf(project);
+        int selectedIndex = projects.indexOf(project);
 
         // Remove the existing panel from the listModel
         listModel.remove(selectedIndex);
