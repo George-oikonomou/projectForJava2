@@ -26,7 +26,7 @@ public class MainPage extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new BorderLayout(10, 10));
-        this.setSize(1000, 500);
+        this.setSize(1000, 520);
         this.setVisible(true);
         this.add(menuPanel, BorderLayout.WEST);
         this.add(printPanel, BorderLayout.CENTER);
@@ -55,8 +55,9 @@ public class MainPage extends JFrame {
     private void createButtons(){
         this.newEventButton = createButton("New Event", "addEvent.png", "add an event to a calendar");
         this.editEventButton = createButton("Edit Event",null,"Edit an event from a calendar");
-        this.changeProjectStatusButton = createButton("<html>Change Projects<br /> Status</html>",null, " Change the condition of a project from a calendar");
+        this.changeProjectStatusButton = createButton("<html>Change Projects<br /><center>Status</center></html>",null, " Change the condition of a project from a calendar");
         this.printEventButton = createButton("Print Event",null,"See events from calendars");
+
     }
 
     private JButton createButton(String text, String image, String toolTip) {
@@ -104,7 +105,8 @@ public class MainPage extends JFrame {
                 });
 
             } else if (e.getSource() == editEventButton) {
-                Validate.println("edit Event Button");
+                EditEventGUI editEventGUI = new EditEventGUI(menu.getAllFiles());
+                printPanel.add(editEventGUI);
                 editEventButton.setEnabled(true);
 
             } else if (e.getSource() == changeProjectStatusButton) {

@@ -27,10 +27,11 @@ public class ChangeStatusGui extends JPanel{
         this.enterTitle.setMaximumSize(new Dimension(300, enterTitle.getPreferredSize().height));
         this.enterTitle.addFocusListener(new ClearTextFocusListener("Enter Project Title", enterTitle));
         this.calendarSelect = new SingleCalendarSelect(allFiles);
-        calendarSelect.addActionListener(e -> fillProjects());
+
         if (calendarSelect.isEmpty()){
             searchTitle.setEnabled(false);
         }else {
+            calendarSelect.addActionListener(e -> fillProjects());
             calendarSelect.setSelectedIndex(0);
         }
 
