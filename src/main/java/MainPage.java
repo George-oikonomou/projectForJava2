@@ -1,7 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 
 public class MainPage extends JFrame {
@@ -50,19 +52,26 @@ public class MainPage extends JFrame {
         printPanel.setPreferredSize(new Dimension(450, 500));
     }
 
-    private void createButtons() {
-        this.newEventButton = createButton("New Event");
-        this.editEventButton = createButton("Edit Event");
-        this.changeProjectStatusButton = createButton("<html>Change Projects<br /><center>Status</center></html>");
-        this.printEventButton = createButton("Print Event");
+    private void createButtons(){
+        this.newEventButton = createButton("New Event", "addEvent.png", "add an event to a calendar");
+        this.editEventButton = createButton("Edit Event",null,"Edit an event from a calendar");
+        this.changeProjectStatusButton = createButton("<html>Change Projects<br /><center>Status</center></html>",null, " Change the condition of a project from a calendar");
+        this.printEventButton = createButton("Print Event",null,"See events from calendars");
+
     }
 
-    private JButton createButton(String text) {
+    private JButton createButton(String text, String image, String toolTip) {
         JButton button = new JButton();
+        try {
+            Image img = ImageIO.read(Objects.requireNonNull(getClass().getResource(image)));
+            button.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            button.setText(text);
+        }
         button.setPreferredSize(new Dimension(170, 60));
         button.addActionListener(new Functionality());
-        button.setText(text);
         button.setFont(new Font("Comic Sans", Font.BOLD, 17));
+        button.setToolTipText(toolTip);
         return button;
     }
 
