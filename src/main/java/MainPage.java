@@ -37,7 +37,7 @@ public class MainPage extends JFrame {
     private void createOptionsPanel() {
         menuPanel = new JPanel();
         menuPanel.setLayout(new FlowLayout());
-        menuPanel.setBackground(Color.cyan);
+        menuPanel.setBackground(new Color(90, 160, 207));
         menuPanel.setPreferredSize(new Dimension(250, 500));
         createButtons();
         menuPanel.add(newEventButton);
@@ -48,15 +48,15 @@ public class MainPage extends JFrame {
 
     private void createPrintPanel() {
         printPanel = new JPanel();
-        printPanel.setBackground(Color.pink);
+        printPanel.setBackground(new Color(150, 226, 223));
         printPanel.setPreferredSize(new Dimension(450, 500));
     }
 
     private void createButtons(){
-        this.newEventButton = createButton("New Event", "addEvent.png", "add an event to a calendar");
-        this.editEventButton = createButton("Edit Event",null,"Edit an event from a calendar");
-        this.changeProjectStatusButton = createButton("<html>Change Projects<br /> Status</html>",null, " Change the condition of a project from a calendar");
-        this.printEventButton = createButton("Print Event",null,"See events from calendars");
+        this.newEventButton = createButton("New Event", "Add.jpg", "add an event to a calendar");
+        this.editEventButton = createButton("Edit Event","Edit.jpg","Edit an event from a calendar");
+        this.changeProjectStatusButton = createButton("<html>Change Projects<br /> Status</html>","Status.jpg", " Change the condition of a project from a calendar");
+        this.printEventButton = createButton("Print Event","Print.jpg","See events from calendars");
     }
 
     private JButton createButton(String text, String image, String toolTip) {
