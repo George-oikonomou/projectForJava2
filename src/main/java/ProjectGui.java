@@ -73,11 +73,6 @@ public class ProjectGui extends JPanel {
     }
 
     public void createProject() {
-        Date dueTime = (Date) dueTimeSpinner.getValue();
-        Calendar dueCalendar = Calendar.getInstance();
-        dueCalendar.setTime(dueTime);
-        int dueHour = dueCalendar.get(Calendar.HOUR_OF_DAY);
-        int dueMinute = dueCalendar.get(Calendar.MINUTE);
 
         Validate.Input(due, title, description);
         if (allFiles.isEmpty() ){
@@ -85,15 +80,16 @@ public class ProjectGui extends JPanel {
             return;
         }
         ArrayList<Event> events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
-
-        // Extracting date and time components for due and end
-        int dueYear = due.getCalendar().get(Calendar.YEAR);
-        int dueMonth = due.getCalendar().get(Calendar.MONTH) + 1; // Month is zero-based
-        int dueDay = due.getCalendar().get(Calendar.DAY_OF_MONTH);
         // Creating OurDateTime objects for due
-        OurDateTime dueDateTime = new OurDateTime(dueYear, dueMonth, dueDay, dueHour, dueMinute);
-        // Now, create an Appointment object
+        OurDateTime dueDateTime = DateTimeManager.extractDateTime(due, dueTimeSpinner);
+        // Now, create a Project object
         events.add(new Project(title.getText(),description.getText(),dueDateTime, Status.VTODO_IN_PROCESS));
+
+        JOptionPane.showMessageDialog(null, "Project created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        //restart the fields
+        title.setText("Project Name");
+        description.setText("Project Description");
+        due.setDate(null);
     }
 
     private class ButtonListener implements ActionListener {
