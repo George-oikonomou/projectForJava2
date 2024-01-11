@@ -1,4 +1,6 @@
 import net.fortuna.ical4j.model.property.Duration;
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,11 +8,13 @@ import java.util.regex.Pattern;
 public class Appointment extends Event {
     private String duration;
     private OurDateTime endDate;
+    private JPanel panel;
 
     public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description) {
         super(startDate, title, description);
         this.endDate = endDate;
         setDurationWithDtend(startDate,endDate);
+        setPanel();
     }
 
     public Appointment(OurDateTime startDate, Duration icsDuration, String title, String description){
@@ -77,4 +81,21 @@ public class Appointment extends Event {
                 duration: %s
             """.formatted(getTitle(), getDescription(), getStartDate(), getEndDate(), getDuration());
     }
+
+    @Override
+    public void setPanel() {
+        this.panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setPreferredSize(new Dimension(100, 80)); // Adjust the size as needed
+        panel.add(new JLabel("Title: " + getTitle()));
+        panel.add(new JLabel("Description: " + getDescription()));
+        panel.add(new JLabel("Start Date: " + getStartDate().toString()));
+        panel.add(new JLabel("End Date: " + getEndDate().toString()));
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return panel;
+    }
+
 }

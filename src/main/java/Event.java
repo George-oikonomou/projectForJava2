@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Date;
 import java.util.Random;
 
@@ -5,6 +6,7 @@ public abstract class Event {
     private final OurDateTime startDate;
     private final String title,description;
     private String uuid;
+
 
     public Event(OurDateTime startDate, String title, String description) {
         this.startDate = startDate;
@@ -23,4 +25,7 @@ public abstract class Event {
         int randomPart = 1000 + new Random().nextInt(9000);
         this.uuid      = timestamp + "_" + randomPart + "_" + "@javaTeamGGS";
     }
+
+    public abstract void setPanel();
+    public abstract JPanel getPanel();
 }
