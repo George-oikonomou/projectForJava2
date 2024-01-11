@@ -107,17 +107,9 @@ public class ChangeStatusGui extends JPanel{
         } else {
             project.setStatus(Status.VTODO_IN_PROCESS);
         }
-
-        // Find the index of the selected project in the listModel
         int selectedIndex = projects.indexOf(project);
-
-        // Remove the existing panel from the listModel
         listModel.remove(selectedIndex);
-
-        // Create a new panel for the updated project
         JPanel updatedPanel = createPanelForProject(project);
-
-        // Add the updated panel back to the listModel at the same index
         listModel.add(selectedIndex, updatedPanel);
     }
     private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {
@@ -132,17 +124,16 @@ public class ChangeStatusGui extends JPanel{
     private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
 
         @Override
-            public void focusGained(FocusEvent e) {
-                if (textComponent.getText().equals(defaultText)) {
-                    textComponent.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textComponent.getText().isEmpty()) {
-                    textComponent.setText(defaultText);
-                }
+        public void focusGained(FocusEvent e) {
+            if (textComponent.getText().equals(defaultText)) {
+                textComponent.setText("");
             }
         }
+        @Override
+        public void focusLost(FocusEvent e) {
+            if (textComponent.getText().isEmpty()) {
+                    textComponent.setText(defaultText);
+            }
+        }
+    }
 }

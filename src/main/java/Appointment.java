@@ -97,5 +97,4 @@ public class Appointment extends Event {
     public JPanel getPanel() {
         return panel;
     }
-
 }

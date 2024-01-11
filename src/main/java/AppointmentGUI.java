@@ -80,7 +80,6 @@ public class AppointmentGUI extends JPanel {
 
         JOptionPane.showMessageDialog(null, "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        //restart the fields
         title.setText("Appointment Name");
         description.setText("Appointment Description");
         startDateChooser.setDate(null);
@@ -119,18 +118,13 @@ public class AppointmentGUI extends JPanel {
 
             if (newStartDate == null) return;
 
-            // Extract only the date part from newStartDate
             Date startDate = DateUtils.truncate(newStartDate, Calendar.DATE);
-
-            // Check if both start and end dates have been selected
             if (startDate != null && endDateChooser.getDate() != null) {
                 Date endDate = DateUtils.truncate(endDateChooser.getDate(), Calendar.DATE);
 
                 if (endDate.before(startDate))
                     endDateChooser.setDate(null);
             }
-
-            // Update the minimum date of endDateChooser when the start date changes
             endDateChooser.setMinSelectableDate(newStartDate);
         }
     }

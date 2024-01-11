@@ -49,7 +49,4 @@ public class Project extends Event{
     public JPanel getPanel() {
         return panel;
     }
-
 }
-
-

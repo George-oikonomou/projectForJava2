@@ -46,7 +46,6 @@ public class ReminderGUI extends JPanel {
             JPanel panel = event.getPanel();
             listModel.addElement(panel);
         }
-
         printList = new JList<>(listModel);
         printList.setPreferredSize(new Dimension(230, (nextEvent.isEmpty() ? 1 : nextEvent.size() * 78)));
         printList.setCellRenderer(new PanelListCellRenderer());
@@ -56,8 +55,6 @@ public class ReminderGUI extends JPanel {
         revalidate();
         repaint();
     }
-
-
 
     private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {
         @Override
