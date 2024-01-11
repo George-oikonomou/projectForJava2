@@ -43,10 +43,9 @@ public class ReminderGUI extends JPanel {
         listModel = new DefaultListModel<>();
 
         for (Event event : nextEvent) {
-            JPanel panel = createPanelForEvent(event);
+            JPanel panel = event.getPanel();
             listModel.addElement(panel);
         }
-
         printList = new JList<>(listModel);
         printList.setPreferredSize(new Dimension(230, (nextEvent.isEmpty() ? 1 : nextEvent.size() * 78)));
         printList.setCellRenderer(new PanelListCellRenderer());
@@ -55,25 +54,6 @@ public class ReminderGUI extends JPanel {
         add(scrollPane);
         revalidate();
         repaint();
-    }
-
-    private JPanel createPanelForEvent(Event event) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setPreferredSize(new Dimension(100, 80)); // Adjust the size as needed
-        if (event instanceof Appointment appointment){
-            panel.add(new JLabel("Title: " + appointment.getTitle()));
-            panel.add(new JLabel("Description: " + appointment.getDescription()));
-            panel.add(new JLabel("Start Date: " + appointment.getStartDate().toString()));
-            panel.add(new JLabel("End Date: " + ((Appointment) event).getEndDate().toString()));
-        }else if (event instanceof Project project) {
-            panel.add(new JLabel("Title: " + project.getTitle()));
-            panel.add(new JLabel("Description: " + project.getDescription()));
-            panel.add(new JLabel("Due Date: " + project.getDue()));
-            panel.add(new JLabel("Status: " + project.getStatus().getValue()));
-        }
-
-        return panel;
     }
 
     private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {
