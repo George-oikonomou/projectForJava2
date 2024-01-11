@@ -38,7 +38,7 @@ public class MainPage extends JFrame {
     private void createOptionsPanel() {
         menuPanel = new JPanel();
         menuPanel.setLayout(new FlowLayout());
-        menuPanel.setBackground(new Color(90, 160, 207));
+        menuPanel.setBackground(new Color(255, 190, 235));
         menuPanel.setPreferredSize(new Dimension(250, 500));
         createButtons();
         menuPanel.add(newEventButton);
@@ -50,17 +50,17 @@ public class MainPage extends JFrame {
 
     private void createPrintPanel() {
         printPanel = new JPanel();
-        printPanel.setBackground(new Color(150, 226, 223));
+        printPanel.setBackground(new Color(100, 226, 223));
         printPanel.setPreferredSize(new Dimension(450, 500));
     }
 
     private void createButtons(){
 
-        this.reminder = createButton("Reminder",null,"See your reminders");
-        this.newEventButton = createButton("New Event", "Add.jpg", "add an event to a calendar");
-        this.editEventButton = createButton("Edit Event","Edit.jpg","Edit an event from a calendar");
-        this.changeProjectStatusButton = createButton("<html>Change Projects<br /><center>Status</center></html>","Status.jpg", " Change the condition of a project from a calendar");
-        this.printEventButton = createButton("Print Event","Print.jpg","See events from calendars");
+        this.reminder = createButton("Reminder","reminder.jpg","See your reminders");
+        this.newEventButton = createButton("New Event", "add.jpg", "add an event to a calendar");
+        this.editEventButton = createButton("Edit Event","edit.jpg","Edit an event from a calendar");
+        this.changeProjectStatusButton = createButton("<html>Change Projects<br /><center>Status</center></html>","status.jpg", " Change the condition of a project from a calendar");
+        this.printEventButton = createButton("Print Event","print.jpg","See events from calendars");
     }
 
     private JButton createButton(String text, String image, String toolTip) {

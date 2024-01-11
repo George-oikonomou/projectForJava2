@@ -14,7 +14,7 @@ public class PrintGUI extends JPanel {
         this.allFiles = allFiles;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(450,500));
-        setBackground(Color.PINK);
+        setBackground(new Color(180, 250, 190));
         JButton day = new JButton("Day");
         JButton week = new JButton("Week");
         JButton month = new JButton("Month");
