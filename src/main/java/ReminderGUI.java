@@ -15,7 +15,7 @@ public class ReminderGUI extends JPanel {
         this.allFiles = allFiles;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(450,500));
-        setBackground(Color.pink);
+        setBackground(new Color(180, 250, 190));
         liveTime = new OurDateTime();
         setNextEvent(this.allFiles);
         printEvents();
