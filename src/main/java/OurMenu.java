@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 public class OurMenu extends JMenuBar {
@@ -33,13 +34,42 @@ public class OurMenu extends JMenuBar {
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
             if (fileChooser.showOpenDialog(OurMenu.this) == JFileChooser.APPROVE_OPTION) {
-                java.io.File selectedFile = fileChooser.getSelectedFile();
-                ICSFile icsFile = new ICSFile(selectedFile.getAbsolutePath());
-                this.allFiles.add(icsFile);
-                icsFile.loadEvents();
+                File selectedFile = fileChooser.getSelectedFile();
+
+                if (calendarAlreadyAdded(selectedFile)) {
+                    JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "This calendar has already been added.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!selectedFile.exists()) {
+                        File newFile = new java.io.File(selectedFile.getAbsolutePath());
+                        String filePath = newFile.getAbsolutePath();
+                        if (!filePath.toLowerCase().endsWith(".ics")) {
+                             filePath += ".ics";
+                        }
+                        ICSFile icsFile = new ICSFile(filePath);
+
+                        this.allFiles.add(icsFile);
+                        icsFile.storeEvents(icsFile.getCalendar().getEvents());
+                }else {
+                    ICSFile icsFile = new ICSFile(selectedFile.getAbsolutePath());
+                    this.allFiles.add(icsFile);
+                    icsFile.loadEvents();
+                }
             }
         });
     }
+
+    // Method to check if the calendar file has already been added
+    private boolean calendarAlreadyAdded(File selectedFile) {
+        for (ICSFile existingFile : allFiles) {
+            if (existingFile.getFilePath().equals(selectedFile.getAbsolutePath())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public ArrayList<ICSFile> getAllFiles() {
         return allFiles;

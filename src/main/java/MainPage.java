@@ -14,12 +14,16 @@ public class MainPage extends JFrame {
     JButton printEventButton;
     JButton reminder;
     JPanel menuPanel;
-    JPanel printPanel;
+    private static JPanel printPanel;
 
     public MainPage() {
         createOptionsPanel();
         createPrintPanel();
         initializeFrame();
+    }
+
+    public static JPanel getPrintPanel(){
+        return printPanel;
     }
 
     private void initializeFrame() {

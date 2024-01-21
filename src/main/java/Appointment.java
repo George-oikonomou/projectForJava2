@@ -97,4 +97,8 @@ public class Appointment extends Event {
     public JPanel getPanel() {
         return panel;
     }
+
+    public void setEndDate(OurDateTime endDateTime) {
+        this.endDate = endDateTime;
+    }
 }

@@ -17,7 +17,7 @@ public class AppointmentGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
     private final JDateChooser startDateChooser;
     private final JSpinner startTimeSpinner;
-    private final JDateChooser endDateChooser;
+    private static JDateChooser endDateChooser = null;
     private final JSpinner endTimeSpinner;
     private final JTextField title;
     private final JTextArea description;
@@ -33,15 +33,19 @@ public class AppointmentGUI extends JPanel {
         
         this.title = new JTextField("Appointment Name", 10);
         this.title.addFocusListener(new ClearTextFocusListener("Appointment Name", title));
+
         this.description = new JTextArea("Appointment Description", 5, 20);
         this.description.addFocusListener(new ClearTextFocusListener("Appointment Description", description));
         this.descriptionScrollPane = new JScrollPane(description, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
+
         startDateChooser = DateTimeManager.configureDate(100,20);// Start Date Configuration
         startDateChooser.addPropertyChangeListener("date", new StartDateChangeListener());
         startTimeSpinner = DateTimeManager.configureTime(40,20);// Start Time Configuration
+
         endDateChooser =  DateTimeManager.configureDate(100,20);// End Date Configuration
         endTimeSpinner = DateTimeManager.configureTime(40,20);// End Time Configuration
+
         this.calendarSelect = new SingleCalendarSelect(allFiles);
         this.create = new JButton("Create");
         if (calendarSelect.isEmpty()) create.setEnabled(false);
@@ -65,7 +69,7 @@ public class AppointmentGUI extends JPanel {
 
     public void createAppointment() {
         if(startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description") || endDateChooser.getDate() == null || calendarSelect.isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -78,7 +82,7 @@ public class AppointmentGUI extends JPanel {
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
 
-        JOptionPane.showMessageDialog(null, "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
         title.setText("Appointment Name");
         description.setText("Appointment Description");
@@ -93,7 +97,7 @@ public class AppointmentGUI extends JPanel {
         }
     }
 
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
+    record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
 
         @Override
             public void focusGained(FocusEvent e) {

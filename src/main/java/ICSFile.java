@@ -17,6 +17,11 @@ public class ICSFile {
         this.calendar = new OurCalendar();
         this.filePath = filePath;
     }
+
+    public String getFilePath(){
+        return this.filePath;
+    }
+
     public String getFileName() {
         if (System.getProperty("os.name").toLowerCase().contains("windows"))
             return filePath.substring(filePath.lastIndexOf('\\') + 1 );

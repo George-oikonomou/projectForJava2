@@ -76,7 +76,7 @@ public class ProjectGui extends JPanel {
 
         Validate.Input(due, title, description);
         if (allFiles.isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ArrayList<Event> events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
@@ -85,11 +85,8 @@ public class ProjectGui extends JPanel {
         // Now, create a Project object
         events.add(new Project(title.getText(),description.getText(),dueDateTime, Status.VTODO_IN_PROCESS));
 
-        JOptionPane.showMessageDialog(null, "Project created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-        //restart the fields
-        title.setText("Project Name");
-        description.setText("Project Description");
-        due.setDate(null);
+        //JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Project created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     private class ButtonListener implements ActionListener {
