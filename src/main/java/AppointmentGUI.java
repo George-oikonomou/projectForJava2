@@ -17,7 +17,7 @@ public class AppointmentGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
     private final JDateChooser startDateChooser;
     private final JSpinner startTimeSpinner;
-    private static JDateChooser endDateChooser = null;
+    private final JDateChooser endDateChooser;
     private final JSpinner endTimeSpinner;
     private final JTextField title;
     private final JTextArea description;
@@ -97,7 +97,7 @@ public class AppointmentGUI extends JPanel {
         }
     }
 
-    record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
+    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
 
         @Override
             public void focusGained(FocusEvent e) {

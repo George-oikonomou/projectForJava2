@@ -85,7 +85,11 @@ public class ProjectGui extends JPanel {
         // Now, create a Project object
         events.add(new Project(title.getText(),description.getText(),dueDateTime, Status.VTODO_IN_PROCESS));
 
-        //JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Project created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Project created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        //restart the fields
+        title.setText("Project Name");
+        description.setText("Project Description");
+        due.setDate(null);
 
     }
 
