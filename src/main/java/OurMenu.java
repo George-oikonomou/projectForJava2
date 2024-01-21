@@ -25,13 +25,14 @@ public class OurMenu extends JMenuBar {
         this.add(myMenu);
     }
 
+    public ArrayList<ICSFile> getAllFiles() { return allFiles; }
+
     public void addCalendar() {
         SwingUtilities.invokeLater(() -> {
             JFileChooser fileChooser = new JFileChooser();
-
-            // Set the initial directory to the user's home directory
             fileChooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
 
             if (fileChooser.showOpenDialog(OurMenu.this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
@@ -41,26 +42,34 @@ public class OurMenu extends JMenuBar {
                     return;
                 }
 
-                if (!selectedFile.exists()) {
-                        File newFile = new java.io.File(selectedFile.getAbsolutePath());
-                        String filePath = newFile.getAbsolutePath();
-                        if (!filePath.toLowerCase().endsWith(".ics")) {
-                             filePath += ".ics";
-                        }
-                        ICSFile icsFile = new ICSFile(filePath);
+                if (selectedFile.exists())
+                    loadIcsFile(selectedFile);
+                else
+                    createNewIcsFile(selectedFile);
 
-                        this.allFiles.add(icsFile);
-                        icsFile.storeEvents(icsFile.getCalendar().getEvents());
-                }else {
-                    ICSFile icsFile = new ICSFile(selectedFile.getAbsolutePath());
-                    this.allFiles.add(icsFile);
-                    icsFile.loadEvents();
-                }
             }
+
         });
     }
 
-    // Method to check if the calendar file has already been added
+    private void createNewIcsFile(File selectedFile) {
+        File newFile = new File(selectedFile.getAbsolutePath());
+        String filePath = newFile.getAbsolutePath();
+        if (!filePath.toLowerCase().endsWith(".ics")) {
+             filePath += ".ics";
+        }
+        ICSFile icsFile = new ICSFile(filePath);
+
+        this.allFiles.add(icsFile);
+        icsFile.storeEvents(icsFile.getCalendar().getEvents());
+    }
+
+    private void loadIcsFile(File selectedFile) {
+        ICSFile icsFile = new ICSFile(selectedFile.getAbsolutePath());
+        this.allFiles.add(icsFile);
+        icsFile.loadEvents();
+    }
+
     private boolean calendarAlreadyAdded(File selectedFile) {
         for (ICSFile existingFile : allFiles) {
             if (existingFile.getFilePath().equals(selectedFile.getAbsolutePath())) {
@@ -68,11 +77,6 @@ public class OurMenu extends JMenuBar {
             }
         }
         return false;
-    }
-
-
-    public ArrayList<ICSFile> getAllFiles() {
-        return allFiles;
     }
 
     private class Functionality implements ActionListener{
