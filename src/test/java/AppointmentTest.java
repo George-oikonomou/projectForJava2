@@ -1,3 +1,5 @@
+import Models.Appointment;
+import Models.OurDateTime;
 import net.fortuna.ical4j.model.ParameterList;
 import org.junit.jupiter.api.Test;
 

@@ -1,3 +1,6 @@
+package Main;
+
+import GUI.MainPage;
 import gr.hua.dit.oop2.calendar.TimeService;
 import javax.swing.*;
 

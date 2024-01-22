@@ -1,3 +1,12 @@
+package  GUI;
+
+import Listeners.PanelListCellRenderer;
+import Models.Appointment;
+import Models.Event;
+import Models.Project;
+import Models.ICSFile;
+import Models.OurDateTime;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;

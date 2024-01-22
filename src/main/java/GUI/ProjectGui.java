@@ -1,3 +1,11 @@
+package  GUI;
+
+import Models.Event;
+import Models.Project;
+import Listeners.ClearTextFocusListener;
+import Listeners.Validate;
+import Models.ICSFile;
+import Models.OurDateTime;
 import com.toedter.calendar.JDateChooser;
 import net.fortuna.ical4j.model.property.Status;
 import javax.swing.*;

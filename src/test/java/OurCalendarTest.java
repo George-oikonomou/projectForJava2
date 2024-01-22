@@ -1,3 +1,4 @@
+import Models.*;
 import net.fortuna.ical4j.model.property.Status;
 import org.junit.jupiter.api.Test;
 import net.fortuna.ical4j.model.property.ProdId;

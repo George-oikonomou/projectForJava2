@@ -1,3 +1,10 @@
+package  GUI;
+
+
+import Listeners.ClearTextFocusListener;
+import Listeners.PanelListCellRenderer;
+import Models.ICSFile;
+import Models.Project;
 import net.fortuna.ical4j.model.property.Status;
 
 import javax.swing.*;

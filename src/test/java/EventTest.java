@@ -1,3 +1,6 @@
+import Models.Appointment;
+import Models.Event;
+import Models.OurDateTime;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
