@@ -52,6 +52,10 @@ public class OurMenuGUI extends JMenuBar {
                 else
                     createNewIcsFile(selectedFile);
 
+                MainPageGUI.getPrintPanel().removeAll();
+                MainPageGUI.getPrintPanel().revalidate();
+                MainPageGUI.getPrintPanel().repaint();
+
             }
 
         });

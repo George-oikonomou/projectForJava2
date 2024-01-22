@@ -73,7 +73,7 @@ public class MainPageGUI extends JFrame {
     private JButton createButton(String text, String image, String toolTip) {
         JButton button = new JButton();
         try {
-            Image img = ImageIO.read(Objects.requireNonNull(getClass().getResource(image)));
+            Image img = ImageIO.read(Objects.requireNonNull(getClass().getResource("/" + image)));
             button.setIcon(new ImageIcon(img));
         } catch (Exception ex) {
             button.setText(text);
