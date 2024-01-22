@@ -147,13 +147,6 @@ public class EditEventGUI extends JPanel {
 
         //todo create date object for start date / endDate
 
-        if (eventToEdit instanceof Appointment) {
-            startTimeSpinner.setValue(eventToEdit.getStartDate().getTime());
-            endTimeSpinner.setValue(((Appointment) eventToEdit).getEndDate().getTime());
-        } else {
-            endTimeSpinner.setValue(((Project) eventToEdit).getDue().getTime());
-        }
-
         AddToPanel();
     }
 
