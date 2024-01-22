@@ -7,4 +7,5 @@
 7.  refactor code
 8. edit event show the new calendars that just got added immidiently without the need to press "edit event" again
 9.  add event show the new calendars that just got added immidiently without the need to press add event again(or the category)
-10. status event hid the scroll pane until search operati
+10. status event hid the scroll pane until search operatiN
+11. Huge file name mess things up (gui)
