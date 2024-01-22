@@ -123,7 +123,7 @@ public class MainPageGUI extends JFrame {
         }
 
         private void handleChangeStatus() {
-            ChangeStatusGui changeStatusGui = new ChangeStatusGui(menu.getAllFiles());
+            ChangeStatusGUI changeStatusGui = new ChangeStatusGUI(menu.getAllFiles());
             printPanel.add(changeStatusGui);
             changeProjectStatusButton.setEnabled(true);
         }
@@ -149,7 +149,7 @@ public class MainPageGUI extends JFrame {
 
             createProject.addActionListener(e1 -> {
                 printPanel.removeAll();
-                ProjectGui projectGui = new ProjectGui(menu.getAllFiles());
+                ProjectGUI projectGui = new ProjectGUI(menu.getAllFiles());
                 printPanel.add(projectGui);
                 printPanel.revalidate();
                 printPanel.repaint();

@@ -5,6 +5,7 @@ import Utilities.ClearTextFocusListener;
 import Utilities.PanelListCellRenderer;
 import Models.ICSFile;
 import Models.Project;
+import Utilities.SingleCalendarSelect;
 import net.fortuna.ical4j.model.property.Status;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class ChangeStatusGui extends JPanel{
+public class ChangeStatusGUI extends JPanel{
     private final ArrayList<ICSFile> allFiles;
     private final JList<JPanel> projectList;
     private final DefaultListModel<JPanel> listModel;
@@ -22,7 +23,7 @@ public class ChangeStatusGui extends JPanel{
     private ArrayList<Project> projects;
 
 
-    public ChangeStatusGui(ArrayList<ICSFile> allFiles) {
+    public ChangeStatusGUI(ArrayList<ICSFile> allFiles) {
 
         this.allFiles = allFiles;
         setPreferredSize(new Dimension(300, 450));

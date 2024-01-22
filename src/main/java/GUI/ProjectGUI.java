@@ -3,6 +3,8 @@ package  GUI;
 import Models.Event;
 import Models.Project;
 import Utilities.ClearTextFocusListener;
+import Utilities.DateTimeManager;
+import Utilities.SingleCalendarSelect;
 import Utilities.Validate;
 import Models.ICSFile;
 import Models.OurDateTime;
@@ -15,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ProjectGui extends JPanel {
+public class ProjectGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
     private final JTextField title;
     private final JTextArea description;
@@ -24,7 +26,7 @@ public class ProjectGui extends JPanel {
     private final JButton create;
     private final SingleCalendarSelect calendarSelect;
 
-    public ProjectGui(ArrayList<ICSFile> allFiles) {
+    public ProjectGUI(ArrayList<ICSFile> allFiles) {
 
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -47,7 +49,7 @@ public class ProjectGui extends JPanel {
         this.description = new JTextArea("Project Description", 5, 20);
         this.description.addFocusListener(new ClearTextFocusListener("Project Description", description));
         this.create = new JButton("Create");
-        this.create.addActionListener(new ProjectGui.ButtonListener());
+        this.create.addActionListener(new ProjectGUI.ButtonListener());
 
         // Use a JScrollPane for the JTextArea to enable scrolling if needed
         JScrollPane descriptionScrollPane = new JScrollPane(description);
