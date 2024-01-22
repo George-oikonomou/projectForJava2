@@ -1,12 +1,12 @@
 package  GUI;
 
 
-import Listeners.ClearTextFocusListener;
+import Utilities.ClearTextFocusListener;
 import Models.ICSFile;
 import Models.Event;
 import Models.OurDateTime;
 import Models.Appointment;
-import Listeners.Validate;
+import Utilities.Validate;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.awt.*;
@@ -71,7 +71,7 @@ public class AppointmentGUI extends JPanel {
 
     public void createAppointment() {
         if(startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description") || endDateChooser.getDate() == null || calendarSelect.isEmpty() ){
-            JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -84,7 +84,7 @@ public class AppointmentGUI extends JPanel {
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
 
-        JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
         title.setText("Appointment Name");
         description.setText("Appointment Description");

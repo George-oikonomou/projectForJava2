@@ -2,8 +2,8 @@ package  GUI;
 
 import Models.Event;
 import Models.Project;
-import Listeners.ClearTextFocusListener;
-import Listeners.Validate;
+import Utilities.ClearTextFocusListener;
+import Utilities.Validate;
 import Models.ICSFile;
 import Models.OurDateTime;
 import com.toedter.calendar.JDateChooser;
@@ -79,7 +79,7 @@ public class ProjectGui extends JPanel {
 
         Validate.Input(due, title, description);
         if (allFiles.isEmpty() ){
-            JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ArrayList<Event> events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();

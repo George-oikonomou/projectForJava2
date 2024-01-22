@@ -1,6 +1,6 @@
 package  GUI;
 
-import Listeners.PanelListCellRenderer;
+import Utilities.PanelListCellRenderer;
 import Models.Appointment;
 import Models.Event;
 import Models.Project;

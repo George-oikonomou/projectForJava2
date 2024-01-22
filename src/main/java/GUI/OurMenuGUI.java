@@ -10,12 +10,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-public class OurMenu extends JMenuBar {
+public class OurMenuGUI extends JMenuBar {
     private final JMenuItem addCalendar;
     private final JMenuItem saveCalendar;
     private final ArrayList<ICSFile> allFiles;
 
-    public OurMenu() {
+    public OurMenuGUI() {
         this.allFiles = new ArrayList<>();
         this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.black));
         JMenu myMenu = new JMenu("FILES");
@@ -39,11 +39,11 @@ public class OurMenu extends JMenuBar {
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 
-            if (fileChooser.showOpenDialog(OurMenu.this) == JFileChooser.APPROVE_OPTION) {
+            if (fileChooser.showOpenDialog(OurMenuGUI.this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
 
                 if (calendarAlreadyAdded(selectedFile)) {
-                    JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "This calendar has already been added.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "This calendar has already been added.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 

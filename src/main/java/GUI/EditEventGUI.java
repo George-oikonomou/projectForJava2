@@ -1,9 +1,9 @@
 package  GUI;
 
-import Listeners.PanelListCellRenderer;
-import Listeners.Validate;
+import Utilities.PanelListCellRenderer;
+import Utilities.Validate;
 import Models.*;
-import Listeners.ClearTextFocusListener;
+import Utilities.ClearTextFocusListener;
 import Models.Event;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
@@ -62,7 +62,7 @@ public class EditEventGUI extends JPanel {
                 }
             }
             if (listModel.isEmpty()) {
-                JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "There are no events with title " + enterTitle.getText(),
+                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no events with title " + enterTitle.getText(),
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -198,7 +198,7 @@ public class EditEventGUI extends JPanel {
 
     private void HandleOkResponse(){
         if((startDateChooser.getDate() == null && eventToEdit instanceof Appointment)   || endDateChooser.getDate() == null || titleField.getText().isEmpty()){
-            JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);

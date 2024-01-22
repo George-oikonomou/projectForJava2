@@ -1,6 +1,6 @@
 package Main;
 
-import GUI.MainPage;
+import GUI.MainPageGUI;
 import gr.hua.dit.oop2.calendar.TimeService;
 import javax.swing.*;
 
@@ -10,7 +10,7 @@ public class App {
 
     public static void main(String[] args) {
         // Replace "path/to/your/image.jpg" with the actual path to your image file
-        SwingUtilities.invokeLater(MainPage::new);
+        SwingUtilities.invokeLater(MainPageGUI::new);
         TimeService.stop();
     }
 }

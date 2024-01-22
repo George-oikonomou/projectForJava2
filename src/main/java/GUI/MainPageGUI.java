@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 
-public class MainPage extends JFrame {
-    OurMenu menu;
+public class MainPageGUI extends JFrame {
+    OurMenuGUI menu;
     JButton newEventButton;
     JButton editEventButton;
     JButton changeProjectStatusButton;
@@ -19,7 +19,7 @@ public class MainPage extends JFrame {
     JPanel menuPanel;
     private static JPanel printPanel;
 
-    public MainPage() {
+    public MainPageGUI() {
         createOptionsPanel();
         createPrintPanel();
         initializeFrame();
@@ -38,7 +38,7 @@ public class MainPage extends JFrame {
         this.setVisible(true);
         this.add(menuPanel, BorderLayout.WEST);
         this.add(printPanel, BorderLayout.CENTER);
-        this.menu = new OurMenu();
+        this.menu = new OurMenuGUI();
         this.setJMenuBar(menu);
     }
 
@@ -93,7 +93,7 @@ public class MainPage extends JFrame {
             printPanel.removeAll();
 
             if (menu.getAllFiles().isEmpty()){
-                JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please add a calendar first.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please add a calendar first.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

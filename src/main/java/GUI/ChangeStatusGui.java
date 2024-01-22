@@ -1,8 +1,8 @@
 package  GUI;
 
 
-import Listeners.ClearTextFocusListener;
-import Listeners.PanelListCellRenderer;
+import Utilities.ClearTextFocusListener;
+import Utilities.PanelListCellRenderer;
 import Models.ICSFile;
 import Models.Project;
 import net.fortuna.ical4j.model.property.Status;
