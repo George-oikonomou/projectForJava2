@@ -40,11 +40,12 @@ public class AppointmentGUI extends JPanel {
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
 
         startDateChooser = DateTimeManager.configureDate(100,20);// Start Date Configuration
-        startDateChooser.addPropertyChangeListener("date", new StartDateChangeListener());
         startTimeSpinner = DateTimeManager.configureTime(40,20);// Start Time Configuration
 
         endDateChooser =  DateTimeManager.configureDate(100,20);// End Date Configuration
         endTimeSpinner = DateTimeManager.configureTime(40,20);// End Time Configuration
+
+        startDateChooser.addPropertyChangeListener("date", new DateTimeManager.StartDateChangeListener(endDateChooser));
 
         this.calendarSelect = new SingleCalendarSelect(allFiles);
         this.create = new JButton("Create");
@@ -94,42 +95,6 @@ public class AppointmentGUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             createAppointment();
-        }
-    }
-
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
-
-        @Override
-            public void focusGained(FocusEvent e) {
-                if (textComponent.getText().equals(defaultText)) {
-                    textComponent.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textComponent.getText().isEmpty()) {
-                    textComponent.setText(defaultText);
-                }
-            }
-        }
-
-    private class StartDateChangeListener implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            Date newStartDate = (Date) evt.getNewValue();
-
-            if (newStartDate == null) return;
-
-            Date startDate = DateUtils.truncate(newStartDate, Calendar.DATE);
-            if (startDate != null && endDateChooser.getDate() != null) {
-                Date endDate = DateUtils.truncate(endDateChooser.getDate(), Calendar.DATE);
-
-                if (endDate.before(startDate))
-                    endDateChooser.setDate(null);
-            }
-            endDateChooser.setMinSelectableDate(newStartDate);
         }
     }
 }

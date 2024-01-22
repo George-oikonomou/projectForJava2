@@ -92,12 +92,6 @@ public class ChangeStatusGui extends JPanel{
         panel.add(new JLabel("Due Date: " + project.getDue()));
         panel.add(new JLabel("Status: " + project.getStatus().getValue()));
 
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                    handleSelection(project);
-            }
-        });
         return panel;
     }
     private void handleSelection(Project project) {
@@ -111,29 +105,5 @@ public class ChangeStatusGui extends JPanel{
         listModel.remove(selectedIndex);
         JPanel updatedPanel = createPanelForProject(project);
         listModel.add(selectedIndex, updatedPanel);
-    }
-    private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {
-        @Override
-        public Component getListCellRendererComponent(JList<? extends JPanel> list, JPanel value, int index, boolean isSelected, boolean cellHasFocus) {
-            value.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-            value.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-            return value;
-        }
-    }
-
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
-
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                    textComponent.setText(defaultText);
-            }
-        }
     }
 }

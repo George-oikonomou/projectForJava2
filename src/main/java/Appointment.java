@@ -91,6 +91,7 @@ public class Appointment extends Event {
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Start Date: " + getStartDate().toString()));
         panel.add(new JLabel("End Date: " + getEndDate().toString()));
+        panel.putClientProperty("uid", getUuid());
     }
 
     @Override

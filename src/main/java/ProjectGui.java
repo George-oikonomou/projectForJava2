@@ -99,22 +99,4 @@ public class ProjectGui extends JPanel {
             createProject();
         }
     }
-
-
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
-
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
-            }
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                textComponent.setText(defaultText);
-            }
-        }
-    }
 }

@@ -44,7 +44,8 @@ public class Project extends Event{
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Due Date: " + getDue()));
         panel.add(new JLabel("Status: " + getStatus().getValue()));
-        }
+        panel.putClientProperty("uid", getUuid());
+    }
 
     @Override
     public JPanel getPanel() {

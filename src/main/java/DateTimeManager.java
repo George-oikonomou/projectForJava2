@@ -1,7 +1,10 @@
 import com.toedter.calendar.JDateChooser;
+import org.apache.commons.lang3.time.DateUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -42,5 +45,30 @@ public class DateTimeManager {
         int minute = calendar.get(Calendar.MINUTE);
 
         return new OurDateTime(year, month, day, hour, minute);
+    }
+
+    public static class StartDateChangeListener implements PropertyChangeListener {
+        private final JDateChooser endDateChooser;
+
+        public StartDateChangeListener(JDateChooser endDateChooser) {
+            this.endDateChooser = endDateChooser;
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            Date newStartDate = (Date) evt.getNewValue();
+
+            if (newStartDate == null) return;
+
+            Date startDate = DateUtils.truncate(newStartDate, Calendar.DATE);
+            if (startDate != null && endDateChooser.getDate() != null) {
+                Date endDate = DateUtils.truncate(endDateChooser.getDate(), Calendar.DATE);
+
+                if (endDate.before(startDate)) {
+                    endDateChooser.setDate(null);
+                }
+            }
+            endDateChooser.setMinSelectableDate(newStartDate);
+        }
     }
 }
