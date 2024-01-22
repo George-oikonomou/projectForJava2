@@ -122,7 +122,7 @@
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>App</mainClass>
+                                <mainClass>Main.App</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
