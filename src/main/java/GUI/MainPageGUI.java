@@ -17,7 +17,34 @@ public class MainPageGUI extends JFrame {
     JButton printEventButton;
     JButton reminder;
     JPanel menuPanel;
+    public Pages currentPage;
     private static JPanel printPanel;
+
+    public enum Pages {
+        NEW_APPOINTMENT,
+        NEW_PROJECT,
+        EDIT_EVENT,
+        CHANGE_STATUS,
+        PRINT_EVENT,
+        REMINDER
+    }
+
+    public void getBackToPage() {
+        if (currentPage == null) return;
+
+        printPanel.removeAll();
+        printPanel.revalidate();
+        printPanel.repaint();
+
+        switch (currentPage) {
+            case NEW_APPOINTMENT, NEW_PROJECT -> new Functionality().handleNewEvent();
+            case EDIT_EVENT -> new Functionality().handleEditEvent();
+            case CHANGE_STATUS -> new Functionality().handleChangeStatus();
+            case PRINT_EVENT -> new Functionality().handlePrint();
+            case REMINDER -> new Functionality().handleReminder();
+        }
+    }
+
 
     public MainPageGUI() {
         createOptionsPanel();
@@ -30,6 +57,7 @@ public class MainPageGUI extends JFrame {
     }
 
     private void initializeFrame() {
+        this.currentPage = null;
         this.setTitle("Calendar");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
@@ -38,7 +66,7 @@ public class MainPageGUI extends JFrame {
         this.setVisible(true);
         this.add(menuPanel, BorderLayout.WEST);
         this.add(printPanel, BorderLayout.CENTER);
-        this.menu = new OurMenuGUI();
+        this.menu = new OurMenuGUI(this);
         this.setJMenuBar(menu);
     }
 
@@ -92,11 +120,6 @@ public class MainPageGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             printPanel.removeAll();
 
-            if (menu.getAllFiles().isEmpty()){
-                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please add a calendar first.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
             if (e.getSource() == newEventButton)
                 handleNewEvent();
             else if (e.getSource() == editEventButton)
@@ -115,22 +138,26 @@ public class MainPageGUI extends JFrame {
         private void handleReminder() {
             printPanel.add(new ReminderGUI(menu.getAllFiles()));
             reminder.setEnabled(true);
+            currentPage = Pages.REMINDER;
         }
 
         private void handlePrint() {
             printPanel.add(new PrintGUI(menu.getAllFiles()));
             printEventButton.setEnabled(true);
+            currentPage = Pages.PRINT_EVENT;
         }
 
         private void handleChangeStatus() {
             ChangeStatusGUI changeStatusGui = new ChangeStatusGUI(menu.getAllFiles());
             printPanel.add(changeStatusGui);
             changeProjectStatusButton.setEnabled(true);
+            currentPage = Pages.CHANGE_STATUS;
         }
         private void handleEditEvent() {
             EditEventGUI editEventGUI = new EditEventGUI(menu.getAllFiles());
             printPanel.add(editEventGUI);
             editEventButton.setEnabled(true);
+            currentPage = Pages.EDIT_EVENT;
         }
         public void handleNewEvent(){
             JButton createAppointment = new JButton("Create Appointment");
@@ -138,24 +165,39 @@ public class MainPageGUI extends JFrame {
             printPanel.add(createAppointment);
             printPanel.add(createProject);
 
+            if (currentPage == Pages.NEW_APPOINTMENT){
+                executeCreateAppointmentListener();
+            } else if (currentPage == Pages.NEW_PROJECT){
+                executeCreateProjectListener();
+            }
+
             createAppointment.addActionListener(e1 -> {
-                printPanel.removeAll();
-                AppointmentGUI appointmentGui = new AppointmentGUI(menu.getAllFiles());
-                printPanel.add(appointmentGui);
-                printPanel.revalidate();
-                printPanel.repaint();
-                createAppointment.setEnabled(true);
+                executeCreateAppointmentListener();
             });
 
             createProject.addActionListener(e1 -> {
-                printPanel.removeAll();
-                ProjectGUI projectGui = new ProjectGUI(menu.getAllFiles());
-                printPanel.add(projectGui);
-                printPanel.revalidate();
-                printPanel.repaint();
-                createProject.setEnabled(true);
+                executeCreateProjectListener();
             });
         }
+
+        private void executeCreateAppointmentListener() {
+            printPanel.removeAll();
+            AppointmentGUI appointmentGui = new AppointmentGUI(menu.getAllFiles());
+            printPanel.add(appointmentGui);
+            printPanel.revalidate();
+            printPanel.repaint();
+            currentPage = Pages.NEW_APPOINTMENT;
+        }
+
+        private void executeCreateProjectListener() {
+            printPanel.removeAll();
+            ProjectGUI projectGui = new ProjectGUI(menu.getAllFiles());
+            printPanel.add(projectGui);
+            printPanel.revalidate();
+            printPanel.repaint();
+            currentPage = Pages.NEW_PROJECT;
+        }
+
     }
 
 }

@@ -14,8 +14,10 @@ public class OurMenuGUI extends JMenuBar {
     private final JMenuItem addCalendar;
     private final JMenuItem saveCalendar;
     private final ArrayList<ICSFile> allFiles;
+    private final MainPageGUI mainPageGUI;
 
-    public OurMenuGUI() {
+    public OurMenuGUI(MainPageGUI mainPageGUI) {
+        this.mainPageGUI = mainPageGUI;
         this.allFiles = new ArrayList<>();
         this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.black));
         JMenu myMenu = new JMenu("FILES");
@@ -52,9 +54,7 @@ public class OurMenuGUI extends JMenuBar {
                 else
                     createNewIcsFile(selectedFile);
 
-                MainPageGUI.getPrintPanel().removeAll();
-                MainPageGUI.getPrintPanel().revalidate();
-                MainPageGUI.getPrintPanel().repaint();
+                mainPageGUI.getBackToPage();
 
             }
 
