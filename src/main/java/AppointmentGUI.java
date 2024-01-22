@@ -1,17 +1,9 @@
 import com.toedter.calendar.JDateChooser;
-import org.apache.commons.lang3.time.DateUtils;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class AppointmentGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
@@ -29,7 +21,7 @@ public class AppointmentGUI extends JPanel {
 
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
-        setPreferredSize(new Dimension(420, 250));
+        setPreferredSize(new Dimension(435, 300));
         
         this.title = new JTextField("Appointment Name", 10);
         this.title.addFocusListener(new ClearTextFocusListener("Appointment Name", title));

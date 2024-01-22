@@ -1,7 +1,6 @@
 import net.fortuna.ical4j.model.property.Status;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;

@@ -3,12 +3,15 @@ import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class OurDateTime {
     private final int year,month,day,hour,minute;
     private final String date,time;
     private DateTime icsFormat;
     private long CalculationFormat;
+    private Date dateFormat;
     //constructor to create an ourDateTime object with the values we give
     // it gives us nice format versions of  datetime which we use
     public OurDateTime (int year, int month, int day, int hour, int minute) {
@@ -21,6 +24,7 @@ public class OurDateTime {
         this.time = time(minute,hour,true);
         setCalculationFormat();
         setIcsFormat();
+        setDateFormat();
     }
     /**
      * constructor that creates a OurDateTime object that contains the current datetime change this
@@ -40,6 +44,7 @@ public class OurDateTime {
         this.time = time(minute,hour,true);
         setCalculationFormat();
         setIcsFormat();
+        setDateFormat();
     }
     /**
      * creates a format version of time, so it is nicely printed
@@ -81,6 +86,15 @@ public class OurDateTime {
         String date = date(year,month,day,false);
         String time = time(minute,hour,false);
         this.CalculationFormat = Long.parseLong(date + time);
+    }
+
+    public void setDateFormat(){
+        LocalDateTime localDateTime = LocalDateTime.of(year, month, day, hour, minute);
+        this.dateFormat = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Date getDateFormat(){
+        return this.dateFormat;
     }
 
     @Override

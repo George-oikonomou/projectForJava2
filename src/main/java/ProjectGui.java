@@ -1,16 +1,11 @@
 import com.toedter.calendar.JDateChooser;
 import net.fortuna.ical4j.model.property.Status;
-
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ProjectGui extends JPanel {
     private final ArrayList<ICSFile> allFiles;
@@ -25,7 +20,7 @@ public class ProjectGui extends JPanel {
 
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(410, 350));
+        setPreferredSize(new Dimension(410, 300));
 
         this.due = new JDateChooser();
         JTextField dateTextField = ((JTextField) due.getDateEditor().getUiComponent());

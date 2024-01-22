@@ -124,7 +124,7 @@ public class EditEventGUI extends JPanel {
     }
     private void CreateEditModal(){
         editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        editPanel.setPreferredSize(new Dimension(400, 250));
+        editPanel.setPreferredSize(new Dimension(400, 300));
 
         initializeFields();
     }
@@ -145,7 +145,15 @@ public class EditEventGUI extends JPanel {
 
         startDateChooser.addPropertyChangeListener("date", new DateTimeManager.StartDateChangeListener(endDateChooser));
 
-        //todo create date object for start date / endDate
+        if (eventToEdit instanceof Appointment) {
+            startDateChooser.setDate(eventToEdit.getStartDate().getDateFormat());
+            endDateChooser.setDate(((Appointment) eventToEdit).getEndDate().getDateFormat());
+            startTimeSpinner.setValue(eventToEdit.getStartDate().getDateFormat());
+            endTimeSpinner.setValue(((Appointment) eventToEdit).getEndDate().getDateFormat());
+        } else if (eventToEdit instanceof Project) {
+            endDateChooser.setDate(((Project) eventToEdit).getDue().getDateFormat());
+            endTimeSpinner.setValue(((Project) eventToEdit).getDue().getDateFormat());
+        }
 
         AddToPanel();
     }
@@ -178,6 +186,7 @@ public class EditEventGUI extends JPanel {
         if (response == JOptionPane.OK_OPTION) {
            HandleOkResponse();
         }
+        eventList.clearSelection();
     }
 
     private void HandleOkResponse(){

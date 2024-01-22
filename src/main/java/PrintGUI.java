@@ -110,6 +110,11 @@ public class PrintGUI extends JPanel {
     }
 
     private void performAction(App.AppChoices choice) {
+        if (selectedFiles.isEmpty()) {
+            JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please select at least one calendar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         selectedEvents.clear();
         if (scrollPane != null)
             remove(scrollPane);

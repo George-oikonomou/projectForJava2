@@ -76,6 +76,7 @@ public class MainPage extends JFrame {
             button.setText(text);
         }
         button.setPreferredSize(new Dimension(170, 60));
+
         button.addActionListener(new Functionality());
         button.setFont(new Font("Comic Sans", Font.BOLD, 17));
         button.setToolTipText(toolTip);
@@ -87,50 +88,71 @@ public class MainPage extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             printPanel.removeAll();
-            if (e.getSource() == newEventButton) {
-                JButton createAppointment = new JButton("Create Appointment");
-                JButton createProject = new JButton("Create Project");
-                printPanel.add(createAppointment);
-                printPanel.add(createProject);
 
-                createAppointment.addActionListener(e1 -> {
-                    printPanel.removeAll();
-                    AppointmentGUI appointmentGui = new AppointmentGUI(menu.getAllFiles());
-                    printPanel.add(appointmentGui);
-                    printPanel.revalidate();
-                    printPanel.repaint();
-                    createAppointment.setEnabled(true);
-                });
-
-                createProject.addActionListener(e1 -> {
-                    printPanel.removeAll();
-                    ProjectGui projectGui = new ProjectGui(menu.getAllFiles());
-                    printPanel.add(projectGui);
-                    printPanel.revalidate();
-                    printPanel.repaint();
-                    createProject.setEnabled(true);
-                });
-
-            } else if (e.getSource() == editEventButton) {
-                EditEventGUI editEventGUI = new EditEventGUI(menu.getAllFiles());
-                printPanel.add(editEventGUI);
-                editEventButton.setEnabled(true);
-
-            } else if (e.getSource() == changeProjectStatusButton) {
-                ChangeStatusGui changeStatusGui = new ChangeStatusGui(menu.getAllFiles());
-                printPanel.add(changeStatusGui);
-                changeProjectStatusButton.setEnabled(true);
-
-            } else if (e.getSource() == printEventButton) {
-                printPanel.add(new PrintGUI(menu.getAllFiles()));
-                printEventButton.setEnabled(true);
-
-            } else if (e.getSource() == reminder){
-                printPanel.add(new ReminderGUI(menu.getAllFiles()));
-                reminder.setEnabled(true);
+            if (menu.getAllFiles().isEmpty()){
+                JOptionPane.showMessageDialog(MainPage.getPrintPanel(), "Please add a calendar first.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (e.getSource() == newEventButton)
+                handleNewEvent();
+            else if (e.getSource() == editEventButton)
+                handleEditEvent();
+            else if (e.getSource() == changeProjectStatusButton)
+                handleChangeStatus();
+            else if (e.getSource() == printEventButton)
+                handlePrint();
+            else if (e.getSource() == reminder)
+                handleReminder();
+
             printPanel.revalidate();
             printPanel.repaint();
         }
+
+        private void handleReminder() {
+            printPanel.add(new ReminderGUI(menu.getAllFiles()));
+            reminder.setEnabled(true);
+        }
+
+        private void handlePrint() {
+            printPanel.add(new PrintGUI(menu.getAllFiles()));
+            printEventButton.setEnabled(true);
+        }
+
+        private void handleChangeStatus() {
+            ChangeStatusGui changeStatusGui = new ChangeStatusGui(menu.getAllFiles());
+            printPanel.add(changeStatusGui);
+            changeProjectStatusButton.setEnabled(true);
+        }
+        private void handleEditEvent() {
+            EditEventGUI editEventGUI = new EditEventGUI(menu.getAllFiles());
+            printPanel.add(editEventGUI);
+            editEventButton.setEnabled(true);
+        }
+        public void handleNewEvent(){
+            JButton createAppointment = new JButton("Create Appointment");
+            JButton createProject = new JButton("Create Project");
+            printPanel.add(createAppointment);
+            printPanel.add(createProject);
+
+            createAppointment.addActionListener(e1 -> {
+                printPanel.removeAll();
+                AppointmentGUI appointmentGui = new AppointmentGUI(menu.getAllFiles());
+                printPanel.add(appointmentGui);
+                printPanel.revalidate();
+                printPanel.repaint();
+                createAppointment.setEnabled(true);
+            });
+
+            createProject.addActionListener(e1 -> {
+                printPanel.removeAll();
+                ProjectGui projectGui = new ProjectGui(menu.getAllFiles());
+                printPanel.add(projectGui);
+                printPanel.revalidate();
+                printPanel.repaint();
+                createProject.setEnabled(true);
+            });
+        }
     }
+
 }
