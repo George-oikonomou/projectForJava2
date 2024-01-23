@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class EditEventGUI extends JPanel {
@@ -16,6 +18,9 @@ public class EditEventGUI extends JPanel {
     private final JTextField enterTitle;
     private final JButton searchTitle;
     private final SingleCalendarSelect calendarSelect;
+    private Event eventToEdit;
+    private JList<JPanel> eventList;
+    private ArrayList<Event> events;
     private JTextArea titleField;
     private JTextArea descriptionField;
     private JDateChooser endDateChooser = null;
@@ -24,9 +29,6 @@ public class EditEventGUI extends JPanel {
     private JSpinner endTimeSpinner;
     private JScrollPane titleScrollPane;
     private JScrollPane descriptionScrollPane;
-    private JList<JPanel> eventList;
-    private Event eventToEdit;
-    private ArrayList<Event> events;
     private JPanel editPanel;
 
     public EditEventGUI(ArrayList<ICSFile> allFiles) {
@@ -36,34 +38,23 @@ public class EditEventGUI extends JPanel {
 
         listModel = new DefaultListModel<>();
         searchTitle = new JButton("Search");
-        enterTitle = new JTextField("Enter Project Title", 10);
-        enterTitle.addFocusListener(new ClearTextFocusListener("Enter Project Title", enterTitle));
+        enterTitle = new JTextField("Enter Event Title", 10);
+        enterTitle.addFocusListener(new ClearTextFocusListener("Enter Event Title", enterTitle));
         calendarSelect = new SingleCalendarSelect(allFiles);
         setupUI();
     }
 
     private void setupUI() {
-        if(enterTitle.getText().equals("Enter Project Title"))
+        if(enterTitle.getText().equals("Enter Event Title"))
             searchTitle.setEnabled(false);
         if (calendarSelect.isEmpty()) {
             searchTitle.setEnabled(false);
         } else {
-            calendarSelect.addActionListener(e -> fillProjects());
+            calendarSelect.addActionListener(e -> fillEvents());
             calendarSelect.setSelectedIndex(0);
             enterTitle.getDocument().addDocumentListener(new LiveSearchListener());
         }
-        searchTitle.addActionListener(e -> {
-            listModel.clear();
-            for (Event event : events) {
-                if (event.getTitle().equalsIgnoreCase(enterTitle.getText())) {
-                    listModel.addElement(event.getPanel());
-                }
-            }
-            if (listModel.isEmpty()) {
-                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no events with title " + enterTitle.getText(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        searchTitle.addActionListener(new ButtonListener());
 
         addComponents();
     }
@@ -112,7 +103,7 @@ public class EditEventGUI extends JPanel {
         eventList.setPreferredSize(new Dimension(230, listModel.size() * 100));
     }
 
-    private void fillProjects() { events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents(); }
+    private void fillEvents() { events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents(); }
 
     private void FindSelectedEvent() {
         JPanel selectedPanel = listModel.getElementAt(eventList.getSelectedIndex());
@@ -217,6 +208,22 @@ public class EditEventGUI extends JPanel {
             ((Project) eventToEdit).setDue(endDateTime);
         eventToEdit.setPanel();
         performLiveSearch();
+    }
+
+    private class ButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            listModel.clear();
+            for (Event event : events) {
+                if (event.getTitle().equalsIgnoreCase(enterTitle.getText())) {
+                    listModel.addElement(event.getPanel());
+                }
+            }
+
+            if (listModel.isEmpty()) {
+                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no events with title " + enterTitle.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private class LiveSearchListener implements DocumentListener {
