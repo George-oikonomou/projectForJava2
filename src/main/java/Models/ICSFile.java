@@ -1,3 +1,6 @@
+package  Models;
+
+import Utilities.Validate;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
@@ -17,6 +20,11 @@ public class ICSFile {
         this.calendar = new OurCalendar();
         this.filePath = filePath;
     }
+
+    public String getFilePath(){
+        return this.filePath;
+    }
+
     public String getFileName() {
         if (System.getProperty("os.name").toLowerCase().contains("windows"))
             return filePath.substring(filePath.lastIndexOf('\\') + 1 );

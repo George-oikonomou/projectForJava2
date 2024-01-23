@@ -1,3 +1,10 @@
+package  GUI;
+
+
+import Main.App;
+import Models.ICSFile;
+import Models.Event;
+import Utilities.PanelListCellRenderer;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -110,6 +117,11 @@ public class PrintGUI extends JPanel {
     }
 
     private void performAction(App.AppChoices choice) {
+        if (selectedFiles.isEmpty()) {
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please select at least one calendar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         selectedEvents.clear();
         if (scrollPane != null)
             remove(scrollPane);
@@ -131,14 +143,5 @@ public class PrintGUI extends JPanel {
             }
         }
         printEvents();
-    }
-
-    private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {
-        @Override
-        public Component getListCellRendererComponent(JList<? extends JPanel> list, JPanel value, int index, boolean isSelected, boolean cellHasFocus) {
-            value.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-            value.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-            return value;
-        }
     }
 }

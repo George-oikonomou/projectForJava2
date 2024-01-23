@@ -1,3 +1,5 @@
+package Models;
+
 import net.fortuna.ical4j.model.property.Duration;
 import javax.swing.*;
 import java.awt.*;
@@ -91,10 +93,15 @@ public class Appointment extends Event {
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Start Date: " + getStartDate().toString()));
         panel.add(new JLabel("End Date: " + getEndDate().toString()));
+        panel.putClientProperty("uid", getUuid());
     }
 
     @Override
     public JPanel getPanel() {
         return panel;
+    }
+
+    public void setEndDate(OurDateTime endDateTime) {
+        this.endDate = endDateTime;
     }
 }

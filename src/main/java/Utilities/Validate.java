@@ -1,3 +1,6 @@
+package Utilities;
+
+import Models.OurDateTime;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -5,12 +8,10 @@ import javax.swing.text.JTextComponent;
 
 public  class Validate {//General class for validating input
 
-    public static boolean Input(JDateChooser startDateChooser, JTextComponent title, JTextComponent description) {
+    public static void Input(JDateChooser startDateChooser, JTextComponent title, JTextComponent description) {
         if (startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description")){
             JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
-            return true;
         }
-        return false;
     }
 
     public static boolean Dates(OurDateTime startDateTime, OurDateTime endDateTime) {

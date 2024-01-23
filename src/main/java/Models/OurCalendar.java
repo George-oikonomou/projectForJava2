@@ -1,3 +1,6 @@
+package  Models;
+
+import Main.App;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import java.time.DayOfWeek;
@@ -43,7 +46,7 @@ public class OurCalendar {
 
     public static void sortList(ArrayList<Event> events) {events.sort((event1, event2) -> (int) (compareEvents(event1, event2)));} //TODO CHECK IF IT WORKS
 
-    protected static long compareEvents(Event event1, Event event2) {
+    public static long compareEvents(Event event1, Event event2) {
         OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDue() : event1.getStartDate();
         OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDue() : event2.getStartDate();
 

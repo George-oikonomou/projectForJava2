@@ -1,3 +1,5 @@
+package  Models;
+
 import net.fortuna.ical4j.model.property.Status;
 
 import javax.swing.*;
@@ -5,7 +7,7 @@ import java.awt.*;
 
 public class Project extends Event{
     private Status status;
-    private final OurDateTime due;    //date and time of project deadline
+    private OurDateTime due;    //date and time of project deadline
     private boolean isFinished = false;     // boolean value that tells if the project is finished
     private JPanel panel;
 
@@ -21,6 +23,7 @@ public class Project extends Event{
     public void setStatus(Status status) { this.status = status; }
     public Status getStatus() { return status; }
     public OurDateTime getDue() { return due; }
+    public void setDue(OurDateTime due) { this.due = due; }
     public boolean getIsFinished() { return isFinished; }
 
     @Override
@@ -43,7 +46,8 @@ public class Project extends Event{
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Due Date: " + getDue()));
         panel.add(new JLabel("Status: " + getStatus().getValue()));
-        }
+        panel.putClientProperty("uid", getUuid());
+    }
 
     @Override
     public JPanel getPanel() {

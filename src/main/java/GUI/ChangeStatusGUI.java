@@ -1,12 +1,19 @@
+package  GUI;
+
+
+import Utilities.ClearTextFocusListener;
+import Utilities.PanelListCellRenderer;
+import Models.ICSFile;
+import Models.Project;
+import Utilities.SingleCalendarSelect;
 import net.fortuna.ical4j.model.property.Status;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class ChangeStatusGui extends JPanel{
+public class ChangeStatusGUI extends JPanel{
     private final ArrayList<ICSFile> allFiles;
     private final JList<JPanel> projectList;
     private final DefaultListModel<JPanel> listModel;
@@ -16,7 +23,7 @@ public class ChangeStatusGui extends JPanel{
     private ArrayList<Project> projects;
 
 
-    public ChangeStatusGui(ArrayList<ICSFile> allFiles) {
+    public ChangeStatusGUI(ArrayList<ICSFile> allFiles) {
 
         this.allFiles = allFiles;
         setPreferredSize(new Dimension(300, 450));
@@ -92,12 +99,6 @@ public class ChangeStatusGui extends JPanel{
         panel.add(new JLabel("Due Date: " + project.getDue()));
         panel.add(new JLabel("Status: " + project.getStatus().getValue()));
 
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                    handleSelection(project);
-            }
-        });
         return panel;
     }
     private void handleSelection(Project project) {
@@ -111,29 +112,5 @@ public class ChangeStatusGui extends JPanel{
         listModel.remove(selectedIndex);
         JPanel updatedPanel = createPanelForProject(project);
         listModel.add(selectedIndex, updatedPanel);
-    }
-    private static class PanelListCellRenderer implements ListCellRenderer<JPanel> {
-        @Override
-        public Component getListCellRendererComponent(JList<? extends JPanel> list, JPanel value, int index, boolean isSelected, boolean cellHasFocus) {
-            value.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
-            value.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-            return value;
-        }
-    }
-
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
-
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                    textComponent.setText(defaultText);
-            }
-        }
     }
 }

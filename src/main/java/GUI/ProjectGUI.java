@@ -1,18 +1,23 @@
+package  GUI;
+
+import Models.Event;
+import Models.Project;
+import Utilities.ClearTextFocusListener;
+import Utilities.DateTimeManager;
+import Utilities.SingleCalendarSelect;
+import Utilities.Validate;
+import Models.ICSFile;
+import Models.OurDateTime;
 import com.toedter.calendar.JDateChooser;
 import net.fortuna.ical4j.model.property.Status;
-
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
-public class ProjectGui extends JPanel {
+public class ProjectGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
     private final JTextField title;
     private final JTextArea description;
@@ -21,11 +26,11 @@ public class ProjectGui extends JPanel {
     private final JButton create;
     private final SingleCalendarSelect calendarSelect;
 
-    public ProjectGui(ArrayList<ICSFile> allFiles) {
+    public ProjectGUI(ArrayList<ICSFile> allFiles) {
 
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(410, 350));
+        setPreferredSize(new Dimension(410, 300));
 
         this.due = new JDateChooser();
         JTextField dateTextField = ((JTextField) due.getDateEditor().getUiComponent());
@@ -44,7 +49,7 @@ public class ProjectGui extends JPanel {
         this.description = new JTextArea("Project Description", 5, 20);
         this.description.addFocusListener(new ClearTextFocusListener("Project Description", description));
         this.create = new JButton("Create");
-        this.create.addActionListener(new ProjectGui.ButtonListener());
+        this.create.addActionListener(new ProjectGUI.ButtonListener());
 
         // Use a JScrollPane for the JTextArea to enable scrolling if needed
         JScrollPane descriptionScrollPane = new JScrollPane(description);
@@ -76,7 +81,7 @@ public class ProjectGui extends JPanel {
 
         Validate.Input(due, title, description);
         if (allFiles.isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ArrayList<Event> events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
@@ -90,30 +95,13 @@ public class ProjectGui extends JPanel {
         title.setText("Project Name");
         description.setText("Project Description");
         due.setDate(null);
+
     }
 
     private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             createProject();
-        }
-    }
-
-
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
-
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (textComponent.getText().equals(defaultText)) {
-                textComponent.setText("");
-            }
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (textComponent.getText().isEmpty()) {
-                textComponent.setText(defaultText);
-            }
         }
     }
 }

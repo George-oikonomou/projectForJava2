@@ -1,17 +1,20 @@
+package  GUI;
+
+
+import Utilities.ClearTextFocusListener;
+import Models.ICSFile;
+import Models.Event;
+import Models.OurDateTime;
+import Models.Appointment;
+import Utilities.DateTimeManager;
+import Utilities.SingleCalendarSelect;
+import Utilities.Validate;
 import com.toedter.calendar.JDateChooser;
-import org.apache.commons.lang3.time.DateUtils;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class AppointmentGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
@@ -29,19 +32,24 @@ public class AppointmentGUI extends JPanel {
 
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
-        setPreferredSize(new Dimension(420, 250));
+        setPreferredSize(new Dimension(435, 300));
         
         this.title = new JTextField("Appointment Name", 10);
         this.title.addFocusListener(new ClearTextFocusListener("Appointment Name", title));
+
         this.description = new JTextArea("Appointment Description", 5, 20);
         this.description.addFocusListener(new ClearTextFocusListener("Appointment Description", description));
         this.descriptionScrollPane = new JScrollPane(description, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
+
         startDateChooser = DateTimeManager.configureDate(100,20);// Start Date Configuration
-        startDateChooser.addPropertyChangeListener("date", new StartDateChangeListener());
         startTimeSpinner = DateTimeManager.configureTime(40,20);// Start Time Configuration
+
         endDateChooser =  DateTimeManager.configureDate(100,20);// End Date Configuration
         endTimeSpinner = DateTimeManager.configureTime(40,20);// End Time Configuration
+
+        startDateChooser.addPropertyChangeListener("date", new DateTimeManager.StartDateChangeListener(endDateChooser));
+
         this.calendarSelect = new SingleCalendarSelect(allFiles);
         this.create = new JButton("Create");
         if (calendarSelect.isEmpty()) create.setEnabled(false);
@@ -65,7 +73,7 @@ public class AppointmentGUI extends JPanel {
 
     public void createAppointment() {
         if(startDateChooser.getDate() == null  || title.getText().equals("Appointment Name") || description.getText().equals("Appointment Description") || endDateChooser.getDate() == null || calendarSelect.isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -78,7 +86,7 @@ public class AppointmentGUI extends JPanel {
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
 
-        JOptionPane.showMessageDialog(null, "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
         title.setText("Appointment Name");
         description.setText("Appointment Description");
@@ -90,42 +98,6 @@ public class AppointmentGUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             createAppointment();
-        }
-    }
-
-    private record ClearTextFocusListener(String defaultText, JTextComponent textComponent) implements FocusListener {
-
-        @Override
-            public void focusGained(FocusEvent e) {
-                if (textComponent.getText().equals(defaultText)) {
-                    textComponent.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textComponent.getText().isEmpty()) {
-                    textComponent.setText(defaultText);
-                }
-            }
-        }
-
-    private class StartDateChangeListener implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            Date newStartDate = (Date) evt.getNewValue();
-
-            if (newStartDate == null) return;
-
-            Date startDate = DateUtils.truncate(newStartDate, Calendar.DATE);
-            if (startDate != null && endDateChooser.getDate() != null) {
-                Date endDate = DateUtils.truncate(endDateChooser.getDate(), Calendar.DATE);
-
-                if (endDate.before(startDate))
-                    endDateChooser.setDate(null);
-            }
-            endDateChooser.setMinSelectableDate(newStartDate);
         }
     }
 }
