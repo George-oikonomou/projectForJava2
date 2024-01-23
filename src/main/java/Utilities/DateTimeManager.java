@@ -29,7 +29,6 @@ public class DateTimeManager {
         JDateChooser DateChooser = new JDateChooser();
 
         DateChooser.setPreferredSize(new Dimension(width, height)); // 100 20
-        DateChooser.setMinSelectableDate(new GregorianCalendar(2024, Calendar.JANUARY, 1).getTime());
 
         JTextField startDateTextField = ((JTextField) DateChooser.getDateEditor().getUiComponent());
         startDateTextField.setEditable(false);
