@@ -26,6 +26,10 @@ public class OurCalendar {
 
     public ArrayList<Event> getEvents() { return events; }
     public ArrayList<Project> getProjects(){
+
+        if (!projects.isEmpty())
+            projects.clear();
+
         for (Event event : events){
             if (event instanceof Project project){
                 projects.add(project);
