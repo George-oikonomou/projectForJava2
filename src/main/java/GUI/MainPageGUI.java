@@ -119,6 +119,7 @@ public class MainPageGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             printPanel.removeAll();
+            currentPage = null;
 
             if (e.getSource() == newEventButton)
                 handleNewEvent();
