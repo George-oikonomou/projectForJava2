@@ -29,7 +29,6 @@ public class ReminderGUI extends JPanel implements TimeListener {
     @Override
     public void timeChanged(TimeEvent timeEvent) {
         liveTime = new OurDateTime(timeEvent.getDateTime());
-        System.out.println(liveTime);
         setNextEvent(OurMenuGUI.getAllFiles());
         printEvents();
     }
