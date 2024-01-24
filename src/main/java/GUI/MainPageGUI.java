@@ -73,7 +73,6 @@ public class MainPageGUI extends JFrame {
     }
 
     public void refreshReminderPanel() {
-        reminderPanel.removeAll();
         reminderPanel.add(new ReminderGUI());
         reminderPanel.revalidate();
         reminderPanel.repaint();
@@ -99,8 +98,14 @@ public class MainPageGUI extends JFrame {
 
     private void createReminderPanel(){
         reminderPanel = new JPanel();
+        reminderPanel.setLayout(new FlowLayout());
         reminderPanel.setBackground(new Color(255, 190, 235));
         reminderPanel.setPreferredSize(new Dimension(250,500));
+        reminderPanel.add(new CurrentTimeGUI());
+        JLabel reminders = new JLabel("REMINDERS");
+        Font font = reminders.getFont().deriveFont(Font.PLAIN, 30);
+        reminders.setFont(font);
+        reminderPanel.add(reminders);
     }
 
     private void createButtons(){
