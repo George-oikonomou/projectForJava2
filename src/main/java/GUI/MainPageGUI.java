@@ -17,6 +17,7 @@ public class MainPageGUI extends JFrame {
     JButton printEventButton;
     JPanel menuPanel;
     JPanel reminderPanel;
+    boolean isReminder = false;
     public Pages currentPage;
     private static JPanel printPanel;
 
@@ -69,6 +70,13 @@ public class MainPageGUI extends JFrame {
         this.menu = new OurMenuGUI(this);
         reminderPanel.add(new ReminderGUI());
         this.setJMenuBar(menu);
+    }
+
+    public void refreshReminderPanel() {
+        reminderPanel.removeAll();
+        reminderPanel.add(new ReminderGUI());
+        reminderPanel.revalidate();
+        reminderPanel.repaint();
     }
 
     private void createOptionsPanel() {

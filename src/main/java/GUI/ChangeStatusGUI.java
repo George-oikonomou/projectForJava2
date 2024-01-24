@@ -24,7 +24,7 @@ public class ChangeStatusGUI extends JPanel {
 
 
     public ChangeStatusGUI(ArrayList<ICSFile> allFiles) {
-        setPreferredSize(new Dimension(300, 450));
+        setPreferredSize(new Dimension(300, 460));
 
         this.allFiles = allFiles;
 

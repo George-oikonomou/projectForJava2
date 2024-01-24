@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class ReminderGUI extends JPanel implements TimeListener {
     private DefaultListModel<JPanel> listModel;
-    private final ArrayList<Event> nextEvent;
+    private ArrayList<Event> nextEvent;
     private JList<JPanel> printList;
     private OurDateTime liveTime;
     private JScrollPane scrollPane;
@@ -34,6 +34,11 @@ public class ReminderGUI extends JPanel implements TimeListener {
     }
 
     public ReminderGUI() {
+        if (OurMenuGUI.getAllFiles().isEmpty()){
+            setPreferredSize(new Dimension(0, 0));
+            return;
+        }
+
         this.nextEvent = new ArrayList<>();
 
         setLayout(new FlowLayout());

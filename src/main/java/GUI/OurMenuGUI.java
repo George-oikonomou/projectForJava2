@@ -55,6 +55,8 @@ public class OurMenuGUI extends JMenuBar {
                     createNewIcsFile(selectedFile);
 
                 mainPageGUI.getBackToPage();
+                mainPageGUI.isReminder = true;
+                mainPageGUI.refreshReminderPanel();
 
             }
 

@@ -9,6 +9,8 @@ public class PanelListCellRenderer implements ListCellRenderer<JPanel> {
                                                   boolean isSelected, boolean cellHasFocus) {
         value.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
         value.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
+        value.setToolTipText(((JLabel)value.getComponent(0)).getText());
+
         return value;
     }
 }
