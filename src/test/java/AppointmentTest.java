@@ -115,8 +115,8 @@ public class AppointmentTest {
                 Appointment:
                     title: Meeting
                     description: Team meeting
-                    start date & time: 01/01/2022 10:00
-                    end date & time: 01/01/2022 12:30
+                    start date & time: 01/01/2022 10:00:00
+                    end date & time: 01/01/2022 12:30:00
                     duration: 2 hours 30 minutes
                 """;
 

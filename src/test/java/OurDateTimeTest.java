@@ -9,19 +9,19 @@ public class OurDateTimeTest {
         @Test
         public void setCalculationFormatCreatesCorrectFormatForMidnight() {
             OurDateTime dateTime = new OurDateTime(2022, 1, 1, 0, 0);
-            assertEquals(202201010000L, dateTime.getCalculationFormat());
+            assertEquals(20220101000000L, dateTime.getCalculationFormat());
         }
 
         @Test
         public void setCalculationFormatCreatesCorrectFormatForNoon() {
             OurDateTime dateTime = new OurDateTime(2022, 1, 1, 12, 0);
-            assertEquals(202201011200L, dateTime.getCalculationFormat());
+            assertEquals(20220101120000L, dateTime.getCalculationFormat());
         }
 
         @Test
         public void setCalculationFormatCreatesCorrectFormatForLastMinuteOfDay() {
             OurDateTime dateTime = new OurDateTime(2022, 1, 1, 23, 59);
-            assertEquals(202201012359L, dateTime.getCalculationFormat());
+            assertEquals(20220101235900L, dateTime.getCalculationFormat());
         }
 
         @Test
@@ -51,7 +51,7 @@ public class OurDateTimeTest {
         @Test
         public void getTimeReturnsCorrectTime() {
             OurDateTime dateTime = new OurDateTime(2022, 1, 1, 12, 0);
-            assertEquals("12:00", dateTime.getTime());
+            assertEquals("12:00:00", dateTime.getTime());
         }
 
         @Test
