@@ -13,12 +13,12 @@ import java.util.ArrayList;
 public class OurMenuGUI extends JMenuBar {
     private final JMenuItem addCalendar;
     private final JMenuItem saveCalendar;
-    private final ArrayList<ICSFile> allFiles;
+    private static ArrayList<ICSFile> allFiles;
     private final MainPageGUI mainPageGUI;
 
     public OurMenuGUI(MainPageGUI mainPageGUI) {
         this.mainPageGUI = mainPageGUI;
-        this.allFiles = new ArrayList<>();
+        allFiles = new ArrayList<>();
         this.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.black));
         JMenu myMenu = new JMenu("FILES");
         myMenu.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.black));
@@ -32,7 +32,7 @@ public class OurMenuGUI extends JMenuBar {
         this.add(myMenu);
     }
 
-    public ArrayList<ICSFile> getAllFiles() { return allFiles; }
+    public static ArrayList<ICSFile> getAllFiles() { return allFiles; }
 
     public void addCalendar() {
         SwingUtilities.invokeLater(() -> {
@@ -69,13 +69,13 @@ public class OurMenuGUI extends JMenuBar {
         }
         ICSFile icsFile = new ICSFile(filePath);
 
-        this.allFiles.add(icsFile);
+        allFiles.add(icsFile);
         icsFile.storeEvents(icsFile.getCalendar().getEvents());
     }
 
     private void loadIcsFile(File selectedFile) {
         ICSFile icsFile = new ICSFile(selectedFile.getAbsolutePath());
-        this.allFiles.add(icsFile);
+        allFiles.add(icsFile);
         icsFile.loadEvents();
     }
 

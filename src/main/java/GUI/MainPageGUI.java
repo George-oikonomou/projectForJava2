@@ -15,8 +15,8 @@ public class MainPageGUI extends JFrame {
     JButton editEventButton;
     JButton changeProjectStatusButton;
     JButton printEventButton;
-    JButton reminder;
     JPanel menuPanel;
+    JPanel reminderPanel;
     public Pages currentPage;
     private static JPanel printPanel;
 
@@ -26,7 +26,6 @@ public class MainPageGUI extends JFrame {
         EDIT_EVENT,
         CHANGE_STATUS,
         PRINT_EVENT,
-        REMINDER
     }
 
     public void getBackToPage() {
@@ -41,7 +40,6 @@ public class MainPageGUI extends JFrame {
             case EDIT_EVENT -> new Functionality().handleEditEvent();
             case CHANGE_STATUS -> new Functionality().handleChangeStatus();
             case PRINT_EVENT -> new Functionality().handlePrint();
-            case REMINDER -> new Functionality().handleReminder();
         }
     }
 
@@ -49,6 +47,7 @@ public class MainPageGUI extends JFrame {
     public MainPageGUI() {
         createOptionsPanel();
         createPrintPanel();
+        createReminderPanel();
         initializeFrame();
     }
 
@@ -66,7 +65,9 @@ public class MainPageGUI extends JFrame {
         this.setVisible(true);
         this.add(menuPanel, BorderLayout.WEST);
         this.add(printPanel, BorderLayout.CENTER);
+        this.add(reminderPanel, BorderLayout.EAST);
         this.menu = new OurMenuGUI(this);
+        reminderPanel.add(new ReminderGUI());
         this.setJMenuBar(menu);
     }
 
@@ -80,7 +81,6 @@ public class MainPageGUI extends JFrame {
         menuPanel.add(editEventButton);
         menuPanel.add(changeProjectStatusButton);
         menuPanel.add(printEventButton);
-        menuPanel.add(reminder);
     }
 
     private void createPrintPanel() {
@@ -89,9 +89,14 @@ public class MainPageGUI extends JFrame {
         printPanel.setPreferredSize(new Dimension(450, 500));
     }
 
+    private void createReminderPanel(){
+        reminderPanel = new JPanel();
+        reminderPanel.setBackground(new Color(255, 190, 235));
+        reminderPanel.setPreferredSize(new Dimension(250,500));
+    }
+
     private void createButtons(){
 
-        this.reminder = createButton("Reminder","reminder.jpg","See your reminders");
         this.newEventButton = createButton("New Event", "Add.jpg", "add an event to a calendar");
         this.editEventButton = createButton("Edit Event","Edit.jpg","Edit an event from a calendar");
         this.changeProjectStatusButton = createButton("<html>Change Projects<br /><center>Status</center></html>","Status.jpg", " Change the condition of a project from a calendar");
@@ -129,33 +134,25 @@ public class MainPageGUI extends JFrame {
                 handleChangeStatus();
             else if (e.getSource() == printEventButton)
                 handlePrint();
-            else if (e.getSource() == reminder)
-                handleReminder();
 
             printPanel.revalidate();
             printPanel.repaint();
         }
 
-        private void handleReminder() {
-            printPanel.add(new ReminderGUI(menu.getAllFiles()));
-            reminder.setEnabled(true);
-            currentPage = Pages.REMINDER;
-        }
-
         private void handlePrint() {
-            printPanel.add(new PrintGUI(menu.getAllFiles()));
+            printPanel.add(new PrintGUI(OurMenuGUI.getAllFiles()));
             printEventButton.setEnabled(true);
             currentPage = Pages.PRINT_EVENT;
         }
 
         private void handleChangeStatus() {
-            ChangeStatusGUI changeStatusGui = new ChangeStatusGUI(menu.getAllFiles());
+            ChangeStatusGUI changeStatusGui = new ChangeStatusGUI(OurMenuGUI.getAllFiles());
             printPanel.add(changeStatusGui);
             changeProjectStatusButton.setEnabled(true);
             currentPage = Pages.CHANGE_STATUS;
         }
         private void handleEditEvent() {
-            EditEventGUI editEventGUI = new EditEventGUI(menu.getAllFiles());
+            EditEventGUI editEventGUI = new EditEventGUI(OurMenuGUI.getAllFiles());
             printPanel.add(editEventGUI);
             editEventButton.setEnabled(true);
             currentPage = Pages.EDIT_EVENT;
@@ -172,18 +169,14 @@ public class MainPageGUI extends JFrame {
                 executeCreateProjectListener();
             }
 
-            createAppointment.addActionListener(e1 -> {
-                executeCreateAppointmentListener();
-            });
+            createAppointment.addActionListener(e1 -> executeCreateAppointmentListener());
 
-            createProject.addActionListener(e1 -> {
-                executeCreateProjectListener();
-            });
+            createProject.addActionListener(e1 -> executeCreateProjectListener());
         }
 
         private void executeCreateAppointmentListener() {
             printPanel.removeAll();
-            AppointmentGUI appointmentGui = new AppointmentGUI(menu.getAllFiles());
+            AppointmentGUI appointmentGui = new AppointmentGUI(OurMenuGUI.getAllFiles());
             printPanel.add(appointmentGui);
             printPanel.revalidate();
             printPanel.repaint();
@@ -192,7 +185,7 @@ public class MainPageGUI extends JFrame {
 
         private void executeCreateProjectListener() {
             printPanel.removeAll();
-            ProjectGUI projectGui = new ProjectGUI(menu.getAllFiles());
+            ProjectGUI projectGui = new ProjectGUI(OurMenuGUI.getAllFiles());
             printPanel.add(projectGui);
             printPanel.revalidate();
             printPanel.repaint();
