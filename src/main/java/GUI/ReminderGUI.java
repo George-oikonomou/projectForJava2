@@ -96,7 +96,7 @@ public class ReminderGUI extends JPanel implements TimeListener {
             listModel.addElement(panel);
         }
         printList = new JList<>(listModel);
-        printList.setPreferredSize(new Dimension(170, (nextEvent.isEmpty() ? 1 : nextEvent.size() * 78)));
+        printList.setPreferredSize(new Dimension(170, (nextEvent.isEmpty() ? 1 : nextEvent.size() * 90)));
         printList.setCellRenderer(new PanelListCellRenderer());
         scrollPane = new JScrollPane(printList);
         scrollPane.setPreferredSize(new Dimension(200, 350));

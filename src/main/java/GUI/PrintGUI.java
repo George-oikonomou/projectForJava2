@@ -70,7 +70,7 @@ public class PrintGUI extends JPanel {
 
         printList = new JList<>(listModel);
 
-        printList.setPreferredSize(new Dimension(230, (selectedEvents.isEmpty() ?  1 : selectedEvents.size()) * 78 ));
+        printList.setPreferredSize(new Dimension(230, (selectedEvents.isEmpty() ?  1 : selectedEvents.size()) * 78 )); // todo
         printList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         printList.setCellRenderer(new PanelListCellRenderer());
 

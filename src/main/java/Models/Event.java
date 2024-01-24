@@ -9,12 +9,18 @@ public abstract class Event {
     private String title,description;
     private String uuid;
     private Boolean isNotified;
+    private final String fileName;
 
 
-    public Event(OurDateTime startDate, String title, String description) {
+    public String getFileName() {
+        return fileName;
+    }
+
+    public Event(OurDateTime startDate, String title, String description, String fileName) {
         this.startDate = startDate;
         this.title = title;
         this.description = description;
+        this.fileName = fileName;
         this.isNotified = false;
         generateUUID();
     }
