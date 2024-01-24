@@ -12,14 +12,13 @@ import java.time.format.DateTimeFormatter;
 
 public class CurrentTimeGUI extends JPanel implements TimeListener {
 
-    private JLabel timeLabel;
-    private LocalDateTime currentTime = null; // Store the current time
+    private final JLabel timeLabel;
+    private LocalDateTime currentTime;
 
     public CurrentTimeGUI() {
         setPreferredSize(new Dimension(200, 50));
         this.timeLabel = new JLabel();
         add(timeLabel);
-        // Register as a time listener
         TimeTeller teller = TimeService.getTeller();
         teller.addTimeListener(this);
     }
@@ -30,19 +29,13 @@ public class CurrentTimeGUI extends JPanel implements TimeListener {
     }
 
     private void updateTimeLabel(LocalDateTime dateTime) {
-        // Update the stored current time
         currentTime = dateTime;
-
         // Format current time as HH:mm:ss
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String time = currentTime.format(formatter);
-
-        // Update the label
         timeLabel.setText(time);
         Font font = timeLabel.getFont().deriveFont(Font.PLAIN, 30);
         timeLabel.setFont(font);
-
-        // Revalidate and repaint the panel
         revalidate();
         repaint();
     }
