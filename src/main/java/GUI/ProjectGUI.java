@@ -5,7 +5,6 @@ import Models.Project;
 import Utilities.ClearTextFocusListener;
 import Utilities.DateTimeManager;
 import Utilities.SingleCalendarSelect;
-import Utilities.Validate;
 import Models.ICSFile;
 import Models.OurDateTime;
 import com.toedter.calendar.JDateChooser;
@@ -79,8 +78,7 @@ public class ProjectGUI extends JPanel {
 
     public void createProject() {
 
-        Validate.Input(due, title, description);
-        if (allFiles.isEmpty() ){
+        if(due.getDate() == null  || title.getText().equals("Project Name") || description.getText().equals("Project Description")){
             JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
