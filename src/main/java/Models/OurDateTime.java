@@ -1,9 +1,12 @@
 package  Models;
 
+import GUI.MainPageGUI;
 import Utilities.Validate;
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
+
+import javax.swing.*;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -90,7 +93,7 @@ public class OurDateTime {
         try {
             this.icsFormat = new DateTime(format);
         } catch (ParseException e) {
-            Validate.println("could not create icsDateTime format");
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Error while parsing date", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

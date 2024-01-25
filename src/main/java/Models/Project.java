@@ -13,8 +13,8 @@ public class Project extends Event{
 
     public void setFinished(boolean finished) { isFinished = finished; }
 
-    public Project(String title, String description, OurDateTime due, Status status) {
-        super(null, title, description);
+    public Project(String title, String description, OurDateTime due, Status status, String filename) {
+        super(null, title, description,filename);
         this.due = due;
         this.status = status;
         setFinished(status == Status.VTODO_COMPLETED);
@@ -27,17 +27,6 @@ public class Project extends Event{
     public boolean getIsFinished() { return isFinished; }
 
     @Override
-    public String toString() {
-        return String.format("""
-        Project:
-            title: %s
-            description: %s
-            due: %s
-            status: %s
-        """, getTitle(), getDescription(), getDue(), getStatus().getValue());
-    }
-
-    @Override
     public void setPanel() {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -46,6 +35,7 @@ public class Project extends Event{
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Due Date: " + getDue()));
         panel.add(new JLabel("Status: " + getStatus().getValue()));
+        panel.add(new JLabel("Calendar Name: " + getFileName()));
         panel.putClientProperty("uid", getUuid());
     }
 

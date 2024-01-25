@@ -195,6 +195,9 @@ public class EditEventGUI extends JPanel {
         if (startDateChooser.getDate()!=null && eventToEdit instanceof Appointment) {
             OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
             if (Validate.Dates(startDateTime, endDateTime)) return;
+
+            eventToEdit.setNotified(startDateTime.getDateFormat().equals(((Appointment) eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
+
             ((Appointment) eventToEdit).setDurationWithDtend(startDateTime, endDateTime);
             eventToEdit.setStartDate(startDateTime);
             ((Appointment) eventToEdit).setEndDate(endDateTime);
@@ -204,8 +207,12 @@ public class EditEventGUI extends JPanel {
         eventToEdit.setTitle(titleField.getText());
         eventToEdit.setDescription(descriptionField.getText());
         //cast appointment to event
-        if (eventToEdit instanceof Project)
+        if (eventToEdit instanceof Project){
+
+            eventToEdit.setNotified(endDateTime.getDateFormat().equals(((Project) eventToEdit).getDue().getDateFormat()));
+
             ((Project) eventToEdit).setDue(endDateTime);
+        }
         eventToEdit.setPanel();
         performLiveSearch();
     }

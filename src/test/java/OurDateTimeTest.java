@@ -1,4 +1,3 @@
-import Utilities.Validate;
 import Models.OurDateTime;
 import net.fortuna.ical4j.model.DateTime;
 import org.junit.jupiter.api.Test;
@@ -80,9 +79,7 @@ public class OurDateTimeTest {
             DateTime expectedIcsFormat = null;
             try {
                 expectedIcsFormat = new DateTime("20220101T120000");
-            } catch (ParseException e) {
-                Validate.print("could not create icsDateTime format");
-            }
+            } catch (ParseException ignored) {}
             assertEquals(expectedIcsFormat, dateTime.getIcsFormat());
         }
 }
