@@ -105,7 +105,7 @@ public class EventManagement extends JPanel {
         public void changedUpdate(DocumentEvent e) {}
     }
 
-    public class ButtonListener implements ActionListener{
+    public static class ButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
         }

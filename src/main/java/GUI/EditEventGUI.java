@@ -1,15 +1,11 @@
 package  GUI;
-
 import Utilities.*;
 import Models.*;
 import Models.Event;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class EditEventGUI extends EventManagement {
@@ -132,7 +128,7 @@ public class EditEventGUI extends EventManagement {
             OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
             if (Validate.Dates(startDateTime, endDateTime)) return;
 
-            eventToEdit.setNotified(startDateTime.getDateFormat().equals(((Appointment) eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
+            eventToEdit.setNotified(startDateTime.getDateFormat().equals((eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
 
             ((Appointment) eventToEdit).setDurationWithDtend(startDateTime, endDateTime);
             eventToEdit.setStartDate(startDateTime);
