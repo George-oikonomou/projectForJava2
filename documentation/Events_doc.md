@@ -7,7 +7,10 @@
              * [setDurationWithIcsDuration](#setdurationwithicsdurationourdatetime-datetime-ourdatetime-enddate)
              * [parseIntOrZero](#parseintorzerostring-value)
              * [calculateDurationInDays](#calculatedurationindaysint-durationinmin)
+             * [setPanel](#setpanel)
         * [Project](#project)
+          * [Methods](#methods-1)
+               * [setPanel](#setpanel-1)
 
 ## Superclass general information:
 
@@ -15,13 +18,13 @@ The superclass is named `Event`.
    - This class has :
         - a constructor
         - Setters and Getters
-        - A method that generates the UUID for the event.
-
+        - a method that generates the UUID for the event.
+        - 2 abstract methods that are setter and getter for JPanel, that are used for the subclasses.
    - In this class we have the fields:
         - dateTime for the new event
         - title and description for the event
         - uuid which is an id that is given to each event, in the file
-
+        - a boolean variable to check if the event is notified or not.
 <hr>
 
 ## Subclasses:
@@ -29,7 +32,8 @@ The superclass is named `Event`.
   - ### Appointment
       - In this class we have a field for:
          - duration of each appointment, 
-         - and an endDateTime of each appointment.
+         - an endDateTime of each appointment.
+         - a JPanel to set the panel
         
       - This class has :
         - `2 constructors `
@@ -59,7 +63,12 @@ The superclass is named `Event`.
         - gets the duration in minutes,
         - it transforms it to a string of numbers for days, hours and minutes.
         - it returns the String.
-
+  
+     - ### `setPanel()`
+    
+        - sets the panel for the appointment.   
+        - sets Layout, size and Labels for the panel.
+        - sets a unique id for the panel.
 <hr>
 
 - ### Project
@@ -71,8 +80,14 @@ The superclass is named `Event`.
     - In this class we have the fields:
       - status
       - due for the deadline of the project
-      - isFinished to check if the project is finished or not
+      - a JPanel to set the panel 
 
+- ### Methods
+    - ### `setPanel()`
+    
+        - sets the panel for the project.   
+        - sets Layout, size and Labels for the panel.
+        - sets a unique id for the panel.
 <hr>
 
 - [ICSFile Class General Information](ICSFile_doc.md)
