@@ -1,5 +1,6 @@
 package  Models;
 
+import GUI.MainPageGUI;
 import Utilities.Validate;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
@@ -9,6 +10,8 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VToDo;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.validate.ValidationException;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -54,10 +57,10 @@ public class ICSFile {
                     else if (component instanceof VToDo project) //try to create a project
                         events.add(createProject(project));
                     else
-                        Validate.println("The event " + count + " in the file is not an appointment nor a project moving on to next event..");
+                        JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "The event " + count + " in the file is not an appointment nor a project moving on to next event..", "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (NoSuchElementException e) {
                     // if something goes wrong here it will not terminate the program but move to the next comp
-                    Validate.println("the event " + count + " on the file has missing properties moving on to next event..");
+                    JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "The event " + count + " on the file has missing properties moving on to next event..", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
                 count++;
@@ -67,11 +70,9 @@ public class ICSFile {
             this.calendar.setVersion(calendar.getVersion().getValue());
             this.calendar.setEvents(events);
         } catch (ParserException | NullPointerException e) {
-            Validate.println("The file you have provided is corrupt ");
-            System.exit(1);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "The file you have provided is corrupt", "Error", JOptionPane.ERROR_MESSAGE);
         }catch (IOException e){
-            Validate.println("The file you provided does not exist");
-            System.exit(1);
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "The file you have provided is not found", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -89,8 +90,8 @@ public class ICSFile {
         OurDateTime startDate = ICSFormatToOurDateTime(appointment.getStartDate().getValue());
         // if i have duration get duration else get dtend
         return (appointment.getDuration() != null)
-                ? new Appointment(startDate, appointment.getDuration(), title, description)
-                : new Appointment(startDate, ICSFormatToOurDateTime(appointment.getEndDate().getValue()), title, description);
+                ? new Appointment(startDate, appointment.getDuration(), title, description,getFileName())
+                : new Appointment(startDate, ICSFormatToOurDateTime(appointment.getEndDate().getValue()), title, description,getFileName());
     }
 
     private Project createProject(VToDo project) {
@@ -107,7 +108,7 @@ public class ICSFile {
         OurDateTime dueDate = ICSFormatToOurDateTime(project.getDue().getValue());
         Status status = project.getStatus();
 
-        return new Project(title, description, dueDate, status);
+        return new Project(title, description, dueDate, status, getFileName());
     }
 
     public void storeEvents(ArrayList<Event> events) {
@@ -128,9 +129,8 @@ public class ICSFile {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             CalendarOutputter outPutter = new CalendarOutputter();
             outPutter.output(calendar, fileWriter);
-            Validate.println("Calendar successfully written to " + filePath);
         } catch (IOException | ValidationException e) {
-            Validate.println("There was an error saving your calendar");
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Something went wrong while saving your calendar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -98,6 +98,7 @@ public class OurMenuGUI extends JMenuBar {
             }else if (e.getSource() == saveCalendar) {
                 for (ICSFile icsFile : getAllFiles()) {
                     icsFile.storeEvents(icsFile.getCalendar().getEvents());
+                    JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "calendar "+icsFile.getFileName() + " has been saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }

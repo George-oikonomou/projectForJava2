@@ -64,13 +64,15 @@ public class PrintGUI extends JPanel {
         listModel = new DefaultListModel<>();
 
         for (Event event : selectedEvents) {
-            JPanel panel = event.getPanel();
-            listModel.addElement(panel);
+            listModel.addElement( event.getPanel());
+            listModel.addElement(new JPanel() {{
+                setPreferredSize(new Dimension(0, 10));
+            }});
         }
 
         printList = new JList<>(listModel);
 
-        printList.setPreferredSize(new Dimension(230, (selectedEvents.isEmpty() ?  1 : selectedEvents.size()) * 78 ));
+        printList.setPreferredSize(new Dimension(230, selectedEvents.size() *90 ));
         printList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         printList.setCellRenderer(new PanelListCellRenderer());
 

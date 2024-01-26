@@ -12,15 +12,15 @@ public class Appointment extends Event {
     private OurDateTime endDate;
     private JPanel panel;
 
-    public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description) {
-        super(startDate, title, description);
+    public Appointment(OurDateTime startDate, OurDateTime endDate, String title, String description, String fileName) {
+        super(startDate, title, description, fileName);
         this.endDate = endDate;
         setDurationWithDtend(startDate,endDate);
         setPanel();
     }
 
-    public Appointment(OurDateTime startDate, Duration icsDuration, String title, String description){
-        super(startDate, title, description);
+    public Appointment(OurDateTime startDate, Duration icsDuration, String title, String description, String fileName){
+        super(startDate, title, description,fileName);
         setDurationWithIcsDuration(startDate ,icsDuration);
     }
 
@@ -72,17 +72,6 @@ public class Appointment extends Event {
                                       (days == 0 && hours == 0) || minutes > 0 ? minutes + (minutes == 1 ? " minute" : " minutes") : "").trim();
     }
 
-    @Override
-    public String toString() {
-        return """
-            Appointment:
-                title: %s
-                description: %s
-                start date & time: %s
-                end date & time: %s
-                duration: %s
-            """.formatted(getTitle(), getDescription(), getStartDate(), getEndDate(), getDuration());
-    }
 
     @Override
     public void setPanel() {
@@ -93,6 +82,7 @@ public class Appointment extends Event {
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Start Date: " + getStartDate().toString()));
         panel.add(new JLabel("End Date: " + getEndDate().toString()));
+        panel.add(new JLabel("Calendar Name: " + getFileName()));
         panel.putClientProperty("uid", getUuid());
     }
 
