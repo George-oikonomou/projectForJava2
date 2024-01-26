@@ -84,7 +84,7 @@ public class AppointmentGUI extends JPanel {
 
         if (Validate.Dates(startDateTime, endDateTime)) return;
 
-        events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText()));
+        events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText(),allFiles.get(calendarSelect.getSelectedIndex()).getFileName()));
 
         JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 

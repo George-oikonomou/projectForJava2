@@ -18,7 +18,7 @@ public class OurCalendarTest {
     public void setAndGetEventsWorkCorrectly() {
         OurCalendar calendar = new OurCalendar();
         ArrayList<Event> events = new ArrayList<>();
-        events.add(new Project("title","description",new OurDateTime(), Status.VTODO_NEEDS_ACTION));
+        events.add(new Project("title","description",new OurDateTime(), Status.VTODO_NEEDS_ACTION, "filename"));
         calendar.setEvents(events);
         assertEquals(events, calendar.getEvents());
     }
@@ -51,8 +51,8 @@ public class OurCalendarTest {
     public void sortListSortsEventsInCorrectOrder() {
             OurCalendar calendar = new OurCalendar();
             ArrayList<Event> events = new ArrayList<>();
-            events.add(new Project("title2","description2",new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS));
-            events.add(new Project("title1","description1",new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS));
+            events.add(new Project("title2","description2",new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS, "filename"));
+            events.add(new Project("title1","description1",new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS, "filename"));
             calendar.setEvents(events);
             OurCalendar.sortList(events);
             assertEquals("title1", calendar.getEvents().get(0).getTitle());
@@ -61,22 +61,22 @@ public class OurCalendarTest {
 
     @Test
     public void compareEventsComparesProjectsByDueDate() {
-            Project project1 = new Project("title1", "description1", new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS);
-            Project project2 = new Project("title2", "description2", new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS);
+            Project project1 = new Project("title1", "description1", new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS, "filename");
+            Project project2 = new Project("title2", "description2", new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS, "filename");
             assertTrue(OurCalendar.compareEvents(project1, project2) < 0);
     }
 
     @Test
     public void compareEventsComparesAppointmentsByStartDate() {
-            Appointment appointment1 = new Appointment(new OurDateTime(2022, 1, 1, 10, 0), new OurDateTime(2022, 1, 1, 11, 0), "title1", "description1");
-            Appointment appointment2 = new Appointment(new OurDateTime(2022, 1, 2, 10, 0), new OurDateTime(2022, 1, 2, 11, 0), "title2", "description2");
+            Appointment appointment1 = new Appointment(new OurDateTime(2022, 1, 1, 10, 0), new OurDateTime(2022, 1, 1, 11, 0), "title1", "description1", "filename");
+            Appointment appointment2 = new Appointment(new OurDateTime(2022, 1, 2, 10, 0), new OurDateTime(2022, 1, 2, 11, 0), "title2", "description2", "filename");
             assertTrue(OurCalendar.compareEvents(appointment1, appointment2) < 0);
     }
 
     @Test
     public void compareEventsComparesProjectAndAppointmentByDueDateAndStartDate() {
-            Project project = new Project("title1", "description1", new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS);
-            Appointment appointment = new Appointment(new OurDateTime(2022, 1, 1, 10, 0), new OurDateTime(2022, 1, 1, 11, 0), "title2", "description2");
+            Project project = new Project("title1", "description1", new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS, "filename");
+            Appointment appointment = new Appointment(new OurDateTime(2022, 1, 1, 10, 0), new OurDateTime(2022, 1, 1, 11, 0), "title2", "description2", "filename");
             assertTrue(OurCalendar.compareEvents(project, appointment) > 0);
     }
 

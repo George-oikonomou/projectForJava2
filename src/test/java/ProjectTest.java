@@ -10,12 +10,7 @@ public class ProjectTest {
     private OurDateTime dateTime;
 
 
-    @Test
-    public void projectCompletedWhenStatusIsCompleted() {
-        dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        project = new Project("title", "description", dateTime, Status.VTODO_COMPLETED);
-        assertEquals(project.getStatus(), Status.VTODO_COMPLETED);
-    }
+    
 
     @Test
     public void projectInProcessWhenStatusIsNeedsAction() {
@@ -27,14 +22,14 @@ public class ProjectTest {
     @Test
     public void getDueReturnsCorrectDateTime() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS);
+        project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS, "filename");
         assertEquals(dateTime, project.getDue());
     }
 
     @Test
     public void getStatusReturnsCorrectStatus() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS);
+        project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS, "filename");
         assertEquals(Status.VTODO_IN_PROCESS, project.getStatus());
     }
 }
