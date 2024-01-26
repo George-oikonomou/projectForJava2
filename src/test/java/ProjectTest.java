@@ -19,7 +19,6 @@ public class ProjectTest {
         assertEquals(project.getStatus(), Status.VTODO_COMPLETED);
     }
 
-
     @Test
     public void getDueReturnsCorrectDateTime() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
