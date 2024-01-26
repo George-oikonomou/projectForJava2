@@ -11,25 +11,17 @@ public class ProjectTest {
 
 
     @Test
-    public void projectIsFinishedWhenStatusIsCompleted() {
+    public void projectCompletedWhenStatusIsCompleted() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
         project = new Project("title", "description", dateTime, Status.VTODO_COMPLETED);
-        assertTrue(project.getIsFinished());
+        assertEquals(project.getStatus(), Status.VTODO_COMPLETED);
     }
 
     @Test
-    public void projectIsNotFinishedWhenStatusIsNeedsAction() {
+    public void projectInProcessWhenStatusIsNeedsAction() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
         project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS);
-        assertFalse(project.getIsFinished());
-    }
-
-    @Test
-    public void setFinishedChangesIsFinishedStatus() {
-        dateTime = new OurDateTime(2023, 12, 13, 12, 0);
-        project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS);
-        project.setFinished(true);
-        assertTrue(project.getIsFinished());
+        assertEquals(project.getStatus(), Status.VTODO_COMPLETED);
     }
 
     @Test
