@@ -21,7 +21,7 @@ public class ProjectTest {
     public void projectInProcessWhenStatusIsNeedsAction() {
         dateTime = new OurDateTime(2023, 12, 13, 12, 0);
         project = new Project("title", "description", dateTime, Status.VTODO_IN_PROCESS);
-        assertEquals(project.getStatus(), Status.VTODO_COMPLETED);
+        assertEquals(project.getStatus(), Status.VTODO_IN_PROCESS);
     }
 
     @Test
