@@ -31,8 +31,8 @@
 - handleChangeStatus(): **adds in the printPanel an object ChangeProjectStatusGUI to change the status of a project.**
 - handleEditEvent(): **adds in the printPanel an object EditEventGUI to edit an event.**
 - handleNewEvent(): **creates two buttons, to choose to create an appointment or a project and adds them into the printPanel. Depending on the choice, we are creating the suitable event.**
-- executeCreateAppointmentListener(): **creates an appointment and adds it to the printPanel and then revalidates and repaints the panel.**  
-- executeCreateProjectListener(): **creates a project and adds it to the printPanel and then revalidates and repaints the panel.**
+- executeCreateAppointmentListener(): **creates an appointmentGUI and adds it to the printPanel and then revalidates and repaints the panel.**  
+- executeCreateProjectListener(): **creates a projectGUI and adds it to the printPanel and then revalidates and repaints the panel.**
 
 ## Usage:
 This class is used to create the main page of the program.
