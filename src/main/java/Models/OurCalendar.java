@@ -3,6 +3,7 @@ package  Models;
 import Main.App;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Status;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -144,7 +145,7 @@ public class OurCalendar {
         ArrayList<Event> eventsToBePrinted = new ArrayList<>();
 
         for (Event event : events) {
-            if (event instanceof Project && !((Project) event).getIsFinished()) {
+            if (event instanceof Project && !((Project) event).getStatus().equals(Status.VTODO_COMPLETED)) {
                 long dueFormat = ((Project) event).getDue().getCalculationFormat(); //making a DueFormat to check if it surpasses the realDateTime
                 if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
                     eventsToBePrinted.add(event);

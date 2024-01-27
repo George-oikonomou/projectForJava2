@@ -2,7 +2,7 @@
   * [Methods](#methods)
     * [time](#timeint-minute-int-hour-boolean-includeseparators)
     * [date](#dateint-year-int-month-int-day-boolean-includeseparators)
-* [Functionality class](#functionality-class)
+    * [calculateCalculationFormat](#calculatecalculationformatint-year-int-month-int-day-int-hour-int-minute)
     * [dateAndTime](#dateandtime)
 <hr>
 
@@ -10,9 +10,10 @@
 
 ## OurDateTime Class General Information
 - This class has :
-    - `2 constructor`
-      - one that sets a `specific DateTime` from the user
+    - `3 constructor`
+      - one that sets a `specific DateTime` from the user for the events
       - one that sets the `current real or custom DateTime`
+      - and one for the live time
     - Setters and Getters
     - toString()
 - In this class we have the field:
@@ -26,6 +27,8 @@
     - dayOfWeek
     - icsFormat
     - CalculationFormat for the date & time
+    - CalculationFormat for the Reminder
+    - dateFormat for the localDateTime
 <hr>
 
 ## Methods
@@ -41,18 +44,12 @@
   - Gets the year, the month, the day and a boolean if the time will be in this form `YYYY/MM/DD` or in this form `YYYYMMDD`.
   - The year, the month and the days become a string based on the chosen form.
   - Then it returns the string.
+- ### `calculateCalculationFormat(int year, int month, int day, int hour, int minute)`
+  - Sets a date and time with no separators and returns a long number.
 
-<hr>
-
-# Functionality 
-
-## Functionality class
-- This class contains the method `dateAndTime()` that makes a valid ourDateTime object.
-<hr>
-
-### `dateAndTime()`
-- The user types the desirable year, month, day, hour and minute.
-- Returns the new OurDateTime object.
+- ### `dateAndTime()`
+  - The user types the desirable year, month, day, hour and minute.
+  - Returns the new OurDateTime object.
 
 <hr>
 
