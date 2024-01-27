@@ -1,16 +1,12 @@
 package GUI;
-
-import gr.hua.dit.oop2.calendar.TimeEvent;
-import gr.hua.dit.oop2.calendar.TimeListener;
-import gr.hua.dit.oop2.calendar.TimeService;
-import gr.hua.dit.oop2.calendar.TimeTeller;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class CurrentTimeGUI extends JPanel implements TimeListener {
+public class CurrentTimeGUI extends JPanel {
 
     private final JLabel timeLabel;
     private LocalDateTime currentTime;
@@ -19,23 +15,34 @@ public class CurrentTimeGUI extends JPanel implements TimeListener {
         setPreferredSize(new Dimension(200, 50));
         this.timeLabel = new JLabel();
         add(timeLabel);
-        TimeTeller teller = TimeService.getTeller();
-        teller.addTimeListener(this);
+        updateTimeLabelWithTimer();
     }
 
-    @Override
-    public void timeChanged(TimeEvent timeEvent) {
-        updateTimeLabel(timeEvent.getDateTime());
+    private void updateTimeLabelWithTimer() {
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateAndDisplayTime();
+            }
+        });
+
+        timer.start();
     }
 
-    private void updateTimeLabel(LocalDateTime dateTime) {
-        currentTime = dateTime;
+    private void updateAndDisplayTime() {
+        // Update the current time
+        currentTime = LocalDateTime.now();
+
         // Format current time as HH:mm:ss
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String time = currentTime.format(formatter);
         timeLabel.setText(time);
+
+        // Set font size
         Font font = timeLabel.getFont().deriveFont(Font.PLAIN, 30);
         timeLabel.setFont(font);
+
+        // Repaint the panel
         revalidate();
         repaint();
     }
