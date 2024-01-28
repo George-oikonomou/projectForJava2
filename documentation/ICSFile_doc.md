@@ -1,6 +1,8 @@
 * [ICSFile class General Information](#ICSfile-class-general-information)
+  * [Fields](#fields)
   * [Methods](#methods)
     * [ICSFile](#icsfile-string-filepath)
+    * [getFileName](#getfilename)
     * [loadEvents](#loadevents)
     * [createAppointment](#createappointment)
     * [createProject](#createproject)
@@ -20,12 +22,24 @@ message depending on the error.
 
 <hr>
 
+## fields
+- private String fileName
+- private Calendar ourCalendar
+
+<hr>
+
 ## methods
 
 <hr>
 
 ### `ICSFile (String filepath)`
-- sets the name of the file 
+- sets the name of the file and creates a new Calendar. 
+
+<hr>
+
+### `getFileName()`
+- returns the name of the file from the path.
+
 
 <hr>
 
