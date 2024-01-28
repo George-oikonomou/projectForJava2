@@ -81,6 +81,8 @@ public class ChangeStatusGUI extends JPanel {
 
 
     private void performLiveSearch() {
+        if (projectList == null) return;
+
         searchTitle.setEnabled(true);
         String searchText = enterTitle.getText().toLowerCase();
         listModel.clear();
@@ -99,7 +101,10 @@ public class ChangeStatusGUI extends JPanel {
 
     }
 
-    private void fillProjects() { projects = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getProjects();}
+    private void fillProjects() {
+        projects = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getProjects();
+        performLiveSearch();
+    }
 
     private void FindSelectedProject() {
         JPanel selectedPanel = listModel.getElementAt(projectList.getSelectedIndex());

@@ -86,6 +86,8 @@ public class EditEventGUI extends JPanel {
     }
 
     private void performLiveSearch() {
+        if (eventList == null) return;
+
         searchTitle.setEnabled(true);
         String searchText = enterTitle.getText().toLowerCase();
         listModel.clear();
@@ -103,7 +105,10 @@ public class EditEventGUI extends JPanel {
         eventList.setPreferredSize(new Dimension(230, listModel.size() * 100));
     }
 
-    private void fillEvents() { events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents(); }
+    private void fillEvents() {
+        events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
+        performLiveSearch();
+    }
 
     private void FindSelectedEvent() {
         JPanel selectedPanel = listModel.getElementAt(eventList.getSelectedIndex());
@@ -194,7 +199,11 @@ public class EditEventGUI extends JPanel {
 
         if (startDateChooser.getDate()!=null && eventToEdit instanceof Appointment) {
             OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
-            if (Validate.Dates(startDateTime, endDateTime)) return;
+
+            if (startDateTime.getCalculationFormat() > endDateTime.getCalculationFormat()){
+                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Start date cant be after end date","Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             eventToEdit.setNotified(startDateTime.getDateFormat().equals(((Appointment) eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
 
