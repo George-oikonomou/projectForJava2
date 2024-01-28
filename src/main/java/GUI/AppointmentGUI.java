@@ -8,7 +8,6 @@ import Models.OurDateTime;
 import Models.Appointment;
 import Utilities.DateTimeManager;
 import Utilities.SingleCalendarSelect;
-import Utilities.Validate;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.awt.*;
@@ -82,7 +81,10 @@ public class AppointmentGUI extends JPanel {
         OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
         OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);
 
-        if (Validate.Dates(startDateTime, endDateTime)) return;
+        if (startDateTime.getCalculationFormat() > endDateTime.getCalculationFormat()){
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Start date cant be after end date","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText(),allFiles.get(calendarSelect.getSelectedIndex()).getFileName()));
 

@@ -26,6 +26,7 @@ public class ReminderGUI extends JPanel implements TimeListener {
     private OurDateTime liveTime;
     private JScrollPane scrollPane;
 
+
     @Override
     public void timeChanged(TimeEvent timeEvent) {
         liveTime = new OurDateTime(timeEvent.getDateTime());

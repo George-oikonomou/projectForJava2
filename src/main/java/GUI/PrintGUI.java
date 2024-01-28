@@ -4,6 +4,8 @@ package  GUI;
 import Main.App;
 import Models.ICSFile;
 import Models.Event;
+import Models.OurDateTime;
+import Models.Project;
 import Utilities.PanelListCellRenderer;
 import javax.swing.*;
 import java.awt.*;
@@ -93,6 +95,7 @@ public class PrintGUI extends JPanel {
 
         return button;
     }
+
     private void selectMultipleFiles() {
         selectedFiles.clear();
 
@@ -118,6 +121,18 @@ public class PrintGUI extends JPanel {
         }
     }
 
+    public void sortList(ArrayList<Event> events, boolean ascending) {
+        events.sort((event1, event2) -> (int) (ascending ? compareEvents(event1, event2)
+                                                         : compareEvents(event2, event1)));
+    }
+
+    public long compareEvents(Event event1, Event event2) {
+        OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDue() : event1.getStartDate();
+        OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDue() : event2.getStartDate();
+
+        return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
+    }
+
     private void performAction(App.AppChoices choice) {
         if (selectedFiles.isEmpty()) {
             JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please select at least one calendar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -132,16 +147,22 @@ public class PrintGUI extends JPanel {
                 for (ICSFile icsFile : selectedFiles) {
                     selectedEvents.addAll(icsFile.getCalendar().printUpcomingEvents(choice));
                 }
+                sortList(selectedEvents, true);
+
             }
             case pastday, pastweek, pastmonth -> {
                 for (ICSFile icsFile : selectedFiles) {
                     selectedEvents.addAll(icsFile.getCalendar().printOldEvents(choice));
                 }
+                sortList(selectedEvents, false);
+
             }
             case todo, due -> {
                 for (ICSFile icsFile : selectedFiles) {
                     selectedEvents.addAll(icsFile.getCalendar().printUnfinishedProject(choice));
                 }
+                sortList(selectedEvents, choice == App.AppChoices.todo);
+
             }
         }
         printEvents();
