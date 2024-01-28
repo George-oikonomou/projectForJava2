@@ -134,15 +134,15 @@ public class PrintGUI extends JPanel {
     }
 
     private void performAction(App.AppChoices choice) {
-        if (selectedFiles.isEmpty()) {
+        if (selectedFiles.isEmpty()) {// If no files are selected
             JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please select at least one calendar.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        // Clear the list of events
         selectedEvents.clear();
-        if (scrollPane != null)
+        if (scrollPane != null)// If there is a scroll pane, remove it
             remove(scrollPane);
-        switch (choice) {
+        switch (choice) {// Add the events to the list sorted based on the choice and required logic ascending or descending)
             case day, week, month -> {
                 for (ICSFile icsFile : selectedFiles) {
                     selectedEvents.addAll(icsFile.getCalendar().printUpcomingEvents(choice));
@@ -165,6 +165,6 @@ public class PrintGUI extends JPanel {
 
             }
         }
-        printEvents();
+        printEvents();// Print the events
     }
 }
