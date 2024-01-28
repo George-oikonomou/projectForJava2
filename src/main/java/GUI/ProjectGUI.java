@@ -23,6 +23,7 @@ public class ProjectGUI extends JPanel {
     private final JDateChooser due;
     private final JSpinner dueTimeSpinner;
     private final JButton create;
+    private final JScrollPane descriptionScrollPane;
     private final SingleCalendarSelect calendarSelect;
 
     public ProjectGUI(ArrayList<ICSFile> allFiles) {
@@ -31,16 +32,14 @@ public class ProjectGUI extends JPanel {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setPreferredSize(new Dimension(410, 300));
 
+        // Creating a JDateChooser object
         this.due = new JDateChooser();
         JTextField dateTextField = ((JTextField) due.getDateEditor().getUiComponent());
         dateTextField.setEditable(false);
         due.setPreferredSize(new Dimension(100, 20));
 
-        // Set the minimum date for the dueDateChooser to January 1, 2024
-        Calendar minDateCalendar = Calendar.getInstance();
-        minDateCalendar.set(2024, Calendar.JANUARY, 1);
-        due.setMinSelectableDate(minDateCalendar.getTime());
 
+        // title and description
         this.title = new JTextField("Project Name", 10);
         this.title.setMaximumSize(new Dimension(300, title.getPreferredSize().height));
         this.title.addFocusListener(new ClearTextFocusListener("Project Name", title));
@@ -51,10 +50,11 @@ public class ProjectGUI extends JPanel {
         this.create.addActionListener(new ProjectGUI.ButtonListener());
 
         // Use a JScrollPane for the JTextArea to enable scrolling if needed
-        JScrollPane descriptionScrollPane = new JScrollPane(description);
+        descriptionScrollPane = new JScrollPane(description);
         descriptionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         descriptionScrollPane.setPreferredSize(new Dimension(350, 100));
 
+        // Creating a JSpinner object
         this.dueTimeSpinner = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor dueTimeEditor = new JSpinner.DateEditor(dueTimeSpinner, "HH:mm");
         dueTimeSpinner.setEditor(dueTimeEditor);
@@ -64,9 +64,16 @@ public class ProjectGUI extends JPanel {
 
         this.calendarSelect = new SingleCalendarSelect(allFiles);
 
+        // If there are no calendars, disable the create button
         if (calendarSelect.isEmpty()) create.setEnabled(false);
 
+        addComponents();
+    }
 
+    /**
+     * This method is used to place the GUI components in the correct position
+     */
+    private void addComponents(){
         add(new JLabel("Enter the due date of the project"));
         add(due);
         add(dueTimeSpinner);
@@ -76,7 +83,11 @@ public class ProjectGUI extends JPanel {
         add(create);
     }
 
-    public void createProject() {
+
+    /**
+     * This method is used to create a new project
+     */
+    private void createProject() {
 
         if(due.getDate() == null  || title.getText().equals("Project Name") || description.getText().equals("Project Description")){
             JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);

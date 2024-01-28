@@ -87,7 +87,9 @@ public class ReminderGUI extends JPanel implements TimeListener {
         }
     }
 
-
+    /**
+     * This method is used to print the events in the reminder panel
+     */
     public void printEvents() {
         removeAll();
         listModel = new DefaultListModel<>();
@@ -109,6 +111,10 @@ public class ReminderGUI extends JPanel implements TimeListener {
         repaint();
     }
 
+    /**
+     * This method is used to play a notification sound when an event is due
+     * quite a unique sound if you ask me
+     */
     private void playNotificationSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream((Objects.requireNonNull(getClass().getResource("/reminder.wav"))));
