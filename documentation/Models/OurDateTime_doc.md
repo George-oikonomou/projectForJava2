@@ -57,7 +57,7 @@
 - [ICSFile Class General Information](ICSFile_doc.md)
 - [OurCalendar Class General Information](OurCalendar_doc.md)
 - [TimeTeller Class General Information](TimeTeller_doc.md)
-- [App Class General Information](App_doc.md)
-- [Validate Class General Information](Validate_doc.md)
+- [App Class General Information](../Main/App_doc.md)
+- [Validate Class General Information](../Validate_doc.md)
 
 [Back to top](#ourdatetime-class-general-information)

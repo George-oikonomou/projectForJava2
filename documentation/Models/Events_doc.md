@@ -94,7 +94,7 @@ The superclass is named `Event`.
 - [OurCalendar Class General Information](OurCalendar_doc.md)
 - [OurDateTime Class General Information](OurDateTime_doc.md)
 - [TimeTeller Class General Information](TimeTeller_doc.md)
-- [Validate Class General Information](Validate_doc.md)
+- [Validate Class General Information](../Validate_doc.md)
 
 
 [Back to top](#superclass-general-information)
