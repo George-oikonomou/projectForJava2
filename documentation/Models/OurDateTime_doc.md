@@ -11,9 +11,9 @@
 ## OurDateTime Class General Information
 - This class has :
     - `3 constructor`
-      - one that sets a `specific DateTime` from the user for the events
-      - one that sets the `current real or custom DateTime`
-      - and one for the live time
+      - one that sets a specific DateTime from the user for the events
+      - one that's used for the ReminderGUI
+      - and one for the live time that's used for OurCalendar
     - Setters and Getters
     - toString()
 - In this class we have the field:

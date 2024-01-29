@@ -5,7 +5,6 @@ import Models.Event;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class EditEventGUI extends EventManagement {
@@ -49,12 +48,12 @@ public class EditEventGUI extends EventManagement {
         for (Event event : events) {
             if (event.getUuid().equals(uid)) {
                     eventToEdit = event;
-                    CreateEditModal();
+                    createEditModal();
                     break;
             }
         }
     }
-    private void CreateEditModal(){
+    private void createEditModal() {
         editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         editPanel.setPreferredSize(new Dimension(400, 300));
 
@@ -87,12 +86,10 @@ public class EditEventGUI extends EventManagement {
             endTimeSpinner.setValue(((Project) eventToEdit).getDue().getDateFormat());
         }
 
-        AddToPanel();
+        addToPanel();
     }
 
-    public void AddToPanel(){
-
-
+    public void addToPanel() {
         editPanel.add(new JLabel("NEW title of the event"));
         editPanel.add(titleScrollPane);
         editPanel.add(new JSeparator(SwingConstants.HORIZONTAL) {{
@@ -116,12 +113,12 @@ public class EditEventGUI extends EventManagement {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (response == JOptionPane.OK_OPTION) {
-           HandleOkResponse();
+           handleOkResponse();
         }
         getEventList().clearSelection();
     }
 
-    private void HandleOkResponse(){
+    private void handleOkResponse() {
         if((startDateChooser.getDate() == null && eventToEdit instanceof Appointment)   || endDateChooser.getDate() == null || titleField.getText().isEmpty()){
             JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Please fill in all the fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -157,19 +154,4 @@ public class EditEventGUI extends EventManagement {
         performLiveSearch();
     }
 
-    private class ButtonListener extends EventManagement.ButtonListener {
-        @Override
-        public void actionPerformed(ActionEvent e){
-            getListModel().clear();
-            for (Event event : events) {
-                if (event.getTitle().equalsIgnoreCase(getEnterTitle().getText())) {
-                    getListModel().addElement(event.getPanel());
-                }
-            }
-
-            if (getListModel().isEmpty()) {
-                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no events with title " + getEnterTitle().getText(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
 }
