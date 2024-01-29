@@ -78,6 +78,7 @@ public class EventManagement extends JPanel {
     public void findSelectedEvent(){}
 
     public void performLiveSearch() {
+        if (eventList == null) return;
         searchTitle.setEnabled(true);
         String searchText = enterTitle.getText().toLowerCase();
         listModel.clear();
@@ -90,6 +91,7 @@ public class EventManagement extends JPanel {
     }
 
     public void search(String searchText){}
+
     public DefaultListModel<JPanel> getListModel() {return listModel;}
     public JList<JPanel> getEventList() {return eventList;}
     public ArrayList<ICSFile> getAllFiles() {return allFiles;}

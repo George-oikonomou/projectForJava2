@@ -13,6 +13,7 @@ public class ChangeStatusGUI extends EventManagement {
     public ChangeStatusGUI(ArrayList<ICSFile> allFiles) {
         super(allFiles,"Enter Project Title");
     }
+
     public void search(String searchText){
         for (Project project : projects) {
             if (project.getTitle().toLowerCase().startsWith(searchText)) {
@@ -23,7 +24,10 @@ public class ChangeStatusGUI extends EventManagement {
 
     }
 
-    public void fillEvents() { projects = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getProjects();}
+    public void fillEvents() {
+        projects = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getProjects();
+        performLiveSearch();
+    }
 
     public void findSelectedEvent() {
         JPanel selectedPanel = getListModel().getElementAt(getEventList().getSelectedIndex());
