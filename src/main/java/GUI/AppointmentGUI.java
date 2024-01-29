@@ -90,6 +90,7 @@ public class AppointmentGUI extends JPanel {
         }
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText(),allFiles.get(calendarSelect.getSelectedIndex()).getFileName()));
+        MainPageGUI.setIsSaved(false);
 
         JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Appointment created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 

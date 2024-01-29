@@ -1,11 +1,14 @@
 package  GUI;
 
 
+import Models.ICSFile;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Objects;
 
 
@@ -20,6 +23,7 @@ public class MainPageGUI extends JFrame {
     boolean isReminder = false;
     public Pages currentPage;
     private static JPanel printPanel;
+    private static boolean isSaved = true;
 
     public enum Pages {
         NEW_APPOINTMENT,
@@ -27,6 +31,10 @@ public class MainPageGUI extends JFrame {
         EDIT_EVENT,
         CHANGE_STATUS,
         PRINT_EVENT,
+    }
+
+    public static void setIsSaved(boolean isSaved) {
+        MainPageGUI.isSaved = isSaved;
     }
 
     public void getBackToPage() {
@@ -50,6 +58,7 @@ public class MainPageGUI extends JFrame {
         createPrintPanel();
         createReminderPanel();
         initializeFrame();
+        windowOperations();
     }
 
     public static JPanel getPrintPanel(){
@@ -132,6 +141,18 @@ public class MainPageGUI extends JFrame {
         return button;
     }
 
+    public void windowOperations() {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (!isSaved)
+                    new Functionality().handleWindowClosing(e);
+                else
+                    System.exit(0);
+            }
+        });
+    }
+
     private class Functionality implements ActionListener {
 
         @Override
@@ -205,6 +226,26 @@ public class MainPageGUI extends JFrame {
             currentPage = Pages.NEW_PROJECT;
         }
 
+        private void handleWindowClosing(WindowEvent e) {
+            int option = JOptionPane.showConfirmDialog(
+                    MainPageGUI.getPrintPanel(),
+                    "There are unsaved changes. Do you want to save them?",
+                    "Confirm Exit",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            if (option == JOptionPane.YES_OPTION) {
+                for (ICSFile icsFile : OurMenuGUI.getAllFiles()) {//displays a message for all calendars one by one that they have been saved successfully
+                    icsFile.storeEvents(icsFile.getCalendar().getEvents());
+                    JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "calendar "+icsFile.getFileName() + " has been saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+                 System.exit(0);
+            }else if (option == JOptionPane.NO_OPTION)
+                 System.exit(0);
+            else
+                ((JFrame) e.getSource()).setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        }
     }
 
 }

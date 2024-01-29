@@ -51,6 +51,7 @@ public class ChangeStatusGUI extends EventManagement {
             project.setStatus(Status.VTODO_IN_PROCESS);
         }
         project.setPanel();
+        MainPageGUI.setIsSaved(false);
         performLiveSearch();
     }
     public class ButtonListener extends EventManagement.ButtonListener {

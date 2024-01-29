@@ -110,6 +110,7 @@ public class OurMenuGUI extends JMenuBar {
                     icsFile.storeEvents(icsFile.getCalendar().getEvents());
                     JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "calendar "+icsFile.getFileName() + " has been saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
+                MainPageGUI.setIsSaved(true);
             }
         }
     }
