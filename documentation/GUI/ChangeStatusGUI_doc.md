@@ -1,24 +1,14 @@
-# *ChangeStatusGUI class extends JPanel*
+# *ChangeStatusGUI class extends EventManagement*
 
 ## Fields:
-- ArrayList<ICSFile> allFiles
-- JList<JPanel> projectList
-- DefaultListModel<JPanel> listModel
-- JTextField enterTitle
-- JButton searchTitle
-- SingleCalendarSelect calendarSelect
 - ArrayList<Project> projects
 
 ## Methods:
-- ChangeStatusGUI(ArrayList<ICSFile> allFiles): **constructor that creates the fields to change the status of a project and a button that changes the status of the project with the help of an actionListener and adds them to the PrintPanel.**
-- setupUI():
-- addComponents():
-- performLiveSearch():
-- fillProjects():
-- FindSelectedProject():
-- handleSelection(Project project):
+- ChangeStatusGUI(ArrayList<ICSFile> allFiles): **constructor that creates the fields with the help of the EventManagement's constructor.**
+- search(String searchText): **searches for the projects that match the search text and when its found, it shows the project to the List.**
+- fillEvents(): **fills the ArrayList projects with the projects of the files.**
+- findSelectedEvent(): **finds the selected project and changes status with the method handleSelection.**
+- handleSelection(Project project): **when a project is selected, it changes the status of the project.**
 
-### Inner Class: ButtonListener implements ActionListener
-- actionPerformed(ActionEvent e): 
-
-### Inner Class: LiveSearchListener implements DocumentListener
+## Usage:
+- This class is used to change the status of a project.

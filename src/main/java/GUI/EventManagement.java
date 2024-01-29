@@ -7,42 +7,32 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class EventManagement extends JPanel {
-    private final String message;
+
     private final ArrayList<ICSFile> allFiles;
     private JList<JPanel> eventList;
     private final DefaultListModel<JPanel> listModel;
     private final JTextField enterTitle;
-    private final JButton searchTitle;
     private final SingleCalendarSelect calendarSelect;
 
-    public EventManagement(ArrayList<ICSFile> allFiles, String message){
+    public EventManagement(ArrayList<ICSFile> allFiles, String message) {
         setPreferredSize(new Dimension(300,460));
         this.allFiles = allFiles;
-        this.message = message;
         listModel = new DefaultListModel<>();
-        searchTitle = new JButton("Search");
         enterTitle = new JTextField(message,10);
         enterTitle.addFocusListener(new ClearTextFocusListener(message,enterTitle));
         calendarSelect = new SingleCalendarSelect(allFiles);
         setupUI();
     }
 
-    public void setupUI(){
-        if(enterTitle.getText().equals(message))
-            searchTitle.setEnabled(false);
-        if (calendarSelect.isEmpty()) {
-            searchTitle.setEnabled(false);
-        }else {
+    public void setupUI() {
+        if (!calendarSelect.isEmpty()) {
             calendarSelect.addActionListener(e -> fillEvents());
             calendarSelect.setSelectedIndex(0);
             enterTitle.getDocument().addDocumentListener(new LiveSearchListener());
         }
-        searchTitle.addActionListener(new ButtonListener());
         addComponents();
     }
 
@@ -53,7 +43,6 @@ public class EventManagement extends JPanel {
             setForeground(Color.BLACK);
         }});
         add(enterTitle);
-        add(searchTitle);
 
         eventList = new JList<>(listModel);
         eventList.setPreferredSize(new Dimension(230, 1));
@@ -73,30 +62,27 @@ public class EventManagement extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public void fillEvents(){}
+    public void fillEvents() {}
 
-    public void findSelectedEvent(){}
+    public void findSelectedEvent() {}
 
     public void performLiveSearch() {
         if (eventList == null) return;
-        searchTitle.setEnabled(true);
         String searchText = enterTitle.getText().toLowerCase();
         listModel.clear();
         if (searchText.isEmpty()) {
             eventList.setPreferredSize(new Dimension(230, 1));
-            searchTitle.setEnabled(false);
             return;
         }
         search(searchText);
     }
 
-    public void search(String searchText){}
+    public void search(String searchText) {}
 
     public DefaultListModel<JPanel> getListModel() {return listModel;}
     public JList<JPanel> getEventList() {return eventList;}
     public ArrayList<ICSFile> getAllFiles() {return allFiles;}
     public SingleCalendarSelect getCalendarSelect() {return calendarSelect;}
-    public JTextField getEnterTitle() {return enterTitle;}
 
     private class LiveSearchListener implements DocumentListener {
         @Override
@@ -107,9 +93,4 @@ public class EventManagement extends JPanel {
         public void changedUpdate(DocumentEvent e) {}
     }
 
-    public static class ButtonListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        }
-    }
 }

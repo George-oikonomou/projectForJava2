@@ -4,7 +4,6 @@ import Models.Project;
 import net.fortuna.ical4j.model.property.Status;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class ChangeStatusGUI extends EventManagement {
@@ -29,7 +28,7 @@ public class ChangeStatusGUI extends EventManagement {
         projects = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getProjects();
         performLiveSearch();
     }
-
+    @Override
     public void findSelectedEvent() {
         JPanel selectedPanel = getListModel().getElementAt(getEventList().getSelectedIndex());
 
@@ -52,22 +51,6 @@ public class ChangeStatusGUI extends EventManagement {
         }
         project.setPanel();
         performLiveSearch();
-    }
-    public class ButtonListener extends EventManagement.ButtonListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // Custom implementation for the button click
-            getListModel().clear();
-            for (Project project : projects) {
-                if (project.getTitle().equalsIgnoreCase(getEnterTitle().getText())) {
-                    getListModel().addElement(project.getPanel());
-                }
-            }
-
-            if (getListModel().isEmpty()) {
-                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no Projects with title " + getEnterTitle().getText(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
     }
 
 }

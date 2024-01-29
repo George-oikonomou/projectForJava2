@@ -17,8 +17,7 @@ public class OurDateTime {
     private DateTime icsFormat;
     private long calculationFormat ,calculationFormat30;
     private Date dateFormat;
-    //constructor to create an ourDateTime object with the values we give
-    // it gives us nice format versions of  datetime which we use
+    //constructor that creates an OurDateTime object with the given values from the user, for the new events
     public OurDateTime (int year, int month, int day, int hour, int minute) {
         this.year = year;
         this.month = month;
@@ -33,12 +32,8 @@ public class OurDateTime {
         setIcsFormat();
         setDateFormat();
     }
-    /**
-     * constructor that creates a OurDateTime object that contains the current datetime change this
-     * to change the current time
-     */
+    //constructor that's used in ReminderGUI
     public OurDateTime(LocalDateTime realTime) {
-
         this.year = realTime.getYear();
         this.month = realTime.getMonthValue();
         this.day = realTime.getDayOfMonth();
@@ -52,7 +47,7 @@ public class OurDateTime {
         setIcsFormat();
         setDateFormat();
     }
-
+//constructor that's used in the OurCalendar class to print the events, based on the liveDateTime
     public OurDateTime() {
         TimeTeller teller = TimeService.getTeller();
         LocalDateTime realTime = teller.now();

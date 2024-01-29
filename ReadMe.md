@@ -37,7 +37,7 @@ When you press the ADD button you are going to be prompted with 2 options:
 - *Create appointment*
 - *Create project*
 
-![Local Image](src/main/resources/screenshotsForReadme/ADD.png)
+![Local Image](src/main/resources/screenshotsForReadme/Add.png)
 
 When you press one of the two buttons and fill in the required information, then select one of the calendars
 that you have already loaded to save the new event.To create the new event press the button Create.
