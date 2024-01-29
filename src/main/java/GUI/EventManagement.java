@@ -26,7 +26,7 @@ public class EventManagement extends JPanel {
         this.message = message;
         listModel = new DefaultListModel<>();
         searchTitle = new JButton("Search");
-        enterTitle = new JTextField(message);
+        enterTitle = new JTextField(message,10);
         enterTitle.addFocusListener(new ClearTextFocusListener(message,enterTitle));
         calendarSelect = new SingleCalendarSelect(allFiles);
         setupUI();

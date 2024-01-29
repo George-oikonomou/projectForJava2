@@ -6,15 +6,12 @@ import gr.hua.dit.oop2.calendar.TimeTeller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CurrentTimeGUI extends JPanel implements TimeListener {
 
     private final JLabel timeLabel;
-    private LocalDateTime currentTime;
 
     public CurrentTimeGUI() {
         setPreferredSize(new Dimension(200, 50));
@@ -26,7 +23,6 @@ public class CurrentTimeGUI extends JPanel implements TimeListener {
 
     private void updateAndDisplayTime(LocalDateTime currentTime) {
         // Update the current time
-        this.currentTime = currentTime;
         // Format current time as HH:mm:ss
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String time = currentTime.format(formatter);

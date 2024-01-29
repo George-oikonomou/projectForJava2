@@ -25,8 +25,8 @@ public class ChangeStatusGUI extends EventManagement {
 
     }
 
-    private void fillProjects() {
-        projects = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getProjects();
+    public void fillEvents() {
+        projects = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getProjects();
         performLiveSearch();
     }
 

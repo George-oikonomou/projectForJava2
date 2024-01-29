@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class PrintGUI extends JPanel {
     private final ArrayList<ICSFile> allFiles;
-    private JList<JPanel> printList;
-    private  DefaultListModel<JPanel> listModel;
     private static final ArrayList<ICSFile> selectedFiles = new ArrayList<>();
     private static final ArrayList <Event> selectedEvents = new ArrayList<>();
     private JScrollPane scrollPane;
@@ -63,7 +61,7 @@ public class PrintGUI extends JPanel {
 
     public void printEvents() {
 
-        listModel = new DefaultListModel<>();
+        DefaultListModel<JPanel> listModel = new DefaultListModel<>();
 
         for (Event event : selectedEvents) {
             listModel.addElement( event.getPanel());
@@ -72,7 +70,7 @@ public class PrintGUI extends JPanel {
             }});
         }
 
-        printList = new JList<>(listModel);
+        JList<JPanel> printList = new JList<>(listModel);
 
         printList.setPreferredSize(new Dimension(230, selectedEvents.size() *90 ));
         printList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -142,7 +140,7 @@ public class PrintGUI extends JPanel {
         selectedEvents.clear();
         if (scrollPane != null)// If there is a scroll pane, remove it
             remove(scrollPane);
-        switch (choice) {// Add the events to the list sorted based on the choice and required logic ascending or descending)
+        switch (choice) {// Add the events to the list sorted based on the choice and required logic ascending or descending
             case day, week, month -> {
                 for (ICSFile icsFile : selectedFiles) {
                     selectedEvents.addAll(icsFile.getCalendar().printUpcomingEvents(choice));

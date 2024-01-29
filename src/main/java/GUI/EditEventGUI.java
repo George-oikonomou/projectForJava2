@@ -36,8 +36,8 @@ public class EditEventGUI extends EventManagement {
 
     }
 
-    private void fillEvents() {
-        events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
+    public void fillEvents() {
+        events = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getEvents();
         performLiveSearch();
     }
 
