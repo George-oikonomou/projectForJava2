@@ -21,11 +21,11 @@
 - It uses the SwingUtilities.invokeLater method to create a MainPageGUI and execute the program.
 - There is also a TimeService to stop the time before the program exits.
 
-- [Event Class General Information](Events_doc.md)
-- [ICSFile Class General Information](ICSFile_doc.md)
-- [OurCalendar Class General Information](OurCalendar_doc.md)
-- [OurDateTime Class General Information](OurDateTime_doc.md)
+- [Event Class General Information](../Models/Events_doc.md)
+- [ICSFile Class General Information](../Models/ICSFile_doc.md)
+- [OurCalendar Class General Information](../Models/OurCalendar_doc.md)
+- [OurDateTime Class General Information](../Models/OurDateTime_doc.md)
 - [TimeTeller Class General Information](TimeTeller_doc.md)
-- [Validate Class General Information](Validate_doc.md)
+- [Validate Class General Information](../Validate_doc.md)
 
 [Back to top](#app-class-general-information)
