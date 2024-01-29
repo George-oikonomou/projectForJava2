@@ -1,7 +1,6 @@
 package  Models;
 
 import GUI.MainPageGUI;
-import Utilities.Validate;
 import gr.hua.dit.oop2.calendar.TimeService;
 import gr.hua.dit.oop2.calendar.TimeTeller;
 import net.fortuna.ical4j.model.DateTime;
@@ -114,6 +113,9 @@ public class OurDateTime {
         this.calculationFormat = Long.parseLong(date + time);
     }
 
+    /**
+     * description: sets the calculation format of the date time that is 30 minutes later than the current date time (for reminders)
+     */
     public void setCalculationFormat30() {
         LocalDateTime time = LocalDateTime.of(getYear(), getMonth(), getDay(), getHour(), getMinute());
         LocalDateTime time30 = time.plusMinutes(30);
@@ -131,6 +133,10 @@ public class OurDateTime {
     public long getCalculationFormat30(){
         return calculationFormat30;
     }
+
+    /**
+     * description: sets the date format of the date time used for the jSpinner and jDatechooser
+     */
     public void setDateFormat(){
         LocalDateTime localDateTime = LocalDateTime.of(year, month, day, hour, minute);
         this.dateFormat = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());

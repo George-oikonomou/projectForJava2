@@ -8,7 +8,6 @@ import Models.OurDateTime;
 import Models.Appointment;
 import Utilities.DateTimeManager;
 import Utilities.SingleCalendarSelect;
-import Utilities.Validate;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +27,7 @@ public class AppointmentGUI extends JPanel {
     private final JButton create;
     private final SingleCalendarSelect calendarSelect;
 
-    public AppointmentGUI(ArrayList<ICSFile> allFiles) {
+    public AppointmentGUI(ArrayList<ICSFile> allFiles) {// Constructor
 
         this.allFiles = allFiles;
         setLayout(new FlowLayout(FlowLayout.LEFT));// Layout and Size Settings
@@ -57,6 +56,9 @@ public class AppointmentGUI extends JPanel {
         addComponents();// GUI Components Placement
     }
 
+    /**
+     * This method is used to place the GUI components in the correct position
+     */
     private void addComponents() {
         add(new JLabel("Enter the start date of the appointment"));
         add(startDateChooser);
@@ -82,7 +84,10 @@ public class AppointmentGUI extends JPanel {
         OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
         OurDateTime endDateTime = DateTimeManager.extractDateTime(endDateChooser, endTimeSpinner);
 
-        if (Validate.Dates(startDateTime, endDateTime)) return;
+        if (startDateTime.getCalculationFormat() > endDateTime.getCalculationFormat()){
+            JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Start date cant be after end date","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         events.add(new Appointment(startDateTime, endDateTime,title.getText(),description.getText(),allFiles.get(calendarSelect.getSelectedIndex()).getFileName()));
 

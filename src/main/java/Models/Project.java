@@ -8,23 +8,19 @@ import java.awt.*;
 public class Project extends Event{
     private Status status;
     private OurDateTime due;    //date and time of project deadline
-    private boolean isFinished = false;     // boolean value that tells if the project is finished
     private JPanel panel;
 
-    public void setFinished(boolean finished) { isFinished = finished; }
 
     public Project(String title, String description, OurDateTime due, Status status, String filename) {
         super(null, title, description,filename);
         this.due = due;
         this.status = status;
-        setFinished(status == Status.VTODO_COMPLETED);
         setPanel();
     }
     public void setStatus(Status status) { this.status = status; }
     public Status getStatus() { return status; }
     public OurDateTime getDue() { return due; }
     public void setDue(OurDateTime due) { this.due = due; }
-    public boolean getIsFinished() { return isFinished; }
 
     @Override
     public void setPanel() {

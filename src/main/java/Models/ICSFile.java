@@ -1,7 +1,6 @@
 package  Models;
 
 import GUI.MainPageGUI;
-import Utilities.Validate;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
@@ -24,10 +23,16 @@ public class ICSFile {
         this.filePath = filePath;
     }
 
+    /**
+     * @return returns the path of the ics file
+     */
     public String getFilePath(){
         return this.filePath;
     }
 
+    /**
+     * @return returns the name of the ics file without the path FOR WINDOWS AND LINUX
+     */
     public String getFileName() {
         if (System.getProperty("os.name").toLowerCase().contains("windows"))
             return filePath.substring(filePath.lastIndexOf('\\') + 1 );

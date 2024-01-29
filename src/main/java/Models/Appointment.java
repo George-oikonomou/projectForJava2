@@ -27,13 +27,26 @@ public class Appointment extends Event {
     public OurDateTime getEndDate() {return endDate;}
 
     public String getDuration() {return duration;}
-    public void setDurationWithDtend(OurDateTime dateTime, OurDateTime endDate) {
-        LocalDateTime start = LocalDateTime.of(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute());
+
+
+    /**
+     * @param startDate start date
+     * @param endDate end date
+     * description: calculates the duration of the event in days, hours and minutes by subtracting the start date from the end date
+     */
+    public void setDurationWithDtend(OurDateTime startDate, OurDateTime endDate) {
+        LocalDateTime start = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDay(), startDate.getHour(), startDate.getMinute());
         LocalDateTime end   = LocalDateTime.of( endDate.getYear(),  endDate.getMonth(),  endDate.getDay(),  endDate.getHour(),  endDate.getMinute());
 
         long durationInMinutes = java.time.Duration.between(start, end).toMinutes();
         this.duration = calculateDurationInDays((int) durationInMinutes);
     }
+
+    /**
+     * @param dateTime start date
+     * @param icsDuration duration of the event
+     * description: calculates the duration of the event in days, hours and minutes by adding the duration to the start date
+     */
     private void setDurationWithIcsDuration(OurDateTime dateTime , Duration icsDuration){
 
         // Define a pattern to match the iCal4j duration format
@@ -57,6 +70,10 @@ public class Appointment extends Event {
         this.endDate = new OurDateTime(end.getYear(),end.getDayOfMonth(),end.getDayOfMonth(), end.getHour(), end.getMinute());
     }
 
+    /**
+     * @param value string to be parsed
+     * @return the parsed value or 0 if the value is null
+     */
     private static int parseIntOrZero(String value) {
         return value != null ? Integer.parseInt(value)
                              : 0;
@@ -73,7 +90,12 @@ public class Appointment extends Event {
     }
 
 
+
     @Override
+    /*
+     * description: creates a panel with the event's info
+     * usage: used to display the event's info in the main page
+     */
     public void setPanel() {
         this.panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

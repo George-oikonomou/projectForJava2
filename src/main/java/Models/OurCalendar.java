@@ -3,6 +3,7 @@ package  Models;
 import Main.App;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Status;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,6 +26,10 @@ public class OurCalendar {
     }
 
     public ArrayList<Event> getEvents() { return events; }
+
+    /**
+     * method that loads Events from the ics file and saves it the projects ArrayList on our calendar
+     */
     public ArrayList<Project> getProjects(){
 
         if (!projects.isEmpty())
@@ -48,16 +53,9 @@ public class OurCalendar {
     public CalScale getCalScale() { return calScale; }
     public void setCalScale(CalScale calScale) { this.calScale = calScale; }
 
-    public static void sortList(ArrayList<Event> events) {events.sort((event1, event2) -> (int) (compareEvents(event1, event2)));} //TODO CHECK IF IT WORKS
 
-    public static long compareEvents(Event event1, Event event2) {
-        OurDateTime startDate1 = (event1 instanceof Project) ? ((Project) event1).getDue() : event1.getStartDate();
-        OurDateTime startDate2 = (event2 instanceof Project) ? ((Project) event2).getDue() : event2.getStartDate();
 
-        return startDate1.getCalculationFormat() - startDate2.getCalculationFormat();
-    }
-
-    private ArrayList<Event> eventsBetween(long minTime, long maxTime) {     //code 2 is for upcoming events this week, code 3 is for old events this week, code 1 is for the other prints
+    private ArrayList<Event> eventsBetween(long minTime, long maxTime) {     //returns all the events between minTime and maxTime
         long eventTime;
         ArrayList<Event> eventsToBePrinted = new ArrayList<>();
 
@@ -75,6 +73,9 @@ public class OurCalendar {
     }
 
 
+    /*
+        * description: prints all the future events between the minTime and maxTime
+     */
     public ArrayList<Event> printUpcomingEvents(App.AppChoices choice) {
         OurDateTime minTime = new OurDateTime(); //if we want to print an upcoming event the min time should be the current time
         OurDateTime maxTime = new OurDateTime(); //this value will always change based on the choice
@@ -108,6 +109,10 @@ public class OurCalendar {
         }
         return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
+
+    /*
+        * description: prints all the past events between the minTime and maxTime
+     */
     public ArrayList<Event> printOldEvents(App.AppChoices choice) {
         OurDateTime maxTime = new OurDateTime(); //if we want to print an old event the max time should be the current time
         OurDateTime minTime = new OurDateTime(); //this value will always change based on the choice
@@ -137,6 +142,10 @@ public class OurCalendar {
         return eventsBetween(minTime.getCalculationFormat(), maxTime.getCalculationFormat());
     }
 
+
+    /*
+     * description: prints all the unfinished projects between the minTime and maxTime
+     */
     public ArrayList<Event> printUnfinishedProject(App.AppChoices choice) {
 
         OurDateTime realDateTime = new OurDateTime(); // Current date & time
@@ -144,7 +153,7 @@ public class OurCalendar {
         ArrayList<Event> eventsToBePrinted = new ArrayList<>();
 
         for (Event event : events) {
-            if (event instanceof Project && !((Project) event).getIsFinished()) {
+            if (event instanceof Project && !((Project) event).getStatus().equals(Status.VTODO_COMPLETED)) {
                 long dueFormat = ((Project) event).getDue().getCalculationFormat(); //making a DueFormat to check if it surpasses the realDateTime
                 if ((choice == App.AppChoices.todo && format < dueFormat) || (choice == App.AppChoices.due && format >= dueFormat))
                     eventsToBePrinted.add(event);

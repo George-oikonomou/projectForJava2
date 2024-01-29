@@ -24,8 +24,9 @@ public class EditEventGUI extends EventManagement {
     public EditEventGUI(ArrayList<ICSFile> allFiles) {
         super(allFiles,"Enter Event Title");
     }
-
+  
     public void search (String searchText){
+
         for (Event event : events) {
             if (event.getTitle().toLowerCase().startsWith(searchText)) {
                 getListModel().addElement(event.getPanel());
@@ -35,8 +36,8 @@ public class EditEventGUI extends EventManagement {
 
     }
 
-    public void fillEvents() {
-        events = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getEvents();
+    private void fillEvents() {
+        events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
         performLiveSearch();
     }
 
@@ -129,7 +130,11 @@ public class EditEventGUI extends EventManagement {
 
         if (startDateChooser.getDate()!=null && eventToEdit instanceof Appointment) {
             OurDateTime startDateTime = DateTimeManager.extractDateTime(startDateChooser, startTimeSpinner);
-            if (Validate.Dates(startDateTime, endDateTime)) return;
+
+            if (startDateTime.getCalculationFormat() > endDateTime.getCalculationFormat()){
+                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Start date cant be after end date","Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             eventToEdit.setNotified(startDateTime.getDateFormat().equals((eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
 

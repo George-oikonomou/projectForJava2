@@ -1,3 +1,5 @@
+import GUI.OurMenuGUI;
+import GUI.PrintGUI;
 import Models.*;
 import net.fortuna.ical4j.model.property.Status;
 import org.junit.jupiter.api.Test;
@@ -49,35 +51,44 @@ public class OurCalendarTest {
 
     @Test
     public void sortListSortsEventsInCorrectOrder() {
+            PrintGUI printGUI = new PrintGUI(OurMenuGUI.getAllFiles());
+
             OurCalendar calendar = new OurCalendar();
             ArrayList<Event> events = new ArrayList<>();
             events.add(new Project("title2","description2",new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS, "filename"));
             events.add(new Project("title1","description1",new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS, "filename"));
             calendar.setEvents(events);
-            OurCalendar.sortList(events);
+            printGUI.sortList(events,true);
             assertEquals("title1", calendar.getEvents().get(0).getTitle());
             assertEquals("title2", calendar.getEvents().get(1).getTitle());
     }
 
     @Test
     public void compareEventsComparesProjectsByDueDate() {
-            Project project1 = new Project("title1", "description1", new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS, "filename");
+        PrintGUI printGUI = new PrintGUI(OurMenuGUI.getAllFiles());
+
+        Project project1 = new Project("title1", "description1", new OurDateTime(2022, 1, 1, 10, 0), Status.VTODO_IN_PROCESS, "filename");
             Project project2 = new Project("title2", "description2", new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS, "filename");
-            assertTrue(OurCalendar.compareEvents(project1, project2) < 0);
+            assertTrue(printGUI.compareEvents(project1, project2) < 0);
     }
 
     @Test
     public void compareEventsComparesAppointmentsByStartDate() {
+            PrintGUI printGUI = new PrintGUI(OurMenuGUI.getAllFiles());
+
             Appointment appointment1 = new Appointment(new OurDateTime(2022, 1, 1, 10, 0), new OurDateTime(2022, 1, 1, 11, 0), "title1", "description1", "filename");
             Appointment appointment2 = new Appointment(new OurDateTime(2022, 1, 2, 10, 0), new OurDateTime(2022, 1, 2, 11, 0), "title2", "description2", "filename");
-            assertTrue(OurCalendar.compareEvents(appointment1, appointment2) < 0);
+
+            assertTrue(printGUI.compareEvents(appointment1, appointment2) < 0);
     }
 
     @Test
     public void compareEventsComparesProjectAndAppointmentByDueDateAndStartDate() {
+            PrintGUI printGUI = new PrintGUI(OurMenuGUI.getAllFiles());
+
             Project project = new Project("title1", "description1", new OurDateTime(2022, 1, 2, 10, 0), Status.VTODO_IN_PROCESS, "filename");
             Appointment appointment = new Appointment(new OurDateTime(2022, 1, 1, 10, 0), new OurDateTime(2022, 1, 1, 11, 0), "title2", "description2", "filename");
-            assertTrue(OurCalendar.compareEvents(project, appointment) > 0);
+            assertTrue(printGUI.compareEvents(project, appointment) > 0);
     }
 
 }

@@ -4,6 +4,10 @@ import javax.swing.text.JTextComponent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+/**
+ * A FocusListener that clears the text of a JTextComponent when it gains focus
+ * and restores the default text when it loses focus.
+ */
 public class ClearTextFocusListener implements FocusListener {
     private final String defaultText;
     private final JTextComponent textComponent;

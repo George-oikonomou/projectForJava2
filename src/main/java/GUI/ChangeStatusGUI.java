@@ -15,6 +15,7 @@ public class ChangeStatusGUI extends EventManagement {
     }
 
     public void search(String searchText){
+
         for (Project project : projects) {
             if (project.getTitle().toLowerCase().startsWith(searchText)) {
                 getListModel().addElement(project.getPanel());
@@ -24,8 +25,8 @@ public class ChangeStatusGUI extends EventManagement {
 
     }
 
-    public void fillEvents() {
-        projects = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getProjects();
+    private void fillProjects() {
+        projects = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getProjects();
         performLiveSearch();
     }
 
