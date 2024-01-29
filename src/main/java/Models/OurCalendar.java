@@ -101,8 +101,8 @@ public class OurCalendar {
                 inputDateTime.toLocalDate().isLeapYear() this checks if the year is a leap year
                 then we set the length of the month considering if it is a leap year.
                 Then at the end we put back the time, so we don't lose it */
-                LocalDateTime endOfMonth = currentTime.withDayOfMonth(currentTime.getMonth().
-                                length(currentTime.toLocalDate().isLeapYear())).with(LocalDateTime.now().toLocalTime());
+                LocalDateTime endOfMonth = currentTime.withDayOfMonth(currentTime.getMonth().length(currentTime.toLocalDate().isLeapYear())).with(LocalTime.MAX);
+
                 maxTime = new OurDateTime(endOfMonth.getYear(),endOfMonth.getMonthValue(),
                         endOfMonth.getDayOfMonth(),endOfMonth.getHour(),endOfMonth.getMinute());
             }
