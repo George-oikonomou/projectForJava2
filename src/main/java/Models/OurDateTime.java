@@ -55,8 +55,6 @@ public class OurDateTime {
 
     public OurDateTime() {
         TimeTeller teller = TimeService.getTeller();
-        //CHANGE HERE example
-        //LocalDateTime realTime = LocalDateTime.of(2024,2,29,18,11);
         LocalDateTime realTime = teller.now();
         this.year = realTime.getYear();
         this.month = realTime.getMonthValue();

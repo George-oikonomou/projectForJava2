@@ -83,7 +83,7 @@ public class ICSFile {
 
     private Appointment createAppointment(VEvent appointment) {
         //must have properties
-        if (appointment.getSummary() == null || appointment.getStartDate() == null || (appointment.getEndDate() == null && appointment.getDuration() == null))
+        if (appointment.getSummary() == null || appointment.getStartDate().getValue().isEmpty() || (appointment.getEndDate() == null && appointment.getDuration() == null))
               throw new NoSuchElementException();
 
         String  title = appointment.getSummary().getValue();
@@ -101,7 +101,7 @@ public class ICSFile {
 
     private Project createProject(VToDo project) {
         //must have properties
-        if (project.getStatus() == null || project.getDue() == null || project.getSummary() == null)
+        if (project.getStatus() == null || project.getDue().getValue().isEmpty()|| project.getSummary() == null)
             throw new NoSuchElementException();
 
         String title = project.getSummary().getValue();

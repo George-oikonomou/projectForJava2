@@ -99,7 +99,7 @@ public class Appointment extends Event {
     public void setPanel() {
         this.panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setPreferredSize(new Dimension(100, 80)); // Adjust the size as needed
+        panel.setPreferredSize(new Dimension(100, 85)); // Adjust the size as needed
         panel.add(new JLabel("Title: " + getTitle()));
         panel.add(new JLabel("Description: " + getDescription()));
         panel.add(new JLabel("Start Date: " + getStartDate().toString()));

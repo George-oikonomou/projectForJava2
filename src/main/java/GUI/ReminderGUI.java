@@ -20,11 +20,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ReminderGUI extends JPanel implements TimeListener {
-    private DefaultListModel<JPanel> listModel;
     private ArrayList<Event> nextEvent;
-    private JList<JPanel> printList;
     private OurDateTime liveTime;
-    private JScrollPane scrollPane;
 
 
     @Override
@@ -92,7 +89,7 @@ public class ReminderGUI extends JPanel implements TimeListener {
      */
     public void printEvents() {
         removeAll();
-        listModel = new DefaultListModel<>();
+        DefaultListModel<JPanel> listModel = new DefaultListModel<>();
 
         for (Event event : nextEvent) {
             JPanel panel = event.getPanel();
@@ -101,10 +98,10 @@ public class ReminderGUI extends JPanel implements TimeListener {
                 setPreferredSize(new Dimension(0, 10));
             }});
         }
-        printList = new JList<>(listModel);
+        JList<JPanel> printList = new JList<>(listModel);
         printList.setPreferredSize(new Dimension(170, (nextEvent.isEmpty() ? 1 : nextEvent.size() * 90)));
         printList.setCellRenderer(new PanelListCellRenderer());
-        scrollPane = new JScrollPane(printList);
+        JScrollPane scrollPane = new JScrollPane(printList);
         scrollPane.setPreferredSize(new Dimension(200, 350));
         add(scrollPane);
         revalidate();

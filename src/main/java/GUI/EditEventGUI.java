@@ -1,25 +1,15 @@
 package  GUI;
-
 import Utilities.*;
 import Models.*;
 import Models.Event;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class EditEventGUI extends JPanel {
-    private final ArrayList<ICSFile> allFiles;
-    private final DefaultListModel<JPanel> listModel;
-    private final JTextField enterTitle;
-    private final JButton searchTitle;
-    private final SingleCalendarSelect calendarSelect;
+public class EditEventGUI extends EventManagement {
     private Event eventToEdit;
-    private JList<JPanel> eventList;
     private ArrayList<Event> events;
     private JTextArea titleField;
     private JTextArea descriptionField;
@@ -32,86 +22,27 @@ public class EditEventGUI extends JPanel {
     private JPanel editPanel;
 
     public EditEventGUI(ArrayList<ICSFile> allFiles) {
-        setPreferredSize(new Dimension(300, 460));
-
-        this.allFiles = allFiles;
-
-        listModel = new DefaultListModel<>();
-        searchTitle = new JButton("Search");
-        enterTitle = new JTextField("Enter Event Title", 10);
-        enterTitle.addFocusListener(new ClearTextFocusListener("Enter Event Title", enterTitle));
-        calendarSelect = new SingleCalendarSelect(allFiles);
-        setupUI();
+        super(allFiles,"Enter Event Title");
     }
-
-    private void setupUI() {
-        if(enterTitle.getText().equals("Enter Event Title"))
-            searchTitle.setEnabled(false);
-        if (calendarSelect.isEmpty()) {
-            searchTitle.setEnabled(false);
-        } else {
-            calendarSelect.addActionListener(e -> fillEvents());
-            calendarSelect.setSelectedIndex(0);
-            enterTitle.getDocument().addDocumentListener(new LiveSearchListener());
-        }
-        searchTitle.addActionListener(new ButtonListener());
-
-        addComponents();
-    }
-
-    private void addComponents() {
-        add(calendarSelect);
-        add(new JSeparator(SwingConstants.HORIZONTAL) {{
-            setPreferredSize(new Dimension(4096, 1));
-            setForeground(Color.BLACK);
-        }});
-        add(enterTitle);
-        add(searchTitle);
-
-        eventList = new JList<>(listModel);
-        eventList.setPreferredSize(new Dimension(230, 1));
-        eventList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        eventList.setCellRenderer(new PanelListCellRenderer());
-        eventList.setFixedCellHeight(100);
-        eventList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                if (eventList.getSelectedIndex() != -1)
-                    FindSelectedEvent();
-            }
-        });
-
-        JScrollPane scrollPane = new JScrollPane(eventList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize(new Dimension(300, 400));
-        add(scrollPane, BorderLayout.CENTER);
-    }
-
-    private void performLiveSearch() {
-        if (eventList == null) return;
-
-        searchTitle.setEnabled(true);
-        String searchText = enterTitle.getText().toLowerCase();
-        listModel.clear();
-        if (searchText.isEmpty()){
-            eventList.setPreferredSize(new Dimension(230, 1));
-            searchTitle.setEnabled(false);
-            return;
-        }
+  
+    public void search (String searchText){
 
         for (Event event : events) {
             if (event.getTitle().toLowerCase().startsWith(searchText)) {
-                listModel.addElement(event.getPanel());
+                getListModel().addElement(event.getPanel());
             }
         }
-        eventList.setPreferredSize(new Dimension(230, listModel.size() * 100));
+        getEventList().setPreferredSize(new Dimension(230, getListModel().size() * 100));
+
     }
 
-    private void fillEvents() {
-        events = allFiles.get(calendarSelect.getSelectedIndex()).getCalendar().getEvents();
+    public void fillEvents() {
+        events = getAllFiles().get(getCalendarSelect().getSelectedIndex()).getCalendar().getEvents();
         performLiveSearch();
     }
 
-    private void FindSelectedEvent() {
-        JPanel selectedPanel = listModel.getElementAt(eventList.getSelectedIndex());
+    public void findSelectedEvent() {
+        JPanel selectedPanel = getListModel().getElementAt(getEventList().getSelectedIndex());
 
         String uid = (String) selectedPanel.getClientProperty("uid");
 
@@ -187,7 +118,7 @@ public class EditEventGUI extends JPanel {
         if (response == JOptionPane.OK_OPTION) {
            HandleOkResponse();
         }
-        eventList.clearSelection();
+        getEventList().clearSelection();
     }
 
     private void HandleOkResponse(){
@@ -205,7 +136,7 @@ public class EditEventGUI extends JPanel {
                 return;
             }
 
-            eventToEdit.setNotified(startDateTime.getDateFormat().equals(((Appointment) eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
+            eventToEdit.setNotified(startDateTime.getDateFormat().equals((eventToEdit).getStartDate().getDateFormat()) && endDateTime.getDateFormat().equals(((Appointment) eventToEdit).getEndDate().getDateFormat()));
 
             ((Appointment) eventToEdit).setDurationWithDtend(startDateTime, endDateTime);
             eventToEdit.setStartDate(startDateTime);
@@ -226,30 +157,19 @@ public class EditEventGUI extends JPanel {
         performLiveSearch();
     }
 
-    private class ButtonListener implements ActionListener {
+    private class ButtonListener extends EventManagement.ButtonListener {
         @Override
         public void actionPerformed(ActionEvent e){
-            listModel.clear();
+            getListModel().clear();
             for (Event event : events) {
-                if (event.getTitle().equalsIgnoreCase(enterTitle.getText())) {
-                    listModel.addElement(event.getPanel());
+                if (event.getTitle().equalsIgnoreCase(getEnterTitle().getText())) {
+                    getListModel().addElement(event.getPanel());
                 }
             }
 
-            if (listModel.isEmpty()) {
-                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no events with title " + enterTitle.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+            if (getListModel().isEmpty()) {
+                JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "There are no events with title " + getEnterTitle().getText(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
-
-    private class LiveSearchListener implements DocumentListener {
-        @Override
-        public void insertUpdate(DocumentEvent e) { performLiveSearch(); }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) { performLiveSearch(); }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {}
     }
 }
