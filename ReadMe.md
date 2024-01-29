@@ -83,7 +83,7 @@ then it will appear in the Reminders panel. Also, when the event appears in the 
 
 ![Local Image](src/main/resources/screenshotsForReadme/Reminders.png)
 
-Also, the current time is shown on the top left side of the app.
+Also, the current time is shown on the top right side of the app.
 
 ## Addition Information
 
