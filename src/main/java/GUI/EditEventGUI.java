@@ -150,6 +150,7 @@ public class EditEventGUI extends EventManagement {
 
             ((Project) eventToEdit).setDue(endDateTime);
         }
+        MainPageGUI.setIsSaved(false);
         eventToEdit.setPanel();
         performLiveSearch();
     }

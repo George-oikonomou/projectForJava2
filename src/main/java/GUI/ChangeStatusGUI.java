@@ -50,6 +50,7 @@ public class ChangeStatusGUI extends EventManagement {
             project.setStatus(Status.VTODO_IN_PROCESS);
         }
         project.setPanel();
+        MainPageGUI.setIsSaved(false);
         performLiveSearch();
     }
 

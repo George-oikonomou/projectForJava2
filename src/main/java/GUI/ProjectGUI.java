@@ -97,6 +97,7 @@ public class ProjectGUI extends JPanel {
         OurDateTime dueDateTime = DateTimeManager.extractDateTime(due, dueTimeSpinner);
         // Now, create a Project object
         events.add(new Project(title.getText(),description.getText(),dueDateTime, Status.VTODO_IN_PROCESS, allFiles.get(calendarSelect.getSelectedIndex()).getFileName()));
+        MainPageGUI.setIsSaved(false);
 
         JOptionPane.showMessageDialog(MainPageGUI.getPrintPanel(), "Project created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         //restart the fields
